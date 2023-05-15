@@ -1,0 +1,20 @@
+{
+  "name": "bh-lib",
+  "version": "1.0.0",
+  "description": "Black-hammer Library",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "SEGS",
+  "license": "MIT",
+  "dependencies": {
+    "17": "0.0.0",
+    "@astrouxds/react": "^7.9.3",
+    "dagre": "0.8.5",
+    "highlight.js": "11.5.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-flow-renderer": "^9.7.4"
+  }
+}
