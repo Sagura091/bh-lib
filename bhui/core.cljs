@@ -12,4 +12,8 @@
             [ui-component.molecule.core]
             [ui-component.organism.ui-grid]))
 
-(def events [events])
+(def event2 [events])
+
+subscriptions.
+(event2/subscribe )
+
