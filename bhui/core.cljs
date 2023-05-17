@@ -1,6 +1,6 @@
 (ns core
   (:require [csrf]
-            [events]
+            [events :as events]
             [data-source-handler]
             [subs]
             [subscription-handlers]
@@ -11,9 +11,3 @@
             [ui-component.atom.core]
             [ui-component.molecule.core]
             [ui-component.organism.ui-grid]))
-
-(def event2 [events])
-
-subscriptions.
-(event2/subscribe )
-

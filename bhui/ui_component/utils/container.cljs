@@ -11,7 +11,8 @@
 
 (def default-composite {:blackboard {}})
 
-
+;; *****TO DO****
+;; why is reframe in here?
 (re-frame/reg-event-db
   :events/init-container
   (fn-traced [db [_ container]]
