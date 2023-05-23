@@ -7,14 +7,14 @@
     "test": "npm run test"
   },
   "author": "SEGS",
-  "license": "MIT",
+  "license": "NG",
   "dependencies": {
     "17": "0.0.0",
     "@astrouxds/react": "^7.9.3",
     "dagre": "0.8.5",
-    "highlight.js": "11.5.1",
+    "highlight.js": "11.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-flow-renderer": "^9.7.4"
+    "react-flow-renderer": "^9.5.4"
   }
 }
