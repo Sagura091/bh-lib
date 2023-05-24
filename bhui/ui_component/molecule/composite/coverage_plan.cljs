@@ -676,11 +676,11 @@
     :color)
 
 
-  @(re-frame/subscribe [:bhui.subs/source :source/targets])
+  @(re-frame/subscribe [:subs/source :source/targets])
 
   ; can we change the data in :source/targets and have the UI update?
   ;
-  (re-frame/dispatch [:bhui.events/data-update
+  (re-frame/dispatch [:events/data-update
                       {:id    :source/targets
                        :value {:title    "Targets",
                                :c-o-c    [{:step      :generated,

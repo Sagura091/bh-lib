@@ -47,10 +47,10 @@
              (if (= direction :outputs)
                {source-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
-                              [:bhui.subs/source remote])}
+                              [:subs/source remote])}
                {target-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
-                              [:bhui.subs/source remote])}))))
+                              [:subs/source remote])}))))
     (into {})))
 
 
@@ -106,10 +106,10 @@
     ;(log/info "component->ui :source/remote" node "//" remote)
 
     ; 1. subscribe to the server (if needed)
-    (re-frame/dispatch-sync [:bhui.events/subscribe-to #{remote}])
+    (re-frame/dispatch-sync [:events/subscribe-to #{remote}])
 
     ; 2. return the signal vector to the new data-source key
-    [:bhui.subs/source remote]))
+    [:subs/source remote]))
 
 
 ; :source/fn
