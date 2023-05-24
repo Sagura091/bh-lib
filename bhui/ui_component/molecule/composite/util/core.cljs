@@ -15,5 +15,3 @@
 (def node-config-ui-make-config-panel node-config-ui/make-config-panel)
 
 (def signals-process-components signals/process-components)
-
-(def)
