@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"shadow.js.shim.module$dagre.js",
+"lineCount":5,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,6BAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,oCAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,YAAf,GAA8BC,aAAA,CAAc,OAAd,CAA9B;AACAC,kCAAmCC,CAAAA,OAAnC,GAA6CN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,YAA5D;;",
+"sources":["shadow.js.shim.module$dagre.js"],
+"sourcesContent":["goog.provide(\"shadow.js.shim.module$dagre\");\ngoog.provide(\"module$shadow_js_shim_module$dagre\");\nshadow.js.shim.module$dagre = shadow$bridge(\"dagre\");\nmodule$shadow_js_shim_module$dagre.default = shadow.js.shim.module$dagre;\n"],
+"names":["goog","provide","shadow","js","shim","module$dagre","shadow$bridge","module$shadow_js_shim_module$dagre","default"]
+}

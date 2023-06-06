@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"shadow.js.shim.module$react_leaflet.js",
+"lineCount":5,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,qCAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,4CAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,oBAAf,GAAsCC,aAAA,CAAc,eAAd,CAAtC;AACAC,0CAA2CC,CAAAA,OAA3C,GAAqDN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,oBAApE;;",
+"sources":["shadow.js.shim.module$react_leaflet.js"],
+"sourcesContent":["goog.provide(\"shadow.js.shim.module$react_leaflet\");\ngoog.provide(\"module$shadow_js_shim_module$react_leaflet\");\nshadow.js.shim.module$react_leaflet = shadow$bridge(\"react-leaflet\");\nmodule$shadow_js_shim_module$react_leaflet.default = shadow.js.shim.module$react_leaflet;\n"],
+"names":["goog","provide","shadow","js","shim","module$react_leaflet","shadow$bridge","module$shadow_js_shim_module$react_leaflet","default"]
+}

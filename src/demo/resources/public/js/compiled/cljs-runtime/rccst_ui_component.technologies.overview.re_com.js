@@ -1,0 +1,6 @@
+goog.provide('rccst_ui_component.technologies.overview.re_com');
+rccst_ui_component.technologies.overview.re_com.overview = (function rccst_ui_component$technologies$overview$re_com$overview(){
+return rccst_ui_component.technologies.overview.overview.overview.cljs$core$IFn$_invoke$arity$variadic("Re-com","#### _A ClojureScript library of UI components for Reagent_\n\n**re-com provides:**\n- Familiar UI widgets/components such as dropdowns, date pickers, popovers, tabs, etc.\n- Layout components, which arrange widgets vertically and horizontally, within splitters, etc. Plus components which put borders\naround their children. These various pieces can be arbitrarily nested to create sophisticated layouts.\n- A mostly Bootstrap look, mixed with some Material Design Icons.\n- UI basics to build a desktop-class SPA app.\n- Use of the [Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/). The entire layout side of this library\nrelies on Flexbox.\n\nSee also:\n>[re-com/project](https://github.com/day8/re-com)\n>[re-com/demo](https://re-com.day8.com.au/)",cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["/imgs/re-com-logo.png"], 0));
+});
+
+//# sourceMappingURL=rccst_ui_component.technologies.overview.re_com.js.map

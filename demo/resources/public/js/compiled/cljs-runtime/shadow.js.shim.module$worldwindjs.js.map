@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"shadow.js.shim.module$worldwindjs.js",
+"lineCount":5,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,mCAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,0CAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,kBAAf,GAAoCC,aAAA,CAAc,aAAd,CAApC;AACAC,wCAAyCC,CAAAA,OAAzC,GAAmDN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,kBAAlE;;",
+"sources":["shadow.js.shim.module$worldwindjs.js"],
+"sourcesContent":["goog.provide(\"shadow.js.shim.module$worldwindjs\");\ngoog.provide(\"module$shadow_js_shim_module$worldwindjs\");\nshadow.js.shim.module$worldwindjs = shadow$bridge(\"worldwindjs\");\nmodule$shadow_js_shim_module$worldwindjs.default = shadow.js.shim.module$worldwindjs;\n"],
+"names":["goog","provide","shadow","js","shim","module$worldwindjs","shadow$bridge","module$shadow_js_shim_module$worldwindjs","default"]
+}

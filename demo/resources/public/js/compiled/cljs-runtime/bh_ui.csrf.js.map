@@ -1,0 +1,1 @@
+{"version":3,"sources":["bh_ui/csrf.cljs"],"mappings":";AAGA,AAAKA,+BAAYC","names":["bh-ui.csrf/?csrf-token","js/csrfToken"],"sourcesContent":["(ns bh-ui.csrf)\n\n\n(def ?csrf-token js/csrfToken)\n"]}

@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"shadow.js.shim.module$recharts.js",
+"lineCount":5,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,gCAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,uCAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,eAAf,GAAiCC,aAAA,CAAc,UAAd,CAAjC;AACAC,qCAAsCC,CAAAA,OAAtC,GAAgDN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,eAA/D;;",
+"sources":["shadow.js.shim.module$recharts.js"],
+"sourcesContent":["goog.provide(\"shadow.js.shim.module$recharts\");\ngoog.provide(\"module$shadow_js_shim_module$recharts\");\nshadow.js.shim.module$recharts = shadow$bridge(\"recharts\");\nmodule$shadow_js_shim_module$recharts.default = shadow.js.shim.module$recharts;\n"],
+"names":["goog","provide","shadow","js","shim","module$recharts","shadow$bridge","module$shadow_js_shim_module$recharts","default"]
+}

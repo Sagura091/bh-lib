@@ -1,0 +1,9 @@
+{
+"version":3,
+"file":"shadow.js.shim.module$react_grid_layout.js",
+"lineCount":5,
+"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,yCAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,gDAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,wBAAf,GAA0CC,aAAA,CAAc,mBAAd,CAA1C;AACAC,8CAA+CC,CAAAA,OAA/C,GAAyDN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,wBAAxE;;",
+"sources":["shadow.js.shim.module$react_grid_layout.js"],
+"sourcesContent":["goog.provide(\"shadow.js.shim.module$react_grid_layout\");\ngoog.provide(\"module$shadow_js_shim_module$react_grid_layout\");\nshadow.js.shim.module$react_grid_layout = shadow$bridge(\"react-grid-layout\");\nmodule$shadow_js_shim_module$react_grid_layout.default = shadow.js.shim.module$react_grid_layout;\n"],
+"names":["goog","provide","shadow","js","shim","module$react_grid_layout","shadow$bridge","module$shadow_js_shim_module$react_grid_layout","default"]
+}

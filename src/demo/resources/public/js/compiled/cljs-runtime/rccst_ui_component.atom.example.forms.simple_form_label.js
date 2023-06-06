@@ -1,0 +1,6 @@
+goog.provide('rccst_ui_component.atom.example.forms.simple_form_label');
+rccst_ui_component.atom.example.forms.simple_form_label.example = (function rccst_ui_component$atom$example$forms$simple_form_label$example(){
+return woolybear.ad.demo.src.catalog.utils.demo.cljs$core$IFn$_invoke$arity$variadic("Form field labels (simple)",cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["You can add label components as children of input components, and they will be applied\n    appropriately and consistently to the fields they describe. Labels take the standard\n    extra-classes and subscribe-to-classes options.",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [woolybear.ad.layout.padded,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [woolybear.ad.forms.label,"Simple Label"], null)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol("layout","padded","layout/padded",-916248757,null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol("forms","label","forms/label",-163260246,null),"Simple Label"], null)], null)], 0));
+});
+
+//# sourceMappingURL=rccst_ui_component.atom.example.forms.simple_form_label.js.map

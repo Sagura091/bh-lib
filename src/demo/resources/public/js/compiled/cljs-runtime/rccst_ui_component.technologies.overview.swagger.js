@@ -1,0 +1,6 @@
+goog.provide('rccst_ui_component.technologies.overview.swagger');
+rccst_ui_component.technologies.overview.swagger.overview = (function rccst_ui_component$technologies$overview$swagger$overview(){
+return rccst_ui_component.technologies.overview.overview.overview.cljs$core$IFn$_invoke$arity$variadic("Swagger","### _API Development & Documentation_\n\nSwagger helps developers build more robust and expressive API's, quickly and easily using their\nset of open-source tools.  **Swagger UI** is just one of the many tools Swagger offers.\nIt provides an interactive web page for your applications API, that allows you to visualize, manipulate,\nand test your API from a single, well organized web page.  Developers are able to execute and monitor\nthe API requests they send, and results they receive, in an easy-to-use auto generated page for each API endpoint.\n\n> To see a live example of a Swagger UI page for a sample application, [click here](https://petstore.swagger.io/?_ga=2.239271107.1151330550.1642458404-998528997.1642458404)",cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["/imgs/swagger-ui-logo.png"], 0));
+});
+
+//# sourceMappingURL=rccst_ui_component.technologies.overview.swagger.js.map

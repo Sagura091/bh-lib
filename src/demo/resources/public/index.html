@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>UI demo.src.catalog</title>
+
+    <link rel="shortcut icon" type="image/png" href="images/hammer-icon-16x16.png" />
+    <link rel="apple-touch-icon" href="images/hammer-icon-16x16.png">
+
+
+    <link rel="stylesheet" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" href="js/compiled/Widgets/widgets.css">
+    <link rel="stylesheet" href="assets/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="assets/css/re-com.css">
+    <link rel="stylesheet" href="assets/css/react-grid-layout.css">
+<!--    <link rel="stylesheet" href="assets/css/flippable-card.css">-->
+    <link rel="stylesheet" href="js/compiled/Assets/astro-web-components.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <link rel="stylesheet" href="/css/wb.css">
+    <link rel="stylesheet" href="/css/css">
+    <link rel="stylesheet" href="/css/astro.css">
+    <link rel="stylesheet" href="/css/fixed-data-table.css">
+
+<!--    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" type="text/css">-->
+<!--    <link href='https://fonts.googleapis.com/css?family=Roboto+Condensed:400,300' rel='stylesheet' type='text/css'>-->
+
+    <!-- fix a bug in Leaflet CSS (missing styling on .leaflet-container) -->
+    <style>
+            .leaflet-container {
+                height: 100%;
+                width: 100%;
+            }
+	    </style>
+
+  </head>
+  <body class="light-theme">
+    <noscript>
+      bh/rccst is a JavaScript app. Please enable JavaScript to continue.
+    </noscript>
+    <script src="assets/scripts/detect-element-resize.js" type="text/javascript"></script>
+    <div id="app" style="height: inherit">
+      <h2>Reagent/Re-frame stuff should go here</h2>
+    </div>
+    <script type="text/javascript">
+        var csrfToken = "{{csrf-token}}";
+    </script>
+    <script>
+         window.prstr  = function (obj) { return cljs.core.pr_str(obj) };
+    </script>
+    <script src="/js/compiled/bundle.js"></script>
+    <script src="/js/compiled/app.js"></script>
+  </body>
+</html>
