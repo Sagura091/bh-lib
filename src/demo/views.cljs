@@ -15,11 +15,12 @@
 
 (def navbar [[:app-bar/welcome "Welcome!" [welcome/page]]
              [:app-bar/tech "Technologies" [tech/page]]
-             [:app-bar/atoms "'Atoms'" [atoms/page]]
-             [:app-bar/molecules "'Molecules'" [molecules/page]]
-             [:app-bar/organisms "'Organisms'" [organisms/page]]
-             [:app-bar/templates "'Templates'" [templates/page]]
-             [:app-bar/giants "Giants" [giants/view]]])
+             ;[:app-bar/atoms "'Atoms'" [atoms/page]]
+             ;[:app-bar/molecules "'Molecules'" [molecules/page]]
+             ;[:app-bar/organisms "'Organisms'" [organisms/page]]
+            ; [:app-bar/templates "'Templates'" [templates/page]]
+             ;[:app-bar/giants "Giants" [giants/view]]
+             ])
 
 
 (defn view

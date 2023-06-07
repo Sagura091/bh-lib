@@ -1,6 +1,0 @@
-goog.provide('rccst_ui_component.atom.example.layout.page');
-rccst_ui_component.atom.example.layout.page.example = (function rccst_ui_component$atom$example$layout$page$example(){
-return woolybear.ad.demo.src.catalog.utils.demo.cljs$core$IFn$_invoke$arity$variadic("Page",cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["The page component is a simple chart designed to contain an entire\n    \"page\" (not including the site header and footer). Use this container\n    to wrap each page, then edit the AD page component whenever you want to\n    make changes that apply to the page as a whole.",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [woolybear.ad.layout.page,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),"Something much more complex would go here."], null)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol("layout","page","layout/page",-636922946,null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),"Something much more complex would go here."], null)], null)], 0));
-});
-
-//# sourceMappingURL=rccst_ui_component.atom.example.layout.page.js.map

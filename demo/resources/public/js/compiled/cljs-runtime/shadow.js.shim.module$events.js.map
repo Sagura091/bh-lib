@@ -1,9 +1,0 @@
-{
-"version":3,
-"file":"shadow.js.shim.module$events.js",
-"lineCount":5,
-"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,8BAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,qCAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,aAAf,GAA+BC,aAAA,CAAc,QAAd,CAA/B;AACAC,mCAAoCC,CAAAA,OAApC,GAA8CN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,aAA7D;;",
-"sources":["shadow.js.shim.module$events.js"],
-"sourcesContent":["goog.provide(\"shadow.js.shim.module$events\");\ngoog.provide(\"module$shadow_js_shim_module$events\");\nshadow.js.shim.module$events = shadow$bridge(\"events\");\nmodule$shadow_js_shim_module$events.default = shadow.js.shim.module$events;\n"],
-"names":["goog","provide","shadow","js","shim","module$events","shadow$bridge","module$shadow_js_shim_module$events","default"]
-}

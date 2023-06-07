@@ -1,5 +1,5 @@
 (ns bh-ui.atom.chart.utils
-  (:require [events :as events]
+  (:require [bh-ui.events :as events]
             [bh-ui.atom.re-com.table :as table]
             [bh-ui.utils :as u]
             [bh-ui.utils.color :as color]

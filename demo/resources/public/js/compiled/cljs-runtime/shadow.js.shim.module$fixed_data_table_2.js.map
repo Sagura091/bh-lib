@@ -1,9 +1,0 @@
-{
-"version":3,
-"file":"shadow.js.shim.module$fixed_data_table_2.js",
-"lineCount":5,
-"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,0CAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,iDAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,yBAAf,GAA2CC,aAAA,CAAc,oBAAd,CAA3C;AACAC,+CAAgDC,CAAAA,OAAhD,GAA0DN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,yBAAzE;;",
-"sources":["shadow.js.shim.module$fixed_data_table_2.js"],
-"sourcesContent":["goog.provide(\"shadow.js.shim.module$fixed_data_table_2\");\ngoog.provide(\"module$shadow_js_shim_module$fixed_data_table_2\");\nshadow.js.shim.module$fixed_data_table_2 = shadow$bridge(\"fixed-data-table-2\");\nmodule$shadow_js_shim_module$fixed_data_table_2.default = shadow.js.shim.module$fixed_data_table_2;\n"],
-"names":["goog","provide","shadow","js","shim","module$fixed_data_table_2","shadow$bridge","module$shadow_js_shim_module$fixed_data_table_2","default"]
-}

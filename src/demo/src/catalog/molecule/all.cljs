@@ -5,7 +5,7 @@
             [demo.src.catalog.molecule.example.header-bar :as header-bar]))
 
 
-(defn demo.src.catalog
+(defn catalog
   []
 
   [:div

@@ -7,7 +7,7 @@ goog.provide('day8.re_frame_10x.inlined_deps.spade.git_sha_93ef290.container');
  */
 day8.re_frame_10x.inlined_deps.spade.git_sha_93ef290.container.IStyleContainer = function(){};
 
-var day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$dyn_25815 = (function (this$,style_name,css){
+var day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$dyn_48510 = (function (this$,style_name,css){
 var x__4550__auto__ = (((this$ == null))?null:this$);
 var m__4551__auto__ = (day8.re_frame_10x.inlined_deps.spade.git_sha_93ef290.container.mount_style_BANG_[goog.typeOf(x__4550__auto__)]);
 if((!((m__4551__auto__ == null)))){
@@ -28,7 +28,7 @@ day8.re_frame_10x.inlined_deps.spade.git_sha_93ef290.container.mount_style_BANG_
 if((((!((this$ == null)))) && ((!((this$.day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$arity$3 == null)))))){
 return this$.day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$arity$3(this$,style_name,css);
 } else {
-return day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$dyn_25815(this$,style_name,css);
+return day8$re_frame_10x$inlined_deps$spade$git_sha_93ef290$container$IStyleContainer$mount_style_BANG_$dyn_48510(this$,style_name,css);
 }
 });
 

@@ -1,6 +1,0 @@
-goog.provide('rccst_ui_component.technologies.overview.hiccup');
-rccst_ui_component.technologies.overview.hiccup.overview = (function rccst_ui_component$technologies$overview$hiccup$overview(){
-return rccst_ui_component.technologies.overview.overview.overview("Hiccup","#### _Hiccup is a library for representing HTML in Clojure_\n\nIt uses vectors to represent elements, and maps to represent an element's attributes.\n\nHiccup turns Clojure data structures like this:\n\n  `[:a {:href \"http://github.com\"} \"GitHub\"]`\n\nInto HTML tags like this:\n\n  `<a href=\"http://github.com\">GitHub</a>`\n\nHiccup provides a convenient shortcut for adding id and class attributes to an element.\nInstead of writing:\n\n  `[:div {:id \"email\" :class \"selected starred\"} \"...\"]`\n\nYou can write:\n\n  `[:div#email.selected.starred \"...\"]`\n\nAs in CSS, the word after the \"#\" denotes the element's ID, and the word after each \".\" denotes\nthe element's classes.\n\nThere may be multiple classes, but there can only be one ID. Additionally, the ID must always come\nfirst, so `div#foo.bar` would work, but `div.foo#bar` would not.\n\nSee also:\n>[Hiccup](https://github.com/weavejester/hiccup)\n>[reagent-project/reagent](https://github.com/reagent-project/reagent)");
-});
-
-//# sourceMappingURL=rccst_ui_component.technologies.overview.hiccup.js.map

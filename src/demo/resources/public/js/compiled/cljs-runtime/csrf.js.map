@@ -1,1 +1,0 @@
-{"version":3,"sources":["csrf.cljs"],"mappings":";AAGA,AAAKA,yBAAYC","names":["csrf/?csrf-token","js/csrfToken"],"sourcesContent":["(ns csrf)\n\n\n(def ?csrf-token js/csrfToken)\n"]}

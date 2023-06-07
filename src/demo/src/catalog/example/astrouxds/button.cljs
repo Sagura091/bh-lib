@@ -1,4 +1,4 @@
-(ns demo.src.catalog.atom.example.astrouxds.button
+(ns demo.src.catalog.example.astrouxds.button
   (:require [bh-ui.atom.astrouxds.button :as button]
             [re-com.core :as rc]
             [woolybear.ad.utils :as acu]))

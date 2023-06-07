@@ -31,14 +31,14 @@ return null;
  */
 re_com.v_table.scrollbar = (function re_com$v_table$scrollbar(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___50628 = arguments.length;
-var i__4865__auto___50629 = (0);
+var len__4864__auto___72955 = arguments.length;
+var i__4865__auto___72956 = (0);
 while(true){
-if((i__4865__auto___50629 < len__4864__auto___50628)){
-args__4870__auto__.push((arguments[i__4865__auto___50629]));
+if((i__4865__auto___72956 < len__4864__auto___72955)){
+args__4870__auto__.push((arguments[i__4865__auto___72956]));
 
-var G__50630 = (i__4865__auto___50629 + (1));
-i__4865__auto___50629 = G__50630;
+var G__72957 = (i__4865__auto___72956 + (1));
+i__4865__auto___72956 = G__72957;
 continue;
 } else {
 }
@@ -49,12 +49,12 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.v_table.scrollbar.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.v_table.scrollbar.cljs$core$IFn$_invoke$arity$variadic = (function (p__50540){
-var map__50541 = p__50540;
-var map__50541__$1 = cljs.core.__destructure_map(map__50541);
-var type = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50541__$1,new cljs.core.Keyword(null,"type","type",1174270348));
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50541__$1,new cljs.core.Keyword(null,"width","width",-384071477),(10));
-var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50541__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
+(re_com.v_table.scrollbar.cljs$core$IFn$_invoke$arity$variadic = (function (p__72866){
+var map__72867 = p__72866;
+var map__72867__$1 = cljs.core.__destructure_map(map__72867);
+var type = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72867__$1,new cljs.core.Keyword(null,"type","type",1174270348));
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72867__$1,new cljs.core.Keyword(null,"width","width",-384071477),(10));
+var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72867__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
 var horizontal_QMARK_ = cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(type,new cljs.core.Keyword(null,"horizontal","horizontal",2062109475));
 var radius = re_com.v_table.px((width / (2)));
 var scrollbar_color = "#eee";
@@ -79,8 +79,8 @@ if(beginning_or_beyond_QMARK_){
 return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1((0)) : on_change.call(null,(0)));
 } else {
 if(end_or_beyond_QMARK_){
-var G__50544 = Math.round((new cljs.core.Keyword(null,"max-scroll-pos","max-scroll-pos",-325462965).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) * new cljs.core.Keyword(null,"scrollbar-content-ratio","scrollbar-content-ratio",1658723056).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs))));
-return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__50544) : on_change.call(null,G__50544));
+var G__72868 = Math.round((new cljs.core.Keyword(null,"max-scroll-pos","max-scroll-pos",-325462965).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) * new cljs.core.Keyword(null,"scrollbar-content-ratio","scrollbar-content-ratio",1658723056).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs))));
+return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__72868) : on_change.call(null,G__72868));
 } else {
 return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(new_external_scroll_pos) : on_change.call(null,new_external_scroll_pos));
 
@@ -107,12 +107,12 @@ var target = event.target;
 var bounding_rect = (((target == null))?cljs.core.PersistentArrayMap.EMPTY:target.getBoundingClientRect());
 var click_pos = ((horizontal_QMARK_)?(event.clientX - bounding_rect.left):(event.clientY - bounding_rect.top));
 var op = (((click_pos <= new cljs.core.Keyword(null,"internal-scroll-pos","internal-scroll-pos",1183420691).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs))))?cljs.core._:cljs.core._PLUS_);
-var new_internal_scroll_pos = (new cljs.core.Keyword(null,"internal-scroll-pos","internal-scroll-pos",1183420691).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) + (function (){var G__50545 = (new cljs.core.Keyword(null,"length","length",588987862).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) / new cljs.core.Keyword(null,"thumb-ratio","thumb-ratio",634209799).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)));
-return (op.cljs$core$IFn$_invoke$arity$1 ? op.cljs$core$IFn$_invoke$arity$1(G__50545) : op.call(null,G__50545));
+var new_internal_scroll_pos = (new cljs.core.Keyword(null,"internal-scroll-pos","internal-scroll-pos",1183420691).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) + (function (){var G__72869 = (new cljs.core.Keyword(null,"length","length",588987862).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) / new cljs.core.Keyword(null,"thumb-ratio","thumb-ratio",634209799).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)));
+return (op.cljs$core$IFn$_invoke$arity$1 ? op.cljs$core$IFn$_invoke$arity$1(G__72869) : op.call(null,G__72869));
 })());
-var new_external_scroll_pos = (function (){var G__50546 = new cljs.core.Keyword(null,"scroll-pos","scroll-pos",292123569).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs));
-var G__50547 = new cljs.core.Keyword(null,"length","length",588987862).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs));
-return (op.cljs$core$IFn$_invoke$arity$2 ? op.cljs$core$IFn$_invoke$arity$2(G__50546,G__50547) : op.call(null,G__50546,G__50547));
+var new_external_scroll_pos = (function (){var G__72870 = new cljs.core.Keyword(null,"scroll-pos","scroll-pos",292123569).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs));
+var G__72871 = new cljs.core.Keyword(null,"length","length",588987862).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs));
+return (op.cljs$core$IFn$_invoke$arity$2 ? op.cljs$core$IFn$_invoke$arity$2(G__72870,G__72871) : op.call(null,G__72870,G__72871));
 })();
 var beginning_or_beyond_QMARK_ = (new_internal_scroll_pos <= (0));
 var end_or_beyond_QMARK_ = (new_internal_scroll_pos >= new cljs.core.Keyword(null,"max-scroll-pos","max-scroll-pos",-325462965).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)));
@@ -120,8 +120,8 @@ if(beginning_or_beyond_QMARK_){
 return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1((0)) : on_change.call(null,(0)));
 } else {
 if(end_or_beyond_QMARK_){
-var G__50548 = Math.round((new cljs.core.Keyword(null,"max-scroll-pos","max-scroll-pos",-325462965).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) * new cljs.core.Keyword(null,"scrollbar-content-ratio","scrollbar-content-ratio",1658723056).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs))));
-return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__50548) : on_change.call(null,G__50548));
+var G__72872 = Math.round((new cljs.core.Keyword(null,"max-scroll-pos","max-scroll-pos",-325462965).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs)) * new cljs.core.Keyword(null,"scrollbar-content-ratio","scrollbar-content-ratio",1658723056).cljs$core$IFn$_invoke$arity$1(cljs.core.deref(calcs))));
+return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__72872) : on_change.call(null,G__72872));
 } else {
 return (on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(new_external_scroll_pos) : on_change.call(null,new_external_scroll_pos));
 
@@ -144,15 +144,15 @@ cljs.core.reset_BANG_(dragging_QMARK_,true);
 return event.stopPropagation();
 });
 return (function() { 
-var re_com$v_table$scrollbar_renderer__delegate = function (p__50549){
-var map__50550 = p__50549;
-var map__50550__$1 = cljs.core.__destructure_map(map__50550);
-var length = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50550__$1,new cljs.core.Keyword(null,"length","length",588987862));
-var width__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50550__$1,new cljs.core.Keyword(null,"width","width",-384071477),(10));
-var content_length = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50550__$1,new cljs.core.Keyword(null,"content-length","content-length",441319507));
-var scroll_pos = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50550__$1,new cljs.core.Keyword(null,"scroll-pos","scroll-pos",292123569));
-var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50550__$1,new cljs.core.Keyword(null,"style","style",-496642736));
-var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50550__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+var re_com$v_table$scrollbar_renderer__delegate = function (p__72873){
+var map__72874 = p__72873;
+var map__72874__$1 = cljs.core.__destructure_map(map__72874);
+var length = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72874__$1,new cljs.core.Keyword(null,"length","length",588987862));
+var width__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72874__$1,new cljs.core.Keyword(null,"width","width",-384071477),(10));
+var content_length = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72874__$1,new cljs.core.Keyword(null,"content-length","content-length",441319507));
+var scroll_pos = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72874__$1,new cljs.core.Keyword(null,"scroll-pos","scroll-pos",292123569));
+var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72874__$1,new cljs.core.Keyword(null,"style","style",-496642736));
+var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72874__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
 var thumb_ratio = (content_length / length);
 var thumb_length = (function (){var x__4336__auto__ = (1.5 * width__$1);
 var y__4337__auto__ = (length / thumb_ratio);
@@ -190,17 +190,17 @@ return null;
 })], null),new cljs.core.Keyword(null,"child","child",623967545),""], null)], null);
 };
 var re_com$v_table$scrollbar_renderer = function (var_args){
-var p__50549 = null;
+var p__72873 = null;
 if (arguments.length > 0) {
-var G__50637__i = 0, G__50637__a = new Array(arguments.length -  0);
-while (G__50637__i < G__50637__a.length) {G__50637__a[G__50637__i] = arguments[G__50637__i + 0]; ++G__50637__i;}
-  p__50549 = new cljs.core.IndexedSeq(G__50637__a,0,null);
+var G__72971__i = 0, G__72971__a = new Array(arguments.length -  0);
+while (G__72971__i < G__72971__a.length) {G__72971__a[G__72971__i] = arguments[G__72971__i + 0]; ++G__72971__i;}
+  p__72873 = new cljs.core.IndexedSeq(G__72971__a,0,null);
 } 
-return re_com$v_table$scrollbar_renderer__delegate.call(this,p__50549);};
+return re_com$v_table$scrollbar_renderer__delegate.call(this,p__72873);};
 re_com$v_table$scrollbar_renderer.cljs$lang$maxFixedArity = 0;
-re_com$v_table$scrollbar_renderer.cljs$lang$applyTo = (function (arglist__50638){
-var p__50549 = cljs.core.seq(arglist__50638);
-return re_com$v_table$scrollbar_renderer__delegate(p__50549);
+re_com$v_table$scrollbar_renderer.cljs$lang$applyTo = (function (arglist__72972){
+var p__72873 = cljs.core.seq(arglist__72972);
+return re_com$v_table$scrollbar_renderer__delegate(p__72873);
 });
 re_com$v_table$scrollbar_renderer.cljs$core$IFn$_invoke$arity$variadic = re_com$v_table$scrollbar_renderer__delegate;
 return re_com$v_table$scrollbar_renderer;
@@ -211,9 +211,9 @@ return re_com$v_table$scrollbar_renderer;
 (re_com.v_table.scrollbar.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.v_table.scrollbar.cljs$lang$applyTo = (function (seq50539){
+(re_com.v_table.scrollbar.cljs$lang$applyTo = (function (seq72865){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq50539));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72865));
 }));
 
 /**
@@ -250,12 +250,12 @@ return cljs.core.with_meta(new cljs.core.PersistentVector(null, 3, 5, cljs.core.
 /**
  * Render section 2 - the viewport component (which renders the content component as its child)
  */
-re_com.v_table.row_header_viewport = (function re_com$v_table$row_header_viewport(row_header_renderer,key_fn,top_row_index,rows,scroll_y,row_header_selection_fn,p__50557,selection_allowed_QMARK_,row_viewport_height,content_rows_height,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
-var vec__50558 = p__50557;
-var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50558,(0),null);
-var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50558,(1),null);
-var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50558,(2),null);
-var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50558,(3),null);
+re_com.v_table.row_header_viewport = (function re_com$v_table$row_header_viewport(row_header_renderer,key_fn,top_row_index,rows,scroll_y,row_header_selection_fn,p__72875,selection_allowed_QMARK_,row_viewport_height,content_rows_height,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
+var vec__72876 = p__72875;
+var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72876,(0),null);
+var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72876,(1),null);
+var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72876,(2),null);
+var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72876,(3),null);
 return new cljs.core.PersistentVector(null, 15, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.box.v_box,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"re_com/v_table.cljs",new cljs.core.Keyword(null,"line","line",212345235),216], null)),new cljs.core.Keyword(null,"class","class",-2030961996),["rc-v-table-row-headers rc-v-table-viewport ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(class$)].join(''),new cljs.core.Keyword(null,"style","style",-496642736),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"position","position",-2011731912),"relative",new cljs.core.Keyword(null,"overflow","overflow",2058931880),"hidden",new cljs.core.Keyword(null,"max-height","max-height",-612563804),re_com.v_table.px(content_rows_height)], null),style], 0)),new cljs.core.Keyword(null,"attr","attr",-604132353),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([(cljs.core.truth_(row_header_selection_fn)?new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"on-mouse-down","on-mouse-down",1147755470),(function (event){
 (on_mouse_down.cljs$core$IFn$_invoke$arity$5 ? on_mouse_down.cljs$core$IFn$_invoke$arity$5(new cljs.core.Keyword(null,"row-header","row-header",1799050794),row_header_selection_fn,content_rows_height,(0),event) : on_mouse_down.call(null,new cljs.core.Keyword(null,"row-header","row-header",1799050794),row_header_selection_fn,content_rows_height,(0),event));
 
@@ -298,12 +298,12 @@ return new cljs.core.PersistentVector(null, 11, 5, cljs.core.PersistentVector.EM
 /**
  * Render section 4 - the viewport component (which renders the content component as its child)
  */
-re_com.v_table.column_header_viewport = (function re_com$v_table$column_header_viewport(column_header_renderer,scroll_x,column_header_selection_fn,p__50561,selection_allowed_QMARK_,row_viewport_width,column_header_height,content_rows_width,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
-var vec__50562 = p__50561;
-var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50562,(0),null);
-var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50562,(1),null);
-var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50562,(2),null);
-var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50562,(3),null);
+re_com.v_table.column_header_viewport = (function re_com$v_table$column_header_viewport(column_header_renderer,scroll_x,column_header_selection_fn,p__72879,selection_allowed_QMARK_,row_viewport_width,column_header_height,content_rows_width,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
+var vec__72880 = p__72879;
+var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72880,(0),null);
+var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72880,(1),null);
+var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72880,(2),null);
+var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72880,(3),null);
 return new cljs.core.PersistentVector(null, 15, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.box.v_box,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"re_com/v_table.cljs",new cljs.core.Keyword(null,"line","line",212345235),281], null)),new cljs.core.Keyword(null,"class","class",-2030961996),["rc-v-table-column-headers rc-v-table-viewport ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(class$)].join(''),new cljs.core.Keyword(null,"style","style",-496642736),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"overflow","overflow",2058931880),"hidden",new cljs.core.Keyword(null,"position","position",-2011731912),"relative"], null),style], 0)),new cljs.core.Keyword(null,"attr","attr",-604132353),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([(cljs.core.truth_(column_header_selection_fn)?new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"on-mouse-down","on-mouse-down",1147755470),(function (event){
 (on_mouse_down.cljs$core$IFn$_invoke$arity$5 ? on_mouse_down.cljs$core$IFn$_invoke$arity$5(new cljs.core.Keyword(null,"column-header","column-header",-1495823888),column_header_selection_fn,column_header_height,content_rows_width,event) : on_mouse_down.call(null,new cljs.core.Keyword(null,"column-header","column-header",-1495823888),column_header_selection_fn,column_header_height,content_rows_width,event));
 
@@ -346,12 +346,12 @@ return cljs.core.with_meta(new cljs.core.PersistentVector(null, 3, 5, cljs.core.
 /**
  * Render section 5 - the viewport component (which renders the content component as its child)
  */
-re_com.v_table.row_viewport = (function re_com$v_table$row_viewport(row_renderer,key_fn,top_row_index,rows,scroll_x,scroll_y,row_selection_fn,p__50568,selection_allowed_QMARK_,row_viewport_height,row_viewport_width,row_viewport_id,content_rows_height,content_rows_width,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
-var vec__50569 = p__50568;
-var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50569,(0),null);
-var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50569,(1),null);
-var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50569,(2),null);
-var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50569,(3),null);
+re_com.v_table.row_viewport = (function re_com$v_table$row_viewport(row_renderer,key_fn,top_row_index,rows,scroll_x,scroll_y,row_selection_fn,p__72883,selection_allowed_QMARK_,row_viewport_height,row_viewport_width,row_viewport_id,content_rows_height,content_rows_width,class$,style,attr,sel_class,sel_style,sel_attr,content_class,content_style,content_attr){
+var vec__72884 = p__72883;
+var selection_renderer = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72884,(0),null);
+var on_mouse_down = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72884,(1),null);
+var on_mouse_enter = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72884,(2),null);
+var on_mouse_leave = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72884,(3),null);
 return new cljs.core.PersistentVector(null, 17, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.box.v_box,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"re_com/v_table.cljs",new cljs.core.Keyword(null,"line","line",212345235),339], null)),new cljs.core.Keyword(null,"class","class",-2030961996),["rc-v-table-rows rc-v-table-viewport ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(class$)].join(''),new cljs.core.Keyword(null,"style","style",-496642736),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"overflow","overflow",2058931880),"hidden",new cljs.core.Keyword(null,"position","position",-2011731912),"relative",new cljs.core.Keyword(null,"max-height","max-height",-612563804),re_com.v_table.px(content_rows_height)], null),style], 0)),new cljs.core.Keyword(null,"attr","attr",-604132353),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([(cljs.core.truth_(row_selection_fn)?new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"on-mouse-down","on-mouse-down",1147755470),(function (event){
 (on_mouse_down.cljs$core$IFn$_invoke$arity$5 ? on_mouse_down.cljs$core$IFn$_invoke$arity$5(new cljs.core.Keyword(null,"row","row",-570139521),row_selection_fn,content_rows_height,content_rows_width,event) : on_mouse_down.call(null,new cljs.core.Keyword(null,"row","row",-570139521),row_selection_fn,content_rows_height,content_rows_width,event));
 
@@ -720,14 +720,14 @@ re_com.v_table.v_table_args_desc = ((re_com.config.include_args_desc_QMARK_)?new
  */
 re_com.v_table.v_table = (function re_com$v_table$v_table(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___50649 = arguments.length;
-var i__4865__auto___50650 = (0);
+var len__4864__auto___72980 = arguments.length;
+var i__4865__auto___72981 = (0);
 while(true){
-if((i__4865__auto___50650 < len__4864__auto___50649)){
-args__4870__auto__.push((arguments[i__4865__auto___50650]));
+if((i__4865__auto___72981 < len__4864__auto___72980)){
+args__4870__auto__.push((arguments[i__4865__auto___72981]));
 
-var G__50651 = (i__4865__auto___50650 + (1));
-i__4865__auto___50650 = G__50651;
+var G__72982 = (i__4865__auto___72981 + (1));
+i__4865__auto___72981 = G__72982;
 continue;
 } else {
 }
@@ -738,17 +738,17 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.v_table.v_table.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.v_table.v_table.cljs$core$IFn$_invoke$arity$variadic = (function (p__50589){
-var map__50590 = p__50589;
-var map__50590__$1 = cljs.core.__destructure_map(map__50590);
-var args = map__50590__$1;
-var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"model","model",331153215));
-var virtual_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50590__$1,new cljs.core.Keyword(null,"virtual?","virtual?",1554264002),true);
-var row_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749));
-var row_viewport_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"row-viewport-width","row-viewport-width",1520708232));
-var row_viewport_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"row-viewport-height","row-viewport-height",-532496779));
-var max_row_viewport_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688));
-var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50590__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+(re_com.v_table.v_table.cljs$core$IFn$_invoke$arity$variadic = (function (p__72914){
+var map__72915 = p__72914;
+var map__72915__$1 = cljs.core.__destructure_map(map__72915);
+var args = map__72915__$1;
+var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"model","model",331153215));
+var virtual_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72915__$1,new cljs.core.Keyword(null,"virtual?","virtual?",1554264002),true);
+var row_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749));
+var row_viewport_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"row-viewport-width","row-viewport-width",1520708232));
+var row_viewport_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"row-viewport-height","row-viewport-height",-532496779));
+var max_row_viewport_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688));
+var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72915__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
 var or__4253__auto__ = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.v_table.v_table_args_desc),args));
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
@@ -802,11 +802,11 @@ return ((x__4339__auto__ < y__4340__auto__) ? x__4339__auto__ : y__4340__auto__)
 return null;
 }
 }));
-var on_h_scroll_change = (function (p1__50576_SHARP_){
-return cljs.core.reset_BANG_(scroll_x,p1__50576_SHARP_);
+var on_h_scroll_change = (function (p1__72895_SHARP_){
+return cljs.core.reset_BANG_(scroll_x,p1__72895_SHARP_);
 });
-var on_v_scroll_change = (function (p1__50577_SHARP_){
-return cljs.core.reset_BANG_(scroll_y,p1__50577_SHARP_);
+var on_v_scroll_change = (function (p1__72896_SHARP_){
+return cljs.core.reset_BANG_(scroll_y,p1__72896_SHARP_);
 });
 var on_viewport_resize = (function re_com$v_table$on_viewport_resize(event){
 var target = event.target;
@@ -978,12 +978,12 @@ cljs.core.reset_BANG_(event_debug,event);
 } else {
 }
 
-var G__50601 = new cljs.core.Keyword(null,"selecting","selecting",-1699771909);
-var G__50602 = selection_coords();
-var G__50603 = ctrlKey;
-var G__50604 = shiftKey;
-var G__50605 = event;
-return (sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__50601,G__50602,G__50603,G__50604,G__50605) : sel_fn.call(null,G__50601,G__50602,G__50603,G__50604,G__50605));
+var G__72928 = new cljs.core.Keyword(null,"selecting","selecting",-1699771909);
+var G__72929 = selection_coords();
+var G__72930 = ctrlKey;
+var G__72931 = shiftKey;
+var G__72932 = event;
+return (sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__72928,G__72929,G__72930,G__72931,G__72932) : sel_fn.call(null,G__72928,G__72929,G__72930,G__72931,G__72932));
 });
 var on_drag_end = (function re_com$v_table$on_drag_end(sel_fn,ctrlKey,shiftKey,event){
 if(cljs.core.truth_(re_com.config.debug_QMARK_)){
@@ -996,12 +996,12 @@ cljs.core.reset_BANG_(event_debug,event);
 } else {
 }
 
-var G__50606_50670 = new cljs.core.Keyword(null,"selection-end","selection-end",696987835);
-var G__50607_50672 = selection_coords();
-var G__50608_50673 = ctrlKey;
-var G__50609_50674 = shiftKey;
-var G__50610_50675 = event;
-(sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__50606_50670,G__50607_50672,G__50608_50673,G__50609_50674,G__50610_50675) : sel_fn.call(null,G__50606_50670,G__50607_50672,G__50608_50673,G__50609_50674,G__50610_50675));
+var G__72933_72989 = new cljs.core.Keyword(null,"selection-end","selection-end",696987835);
+var G__72934_72990 = selection_coords();
+var G__72935_72991 = ctrlKey;
+var G__72936_72992 = shiftKey;
+var G__72937_72993 = event;
+(sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__72933_72989,G__72934_72990,G__72935_72991,G__72936_72992,G__72937_72993) : sel_fn.call(null,G__72933_72989,G__72934_72990,G__72935_72991,G__72936_72992,G__72937_72993));
 
 cljs.core.reset_BANG_(dragging_QMARK_,false);
 
@@ -1035,12 +1035,12 @@ cljs.core.reset_BANG_(event_debug,event);
 } else {
 }
 
-var G__50611_50678 = new cljs.core.Keyword(null,"selection-start","selection-start",-888859581);
-var G__50612_50679 = selection_coords();
-var G__50613_50680 = event.ctrlKey;
-var G__50614_50681 = event.shiftKey;
-var G__50615_50682 = event;
-(sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__50611_50678,G__50612_50679,G__50613_50680,G__50614_50681,G__50615_50682) : sel_fn.call(null,G__50611_50678,G__50612_50679,G__50613_50680,G__50614_50681,G__50615_50682));
+var G__72938_72997 = new cljs.core.Keyword(null,"selection-start","selection-start",-888859581);
+var G__72939_72998 = selection_coords();
+var G__72940_72999 = event.ctrlKey;
+var G__72941_73000 = event.shiftKey;
+var G__72942_73001 = event;
+(sel_fn.cljs$core$IFn$_invoke$arity$5 ? sel_fn.cljs$core$IFn$_invoke$arity$5(G__72938_72997,G__72939_72998,G__72940_72999,G__72941_73000,G__72942_73001) : sel_fn.call(null,G__72938_72997,G__72939_72998,G__72940_72999,G__72941_73000,G__72942_73001));
 
 cljs.core.reset_BANG_(dmm_tracker,re_com.dmm_tracker.make_dmm_tracker(cljs.core.partial.cljs$core$IFn$_invoke$arity$2(on_drag_change,sel_fn),cljs.core.partial.cljs$core$IFn$_invoke$arity$2(on_drag_end,sel_fn)));
 
@@ -1095,39 +1095,39 @@ window.removeResizeListener(cljs.core.deref(row_viewport_element),on_viewport_re
 
 return cljs.core.reset_BANG_(row_viewport_element,null);
 }),new cljs.core.Keyword(null,"reagent-render","reagent-render",-985383853),(function() { 
-var re_com$v_table$v_table_render__delegate = function (p__50616){
-var map__50617 = p__50616;
-var map__50617__$1 = cljs.core.__destructure_map(map__50617);
-var args__$1 = map__50617__$1;
-var bottom_left_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"bottom-left-renderer","bottom-left-renderer",768170713));
-var row_footer_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-footer-renderer","row-footer-renderer",2060844986));
-var bottom_right_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"bottom-right-renderer","bottom-right-renderer",1863950426));
-var max_row_viewport_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688));
-var row_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-renderer","row-renderer",314053346));
-var virtual_QMARK___$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50617__$1,new cljs.core.Keyword(null,"virtual?","virtual?",1554264002),true);
-var top_left_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"top-left-renderer","top-left-renderer",2010514596));
-var column_footer_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"column-footer-renderer","column-footer-renderer",1437275846));
-var row_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-header-renderer","row-header-renderer",-355094585));
-var row_viewport_width__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-viewport-width","row-viewport-width",1520708232));
-var remove_empty_row_space_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50617__$1,new cljs.core.Keyword(null,"remove-empty-row-space?","remove-empty-row-space?",2140501449),true);
-var scroll_rows_into_view = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"scroll-rows-into-view","scroll-rows-into-view",-984076694));
-var row_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-selection-fn","row-selection-fn",274335562));
-var column_header_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"column-header-selection-fn","column-header-selection-fn",2096757610));
-var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
-var row_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749));
-var max_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"max-width","max-width",-1939924051));
-var src__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
-var top_right_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"top-right-renderer","top-right-renderer",-1691262321));
-var row_content_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-content-width","row-content-width",-1986261648));
-var column_footer_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"column-footer-height","column-footer-height",-1662618224));
-var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50617__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479),null);
-var column_header_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558));
-var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
-var scroll_columns_into_view = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"scroll-columns-into-view","scroll-columns-into-view",1543196851));
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var row_viewport_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-viewport-height","row-viewport-height",-532496779));
-var column_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578));
-var row_header_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50617__$1,new cljs.core.Keyword(null,"row-header-selection-fn","row-header-selection-fn",1835057464));
+var re_com$v_table$v_table_render__delegate = function (p__72943){
+var map__72944 = p__72943;
+var map__72944__$1 = cljs.core.__destructure_map(map__72944);
+var args__$1 = map__72944__$1;
+var bottom_left_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"bottom-left-renderer","bottom-left-renderer",768170713));
+var row_footer_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-footer-renderer","row-footer-renderer",2060844986));
+var bottom_right_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"bottom-right-renderer","bottom-right-renderer",1863950426));
+var max_row_viewport_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688));
+var row_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-renderer","row-renderer",314053346));
+var virtual_QMARK___$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72944__$1,new cljs.core.Keyword(null,"virtual?","virtual?",1554264002),true);
+var top_left_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"top-left-renderer","top-left-renderer",2010514596));
+var column_footer_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"column-footer-renderer","column-footer-renderer",1437275846));
+var row_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-header-renderer","row-header-renderer",-355094585));
+var row_viewport_width__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-viewport-width","row-viewport-width",1520708232));
+var remove_empty_row_space_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72944__$1,new cljs.core.Keyword(null,"remove-empty-row-space?","remove-empty-row-space?",2140501449),true);
+var scroll_rows_into_view = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"scroll-rows-into-view","scroll-rows-into-view",-984076694));
+var row_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-selection-fn","row-selection-fn",274335562));
+var column_header_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"column-header-selection-fn","column-header-selection-fn",2096757610));
+var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
+var row_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749));
+var max_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"max-width","max-width",-1939924051));
+var src__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+var top_right_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"top-right-renderer","top-right-renderer",-1691262321));
+var row_content_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-content-width","row-content-width",-1986261648));
+var column_footer_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"column-footer-height","column-footer-height",-1662618224));
+var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72944__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479),null);
+var column_header_height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558));
+var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
+var scroll_columns_into_view = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"scroll-columns-into-view","scroll-columns-into-view",1543196851));
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var row_viewport_height__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-viewport-height","row-viewport-height",-532496779));
+var column_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578));
+var row_header_selection_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"row-header-selection-fn","row-header-selection-fn",1835057464));
 var or__4253__auto____$1 = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.v_table.v_table_args_desc),args__$1));
 if(cljs.core.truth_(or__4253__auto____$1)){
 return or__4253__auto____$1;
@@ -1137,16 +1137,16 @@ cljs.core.reset_BANG_(content_rows_width,row_content_width);
 cljs.core.reset_BANG_(content_rows_height,(cljs.core.deref(m_size) * row_height__$1));
 
 if(cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(re_com.util.deref_or_value(scroll_rows_into_view),cljs.core.deref(internal_scroll_rows_into_view))){
-var map__50618_50687 = re_com.util.deref_or_value(scroll_rows_into_view);
-var map__50618_50688__$1 = cljs.core.__destructure_map(map__50618_50687);
-var start_row_50689 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50618_50688__$1,new cljs.core.Keyword(null,"start-row","start-row",164678470));
-var end_row_50690 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50618_50688__$1,new cljs.core.Keyword(null,"end-row","end-row",-545103581));
-var new_scroll_y_50691 = (((((start_row_50689 == null)) && ((end_row_50690 == null))))?null:(((start_row_50689 <= cljs.core.deref(top_row_index)))?(start_row_50689 * row_height__$1):(((end_row_50690 >= cljs.core.deref(bot_row_index)))?(((end_row_50690 * row_height__$1) + row_height__$1) + (- cljs.core.deref(rl_row_viewport_height))):null
+var map__72946_73004 = re_com.util.deref_or_value(scroll_rows_into_view);
+var map__72946_73005__$1 = cljs.core.__destructure_map(map__72946_73004);
+var start_row_73006 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946_73005__$1,new cljs.core.Keyword(null,"start-row","start-row",164678470));
+var end_row_73007 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946_73005__$1,new cljs.core.Keyword(null,"end-row","end-row",-545103581));
+var new_scroll_y_73008 = (((((start_row_73006 == null)) && ((end_row_73007 == null))))?null:(((start_row_73006 <= cljs.core.deref(top_row_index)))?(start_row_73006 * row_height__$1):(((end_row_73007 >= cljs.core.deref(bot_row_index)))?(((end_row_73007 * row_height__$1) + row_height__$1) + (- cljs.core.deref(rl_row_viewport_height))):null
 )));
-if((!((new_scroll_y_50691 == null)))){
+if((!((new_scroll_y_73008 == null)))){
 cljs.core.reset_BANG_(scroll_y,(function (){var x__4336__auto__ = (0);
 var y__4337__auto__ = (function (){var x__4339__auto__ = cljs.core.deref(max_scroll_y);
-var y__4340__auto__ = new_scroll_y_50691;
+var y__4340__auto__ = new_scroll_y_73008;
 return ((x__4339__auto__ < y__4340__auto__) ? x__4339__auto__ : y__4340__auto__);
 })();
 return ((x__4336__auto__ > y__4337__auto__) ? x__4336__auto__ : y__4337__auto__);
@@ -1159,18 +1159,18 @@ cljs.core.reset_BANG_(internal_scroll_rows_into_view,re_com.util.deref_or_value(
 }
 
 if(cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(re_com.util.deref_or_value(scroll_columns_into_view),cljs.core.deref(internal_scroll_columns_into_view))){
-var map__50619_50693 = re_com.util.deref_or_value(scroll_columns_into_view);
-var map__50619_50694__$1 = cljs.core.__destructure_map(map__50619_50693);
-var start_col_50695 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50619_50694__$1,new cljs.core.Keyword(null,"start-col","start-col",668080143));
-var end_col_50696 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50619_50694__$1,new cljs.core.Keyword(null,"end-col","end-col",-724155879));
-var left_col_px_50697 = cljs.core.deref(scroll_x);
-var right_col_px_50698 = ((cljs.core.deref(scroll_x) + cljs.core.deref(rl_row_viewport_width)) + (-1));
-var new_scroll_x_50699 = (((start_col_50695 < left_col_px_50697))?start_col_50695:(((end_col_50696 > right_col_px_50698))?(end_col_50696 - cljs.core.deref(rl_row_viewport_width)):null
+var map__72947_73009 = re_com.util.deref_or_value(scroll_columns_into_view);
+var map__72947_73010__$1 = cljs.core.__destructure_map(map__72947_73009);
+var start_col_73011 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72947_73010__$1,new cljs.core.Keyword(null,"start-col","start-col",668080143));
+var end_col_73012 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72947_73010__$1,new cljs.core.Keyword(null,"end-col","end-col",-724155879));
+var left_col_px_73013 = cljs.core.deref(scroll_x);
+var right_col_px_73014 = ((cljs.core.deref(scroll_x) + cljs.core.deref(rl_row_viewport_width)) + (-1));
+var new_scroll_x_73015 = (((start_col_73011 < left_col_px_73013))?start_col_73011:(((end_col_73012 > right_col_px_73014))?(end_col_73012 - cljs.core.deref(rl_row_viewport_width)):null
 ));
-if((!((new_scroll_x_50699 == null)))){
+if((!((new_scroll_x_73015 == null)))){
 cljs.core.reset_BANG_(scroll_x,(function (){var x__4336__auto__ = (0);
 var y__4337__auto__ = (function (){var x__4339__auto__ = cljs.core.deref(max_scroll_x);
-var y__4340__auto__ = new_scroll_x_50699;
+var y__4340__auto__ = new_scroll_x_73015;
 return ((x__4339__auto__ < y__4340__auto__) ? x__4339__auto__ : y__4340__auto__);
 })();
 return ((x__4336__auto__ > y__4337__auto__) ? x__4336__auto__ : y__4337__auto__);
@@ -1270,17 +1270,17 @@ return (0);
 }
 };
 var re_com$v_table$v_table_render = function (var_args){
-var p__50616 = null;
+var p__72943 = null;
 if (arguments.length > 0) {
-var G__50702__i = 0, G__50702__a = new Array(arguments.length -  0);
-while (G__50702__i < G__50702__a.length) {G__50702__a[G__50702__i] = arguments[G__50702__i + 0]; ++G__50702__i;}
-  p__50616 = new cljs.core.IndexedSeq(G__50702__a,0,null);
+var G__73028__i = 0, G__73028__a = new Array(arguments.length -  0);
+while (G__73028__i < G__73028__a.length) {G__73028__a[G__73028__i] = arguments[G__73028__i + 0]; ++G__73028__i;}
+  p__72943 = new cljs.core.IndexedSeq(G__73028__a,0,null);
 } 
-return re_com$v_table$v_table_render__delegate.call(this,p__50616);};
+return re_com$v_table$v_table_render__delegate.call(this,p__72943);};
 re_com$v_table$v_table_render.cljs$lang$maxFixedArity = 0;
-re_com$v_table$v_table_render.cljs$lang$applyTo = (function (arglist__50703){
-var p__50616 = cljs.core.seq(arglist__50703);
-return re_com$v_table$v_table_render__delegate(p__50616);
+re_com$v_table$v_table_render.cljs$lang$applyTo = (function (arglist__73029){
+var p__72943 = cljs.core.seq(arglist__73029);
+return re_com$v_table$v_table_render__delegate(p__72943);
 });
 re_com$v_table$v_table_render.cljs$core$IFn$_invoke$arity$variadic = re_com$v_table$v_table_render__delegate;
 return re_com$v_table$v_table_render;
@@ -1293,9 +1293,9 @@ return re_com$v_table$v_table_render;
 (re_com.v_table.v_table.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.v_table.v_table.cljs$lang$applyTo = (function (seq50580){
+(re_com.v_table.v_table.cljs$lang$applyTo = (function (seq72905){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq50580));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72905));
 }));
 
 

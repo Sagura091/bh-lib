@@ -38,6 +38,6 @@
       [installing/overview]]
 
      [layout/frame {:extra-classes :is-fluid}
-      [adding-demo.src.catalog/overview]]]]])
+      [adding-catalog/overview]]]]])
 
 

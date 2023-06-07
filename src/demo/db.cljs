@@ -1,9 +1,9 @@
 (ns demo.db)
 
 (def default-db
-  {:name             "RCCST"
+  {:name             "DEMO"
    :version          ""
-   :logged-in?       false
+   :logged-in?       true
    :pub-sub-started? false
 
    ; this data comes from the server upon successful login

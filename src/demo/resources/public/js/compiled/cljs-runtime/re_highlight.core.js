@@ -29,14 +29,14 @@ return null;
 });
 re_highlight.core.render = (function re_highlight$core$render(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___29182 = arguments.length;
-var i__4865__auto___29183 = (0);
+var len__4864__auto___51747 = arguments.length;
+var i__4865__auto___51748 = (0);
 while(true){
-if((i__4865__auto___29183 < len__4864__auto___29182)){
-args__4870__auto__.push((arguments[i__4865__auto___29183]));
+if((i__4865__auto___51748 < len__4864__auto___51747)){
+args__4870__auto__.push((arguments[i__4865__auto___51748]));
 
-var G__29184 = (i__4865__auto___29183 + (1));
-i__4865__auto___29183 = G__29184;
+var G__51749 = (i__4865__auto___51748 + (1));
+i__4865__auto___51748 = G__51749;
 continue;
 } else {
 }
@@ -47,23 +47,23 @@ var argseq__4871__auto__ = ((((1) < args__4870__auto__.length))?(new cljs.core.I
 return re_highlight.core.render.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),argseq__4871__auto__);
 });
 
-(re_highlight.core.render.cljs$core$IFn$_invoke$arity$variadic = (function (p__29180,children){
-var map__29181 = p__29180;
-var map__29181__$1 = cljs.core.__destructure_map(map__29181);
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__29181__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__29181__$1,new cljs.core.Keyword(null,"style","style",-496642736));
-var language = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__29181__$1,new cljs.core.Keyword(null,"language","language",-1591107564));
+(re_highlight.core.render.cljs$core$IFn$_invoke$arity$variadic = (function (p__51745,children){
+var map__51746 = p__51745;
+var map__51746__$1 = cljs.core.__destructure_map(map__51746);
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__51746__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__51746__$1,new cljs.core.Keyword(null,"style","style",-496642736));
+var language = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__51746__$1,new cljs.core.Keyword(null,"language","language",-1591107564));
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"pre","pre",2118456869),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"class","class",-2030961996),class$,new cljs.core.Keyword(null,"style","style",-496642736),style], null),cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),language], null)], null),children)], null);
 }));
 
 (re_highlight.core.render.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(re_highlight.core.render.cljs$lang$applyTo = (function (seq29178){
-var G__29179 = cljs.core.first(seq29178);
-var seq29178__$1 = cljs.core.next(seq29178);
+(re_highlight.core.render.cljs$lang$applyTo = (function (seq51743){
+var G__51744 = cljs.core.first(seq51743);
+var seq51743__$1 = cljs.core.next(seq51743);
 var self__4851__auto__ = this;
-return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__29179,seq29178__$1);
+return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__51744,seq51743__$1);
 }));
 
 re_highlight.core.highlight = (function re_highlight$core$highlight(){

@@ -1,4 +1,4 @@
-(ns demo.src.catalog.molecule.example.composite.simple-multi-chart-2
+(ns demo.src.catalog.molecule.example.composite.simple-multi-chart-sub
   (:require [bh-ui.atom.chart.utils :as chart-utils]
             [bh-ui.molecule.composite.simple-multi-chart :as widget]
             [bh-ui.molecule.grid-container :as grid]
@@ -12,7 +12,7 @@
             [woolybear.ad.layout :as layout]))
 
 
-(log/info "demo.src.catalog.molecule.example.composite.simple-multi-chart-2")
+(log/info "demo.src.catalog.molecule.example.composite.simple-multi-chart-sub")
 
 
 (defn- data-tools [data]

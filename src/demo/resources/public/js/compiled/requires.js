@@ -12,6 +12,7 @@ ALL["fixed-data-table-2"] = require("fixed-data-table-2");
 ALL["react-flow-renderer"] = require("react-flow-renderer");
 ALL["@astrouxds/react"] = require("@astrouxds/react");
 ALL["highlight.js/lib/core"] = require("highlight.js/lib/core");
+ALL["events"] = require("events");
 ALL["recharts"] = require("recharts");
 ALL["dagre"] = require("dagre");
 ALL["react-colorful"] = require("react-colorful");

@@ -1,11 +1,12 @@
 {:nrepl        {:port 8777}
  :socket-repl  {:port 8999}
+ :dev-http     {8081 "src/demo/resources/public"}
 
  :deps true
 
  :builds       {:app
                 {:target       :browser
-                 :output-dir   "demo/resources/public/js/compiled"
+                 :output-dir   "src/demo/resources/public/js/compiled"
                  :asset-path   "/js/compiled"
                  :compiler-options {:infer-externs true}
                  :source-map   true,
@@ -15,7 +16,7 @@
                                            day8.re-frame-10x.preload]}
                  :js-options {:entry-keys ["browser" "module" "main"]
                               :js-provider :external
-                              :external-index "demo/resources/public/js/compiled/requires.js"}
+                              :external-index "src/demo/resources/public/js/compiled/requires.js"}
                  :dev          {:compiler-options
                                 {;:output-feature-set :es-next
                                  :infer-externs true

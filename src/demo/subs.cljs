@@ -7,6 +7,7 @@
   (fn [db]
     (:version db)))
 
+
 (re-frame/reg-sub
   ::uuid
   (fn [db]

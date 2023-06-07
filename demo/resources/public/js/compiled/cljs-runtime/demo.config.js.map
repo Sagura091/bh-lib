@@ -1,1 +1,0 @@
-{"version":3,"sources":["demo/config.cljs"],"mappings":";AAEA,AAAKA,2BACMC","names":["demo.config/debug?","js/goog.DEBUG"],"sourcesContent":["(ns demo.config)\n\n(def debug?\n  ^boolean goog.DEBUG)\n"]}

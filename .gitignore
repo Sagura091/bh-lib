@@ -41,3 +41,5 @@ components/metaversion/src/rocky_road/metaversion/rocky_road.clj
 /bases/pistachio/out/
 /bases/p2/out/
 
+/src/demo/resources/public/js/
+/package-lock.json

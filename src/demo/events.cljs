@@ -14,22 +14,12 @@
      :db       (merge db db/default-db)}))
 
 
-(re-frame/reg-event-fx
-  ::get-version
-  (fn-traced [_ _]
-    ;(log/info "::get-version")
-    {:http-xhrio (merge default-header
-                   {:method     :get
-                    :uri        "/version"
-                    :on-success [::version-success]
-                    :on-failure [::bad-lookup-result]})}))
-
-
 (re-frame/reg-event-db
-  ::version-success
-  (fn-traced [db [_ {:keys [version]}]]
-    ;(log/info "::version-success" version)
-    (assoc db :version version)))
+  ::get-version
+  (fn-traced [db _]
+     (assoc db :version "unknown")
+   ))
+
 
 
 (re-frame/reg-event-db

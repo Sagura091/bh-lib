@@ -1,7 +1,0 @@
-goog.provide('rccst_ui_component.atom.example.misc.two_d_globe');
-rccst_ui_component.atom.example.misc.two_d_globe.example = (function rccst_ui_component$atom$example$misc$two_d_globe$example(){
-var container_id = "leaflet-globe-demo";
-return woolybear.ad.demo.src.catalog.utils.demo.cljs$core$IFn$_invoke$arity$variadic("2D Globe (Leaflet)",cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2(["A 2D globe, build using [react-leaflet](https://react-leaflet.js.org/) and [leaflet](https://leafletjs.com).",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [woolybear.ad.layout.centered,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"width","width",-384071477),"100%",new cljs.core.Keyword(null,"height","height",1025178622),"500px"], null)], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [ui_component.atom.leaflet.globe.globe,new cljs.core.Keyword(null,"layers","layers",1944875032),ui_component.atom.leaflet.globe.sample_data], null)], null)], null),cljs.core.PersistentVector.EMPTY], 0));
-});
-
-//# sourceMappingURL=rccst_ui_component.atom.example.misc.two_d_globe.js.map

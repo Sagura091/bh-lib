@@ -1,9 +1,0 @@
-goog.provide('demo.src.catalog.atom.example.astrouxds.classification_marking');
-demo.src.catalog.atom.example.astrouxds.classification_marking.example = (function demo$src$catalog$atom$example$astrouxds$classification_marking$example(){
-var G__50776 = "Classification Markings";
-var G__50777 = "Here we use the classification marking component to wrap some text in a classification banner.";
-var G__50778 = new cljs.core.PersistentVector(null, 7, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.core.v_box,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"demo/src/catalog/atom/example/astrouxds/classification_marking.cljs",new cljs.core.Keyword(null,"line","line",212345235),10], null)),new cljs.core.Keyword(null,"gap","gap",80255254),"5px",new cljs.core.Keyword(null,"children","children",-940561982),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [bh_ui.atom.astrouxds.classification_marking.classification_marking], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"p","p",151049309),"Some text to be wrapped in classification banner."], null),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [bh_ui.atom.astrouxds.classification_marking.classification_marking,new cljs.core.Keyword(null,"level","level",1290497552),"unclassified"], null)], null)], null);
-return (woolybear.ad.utils.demo.cljs$core$IFn$_invoke$arity$3 ? woolybear.ad.utils.demo.cljs$core$IFn$_invoke$arity$3(G__50776,G__50777,G__50778) : woolybear.ad.utils.demo.call(null,G__50776,G__50777,G__50778));
-});
-
-//# sourceMappingURL=demo.src.catalog.atom.example.astrouxds.classification_marking.js.map

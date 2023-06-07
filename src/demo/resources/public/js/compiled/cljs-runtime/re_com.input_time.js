@@ -19,11 +19,11 @@ return val;
 /**
  * Return a time integer from a triple int vector of form  [H  _  M]
  */
-re_com.input_time.triple__GT_time = (function re_com$input_time$triple__GT_time(p__50139){
-var vec__50140 = p__50139;
-var hr = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50140,(0),null);
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50140,(1),null);
-var mi = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__50140,(2),null);
+re_com.input_time.triple__GT_time = (function re_com$input_time$triple__GT_time(p__72531){
+var vec__72532 = p__72531;
+var hr = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72532,(0),null);
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72532,(1),null);
+var mi = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__72532,(2),null);
 return ((hr * (100)) + mi);
 });
 re_com.input_time.triple_seeking_re = /^(\d{0,2})()()$|^(\d{0,1})(:{0,1})(\d{0,2})$|^(\d{0,2})(:{0,1})(\d{0,2})$/;
@@ -158,14 +158,14 @@ re_com.input_time.input_time_args_desc = ((re_com.config.include_args_desc_QMARK
  */
 re_com.input_time.input_time = (function re_com$input_time$input_time(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___50251 = arguments.length;
-var i__4865__auto___50252 = (0);
+var len__4864__auto___72618 = arguments.length;
+var i__4865__auto___72619 = (0);
 while(true){
-if((i__4865__auto___50252 < len__4864__auto___50251)){
-args__4870__auto__.push((arguments[i__4865__auto___50252]));
+if((i__4865__auto___72619 < len__4864__auto___72618)){
+args__4870__auto__.push((arguments[i__4865__auto___72619]));
 
-var G__50253 = (i__4865__auto___50252 + (1));
-i__4865__auto___50252 = G__50253;
+var G__72620 = (i__4865__auto___72619 + (1));
+i__4865__auto___72619 = G__72620;
 continue;
 } else {
 }
@@ -176,13 +176,13 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.input_time.input_time.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.input_time.input_time.cljs$core$IFn$_invoke$arity$variadic = (function (p__50227){
-var map__50229 = p__50227;
-var map__50229__$1 = cljs.core.__destructure_map(map__50229);
-var args = map__50229__$1;
-var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50229__$1,new cljs.core.Keyword(null,"model","model",331153215));
-var minimum = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50229__$1,new cljs.core.Keyword(null,"minimum","minimum",-1621006059),(0));
-var maximum = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50229__$1,new cljs.core.Keyword(null,"maximum","maximum",573880714),(2359));
+(re_com.input_time.input_time.cljs$core$IFn$_invoke$arity$variadic = (function (p__72581){
+var map__72582 = p__72581;
+var map__72582__$1 = cljs.core.__destructure_map(map__72582);
+var args = map__72582__$1;
+var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72582__$1,new cljs.core.Keyword(null,"model","model",331153215));
+var minimum = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72582__$1,new cljs.core.Keyword(null,"minimum","minimum",-1621006059),(0));
+var maximum = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72582__$1,new cljs.core.Keyword(null,"maximum","maximum",573880714),(2359));
 var or__4253__auto__ = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.input_time.input_time_args_desc),args));
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
@@ -195,25 +195,25 @@ var deref_model = re_com.util.deref_or_value(model);
 var text_model = reagent.core.atom.cljs$core$IFn$_invoke$arity$1(re_com.input_time.time__GT_text(deref_model));
 var previous_model = reagent.core.atom.cljs$core$IFn$_invoke$arity$1(deref_model);
 return (function() { 
-var re_com$input_time$input_time_render__delegate = function (p__50234){
-var map__50236 = p__50234;
-var map__50236__$1 = cljs.core.__destructure_map(map__50236);
-var args__$1 = map__50236__$1;
-var disabled_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"disabled?","disabled?",-1523234181));
-var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
-var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"height","height",1025178622));
-var model__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"model","model",331153215));
-var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
-var hide_border_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"hide-border?","hide-border?",1792698922));
-var maximum__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50236__$1,new cljs.core.Keyword(null,"maximum","maximum",573880714),(2359));
-var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"width","width",-384071477));
-var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
-var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"style","style",-496642736));
-var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var show_icon_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50236__$1,new cljs.core.Keyword(null,"show-icon?","show-icon?",-756836459));
-var minimum__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50236__$1,new cljs.core.Keyword(null,"minimum","minimum",-1621006059),(0));
+var re_com$input_time$input_time_render__delegate = function (p__72608){
+var map__72609 = p__72608;
+var map__72609__$1 = cljs.core.__destructure_map(map__72609);
+var args__$1 = map__72609__$1;
+var disabled_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"disabled?","disabled?",-1523234181));
+var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
+var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"height","height",1025178622));
+var model__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"model","model",331153215));
+var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
+var hide_border_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"hide-border?","hide-border?",1792698922));
+var maximum__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72609__$1,new cljs.core.Keyword(null,"maximum","maximum",573880714),(2359));
+var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"width","width",-384071477));
+var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"style","style",-496642736));
+var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var show_icon_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72609__$1,new cljs.core.Keyword(null,"show-icon?","show-icon?",-756836459));
+var minimum__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72609__$1,new cljs.core.Keyword(null,"minimum","minimum",-1621006059),(0));
 var or__4253__auto____$2 = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.input_time.input_time_args_desc),args__$1));
 if(cljs.core.truth_(or__4253__auto____$2)){
 return or__4253__auto____$2;
@@ -256,17 +256,17 @@ return null;
 }
 };
 var re_com$input_time$input_time_render = function (var_args){
-var p__50234 = null;
+var p__72608 = null;
 if (arguments.length > 0) {
-var G__50262__i = 0, G__50262__a = new Array(arguments.length -  0);
-while (G__50262__i < G__50262__a.length) {G__50262__a[G__50262__i] = arguments[G__50262__i + 0]; ++G__50262__i;}
-  p__50234 = new cljs.core.IndexedSeq(G__50262__a,0,null);
+var G__72623__i = 0, G__72623__a = new Array(arguments.length -  0);
+while (G__72623__i < G__72623__a.length) {G__72623__a[G__72623__i] = arguments[G__72623__i + 0]; ++G__72623__i;}
+  p__72608 = new cljs.core.IndexedSeq(G__72623__a,0,null);
 } 
-return re_com$input_time$input_time_render__delegate.call(this,p__50234);};
+return re_com$input_time$input_time_render__delegate.call(this,p__72608);};
 re_com$input_time$input_time_render.cljs$lang$maxFixedArity = 0;
-re_com$input_time$input_time_render.cljs$lang$applyTo = (function (arglist__50263){
-var p__50234 = cljs.core.seq(arglist__50263);
-return re_com$input_time$input_time_render__delegate(p__50234);
+re_com$input_time$input_time_render.cljs$lang$applyTo = (function (arglist__72624){
+var p__72608 = cljs.core.seq(arglist__72624);
+return re_com$input_time$input_time_render__delegate(p__72608);
 });
 re_com$input_time$input_time_render.cljs$core$IFn$_invoke$arity$variadic = re_com$input_time$input_time_render__delegate;
 return re_com$input_time$input_time_render;
@@ -279,9 +279,9 @@ return re_com$input_time$input_time_render;
 (re_com.input_time.input_time.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.input_time.input_time.cljs$lang$applyTo = (function (seq50217){
+(re_com.input_time.input_time.cljs$lang$applyTo = (function (seq72579){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq50217));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72579));
 }));
 
 

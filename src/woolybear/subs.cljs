@@ -11,3 +11,8 @@
  ::active-panel
  (fn [db _]
    (:active-panel db)))
+(comment
+
+  (re-frame/subscribe [::active-panel true])
+  ;Figure active panel tomorrow
+  )

@@ -7,14 +7,14 @@ re_com.slider.slider_args_desc = ((re_com.config.include_args_desc_QMARK_)?new c
  */
 re_com.slider.slider = (function re_com$slider$slider(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___50434 = arguments.length;
-var i__4865__auto___50435 = (0);
+var len__4864__auto___72709 = arguments.length;
+var i__4865__auto___72710 = (0);
 while(true){
-if((i__4865__auto___50435 < len__4864__auto___50434)){
-args__4870__auto__.push((arguments[i__4865__auto___50435]));
+if((i__4865__auto___72710 < len__4864__auto___72709)){
+args__4870__auto__.push((arguments[i__4865__auto___72710]));
 
-var G__50436 = (i__4865__auto___50435 + (1));
-i__4865__auto___50435 = G__50436;
+var G__72712 = (i__4865__auto___72710 + (1));
+i__4865__auto___72710 = G__72712;
 continue;
 } else {
 }
@@ -25,23 +25,23 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.slider.slider.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.slider.slider.cljs$core$IFn$_invoke$arity$variadic = (function (p__50427){
-var map__50428 = p__50427;
-var map__50428__$1 = cljs.core.__destructure_map(map__50428);
-var args = map__50428__$1;
-var disabled_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"disabled?","disabled?",-1523234181));
-var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
-var step = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"step","step",1288888124));
-var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"model","model",331153215));
-var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
-var min = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50428__$1,new cljs.core.Keyword(null,"min","min",444991522),(0));
-var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"width","width",-384071477));
-var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
-var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"style","style",-496642736));
-var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50428__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var max = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__50428__$1,new cljs.core.Keyword(null,"max","max",61366548),(100));
+(re_com.slider.slider.cljs$core$IFn$_invoke$arity$variadic = (function (p__72696){
+var map__72697 = p__72696;
+var map__72697__$1 = cljs.core.__destructure_map(map__72697);
+var args = map__72697__$1;
+var disabled_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"disabled?","disabled?",-1523234181));
+var on_change = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"on-change","on-change",-732046149));
+var step = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"step","step",1288888124));
+var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"model","model",331153215));
+var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
+var min = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72697__$1,new cljs.core.Keyword(null,"min","min",444991522),(0));
+var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"width","width",-384071477));
+var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"style","style",-496642736));
+var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72697__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var max = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72697__$1,new cljs.core.Keyword(null,"max","max",61366548),(100));
 var or__4253__auto__ = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.slider.slider_args_desc),args));
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
@@ -64,8 +64,8 @@ return or__4253__auto____$1;
 return "400px";
 }
 })(),new cljs.core.Keyword(null,"cursor","cursor",1011937484),(cljs.core.truth_(disabled_QMARK___$1)?"default":"pointer")], null),style], 0)),max__$1,["rc-slider ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(class$)].join(''),(function (event){
-var G__50430_50437 = Number(event.target.value);
-(on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__50430_50437) : on_change.call(null,G__50430_50437));
+var G__72705_72722 = Number(event.target.value);
+(on_change.cljs$core$IFn$_invoke$arity$1 ? on_change.cljs$core$IFn$_invoke$arity$1(G__72705_72722) : on_change.call(null,G__72705_72722));
 
 return null;
 }),step__$1]),attr], 0))], null)], null);
@@ -75,9 +75,9 @@ return null;
 (re_com.slider.slider.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.slider.slider.cljs$lang$applyTo = (function (seq50422){
+(re_com.slider.slider.cljs$lang$applyTo = (function (seq72693){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq50422));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72693));
 }));
 
 

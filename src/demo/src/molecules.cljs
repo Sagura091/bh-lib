@@ -9,8 +9,8 @@
 
 
 
-(def navbar [[:molecules/general "General" [general/demo.src.catalog]]
-             [:molecules/all "All" [all/demo.src.catalog]]])
+(def navbar [[:molecules/general "General" [general/catalog]]
+             [:molecules/all "All" [all/catalog]]])
 
 
 (defn page

@@ -16,7 +16,7 @@
 (log/info "demo.src.catalog.molecule.general")
 
 
-(defn demo.src.catalog []
+(defn catalog []
 
   [:div
    [chart-remote-data/example]

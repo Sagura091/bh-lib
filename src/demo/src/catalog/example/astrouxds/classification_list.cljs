@@ -1,4 +1,4 @@
-(ns demo.src.catalog.atom.example.astrouxds.classification-list
+(ns demo.src.catalog.example.astrouxds.classification-list
   (:require [bh-ui.atom.astrouxds.classification-marking :as cm]
             [re-com.core :as rc]
             [woolybear.ad.utils :as acu]))

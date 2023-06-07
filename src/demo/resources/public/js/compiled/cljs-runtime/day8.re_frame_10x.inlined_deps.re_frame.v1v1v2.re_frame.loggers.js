@@ -10,14 +10,14 @@ return cljs.core.List.EMPTY;
 }))], null));
 day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.console = (function day8$re_frame_10x$inlined_deps$re_frame$v1v1v2$re_frame$loggers$console(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___25222 = arguments.length;
-var i__4865__auto___25223 = (0);
+var len__4864__auto___47799 = arguments.length;
+var i__4865__auto___47800 = (0);
 while(true){
-if((i__4865__auto___25223 < len__4864__auto___25222)){
-args__4870__auto__.push((arguments[i__4865__auto___25223]));
+if((i__4865__auto___47800 < len__4864__auto___47799)){
+args__4870__auto__.push((arguments[i__4865__auto___47800]));
 
-var G__25224 = (i__4865__auto___25223 + (1));
-i__4865__auto___25223 = G__25224;
+var G__47801 = (i__4865__auto___47800 + (1));
+i__4865__auto___47800 = G__47801;
 continue;
 } else {
 }
@@ -34,19 +34,19 @@ if(cljs.core.contains_QMARK_(cljs.core.deref(day8.re_frame_10x.inlined_deps.re_f
 throw (new Error(["Assert failed: ",["re-frame: log called with unknown level: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(level)].join(''),"\n","(contains? (clojure.core/deref loggers) level)"].join('')));
 }
 
-return cljs.core.apply.cljs$core$IFn$_invoke$arity$2((function (){var G__25219 = cljs.core.deref(day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.loggers);
-return (level.cljs$core$IFn$_invoke$arity$1 ? level.cljs$core$IFn$_invoke$arity$1(G__25219) : level.call(null,G__25219));
+return cljs.core.apply.cljs$core$IFn$_invoke$arity$2((function (){var G__47798 = cljs.core.deref(day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.loggers);
+return (level.cljs$core$IFn$_invoke$arity$1 ? level.cljs$core$IFn$_invoke$arity$1(G__47798) : level.call(null,G__47798));
 })(),args);
 }));
 
 (day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.console.cljs$lang$maxFixedArity = (1));
 
 /** @this {Function} */
-(day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.console.cljs$lang$applyTo = (function (seq25217){
-var G__25218 = cljs.core.first(seq25217);
-var seq25217__$1 = cljs.core.next(seq25217);
+(day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.console.cljs$lang$applyTo = (function (seq47796){
+var G__47797 = cljs.core.first(seq47796);
+var seq47796__$1 = cljs.core.next(seq47796);
 var self__4851__auto__ = this;
-return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__25218,seq25217__$1);
+return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__47797,seq47796__$1);
 }));
 
 day8.re_frame_10x.inlined_deps.re_frame.v1v1v2.re_frame.loggers.set_loggers_BANG_ = (function day8$re_frame_10x$inlined_deps$re_frame$v1v1v2$re_frame$loggers$set_loggers_BANG_(new_loggers){
