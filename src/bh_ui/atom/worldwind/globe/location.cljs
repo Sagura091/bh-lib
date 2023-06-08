@@ -11,13 +11,14 @@
 
 
 (defn position
-  ([[lat lon]]
-   (WorldWind/Position. lat lon 100))
+  ([[lat lon & alt]]
+   (WorldWind/Position. lat lon (or (first alt) 100)))
+
+  ([lat lon alt]
+   (WorldWind/Position. lat lon alt))
 
   ([lat lon]
    (WorldWind/Position. lat lon 100)))
-
-
 
 
 

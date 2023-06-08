@@ -6,7 +6,7 @@
             [taoensso.timbre :as log]))
 
 
-(log/info "bh.ui-component.atom.worldwind.globe.shape")
+(log/info "bh-ui.atom.worldwind.globe.shape")
 
 
 ; :shape/polygon
