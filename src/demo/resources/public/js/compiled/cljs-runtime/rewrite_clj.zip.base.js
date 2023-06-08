@@ -20,10 +20,10 @@ return or__4253__auto__;
 return top;
 }
 } else {
-var G__53314 = (function (){var G__53304 = new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [node], null);
-return (rewrite_clj.node.forms_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.forms_node.cljs$core$IFn$_invoke$arity$1(G__53304) : rewrite_clj.node.forms_node.call(null,G__53304));
+var G__53276 = (function (){var G__53255 = new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [node], null);
+return (rewrite_clj.node.forms_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.forms_node.cljs$core$IFn$_invoke$arity$1(G__53255) : rewrite_clj.node.forms_node.call(null,G__53255));
 })();
-node = G__53314;
+node = G__53276;
 continue;
 }
 break;
@@ -33,48 +33,48 @@ break;
  * Get tag of node at the current zipper location.
  */
 rewrite_clj.zip.base.tag = (function rewrite_clj$zip$base$tag(zloc){
-var G__53305 = zloc;
-var G__53305__$1 = (((G__53305 == null))?null:clojure.zip.node(G__53305));
-if((G__53305__$1 == null)){
+var G__53256 = zloc;
+var G__53256__$1 = (((G__53256 == null))?null:clojure.zip.node(G__53256));
+if((G__53256__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.tag.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.tag.cljs$core$IFn$_invoke$arity$1(G__53305__$1) : rewrite_clj.node.tag.call(null,G__53305__$1));
+return (rewrite_clj.node.tag.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.tag.cljs$core$IFn$_invoke$arity$1(G__53256__$1) : rewrite_clj.node.tag.call(null,G__53256__$1));
 }
 });
 /**
  * Get sexpr represented by the given node.
  */
 rewrite_clj.zip.base.sexpr = (function rewrite_clj$zip$base$sexpr(zloc){
-var G__53307 = zloc;
-var G__53307__$1 = (((G__53307 == null))?null:clojure.zip.node(G__53307));
-if((G__53307__$1 == null)){
+var G__53257 = zloc;
+var G__53257__$1 = (((G__53257 == null))?null:clojure.zip.node(G__53257));
+if((G__53257__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.sexpr.cljs$core$IFn$_invoke$arity$1(G__53307__$1) : rewrite_clj.node.sexpr.call(null,G__53307__$1));
+return (rewrite_clj.node.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.sexpr.cljs$core$IFn$_invoke$arity$1(G__53257__$1) : rewrite_clj.node.sexpr.call(null,G__53257__$1));
 }
 });
 /**
  * Get children as s-expressions.
  */
 rewrite_clj.zip.base.child_sexprs = (function rewrite_clj$zip$base$child_sexprs(zloc){
-var G__53308 = zloc;
-var G__53308__$1 = (((G__53308 == null))?null:clojure.zip.node(G__53308));
-if((G__53308__$1 == null)){
+var G__53258 = zloc;
+var G__53258__$1 = (((G__53258 == null))?null:clojure.zip.node(G__53258));
+if((G__53258__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.child_sexprs.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.child_sexprs.cljs$core$IFn$_invoke$arity$1(G__53308__$1) : rewrite_clj.node.child_sexprs.call(null,G__53308__$1));
+return (rewrite_clj.node.child_sexprs.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.child_sexprs.cljs$core$IFn$_invoke$arity$1(G__53258__$1) : rewrite_clj.node.child_sexprs.call(null,G__53258__$1));
 }
 });
 /**
  * Get length of printable string for the given zipper location.
  */
 rewrite_clj.zip.base.length = (function rewrite_clj$zip$base$length(zloc){
-var or__4253__auto__ = (function (){var G__53309 = zloc;
-var G__53309__$1 = (((G__53309 == null))?null:clojure.zip.node(G__53309));
-if((G__53309__$1 == null)){
+var or__4253__auto__ = (function (){var G__53260 = zloc;
+var G__53260__$1 = (((G__53260 == null))?null:clojure.zip.node(G__53260));
+if((G__53260__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.length.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.length.cljs$core$IFn$_invoke$arity$1(G__53309__$1) : rewrite_clj.node.length.call(null,G__53309__$1));
+return (rewrite_clj.node.length.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.length.cljs$core$IFn$_invoke$arity$1(G__53260__$1) : rewrite_clj.node.length.call(null,G__53260__$1));
 }
 })();
 if(cljs.core.truth_(or__4253__auto__)){
@@ -87,36 +87,36 @@ return (0);
  * Create zipper from String.
  */
 rewrite_clj.zip.base.of_string = (function rewrite_clj$zip$base$of_string(s){
-var G__53311 = s;
-var G__53311__$1 = (((G__53311 == null))?null:rewrite_clj.parser.parse_string_all(G__53311));
-if((G__53311__$1 == null)){
+var G__53262 = s;
+var G__53262__$1 = (((G__53262 == null))?null:rewrite_clj.parser.parse_string_all(G__53262));
+if((G__53262__$1 == null)){
 return null;
 } else {
-return rewrite_clj.zip.base.edn(G__53311__$1);
+return rewrite_clj.zip.base.edn(G__53262__$1);
 }
 });
 /**
  * Create string representing the current zipper location.
  */
 rewrite_clj.zip.base.string = (function rewrite_clj$zip$base$string(zloc){
-var G__53312 = zloc;
-var G__53312__$1 = (((G__53312 == null))?null:clojure.zip.node(G__53312));
-if((G__53312__$1 == null)){
+var G__53264 = zloc;
+var G__53264__$1 = (((G__53264 == null))?null:clojure.zip.node(G__53264));
+if((G__53264__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1(G__53312__$1) : rewrite_clj.node.string.call(null,G__53312__$1));
+return (rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1(G__53264__$1) : rewrite_clj.node.string.call(null,G__53264__$1));
 }
 });
 /**
  * Create string representing the zipped-up zipper.
  */
 rewrite_clj.zip.base.root_string = (function rewrite_clj$zip$base$root_string(zloc){
-var G__53313 = zloc;
-var G__53313__$1 = (((G__53313 == null))?null:clojure.zip.root(G__53313));
-if((G__53313__$1 == null)){
+var G__53269 = zloc;
+var G__53269__$1 = (((G__53269 == null))?null:clojure.zip.root(G__53269));
+if((G__53269__$1 == null)){
 return null;
 } else {
-return (rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1(G__53313__$1) : rewrite_clj.node.string.call(null,G__53313__$1));
+return (rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.string.cljs$core$IFn$_invoke$arity$1(G__53269__$1) : rewrite_clj.node.string.call(null,G__53269__$1));
 }
 });
 

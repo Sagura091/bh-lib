@@ -3,7 +3,8 @@
   (:require [cljs.spec.alpha :as s]
             [clojure.string :as string]
             [re-frame.core :as re-frame]
-            [clojure.set :as set]))
+            [clojure.set :as set]
+            [taoensso.timbre :as log]))
 
 ;; A subscription argument can be passed in via one of three ways:
 ;; as an atom/ratom directly, as a function that returns a subscription,
@@ -104,6 +105,9 @@
 (def function-type (type #()))
 (def always-nil (atom nil))
 
+
+(def last-sub (atom nil))
+
 (defn subscribe-to
   "Given a value that may be either a re-frame subscription ratom, or a vector
   specifying a re-frame subscription, return a valid re-frame subscription ratom.
@@ -111,6 +115,11 @@
   The value can also be a zero-arity function that returns a subscription, in
   which case subscribe-to will return the result of calling that function."
   [sub]
+
+  (log/info "subscribe-to" sub)
+
+  (reset! last-sub sub)
+
   (condp = (type sub)
     reagent.ratom/RAtom sub
     cljs.core/Atom sub
@@ -118,6 +127,16 @@
     nil always-nil
     ;; else
     (re-frame/subscribe sub)))
+
+
+
+(comment
+  @last-sub
+
+
+  ())
+
+
 
 (defn mk-dispatcher
   "Given an :ad/:ad/event-dispatcher argument, return a dispatcher function suitable

@@ -9,12 +9,18 @@
             [bh-ui.tabbed-pane.utils :as tab-utils]))
 
 
+(def last-short-name (atom nil))
+(def last-start-panel (atom nil))
+
 (defn tabbed-panel
   "makes a large panel containing tabs for each item. Selecting a tab will make tha corresponding
   page show (and hide all the others)
 
   "
   [& {:keys [title extra-classes short-name description children start-panel]}]
+
+  (reset! last-short-name short-name)
+  (reset! last-start-panel start-panel)
 
   (tab-utils/init-tabbed-panel short-name start-panel)
 
@@ -36,3 +42,16 @@
         (map (fn [[tag _ page]]
                [tab-panel/sub-panel {:panel-id tag} page])
           children)))]])
+
+
+
+(comment
+  @last-short-name
+  @last-start-panel
+  (def short-name @last-short-name)
+
+
+  (keyword "" "value")
+
+  ())
+

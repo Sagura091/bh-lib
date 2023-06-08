@@ -15,16 +15,16 @@ return cljs.core.conj.cljs$core$IFn$_invoke$arity$2(ret,[cljs.core.str.cljs$core
 /**
  * Originally copied from re-frisk.devtool/open-debugger-window
  */
-day8.re_frame_10x.fx.window.open_debugger_window = (function day8$re_frame_10x$fx$window$open_debugger_window(p__50345){
-var map__50346 = p__50345;
-var map__50346__$1 = cljs.core.__destructure_map(map__50346);
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"width","width",-384071477));
-var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"height","height",1025178622));
-var top = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"top","top",-1856271961));
-var left = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"left","left",-399115937));
-var on_load = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"on-load","on-load",1415151594));
-var on_success = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"on-success","on-success",1786904109));
-var on_failure = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50346__$1,new cljs.core.Keyword(null,"on-failure","on-failure",842888245));
+day8.re_frame_10x.fx.window.open_debugger_window = (function day8$re_frame_10x$fx$window$open_debugger_window(p__50347){
+var map__50352 = p__50347;
+var map__50352__$1 = cljs.core.__destructure_map(map__50352);
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"width","width",-384071477));
+var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"height","height",1025178622));
+var top = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"top","top",-1856271961));
+var left = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"left","left",-399115937));
+var on_load = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"on-load","on-load",1415151594));
+var on_success = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"on-success","on-success",1786904109));
+var on_failure = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__50352__$1,new cljs.core.Keyword(null,"on-failure","on-failure",842888245));
 var document_title = document.title;
 var window_title = goog.string.escapeString(["re-frame-10x | ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(document_title)].join(''));
 var window_html = ["<head><title>",cljs.core.str.cljs$core$IFn$_invoke$arity$1(window_title),"</title></head><body style=\"margin: 0px;\"></body>"].join('');

@@ -10,14 +10,14 @@ re_com.modal_panel.modal_panel_args_desc = ((re_com.config.include_args_desc_QMA
  */
 re_com.modal_panel.modal_panel = (function re_com$modal_panel$modal_panel(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___72643 = arguments.length;
-var i__4865__auto___72644 = (0);
+var len__4864__auto___72621 = arguments.length;
+var i__4865__auto___72622 = (0);
 while(true){
-if((i__4865__auto___72644 < len__4864__auto___72643)){
-args__4870__auto__.push((arguments[i__4865__auto___72644]));
+if((i__4865__auto___72622 < len__4864__auto___72621)){
+args__4870__auto__.push((arguments[i__4865__auto___72622]));
 
-var G__72645 = (i__4865__auto___72644 + (1));
-i__4865__auto___72644 = G__72645;
+var G__72623 = (i__4865__auto___72622 + (1));
+i__4865__auto___72622 = G__72623;
 continue;
 } else {
 }
@@ -28,19 +28,19 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.modal_panel.modal_panel.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.modal_panel.modal_panel.cljs$core$IFn$_invoke$arity$variadic = (function (p__72639){
-var map__72640 = p__72639;
-var map__72640__$1 = cljs.core.__destructure_map(map__72640);
-var args = map__72640__$1;
-var child = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"child","child",623967545));
-var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
-var wrap_nicely_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72640__$1,new cljs.core.Keyword(null,"wrap-nicely?","wrap-nicely?",85012288),true);
-var backdrop_opacity = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72640__$1,new cljs.core.Keyword(null,"backdrop-opacity","backdrop-opacity",1467395653),0.6);
-var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
-var backdrop_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72640__$1,new cljs.core.Keyword(null,"backdrop-color","backdrop-color",1921200717),"black");
-var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"style","style",-496642736));
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var backdrop_on_click = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72640__$1,new cljs.core.Keyword(null,"backdrop-on-click","backdrop-on-click",-1460240426));
+(re_com.modal_panel.modal_panel.cljs$core$IFn$_invoke$arity$variadic = (function (p__72613){
+var map__72614 = p__72613;
+var map__72614__$1 = cljs.core.__destructure_map(map__72614);
+var args = map__72614__$1;
+var child = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"child","child",623967545));
+var attr = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"attr","attr",-604132353));
+var wrap_nicely_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72614__$1,new cljs.core.Keyword(null,"wrap-nicely?","wrap-nicely?",85012288),true);
+var backdrop_opacity = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72614__$1,new cljs.core.Keyword(null,"backdrop-opacity","backdrop-opacity",1467395653),0.6);
+var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
+var backdrop_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72614__$1,new cljs.core.Keyword(null,"backdrop-color","backdrop-color",1921200717),"black");
+var style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"style","style",-496642736));
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var backdrop_on_click = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72614__$1,new cljs.core.Keyword(null,"backdrop-on-click","backdrop-on-click",-1460240426));
 var or__4253__auto__ = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.modal_panel.modal_panel_args_desc),args));
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
@@ -63,9 +63,9 @@ return null;
 (re_com.modal_panel.modal_panel.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.modal_panel.modal_panel.cljs$lang$applyTo = (function (seq72634){
+(re_com.modal_panel.modal_panel.cljs$lang$applyTo = (function (seq72612){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72634));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72612));
 }));
 
 

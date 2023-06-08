@@ -62,14 +62,14 @@ return val_in_latter;
  */
 zprint.config.merge_deep = (function zprint$config$merge_deep(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___54083 = arguments.length;
-var i__4865__auto___54084 = (0);
+var len__4864__auto___54088 = arguments.length;
+var i__4865__auto___54089 = (0);
 while(true){
-if((i__4865__auto___54084 < len__4864__auto___54083)){
-args__4870__auto__.push((arguments[i__4865__auto___54084]));
+if((i__4865__auto___54089 < len__4864__auto___54088)){
+args__4870__auto__.push((arguments[i__4865__auto___54089]));
 
-var G__54085 = (i__4865__auto___54084 + (1));
-i__4865__auto___54084 = G__54085;
+var G__54090 = (i__4865__auto___54089 + (1));
+i__4865__auto___54089 = G__54090;
 continue;
 } else {
 }
@@ -108,14 +108,14 @@ return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"fr
  */
 zprint.config.merge_deep_doc = (function zprint$config$merge_deep_doc(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___54086 = arguments.length;
-var i__4865__auto___54087 = (0);
+var len__4864__auto___54091 = arguments.length;
+var i__4865__auto___54092 = (0);
 while(true){
-if((i__4865__auto___54087 < len__4864__auto___54086)){
-args__4870__auto__.push((arguments[i__4865__auto___54087]));
+if((i__4865__auto___54092 < len__4864__auto___54091)){
+args__4870__auto__.push((arguments[i__4865__auto___54092]));
 
-var G__54088 = (i__4865__auto___54087 + (1));
-i__4865__auto___54087 = G__54088;
+var G__54093 = (i__4865__auto___54092 + (1));
+i__4865__auto___54092 = G__54093;
 continue;
 } else {
 }
@@ -160,8 +160,8 @@ return cljs.core.dissoc.cljs$core$IFn$_invoke$arity$2(m,k);
  * Remove keys from a map at multiple levels.
  */
 zprint.config.remove_keys = (function zprint$config$remove_keys(m,ks){
-return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53781_SHARP_,p2__53782_SHARP_){
-return zprint.config.remove_key(p1__53781_SHARP_,p2__53782_SHARP_);
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53782_SHARP_,p2__53783_SHARP_){
+return zprint.config.remove_key(p1__53782_SHARP_,p2__53783_SHARP_);
 }),m,ks);
 });
 /**
@@ -241,8 +241,8 @@ return new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"se
  *   in the ks-seq.
  */
 zprint.config.diff_deep_ks = (function zprint$config$diff_deep_ks(doc_string,doc_map,changed_key_seq,existing){
-return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53789_SHARP_,p2__53790_SHARP_){
-return cljs.core.update_in.cljs$core$IFn$_invoke$arity$4(p1__53789_SHARP_,p2__53790_SHARP_,cljs.core.partial.cljs$core$IFn$_invoke$arity$2(zprint.config.value_set_by,doc_string),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(existing,p2__53790_SHARP_));
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53792_SHARP_,p2__53793_SHARP_){
+return cljs.core.update_in.cljs$core$IFn$_invoke$arity$4(p1__53792_SHARP_,p2__53793_SHARP_,cljs.core.partial.cljs$core$IFn$_invoke$arity$2(zprint.config.value_set_by,doc_string),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(existing,p2__53793_SHARP_));
 }),doc_map,changed_key_seq);
 });
 /**
@@ -261,10 +261,10 @@ return cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$2(zprint.config.explaine
  * Do a simple dissoc-in for two levels.  Does not remove the
  *   second map if it is empty.
  */
-zprint.config.dissoc_two = (function zprint$config$dissoc_two(m,p__53792){
-var vec__53794 = p__53792;
-var k1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53794,(0),null);
-var k2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53794,(1),null);
+zprint.config.dissoc_two = (function zprint$config$dissoc_two(m,p__53796){
+var vec__53797 = p__53796;
+var k1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53797,(0),null);
+var k2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53797,(1),null);
 return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(m,k1,cljs.core.dissoc.cljs$core$IFn$_invoke$arity$2(cljs.core.get.cljs$core$IFn$_invoke$arity$2(m,k1),k2));
 });
 /**
@@ -273,14 +273,14 @@ return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(m,k1,cljs.core.dissoc.cljs$
  *   it, being smart about things that were set to nil.
  */
 zprint.config.add_calculated_options = (function zprint$config$add_calculated_options(updated_map){
-var G__53797 = updated_map;
-var G__53797__$1 = (cljs.core.truth_(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)))?cljs.core.assoc_in(G__53797,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"map","map",1371690461),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null),cljs.core.zipmap(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)),cljs.core.range.cljs$core$IFn$_invoke$arity$0())):G__53797);
-var G__53797__$2 = (((((new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)) == null)) && ((!((new cljs.core.Keyword(null,"key-value","key-value",-34906839).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)) == null))))))?zprint.config.dissoc_two(G__53797__$1,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"map","map",1371690461),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null)):G__53797__$1);
-var G__53797__$3 = (cljs.core.truth_(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)))?cljs.core.assoc_in(G__53797__$2,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null),cljs.core.zipmap(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)),cljs.core.range.cljs$core$IFn$_invoke$arity$0())):G__53797__$2);
+var G__53800 = updated_map;
+var G__53800__$1 = (cljs.core.truth_(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)))?cljs.core.assoc_in(G__53800,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"map","map",1371690461),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null),cljs.core.zipmap(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)),cljs.core.range.cljs$core$IFn$_invoke$arity$0())):G__53800);
+var G__53800__$2 = (((((new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)) == null)) && ((!((new cljs.core.Keyword(null,"key-value","key-value",-34906839).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"map","map",1371690461).cljs$core$IFn$_invoke$arity$1(updated_map)) == null))))))?zprint.config.dissoc_two(G__53800__$1,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"map","map",1371690461),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null)):G__53800__$1);
+var G__53800__$3 = (cljs.core.truth_(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)))?cljs.core.assoc_in(G__53800__$2,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null),cljs.core.zipmap(new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)),cljs.core.range.cljs$core$IFn$_invoke$arity$0())):G__53800__$2);
 if((((new cljs.core.Keyword(null,"key-order","key-order",-356936372).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)) == null)) && ((!((new cljs.core.Keyword(null,"key-value","key-value",-34906839).cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058).cljs$core$IFn$_invoke$arity$1(updated_map)) == null)))))){
-return zprint.config.dissoc_two(G__53797__$3,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null));
+return zprint.config.dissoc_two(G__53800__$3,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"reader-cond","reader-cond",-2133265058),new cljs.core.Keyword(null,"key-value","key-value",-34906839)], null));
 } else {
-return G__53797__$3;
+return G__53800__$3;
 }
 });
 /**
@@ -288,8 +288,8 @@ return G__53797__$3;
  *   these options already!
  */
 zprint.config.reset_options_BANG_ = (function zprint$config$reset_options_BANG_(var_args){
-var G__53804 = arguments.length;
-switch (G__53804) {
+var G__53802 = arguments.length;
+switch (G__53802) {
 case 2:
 return zprint.config.reset_options_BANG_.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -347,10 +347,10 @@ return zprint.config.default_zprint_options;
  *   ultimate value is {:set-by x :value y}.
  */
 zprint.config.find_set = (function zprint$config$find_set(p__53808){
-var vec__53809 = p__53808;
-var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53809,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53809,(1),null);
-var mapentry = vec__53809;
+var vec__53812 = p__53808;
+var k = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53812,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53812,(1),null);
+var mapentry = vec__53812;
 if(cljs.core.map_QMARK_(v)){
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentHashSet(null, new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"value","value",305978217),null,new cljs.core.Keyword(null,"set-by","set-by",-1411360264),null], null), null),cljs.core.into.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentHashSet.EMPTY,cljs.core.keys(v)))){
 return cljs.core.PersistentArrayMap.createAsIfByAssoc([k,v]);
@@ -386,8 +386,8 @@ if((m == null)){
 return m;
 } else {
 if(cljs.core.seq_QMARK_(cljs.core.first(cljs.core.next(m)))){
-return cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.first(m),cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.merge,(function (){var G__53812 = cljs.core.first(cljs.core.next(m));
-return (zprint.config.form_map.cljs$core$IFn$_invoke$arity$1 ? zprint.config.form_map.cljs$core$IFn$_invoke$arity$1(G__53812) : zprint.config.form_map.call(null,G__53812));
+return cljs.core.PersistentArrayMap.createAsIfByAssoc([cljs.core.first(m),cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.merge,(function (){var G__53947 = cljs.core.first(cljs.core.next(m));
+return (zprint.config.form_map.cljs$core$IFn$_invoke$arity$1 ? zprint.config.form_map.cljs$core$IFn$_invoke$arity$1(G__53947) : zprint.config.form_map.call(null,G__53947));
 })())]);
 } else {
 return null;
@@ -445,10 +445,10 @@ return zprint.config.default_zprint_options;
  *   and the doc-map as well.  Will throw an exceptino for errors.
  */
 zprint.config.internal_set_options_BANG_ = (function zprint$config$internal_set_options_BANG_(doc_string,doc_map,existing_options,new_options){
-var vec__53948 = (zprint.config.config_and_validate.cljs$core$IFn$_invoke$arity$4 ? zprint.config.config_and_validate.cljs$core$IFn$_invoke$arity$4(doc_string,doc_map,existing_options,new_options) : zprint.config.config_and_validate.call(null,doc_string,doc_map,existing_options,new_options));
-var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53948,(0),null);
-var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53948,(1),null);
-var error_vec = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53948,(2),null);
+var vec__53955 = (zprint.config.config_and_validate.cljs$core$IFn$_invoke$arity$4 ? zprint.config.config_and_validate.cljs$core$IFn$_invoke$arity$4(doc_string,doc_map,existing_options,new_options) : zprint.config.config_and_validate.call(null,doc_string,doc_map,existing_options,new_options));
+var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53955,(0),null);
+var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53955,(1),null);
+var error_vec = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53955,(2),null);
 if(cljs.core.truth_(error_vec)){
 throw (new Error(["set-options! for ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(doc_string)," found these errors: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(error_vec)].join('')));
 } else {
@@ -473,8 +473,8 @@ return cljs.core.select_keys(options,zprint.config.operational_options);
  *   nil if successful, a vector of errors if not. 
  */
 zprint.config.config_configure_all_BANG_ = (function zprint$config$config_configure_all_BANG_(var_args){
-var G__53952 = arguments.length;
-switch (G__53952) {
+var G__53963 = arguments.length;
+switch (G__53963) {
 case 1:
 return zprint.config.config_configure_all_BANG_.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -490,18 +490,18 @@ throw (new Error(["Invalid arity: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 });
 
 (zprint.config.config_configure_all_BANG_.cljs$core$IFn$_invoke$arity$1 = (function (op_options){
-var vec__53953 = (zprint.config.config_and_validate_all.cljs$core$IFn$_invoke$arity$3 ? zprint.config.config_and_validate_all.cljs$core$IFn$_invoke$arity$3(null,null,op_options) : zprint.config.config_and_validate_all.call(null,null,null,op_options));
-var zprint_options = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53953,(0),null);
-var doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53953,(1),null);
-var errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53953,(2),null);
+var vec__53965 = (zprint.config.config_and_validate_all.cljs$core$IFn$_invoke$arity$3 ? zprint.config.config_and_validate_all.cljs$core$IFn$_invoke$arity$3(null,null,op_options) : zprint.config.config_and_validate_all.call(null,null,null,op_options));
+var zprint_options = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53965,(0),null);
+var doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53965,(1),null);
+var errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53965,(2),null);
 if(cljs.core.truth_(errors)){
 return errors;
 } else {
 zprint.config.reset_options_BANG_.cljs$core$IFn$_invoke$arity$2(zprint_options,doc_map);
 
-var G__53956_54092 = new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"configured?","configured?",642178633),true], null);
-var G__53957_54093 = "internal";
-(zprint.config.config_set_options_BANG_.cljs$core$IFn$_invoke$arity$2 ? zprint.config.config_set_options_BANG_.cljs$core$IFn$_invoke$arity$2(G__53956_54092,G__53957_54093) : zprint.config.config_set_options_BANG_.call(null,G__53956_54092,G__53957_54093));
+var G__53968_54104 = new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"configured?","configured?",642178633),true], null);
+var G__53969_54105 = "internal";
+(zprint.config.config_set_options_BANG_.cljs$core$IFn$_invoke$arity$2 ? zprint.config.config_set_options_BANG_.cljs$core$IFn$_invoke$arity$2(G__53968_54104,G__53969_54105) : zprint.config.config_set_options_BANG_.call(null,G__53968_54104,G__53969_54105));
 
 if(cljs.core.truth_((function (){var and__4251__auto__ = zprint.config.is_in_repl_QMARK_();
 if(cljs.core.truth_(and__4251__auto__)){
@@ -531,8 +531,8 @@ return zprint.config.config_configure_all_BANG_.cljs$core$IFn$_invoke$arity$1(nu
  *   not affect the format of the output directly.
  */
 zprint.config.config_set_options_BANG_ = (function zprint$config$config_set_options_BANG_(var_args){
-var G__53963 = arguments.length;
-switch (G__53963) {
+var G__53972 = arguments.length;
+switch (G__53972) {
 case 3:
 return zprint.config.config_set_options_BANG_.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -587,8 +587,8 @@ return empty_seq;
  *   for success, a string with error(s) if not.
  */
 zprint.config.validate_options = (function zprint$config$validate_options(var_args){
-var G__53969 = arguments.length;
-switch (G__53969) {
+var G__53985 = arguments.length;
+switch (G__53985) {
 case 2:
 return zprint.config.validate_options.cljs$core$IFn$_invoke$arity$2((arguments[(0)]),(arguments[(1)]));
 
@@ -605,8 +605,8 @@ throw (new Error(["Invalid arity: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 
 (zprint.config.validate_options.cljs$core$IFn$_invoke$arity$2 = (function (options,source_str){
 if(cljs.core.truth_(options)){
-return zprint.config.empty_to_nil(cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,cljs.core.interpose.cljs$core$IFn$_invoke$arity$2(", ",cljs.core.remove.cljs$core$IFn$_invoke$arity$2((function (p1__53967_SHARP_){
-return (((p1__53967_SHARP_ == null)) || (cljs.core.empty_QMARK_(p1__53967_SHARP_)));
+return zprint.config.empty_to_nil(cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,cljs.core.interpose.cljs$core$IFn$_invoke$arity$2(", ",cljs.core.remove.cljs$core$IFn$_invoke$arity$2((function (p1__53980_SHARP_){
+return (((p1__53980_SHARP_ == null)) || (cljs.core.empty_QMARK_(p1__53980_SHARP_)));
 }),cljs.core.conj.cljs$core$IFn$_invoke$arity$2(cljs.core.PersistentVector.EMPTY,zprint.spec.validate_basic.cljs$core$IFn$_invoke$arity$2(options,source_str))))));
 } else {
 return null;
@@ -624,11 +624,11 @@ return zprint.config.validate_options.cljs$core$IFn$_invoke$arity$2(options,null
  *   and produce a new [existing-map doc-map error-str] from the style defined
  *   in the existing map.
  */
-zprint.config.apply_one_style = (function zprint$config$apply_one_style(doc_string,p__53977,style_name){
-var vec__53978 = p__53977;
-var existing_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53978,(0),null);
-var doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53978,(1),null);
-var error_str = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53978,(2),null);
+zprint.config.apply_one_style = (function zprint$config$apply_one_style(doc_string,p__53999,style_name){
+var vec__54000 = p__53999;
+var existing_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54000,(0),null);
+var doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54000,(1),null);
+var error_str = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54000,(2),null);
 if(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(style_name,new cljs.core.Keyword(null,"not-specified","not-specified",1542080231))) || ((style_name == null)))){
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [existing_map,doc_map,null], null);
 } else {
@@ -676,8 +676,8 @@ return null;
  *   regardless of optional?, errors are detected and reported.
  */
 zprint.config.get_config_from_file = (function zprint$config$get_config_from_file(var_args){
-var G__53988 = arguments.length;
-switch (G__53988) {
+var G__54004 = arguments.length;
+switch (G__54004) {
 case 3:
 return zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$3((arguments[(0)]),(arguments[(1)]),(arguments[(2)]));
 
@@ -709,8 +709,8 @@ return zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$3(filename
  */
 zprint.config.get_config_from_path = (function zprint$config$get_config_from_path(filename_vec,file_sep,dir_vec,acceptfns_QMARK_){
 var dirspec = cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,cljs.core.interpose.cljs$core$IFn$_invoke$arity$2(file_sep,dir_vec));
-var config_vec = cljs.core.some((function (p1__53993_SHARP_){
-return zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$3(p1__53993_SHARP_,new cljs.core.Keyword(null,"optional","optional",2053951509),acceptfns_QMARK_);
+var config_vec = cljs.core.some((function (p1__54005_SHARP_){
+return zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$3(p1__54005_SHARP_,new cljs.core.Keyword(null,"optional","optional",2053951509),acceptfns_QMARK_);
 }),cljs.core.map.cljs$core$IFn$_invoke$arity$2(cljs.core.partial.cljs$core$IFn$_invoke$arity$3(cljs.core.str,dirspec,file_sep),filename_vec));
 return config_vec;
 });
@@ -750,7 +750,7 @@ zprint.config.get_config_from_map = (function zprint$config$get_config_from_map(
 if(cljs.core.truth_(map_string)){
 try{var opts_map = cljs.reader.read_string.cljs$core$IFn$_invoke$arity$1(map_string);
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [opts_map,null], null);
-}catch (e54002){var e = e54002;
+}catch (e54012){var e = e54012;
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [null,["Unable to read configuration from map",cljs.core.str.cljs$core$IFn$_invoke$arity$1(map_string)," because ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(e)].join('')], null);
 }} else {
 return null;
@@ -780,10 +780,10 @@ return false;
  * Return true if a sequence starts with another sequence.
  */
 zprint.config.starts_with_QMARK_ = (function zprint$config$starts_with_QMARK_(coll,seq){
-return cljs.core.reduce.cljs$core$IFn$_invoke$arity$2((function (p1__54005_SHARP_,p2__54006_SHARP_){
-var and__4251__auto__ = p1__54005_SHARP_;
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$2((function (p1__54014_SHARP_,p2__54015_SHARP_){
+var and__4251__auto__ = p1__54014_SHARP_;
 if(cljs.core.truth_(and__4251__auto__)){
-return p2__54006_SHARP_;
+return p2__54015_SHARP_;
 } else {
 return and__4251__auto__;
 }
@@ -796,14 +796,14 @@ return and__4251__auto__;
  */
 zprint.config.build_fn_map_update = (function zprint$config$build_fn_map_update(m){
 var mapseq = cljs.core.seq(m);
-var fn_map_entries = cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p1__54009_SHARP_){
-return zprint.config.starts_with_QMARK_(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"zprint","zprint",1501225152),new cljs.core.Keyword(null,"fn-map","fn-map",565481146)], null),cljs.core.first(p1__54009_SHARP_));
+var fn_map_entries = cljs.core.filter.cljs$core$IFn$_invoke$arity$2((function (p1__54018_SHARP_){
+return zprint.config.starts_with_QMARK_(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"zprint","zprint",1501225152),new cljs.core.Keyword(null,"fn-map","fn-map",565481146)], null),cljs.core.first(p1__54018_SHARP_));
 }),mapseq);
-var fn_map_keys = cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__54010_SHARP_){
-return cljs.core.name(cljs.core.nth.cljs$core$IFn$_invoke$arity$2(cljs.core.first(p1__54010_SHARP_),(2)));
+var fn_map_keys = cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__54019_SHARP_){
+return cljs.core.name(cljs.core.nth.cljs$core$IFn$_invoke$arity$2(cljs.core.first(p1__54019_SHARP_),(2)));
 }),fn_map_entries);
-var fn_map_vals = cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__54011_SHARP_){
-return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.second(p1__54011_SHARP_));
+var fn_map_vals = cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__54020_SHARP_){
+return cljs.core.keyword.cljs$core$IFn$_invoke$arity$1(cljs.core.second(p1__54020_SHARP_));
 }),fn_map_entries);
 return cljs.core.zipmap(fn_map_keys,fn_map_vals);
 });
@@ -824,10 +824,10 @@ return cljs.core.assoc.cljs$core$IFn$_invoke$arity$3(options,new cljs.core.Keywo
  * If a particular key-path exists in an existing map, replace it
  *   with a new key-path.  The existing key-path can have a nil value.
  */
-zprint.config.replace_existing = (function zprint$config$replace_existing(existing,p__54012){
-var vec__54013 = p__54012;
-var k_path = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54013,(0),null);
-var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54013,(1),null);
+zprint.config.replace_existing = (function zprint$config$replace_existing(existing,p__54024){
+var vec__54025 = p__54024;
+var k_path = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54025,(0),null);
+var v = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54025,(1),null);
 if(((cljs.core.seq(k_path)) && (cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(cljs.core.get_in.cljs$core$IFn$_invoke$arity$3(existing,k_path,new cljs.core.Keyword(null,"not-present","not-present",125254321)),new cljs.core.Keyword(null,"not-present","not-present",125254321))))){
 return cljs.core.assoc_in(existing,k_path,v);
 } else {
@@ -850,14 +850,14 @@ zprint.config.config_and_validate = (function zprint$config$config_and_validate(
 if(cljs.core.truth_(new_map)){
 var new_map__$1 = zprint.spec.coerce_to_boolean(new_map);
 var errors = zprint.config.validate_options.cljs$core$IFn$_invoke$arity$2(new_map__$1,doc_string);
-var vec__54016 = zprint.config.perform_remove(doc_string,doc_map,existing_map,new_map__$1);
-var existing_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54016,(0),null);
-var new_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54016,(1),null);
-var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54016,(2),null);
-var vec__54019 = zprint.config.apply_style(doc_string,new_doc_map,existing_map__$1,new_map__$2);
-var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54019,(0),null);
-var new_doc_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54019,(1),null);
-var style_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54019,(2),null);
+var vec__54029 = zprint.config.perform_remove(doc_string,doc_map,existing_map,new_map__$1);
+var existing_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54029,(0),null);
+var new_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54029,(1),null);
+var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54029,(2),null);
+var vec__54032 = zprint.config.apply_style(doc_string,new_doc_map,existing_map__$1,new_map__$2);
+var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54032,(0),null);
+var new_doc_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54032,(1),null);
+var style_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54032,(2),null);
 var errors__$1 = (cljs.core.truth_(style_errors)?[cljs.core.str.cljs$core$IFn$_invoke$arity$1(errors)," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(style_errors)].join(''):errors);
 var new_updated_map = zprint.config.merge_deep.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([updated_map,new_map__$2], 0));
 var new_doc_map__$2 = zprint.config.diff_deep_ks(doc_string,new_doc_map__$1,zprint.config.key_seq(new_map__$2),new_updated_map);
@@ -877,30 +877,30 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 zprint.config.config_and_validate_all = (function zprint$config$config_and_validate_all(cli_opts,cli_errors,op_options){
 var default_map = zprint.config.get_default_options();
 var default_doc_map = zprint.config.get_default_explained_all_options();
-var vec__54031 = zprint.config.config_and_validate("Operational options",default_doc_map,default_map,op_options);
-var op_options__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54031,(0),null);
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54031,(1),null);
-var op_option_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54031,(2),null);
+var vec__54035 = zprint.config.config_and_validate("Operational options",default_doc_map,default_map,op_options);
+var op_options__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54035,(0),null);
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54035,(1),null);
+var op_option_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54035,(2),null);
 var op_options__$2 = zprint.config.select_op_options(op_options__$1);
 var home = null;
 var file_separator = null;
 var zprintrc_file = [home,file_separator,zprint.config.zprintrc].join('');
-var vec__54034 = (cljs.core.truth_((function (){var and__4251__auto__ = home;
+var vec__54038 = (cljs.core.truth_((function (){var and__4251__auto__ = home;
 if(cljs.core.truth_(and__4251__auto__)){
 return file_separator;
 } else {
 return and__4251__auto__;
 }
 })())?zprint.config.get_config_from_path(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [zprint.config.zprintrc,zprint.config.zprintedn], null),file_separator,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [home], null),new cljs.core.Keyword(null,"acceptfns","acceptfns",1968918253)):null);
-var opts_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54034,(0),null);
-var errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54034,(1),null);
-var rc_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54034,(2),null);
-var home_config = vec__54034;
-var vec__54037 = zprint.config.config_and_validate(["Home directory file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(rc_filename)].join(''),default_doc_map,default_map,opts_rcfile);
-var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54037,(0),null);
-var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54037,(1),null);
-var rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54037,(2),null);
-var vec__54040 = (cljs.core.truth_((function (){var and__4251__auto__ = (function (){var or__4253__auto__ = new cljs.core.Keyword(null,"search-config?","search-config?",-932850546).cljs$core$IFn$_invoke$arity$1(updated_map);
+var opts_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54038,(0),null);
+var errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54038,(1),null);
+var rc_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54038,(2),null);
+var home_config = vec__54038;
+var vec__54041 = zprint.config.config_and_validate(["Home directory file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(rc_filename)].join(''),default_doc_map,default_map,opts_rcfile);
+var updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54041,(0),null);
+var new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54041,(1),null);
+var rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54041,(2),null);
+var vec__54044 = (cljs.core.truth_((function (){var and__4251__auto__ = (function (){var or__4253__auto__ = new cljs.core.Keyword(null,"search-config?","search-config?",-932850546).cljs$core$IFn$_invoke$arity$1(updated_map);
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
 } else {
@@ -913,19 +913,19 @@ return file_separator;
 return and__4251__auto__;
 }
 })())?zprint.config.scan_up_dir_tree(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [zprint.config.zprintrc,zprint.config.zprintedn], null),file_separator):null);
-var search_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54040,(0),null);
-var search_errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54040,(1),null);
-var search_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54040,(2),null);
-var search_config = vec__54040;
-var vec__54043 = ((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(home_config,search_config))?new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [search_rcfile,search_errors_rcfile,search_filename], null):null);
-var search_rcfile__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54043,(0),null);
-var search_errors_rcfile__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54043,(1),null);
-var search_filename__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54043,(2),null);
-var vec__54046 = zprint.config.config_and_validate([":search-config? file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(search_filename__$1)].join(''),new_doc_map,updated_map,search_rcfile__$1);
-var search_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54046,(0),null);
-var search_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54046,(1),null);
-var search_rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54046,(2),null);
-var vec__54049 = (cljs.core.truth_((function (){var and__4251__auto__ = cljs.core.not(new cljs.core.Keyword(null,"search-config?","search-config?",-932850546).cljs$core$IFn$_invoke$arity$1(updated_map));
+var search_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54044,(0),null);
+var search_errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54044,(1),null);
+var search_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54044,(2),null);
+var search_config = vec__54044;
+var vec__54047 = ((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(home_config,search_config))?new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [search_rcfile,search_errors_rcfile,search_filename], null):null);
+var search_rcfile__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54047,(0),null);
+var search_errors_rcfile__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54047,(1),null);
+var search_filename__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54047,(2),null);
+var vec__54050 = zprint.config.config_and_validate([":search-config? file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(search_filename__$1)].join(''),new_doc_map,updated_map,search_rcfile__$1);
+var search_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54050,(0),null);
+var search_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54050,(1),null);
+var search_rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54050,(2),null);
+var vec__54053 = (cljs.core.truth_((function (){var and__4251__auto__ = cljs.core.not(new cljs.core.Keyword(null,"search-config?","search-config?",-932850546).cljs$core$IFn$_invoke$arity$1(updated_map));
 if(and__4251__auto__){
 var and__4251__auto____$1 = (function (){var or__4253__auto__ = new cljs.core.Keyword(null,"cwd-zprintrc?","cwd-zprintrc?",167207541).cljs$core$IFn$_invoke$arity$1(search_map);
 if(cljs.core.truth_(or__4253__auto__)){
@@ -943,54 +943,54 @@ return and__4251__auto____$1;
 return and__4251__auto__;
 }
 })())?zprint.config.get_config_from_path(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [zprint.config.zprintrc,zprint.config.zprintedn], null),file_separator,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, ["."], null),null):null);
-var cwd_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54049,(0),null);
-var cwd_errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54049,(1),null);
-var cwd_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54049,(2),null);
-var vec__54052 = zprint.config.config_and_validate([":cwd-zprintrc? file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cwd_filename)].join(''),search_doc_map,search_map,cwd_rcfile);
-var cwd_updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54052,(0),null);
-var cwd_new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54052,(1),null);
-var cwd_rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54052,(2),null);
+var cwd_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54053,(0),null);
+var cwd_errors_rcfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54053,(1),null);
+var cwd_filename = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54053,(2),null);
+var vec__54056 = zprint.config.config_and_validate([":cwd-zprintrc? file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cwd_filename)].join(''),search_doc_map,search_map,cwd_rcfile);
+var cwd_updated_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54056,(0),null);
+var cwd_new_doc_map = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54056,(1),null);
+var cwd_rc_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54056,(2),null);
 var read_system_env_fn = null;
 var env_map = (cljs.core.truth_(read_system_env_fn)?(read_system_env_fn.cljs$core$IFn$_invoke$arity$0 ? read_system_env_fn.cljs$core$IFn$_invoke$arity$0() : read_system_env_fn.call(null)):null);
 var env_and_default_map = zprint.config.merge_existing(new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"zprint","zprint",1501225152),default_map], null),env_map);
 var new_env_map = zprint.config.diff_map(default_map,new cljs.core.Keyword(null,"zprint","zprint",1501225152).cljs$core$IFn$_invoke$arity$1(env_and_default_map));
 var new_env_map__$1 = zprint.config.update_fn_map(new_env_map,env_map);
 var new_env_map__$2 = zprint.config.map_leaves(zprint.config.strtf__GT_boolean,new_env_map__$1);
-var vec__54055 = zprint.config.config_and_validate("Environment variable",cwd_new_doc_map,cwd_updated_map,new_env_map__$2);
-var updated_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54055,(0),null);
-var new_doc_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54055,(1),null);
-var env_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54055,(2),null);
+var vec__54059 = zprint.config.config_and_validate("Environment variable",cwd_new_doc_map,cwd_updated_map,new_env_map__$2);
+var updated_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54059,(0),null);
+var new_doc_map__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54059,(1),null);
+var env_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54059,(2),null);
 var read_system_props_fn = null;
 var prop_map = (cljs.core.truth_(read_system_props_fn)?(read_system_props_fn.cljs$core$IFn$_invoke$arity$0 ? read_system_props_fn.cljs$core$IFn$_invoke$arity$0() : read_system_props_fn.call(null)):null);
 var prop_and_default_map = zprint.config.merge_existing(new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"zprint","zprint",1501225152),default_map], null),prop_map);
 var new_prop_map = zprint.config.diff_map(default_map,new cljs.core.Keyword(null,"zprint","zprint",1501225152).cljs$core$IFn$_invoke$arity$1(prop_and_default_map));
 var new_prop_map__$1 = zprint.config.update_fn_map(new_prop_map,prop_map);
 var new_prop_map__$2 = zprint.config.map_leaves(zprint.config.strtf__GT_boolean,new_prop_map__$1);
-var vec__54058 = zprint.config.config_and_validate("System property",new_doc_map__$1,updated_map__$1,new_prop_map__$2);
-var updated_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54058,(0),null);
-var new_doc_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54058,(1),null);
-var prop_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54058,(2),null);
+var vec__54062 = zprint.config.config_and_validate("System property",new_doc_map__$1,updated_map__$1,new_prop_map__$2);
+var updated_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54062,(0),null);
+var new_doc_map__$2 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54062,(1),null);
+var prop_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54062,(2),null);
 var config_filename = null;
-var vec__54061 = (cljs.core.truth_(config_filename)?zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$1(config_filename):null);
-var opts_configfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54061,(0),null);
-var errors_configfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54061,(1),null);
-var config_filename__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54061,(2),null);
-var vec__54064 = zprint.config.config_and_validate(["Config file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(config_filename__$1)].join(''),new_doc_map__$2,updated_map__$2,opts_configfile);
-var updated_map__$3 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54064,(0),null);
-var new_doc_map__$3 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54064,(1),null);
-var config_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54064,(2),null);
-var vec__54067 = zprint.config.get_config_from_map(new cljs.core.Keyword(null,"config-map","config-map",807193777).cljs$core$IFn$_invoke$arity$1(cli_opts));
-var opts_configmap = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54067,(0),null);
-var errors_configmap = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54067,(1),null);
-var vec__54070 = zprint.config.config_and_validate(["Config map:",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"config-map","config-map",807193777).cljs$core$IFn$_invoke$arity$1(cli_opts))].join(''),new_doc_map__$3,updated_map__$3,opts_configmap);
-var updated_map__$4 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54070,(0),null);
-var new_doc_map__$4 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54070,(1),null);
-var config_errors__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54070,(2),null);
+var vec__54065 = (cljs.core.truth_(config_filename)?zprint.config.get_config_from_file.cljs$core$IFn$_invoke$arity$1(config_filename):null);
+var opts_configfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54065,(0),null);
+var errors_configfile = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54065,(1),null);
+var config_filename__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54065,(2),null);
+var vec__54068 = zprint.config.config_and_validate(["Config file: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(config_filename__$1)].join(''),new_doc_map__$2,updated_map__$2,opts_configfile);
+var updated_map__$3 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54068,(0),null);
+var new_doc_map__$3 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54068,(1),null);
+var config_errors = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54068,(2),null);
+var vec__54071 = zprint.config.get_config_from_map(new cljs.core.Keyword(null,"config-map","config-map",807193777).cljs$core$IFn$_invoke$arity$1(cli_opts));
+var opts_configmap = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54071,(0),null);
+var errors_configmap = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54071,(1),null);
+var vec__54074 = zprint.config.config_and_validate(["Config map:",cljs.core.str.cljs$core$IFn$_invoke$arity$1(new cljs.core.Keyword(null,"config-map","config-map",807193777).cljs$core$IFn$_invoke$arity$1(cli_opts))].join(''),new_doc_map__$3,updated_map__$3,opts_configmap);
+var updated_map__$4 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54074,(0),null);
+var new_doc_map__$4 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54074,(1),null);
+var config_errors__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54074,(2),null);
 var opts_cli = cljs.core.select_keys(cli_opts,zprint.config.zprint_keys);
-var vec__54073 = zprint.config.config_and_validate("CLI options",new_doc_map__$4,updated_map__$4,opts_cli);
-var updated_map__$5 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54073,(0),null);
-var new_doc_map__$5 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54073,(1),null);
-var cli_errors__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54073,(2),null);
+var vec__54077 = zprint.config.config_and_validate("CLI options",new_doc_map__$4,updated_map__$4,opts_cli);
+var updated_map__$5 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54077,(0),null);
+var new_doc_map__$5 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54077,(1),null);
+var cli_errors__$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__54077,(2),null);
 var all_errors = cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.str,cljs.core.interpose.cljs$core$IFn$_invoke$arity$2("\n",cljs.core.filter.cljs$core$IFn$_invoke$arity$2(cljs.core.identity,(new cljs.core.List(null,errors_rcfile,(new cljs.core.List(null,rc_errors,(new cljs.core.List(null,cwd_errors_rcfile,(new cljs.core.List(null,cwd_rc_errors,(new cljs.core.List(null,env_errors,(new cljs.core.List(null,prop_errors,(new cljs.core.List(null,errors_configfile,(new cljs.core.List(null,config_errors__$1,(new cljs.core.List(null,cli_errors__$1,(new cljs.core.List(null,op_option_errors,null,(1),null)),(2),null)),(3),null)),(4),null)),(5),null)),(6),null)),(7),null)),(8),null)),(9),null)),(10),null)))));
 var all_errors__$1 = ((cljs.core.empty_QMARK_(all_errors))?null:all_errors);
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [updated_map__$5,new_doc_map__$5,all_errors__$1], null);

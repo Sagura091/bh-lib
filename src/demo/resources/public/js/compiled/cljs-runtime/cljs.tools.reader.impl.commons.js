@@ -174,9 +174,9 @@ while (G__42724__i < G__42724__a.length) {G__42724__a[G__42724__i] = arguments[G
 } 
 return G__42723__delegate.call(this,rdr,_);};
 G__42723.cljs$lang$maxFixedArity = 1;
-G__42723.cljs$lang$applyTo = (function (arglist__42725){
-var rdr = cljs.core.first(arglist__42725);
-var _ = cljs.core.rest(arglist__42725);
+G__42723.cljs$lang$applyTo = (function (arglist__42726){
+var rdr = cljs.core.first(arglist__42726);
+var _ = cljs.core.rest(arglist__42726);
 return G__42723__delegate(rdr,_);
 });
 G__42723.cljs$core$IFn$_invoke$arity$variadic = G__42723__delegate;

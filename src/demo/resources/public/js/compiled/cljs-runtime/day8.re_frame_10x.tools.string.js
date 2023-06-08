@@ -28,9 +28,9 @@ var argseq__4871__auto__ = ((((2) < args__4870__auto__.length))?(new cljs.core.I
 return day8.re_frame_10x.tools.string.pluralize.cljs$core$IFn$_invoke$arity$variadic((arguments[(0)]),(arguments[(1)]),argseq__4871__auto__);
 });
 
-(day8.re_frame_10x.tools.string.pluralize.cljs$core$IFn$_invoke$arity$variadic = (function (num,singular,p__55895){
-var vec__55896 = p__55895;
-var plural = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__55896,(0),null);
+(day8.re_frame_10x.tools.string.pluralize.cljs$core$IFn$_invoke$arity$variadic = (function (num,singular,p__55891){
+var vec__55892 = p__55891;
+var plural = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__55892,(0),null);
 return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(num)," ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((1),num))?singular:(function (){var or__4253__auto__ = plural;
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
@@ -43,13 +43,13 @@ return [cljs.core.str.cljs$core$IFn$_invoke$arity$1(singular),"s"].join('');
 (day8.re_frame_10x.tools.string.pluralize.cljs$lang$maxFixedArity = (2));
 
 /** @this {Function} */
-(day8.re_frame_10x.tools.string.pluralize.cljs$lang$applyTo = (function (seq55892){
-var G__55893 = cljs.core.first(seq55892);
-var seq55892__$1 = cljs.core.next(seq55892);
-var G__55894 = cljs.core.first(seq55892__$1);
-var seq55892__$2 = cljs.core.next(seq55892__$1);
+(day8.re_frame_10x.tools.string.pluralize.cljs$lang$applyTo = (function (seq55881){
+var G__55882 = cljs.core.first(seq55881);
+var seq55881__$1 = cljs.core.next(seq55881);
+var G__55883 = cljs.core.first(seq55881__$1);
+var seq55881__$2 = cljs.core.next(seq55881__$1);
 var self__4851__auto__ = this;
-return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__55893,G__55894,seq55892__$2);
+return self__4851__auto__.cljs$core$IFn$_invoke$arity$variadic(G__55882,G__55883,seq55881__$2);
 }));
 
 /**

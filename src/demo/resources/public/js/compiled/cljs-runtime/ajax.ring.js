@@ -13,8 +13,8 @@ return new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"st
  * populate the :body key in the response map.
  */
 ajax.ring.ring_response_format = (function ajax$ring$ring_response_format(var_args){
-var G__69800 = arguments.length;
-switch (G__69800) {
+var G__69773 = arguments.length;
+switch (G__69773) {
 case 0:
 return ajax.ring.ring_response_format.cljs$core$IFn$_invoke$arity$0();
 
@@ -33,14 +33,14 @@ throw (new Error(["Invalid arity: ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(
 return ajax.ring.ring_response_format.cljs$core$IFn$_invoke$arity$1(new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"format","format",-1306924766),ajax.formats.raw_response_format.cljs$core$IFn$_invoke$arity$0()], null));
 }));
 
-(ajax.ring.ring_response_format.cljs$core$IFn$_invoke$arity$1 = (function (p__69801){
-var map__69802 = p__69801;
-var map__69802__$1 = cljs.core.__destructure_map(map__69802);
-var map__69803 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69802__$1,new cljs.core.Keyword(null,"format","format",-1306924766));
-var map__69803__$1 = cljs.core.__destructure_map(map__69803);
-var read = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69803__$1,new cljs.core.Keyword(null,"read","read",1140058661));
-var description = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69803__$1,new cljs.core.Keyword(null,"description","description",-1428560544));
-var content_type = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69803__$1,new cljs.core.Keyword(null,"content-type","content-type",-508222634));
+(ajax.ring.ring_response_format.cljs$core$IFn$_invoke$arity$1 = (function (p__69777){
+var map__69778 = p__69777;
+var map__69778__$1 = cljs.core.__destructure_map(map__69778);
+var map__69779 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69778__$1,new cljs.core.Keyword(null,"format","format",-1306924766));
+var map__69779__$1 = cljs.core.__destructure_map(map__69779);
+var read = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69779__$1,new cljs.core.Keyword(null,"read","read",1140058661));
+var description = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69779__$1,new cljs.core.Keyword(null,"description","description",-1428560544));
+var content_type = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69779__$1,new cljs.core.Keyword(null,"content-type","content-type",-508222634));
 return ajax.interceptors.map__GT_ResponseFormat(new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"read","read",1140058661),ajax.ring.make_ring_read(read),new cljs.core.Keyword(null,"description","description",-1428560544),["ring/",cljs.core.str.cljs$core$IFn$_invoke$arity$1(description)].join(''),new cljs.core.Keyword(null,"content-type","content-type",-508222634),content_type], null));
 }));
 

@@ -1,10 +1,10 @@
 (ns bh-ui.core
   (:require [csrf]
-            [events :as events]
-            [data-source-handler]
-            [subs]
-            [subscription-handlers]
-            [subscriptions]
+            [bh-ui.events :as events]
+            [bh-ui.data-source-handler]
+            [bh-ui.subs]
+            [bh-ui.subscription-handlers]
+            [bh-ui.subscriptions]
             [bh-ui.utils]
             [bh-ui.utils.core]
 

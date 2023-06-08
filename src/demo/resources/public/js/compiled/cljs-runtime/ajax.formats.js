@@ -6,8 +6,8 @@ goog.provide('ajax.formats');
  * is nonetheless really rather useful.
  */
 ajax.formats.raw_response_format = (function ajax$formats$raw_response_format(var_args){
-var G__69590 = arguments.length;
-switch (G__69590) {
+var G__69502 = arguments.length;
+switch (G__69502) {
 case 0:
 return ajax.formats.raw_response_format.cljs$core$IFn$_invoke$arity$0();
 
@@ -50,9 +50,9 @@ if((((format_entry == null)) || (cljs.core.map_QMARK_(format_entry)))){
 return format_entry;
 } else {
 if(cljs.core.vector_QMARK_(format_entry)){
-var G__69630 = request;
-var G__69631 = cljs.core.second(format_entry);
-return (ajax.formats.get_format.cljs$core$IFn$_invoke$arity$2 ? ajax.formats.get_format.cljs$core$IFn$_invoke$arity$2(G__69630,G__69631) : ajax.formats.get_format.call(null,G__69630,G__69631));
+var G__69520 = request;
+var G__69521 = cljs.core.second(format_entry);
+return (ajax.formats.get_format.cljs$core$IFn$_invoke$arity$2 ? ajax.formats.get_format.cljs$core$IFn$_invoke$arity$2(G__69520,G__69521) : ajax.formats.get_format.call(null,G__69520,G__69521));
 } else {
 return (format_entry.cljs$core$IFn$_invoke$arity$1 ? format_entry.cljs$core$IFn$_invoke$arity$1(request) : format_entry.call(null,request));
 
@@ -77,15 +77,15 @@ return ((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(accept,"*/*")) || ((conten
 });
 ajax.formats.detect_content_type = (function ajax$formats$detect_content_type(content_type,request,format_entry){
 var accept = ajax.formats.get_accept_entries(request,format_entry);
-return cljs.core.some((function (p1__69642_SHARP_){
-return ajax.formats.content_type_matches(content_type,p1__69642_SHARP_);
+return cljs.core.some((function (p1__69532_SHARP_){
+return ajax.formats.content_type_matches(content_type,p1__69532_SHARP_);
 }),accept);
 });
-ajax.formats.get_default_format = (function ajax$formats$get_default_format(response,p__69643){
-var map__69644 = p__69643;
-var map__69644__$1 = cljs.core.__destructure_map(map__69644);
-var request = map__69644__$1;
-var response_format = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69644__$1,new cljs.core.Keyword(null,"response-format","response-format",1664465322));
+ajax.formats.get_default_format = (function ajax$formats$get_default_format(response,p__69540){
+var map__69541 = p__69540;
+var map__69541__$1 = cljs.core.__destructure_map(map__69541);
+var request = map__69541__$1;
+var response_format = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69541__$1,new cljs.core.Keyword(null,"response-format","response-format",1664465322));
 var content_type = ajax.util.get_content_type(response);
 var accepted_format_QMARK_ = (function ajax$formats$get_default_format_$_accepted_format_QMARK_(format_entry){
 return ajax.formats.detect_content_type(content_type,request,format_entry);
@@ -95,18 +95,18 @@ return ajax.formats.get_format(request,cljs.core.first(cljs.core.filter.cljs$cor
 ajax.formats.detect_response_format_read = (function ajax$formats$detect_response_format_read(request){
 return (function ajax$formats$detect_response_format_read_$_detect_response_format(response){
 var format = ajax.formats.get_default_format(response,request);
-var fexpr__69652 = new cljs.core.Keyword(null,"read","read",1140058661).cljs$core$IFn$_invoke$arity$1(format);
-return (fexpr__69652.cljs$core$IFn$_invoke$arity$1 ? fexpr__69652.cljs$core$IFn$_invoke$arity$1(response) : fexpr__69652.call(null,response));
+var fexpr__69550 = new cljs.core.Keyword(null,"read","read",1140058661).cljs$core$IFn$_invoke$arity$1(format);
+return (fexpr__69550.cljs$core$IFn$_invoke$arity$1 ? fexpr__69550.cljs$core$IFn$_invoke$arity$1(response) : fexpr__69550.call(null,response));
 });
 });
-ajax.formats.accept_header = (function ajax$formats$accept_header(p__69654){
-var map__69655 = p__69654;
-var map__69655__$1 = cljs.core.__destructure_map(map__69655);
-var request = map__69655__$1;
-var response_format = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69655__$1,new cljs.core.Keyword(null,"response-format","response-format",1664465322));
+ajax.formats.accept_header = (function ajax$formats$accept_header(p__69562){
+var map__69564 = p__69562;
+var map__69564__$1 = cljs.core.__destructure_map(map__69564);
+var request = map__69564__$1;
+var response_format = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__69564__$1,new cljs.core.Keyword(null,"response-format","response-format",1664465322));
 var formats = ((cljs.core.vector_QMARK_(response_format))?response_format:new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [response_format], null));
-return cljs.core.mapcat.cljs$core$IFn$_invoke$arity$variadic((function (p1__69653_SHARP_){
-return ajax.formats.get_accept_entries(request,p1__69653_SHARP_);
+return cljs.core.mapcat.cljs$core$IFn$_invoke$arity$variadic((function (p1__69553_SHARP_){
+return ajax.formats.get_accept_entries(request,p1__69553_SHARP_);
 }),cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([formats], 0));
 });
 /**

@@ -8,14 +8,14 @@ goog.provide('woolybear.ad.layout');
  */
 woolybear.ad.layout.page = (function woolybear$ad$layout$page(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70819 = arguments.length;
-var i__4865__auto___70820 = (0);
+var len__4864__auto___70829 = arguments.length;
+var i__4865__auto___70830 = (0);
 while(true){
-if((i__4865__auto___70820 < len__4864__auto___70819)){
-args__4870__auto__.push((arguments[i__4865__auto___70820]));
+if((i__4865__auto___70830 < len__4864__auto___70829)){
+args__4870__auto__.push((arguments[i__4865__auto___70830]));
 
-var G__70821 = (i__4865__auto___70820 + (1));
-i__4865__auto___70820 = G__70821;
+var G__70831 = (i__4865__auto___70830 + (1));
+i__4865__auto___70830 = G__70831;
 continue;
 } else {
 }
@@ -27,36 +27,36 @@ return woolybear.ad.layout.page.cljs$core$IFn$_invoke$arity$variadic(argseq__487
 });
 
 (woolybear.ad.layout.page.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70549 = woolybear.ad.utils.extract_args(args);
-var map__70552 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70549,(0),null);
-var map__70552__$1 = cljs.core.__destructure_map(map__70552);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70552__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70552__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70549,(1),null);
+var vec__70573 = woolybear.ad.utils.extract_args(args);
+var map__70576 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70573,(0),null);
+var map__70576__$1 = cljs.core.__destructure_map(map__70576);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70576__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70576__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70573,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70822__delegate = function (args__$1){
-var vec__70553 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70553,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70553,(1),null);
+var G__70833__delegate = function (args__$1){
+var vec__70577 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70577,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70577,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"container","container",-1736937707),new cljs.core.Keyword(null,"wb-page","wb-page",147985525),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70822 = function (var_args){
+var G__70833 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70823__i = 0, G__70823__a = new Array(arguments.length -  0);
-while (G__70823__i < G__70823__a.length) {G__70823__a[G__70823__i] = arguments[G__70823__i + 0]; ++G__70823__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70823__a,0,null);
+var G__70836__i = 0, G__70836__a = new Array(arguments.length -  0);
+while (G__70836__i < G__70836__a.length) {G__70836__a[G__70836__i] = arguments[G__70836__i + 0]; ++G__70836__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70836__a,0,null);
 } 
-return G__70822__delegate.call(this,args__$1);};
-G__70822.cljs$lang$maxFixedArity = 0;
-G__70822.cljs$lang$applyTo = (function (arglist__70824){
-var args__$1 = cljs.core.seq(arglist__70824);
-return G__70822__delegate(args__$1);
+return G__70833__delegate.call(this,args__$1);};
+G__70833.cljs$lang$maxFixedArity = 0;
+G__70833.cljs$lang$applyTo = (function (arglist__70837){
+var args__$1 = cljs.core.seq(arglist__70837);
+return G__70833__delegate(args__$1);
 });
-G__70822.cljs$core$IFn$_invoke$arity$variadic = G__70822__delegate;
-return G__70822;
+G__70833.cljs$core$IFn$_invoke$arity$variadic = G__70833__delegate;
+return G__70833;
 })()
 ;
 }));
@@ -64,15 +64,15 @@ return G__70822;
 (woolybear.ad.layout.page.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.page.cljs$lang$applyTo = (function (seq70546){
+(woolybear.ad.layout.page.cljs$lang$applyTo = (function (seq70570){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70546));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70570));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page","woolybear.ad.layout/page",1973317717,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70562){
-return cljs.core.map_QMARK_(G__70562);
-})], null),(function (G__70562){
-return cljs.core.map_QMARK_(G__70562);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page","woolybear.ad.layout/page",1973317717,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70582){
+return cljs.core.map_QMARK_(G__70582);
+})], null),(function (G__70582){
+return cljs.core.map_QMARK_(G__70582);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -82,14 +82,14 @@ return cljs.core.map_QMARK_(G__70562);
  */
 woolybear.ad.layout.page_header = (function woolybear$ad$layout$page_header(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70837 = arguments.length;
-var i__4865__auto___70838 = (0);
+var len__4864__auto___70838 = arguments.length;
+var i__4865__auto___70839 = (0);
 while(true){
-if((i__4865__auto___70838 < len__4864__auto___70837)){
-args__4870__auto__.push((arguments[i__4865__auto___70838]));
+if((i__4865__auto___70839 < len__4864__auto___70838)){
+args__4870__auto__.push((arguments[i__4865__auto___70839]));
 
-var G__70839 = (i__4865__auto___70838 + (1));
-i__4865__auto___70838 = G__70839;
+var G__70853 = (i__4865__auto___70839 + (1));
+i__4865__auto___70839 = G__70853;
 continue;
 } else {
 }
@@ -101,36 +101,36 @@ return woolybear.ad.layout.page_header.cljs$core$IFn$_invoke$arity$variadic(args
 });
 
 (woolybear.ad.layout.page_header.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70569 = woolybear.ad.utils.extract_args(args);
-var map__70572 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70569,(0),null);
-var map__70572__$1 = cljs.core.__destructure_map(map__70572);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70572__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70572__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70569,(1),null);
+var vec__70586 = woolybear.ad.utils.extract_args(args);
+var map__70589 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70586,(0),null);
+var map__70589__$1 = cljs.core.__destructure_map(map__70589);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70589__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70589__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70586,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70840__delegate = function (args__$1){
-var vec__70575 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70575,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70575,(1),null);
+var G__70854__delegate = function (args__$1){
+var vec__70590 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70590,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70590,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"container","container",-1736937707),new cljs.core.Keyword(null,"wb-page-header","wb-page-header",-1909037094),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70840 = function (var_args){
+var G__70854 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70841__i = 0, G__70841__a = new Array(arguments.length -  0);
-while (G__70841__i < G__70841__a.length) {G__70841__a[G__70841__i] = arguments[G__70841__i + 0]; ++G__70841__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70841__a,0,null);
+var G__70855__i = 0, G__70855__a = new Array(arguments.length -  0);
+while (G__70855__i < G__70855__a.length) {G__70855__a[G__70855__i] = arguments[G__70855__i + 0]; ++G__70855__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70855__a,0,null);
 } 
-return G__70840__delegate.call(this,args__$1);};
-G__70840.cljs$lang$maxFixedArity = 0;
-G__70840.cljs$lang$applyTo = (function (arglist__70850){
-var args__$1 = cljs.core.seq(arglist__70850);
-return G__70840__delegate(args__$1);
+return G__70854__delegate.call(this,args__$1);};
+G__70854.cljs$lang$maxFixedArity = 0;
+G__70854.cljs$lang$applyTo = (function (arglist__70856){
+var args__$1 = cljs.core.seq(arglist__70856);
+return G__70854__delegate(args__$1);
 });
-G__70840.cljs$core$IFn$_invoke$arity$variadic = G__70840__delegate;
-return G__70840;
+G__70854.cljs$core$IFn$_invoke$arity$variadic = G__70854__delegate;
+return G__70854;
 })()
 ;
 }));
@@ -138,15 +138,15 @@ return G__70840;
 (woolybear.ad.layout.page_header.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.page_header.cljs$lang$applyTo = (function (seq70563){
+(woolybear.ad.layout.page_header.cljs$lang$applyTo = (function (seq70585){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70563));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70585));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-header","woolybear.ad.layout/page-header",-1882784644,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70578){
-return cljs.core.map_QMARK_(G__70578);
-})], null),(function (G__70578){
-return cljs.core.map_QMARK_(G__70578);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-header","woolybear.ad.layout/page-header",-1882784644,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70595){
+return cljs.core.map_QMARK_(G__70595);
+})], null),(function (G__70595){
+return cljs.core.map_QMARK_(G__70595);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -155,14 +155,14 @@ return cljs.core.map_QMARK_(G__70578);
  */
 woolybear.ad.layout.page_title = (function woolybear$ad$layout$page_title(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70856 = arguments.length;
-var i__4865__auto___70857 = (0);
+var len__4864__auto___70857 = arguments.length;
+var i__4865__auto___70858 = (0);
 while(true){
-if((i__4865__auto___70857 < len__4864__auto___70856)){
-args__4870__auto__.push((arguments[i__4865__auto___70857]));
+if((i__4865__auto___70858 < len__4864__auto___70857)){
+args__4870__auto__.push((arguments[i__4865__auto___70858]));
 
-var G__70858 = (i__4865__auto___70857 + (1));
-i__4865__auto___70857 = G__70858;
+var G__70859 = (i__4865__auto___70858 + (1));
+i__4865__auto___70858 = G__70859;
 continue;
 } else {
 }
@@ -174,36 +174,36 @@ return woolybear.ad.layout.page_title.cljs$core$IFn$_invoke$arity$variadic(argse
 });
 
 (woolybear.ad.layout.page_title.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70590 = woolybear.ad.utils.extract_args(args);
-var map__70593 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70590,(0),null);
-var map__70593__$1 = cljs.core.__destructure_map(map__70593);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70593__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70593__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70590,(1),null);
+var vec__70599 = woolybear.ad.utils.extract_args(args);
+var map__70602 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70599,(0),null);
+var map__70602__$1 = cljs.core.__destructure_map(map__70602);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70602__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70602__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70599,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70859__delegate = function (args__$1){
-var vec__70597 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70597,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70597,(1),null);
+var G__70860__delegate = function (args__$1){
+var vec__70603 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70603,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70603,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"container","container",-1736937707),new cljs.core.Keyword(null,"wb-page-title","wb-page-title",-1435513665),new cljs.core.Keyword(null,"is-size-1","is-size-1",-1297639852),extra_classes,dynamic_classes], 0))], null),children], null);
 };
-var G__70859 = function (var_args){
+var G__70860 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70860__i = 0, G__70860__a = new Array(arguments.length -  0);
-while (G__70860__i < G__70860__a.length) {G__70860__a[G__70860__i] = arguments[G__70860__i + 0]; ++G__70860__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70860__a,0,null);
+var G__70861__i = 0, G__70861__a = new Array(arguments.length -  0);
+while (G__70861__i < G__70861__a.length) {G__70861__a[G__70861__i] = arguments[G__70861__i + 0]; ++G__70861__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70861__a,0,null);
 } 
-return G__70859__delegate.call(this,args__$1);};
-G__70859.cljs$lang$maxFixedArity = 0;
-G__70859.cljs$lang$applyTo = (function (arglist__70861){
-var args__$1 = cljs.core.seq(arglist__70861);
-return G__70859__delegate(args__$1);
+return G__70860__delegate.call(this,args__$1);};
+G__70860.cljs$lang$maxFixedArity = 0;
+G__70860.cljs$lang$applyTo = (function (arglist__70862){
+var args__$1 = cljs.core.seq(arglist__70862);
+return G__70860__delegate(args__$1);
 });
-G__70859.cljs$core$IFn$_invoke$arity$variadic = G__70859__delegate;
-return G__70859;
+G__70860.cljs$core$IFn$_invoke$arity$variadic = G__70860__delegate;
+return G__70860;
 })()
 ;
 }));
@@ -211,15 +211,15 @@ return G__70859;
 (woolybear.ad.layout.page_title.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.page_title.cljs$lang$applyTo = (function (seq70588){
+(woolybear.ad.layout.page_title.cljs$lang$applyTo = (function (seq70597){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70588));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70597));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-title","woolybear.ad.layout/page-title",190522847,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70610){
-return cljs.core.map_QMARK_(G__70610);
-})], null),(function (G__70610){
-return cljs.core.map_QMARK_(G__70610);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-title","woolybear.ad.layout/page-title",190522847,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70608){
+return cljs.core.map_QMARK_(G__70608);
+})], null),(function (G__70608){
+return cljs.core.map_QMARK_(G__70608);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -228,14 +228,14 @@ return cljs.core.map_QMARK_(G__70610);
  */
 woolybear.ad.layout.page_body = (function woolybear$ad$layout$page_body(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70864 = arguments.length;
-var i__4865__auto___70865 = (0);
+var len__4864__auto___70863 = arguments.length;
+var i__4865__auto___70864 = (0);
 while(true){
-if((i__4865__auto___70865 < len__4864__auto___70864)){
-args__4870__auto__.push((arguments[i__4865__auto___70865]));
+if((i__4865__auto___70864 < len__4864__auto___70863)){
+args__4870__auto__.push((arguments[i__4865__auto___70864]));
 
-var G__70866 = (i__4865__auto___70865 + (1));
-i__4865__auto___70865 = G__70866;
+var G__70865 = (i__4865__auto___70864 + (1));
+i__4865__auto___70864 = G__70865;
 continue;
 } else {
 }
@@ -247,36 +247,36 @@ return woolybear.ad.layout.page_body.cljs$core$IFn$_invoke$arity$variadic(argseq
 });
 
 (woolybear.ad.layout.page_body.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70627 = woolybear.ad.utils.extract_args(args);
-var map__70630 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70627,(0),null);
-var map__70630__$1 = cljs.core.__destructure_map(map__70630);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70630__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70630__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70627,(1),null);
+var vec__70610 = woolybear.ad.utils.extract_args(args);
+var map__70613 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70610,(0),null);
+var map__70613__$1 = cljs.core.__destructure_map(map__70613);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70613__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70613__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70610,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70876__delegate = function (args__$1){
-var vec__70631 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70631,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70631,(1),null);
+var G__70866__delegate = function (args__$1){
+var vec__70614 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70614,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70614,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"content","content",15833224),new cljs.core.Keyword(null,"wb-page-body","wb-page-body",-1004087761),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70876 = function (var_args){
+var G__70866 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70877__i = 0, G__70877__a = new Array(arguments.length -  0);
-while (G__70877__i < G__70877__a.length) {G__70877__a[G__70877__i] = arguments[G__70877__i + 0]; ++G__70877__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70877__a,0,null);
+var G__70867__i = 0, G__70867__a = new Array(arguments.length -  0);
+while (G__70867__i < G__70867__a.length) {G__70867__a[G__70867__i] = arguments[G__70867__i + 0]; ++G__70867__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70867__a,0,null);
 } 
-return G__70876__delegate.call(this,args__$1);};
-G__70876.cljs$lang$maxFixedArity = 0;
-G__70876.cljs$lang$applyTo = (function (arglist__70878){
-var args__$1 = cljs.core.seq(arglist__70878);
-return G__70876__delegate(args__$1);
+return G__70866__delegate.call(this,args__$1);};
+G__70866.cljs$lang$maxFixedArity = 0;
+G__70866.cljs$lang$applyTo = (function (arglist__70868){
+var args__$1 = cljs.core.seq(arglist__70868);
+return G__70866__delegate(args__$1);
 });
-G__70876.cljs$core$IFn$_invoke$arity$variadic = G__70876__delegate;
-return G__70876;
+G__70866.cljs$core$IFn$_invoke$arity$variadic = G__70866__delegate;
+return G__70866;
 })()
 ;
 }));
@@ -284,15 +284,15 @@ return G__70876;
 (woolybear.ad.layout.page_body.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.page_body.cljs$lang$applyTo = (function (seq70623){
+(woolybear.ad.layout.page_body.cljs$lang$applyTo = (function (seq70609){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70623));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70609));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-body","woolybear.ad.layout/page-body",63298402,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70640){
-return cljs.core.map_QMARK_(G__70640);
-})], null),(function (G__70640){
-return cljs.core.map_QMARK_(G__70640);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","page-body","woolybear.ad.layout/page-body",63298402,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70618){
+return cljs.core.map_QMARK_(G__70618);
+})], null),(function (G__70618){
+return cljs.core.map_QMARK_(G__70618);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -322,36 +322,36 @@ return woolybear.ad.layout.section.cljs$core$IFn$_invoke$arity$variadic(argseq__
 });
 
 (woolybear.ad.layout.section.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70648 = woolybear.ad.utils.extract_args(args);
-var map__70651 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70648,(0),null);
-var map__70651__$1 = cljs.core.__destructure_map(map__70651);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70651__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70651__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70648,(1),null);
+var vec__70622 = woolybear.ad.utils.extract_args(args);
+var map__70625 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70622,(0),null);
+var map__70625__$1 = cljs.core.__destructure_map(map__70625);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70625__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70625__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70622,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70882__delegate = function (args__$1){
-var vec__70655 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70655,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70655,(1),null);
+var G__70886__delegate = function (args__$1){
+var vec__70627 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70627,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70627,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"section","section",-300141526),new cljs.core.Keyword(null,"wb-section","wb-section",212637267),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70882 = function (var_args){
+var G__70886 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70883__i = 0, G__70883__a = new Array(arguments.length -  0);
-while (G__70883__i < G__70883__a.length) {G__70883__a[G__70883__i] = arguments[G__70883__i + 0]; ++G__70883__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70883__a,0,null);
+var G__70887__i = 0, G__70887__a = new Array(arguments.length -  0);
+while (G__70887__i < G__70887__a.length) {G__70887__a[G__70887__i] = arguments[G__70887__i + 0]; ++G__70887__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70887__a,0,null);
 } 
-return G__70882__delegate.call(this,args__$1);};
-G__70882.cljs$lang$maxFixedArity = 0;
-G__70882.cljs$lang$applyTo = (function (arglist__70884){
-var args__$1 = cljs.core.seq(arglist__70884);
-return G__70882__delegate(args__$1);
+return G__70886__delegate.call(this,args__$1);};
+G__70886.cljs$lang$maxFixedArity = 0;
+G__70886.cljs$lang$applyTo = (function (arglist__70888){
+var args__$1 = cljs.core.seq(arglist__70888);
+return G__70886__delegate(args__$1);
 });
-G__70882.cljs$core$IFn$_invoke$arity$variadic = G__70882__delegate;
-return G__70882;
+G__70886.cljs$core$IFn$_invoke$arity$variadic = G__70886__delegate;
+return G__70886;
 })()
 ;
 }));
@@ -359,15 +359,15 @@ return G__70882;
 (woolybear.ad.layout.section.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.section.cljs$lang$applyTo = (function (seq70642){
+(woolybear.ad.layout.section.cljs$lang$applyTo = (function (seq70619){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70642));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70619));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","section","woolybear.ad.layout/section",1872665456,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70658){
-return cljs.core.map_QMARK_(G__70658);
-})], null),(function (G__70658){
-return cljs.core.map_QMARK_(G__70658);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","section","woolybear.ad.layout/section",1872665456,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70633){
+return cljs.core.map_QMARK_(G__70633);
+})], null),(function (G__70633){
+return cljs.core.map_QMARK_(G__70633);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -376,14 +376,14 @@ return cljs.core.map_QMARK_(G__70658);
  */
 woolybear.ad.layout.section_heading = (function woolybear$ad$layout$section_heading(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70889 = arguments.length;
-var i__4865__auto___70890 = (0);
+var len__4864__auto___70896 = arguments.length;
+var i__4865__auto___70897 = (0);
 while(true){
-if((i__4865__auto___70890 < len__4864__auto___70889)){
-args__4870__auto__.push((arguments[i__4865__auto___70890]));
+if((i__4865__auto___70897 < len__4864__auto___70896)){
+args__4870__auto__.push((arguments[i__4865__auto___70897]));
 
-var G__70891 = (i__4865__auto___70890 + (1));
-i__4865__auto___70890 = G__70891;
+var G__70898 = (i__4865__auto___70897 + (1));
+i__4865__auto___70897 = G__70898;
 continue;
 } else {
 }
@@ -395,36 +395,36 @@ return woolybear.ad.layout.section_heading.cljs$core$IFn$_invoke$arity$variadic(
 });
 
 (woolybear.ad.layout.section_heading.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70672 = woolybear.ad.utils.extract_args(args);
-var map__70675 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70672,(0),null);
-var map__70675__$1 = cljs.core.__destructure_map(map__70675);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70675__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70675__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70672,(1),null);
+var vec__70636 = woolybear.ad.utils.extract_args(args);
+var map__70639 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70636,(0),null);
+var map__70639__$1 = cljs.core.__destructure_map(map__70639);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70639__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70639__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70636,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70892__delegate = function (args__$1){
-var vec__70679 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70679,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70679,(1),null);
+var G__70899__delegate = function (args__$1){
+var vec__70640 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70640,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70640,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"container","container",-1736937707),new cljs.core.Keyword(null,"wb-section-heading","wb-section-heading",237336985),new cljs.core.Keyword(null,"is-size-1","is-size-1",-1297639852),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70892 = function (var_args){
+var G__70899 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70893__i = 0, G__70893__a = new Array(arguments.length -  0);
-while (G__70893__i < G__70893__a.length) {G__70893__a[G__70893__i] = arguments[G__70893__i + 0]; ++G__70893__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70893__a,0,null);
+var G__70900__i = 0, G__70900__a = new Array(arguments.length -  0);
+while (G__70900__i < G__70900__a.length) {G__70900__a[G__70900__i] = arguments[G__70900__i + 0]; ++G__70900__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70900__a,0,null);
 } 
-return G__70892__delegate.call(this,args__$1);};
-G__70892.cljs$lang$maxFixedArity = 0;
-G__70892.cljs$lang$applyTo = (function (arglist__70894){
-var args__$1 = cljs.core.seq(arglist__70894);
-return G__70892__delegate(args__$1);
+return G__70899__delegate.call(this,args__$1);};
+G__70899.cljs$lang$maxFixedArity = 0;
+G__70899.cljs$lang$applyTo = (function (arglist__70901){
+var args__$1 = cljs.core.seq(arglist__70901);
+return G__70899__delegate(args__$1);
 });
-G__70892.cljs$core$IFn$_invoke$arity$variadic = G__70892__delegate;
-return G__70892;
+G__70899.cljs$core$IFn$_invoke$arity$variadic = G__70899__delegate;
+return G__70899;
 })()
 ;
 }));
@@ -432,15 +432,15 @@ return G__70892;
 (woolybear.ad.layout.section_heading.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.section_heading.cljs$lang$applyTo = (function (seq70664){
+(woolybear.ad.layout.section_heading.cljs$lang$applyTo = (function (seq70635){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70664));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70635));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","section-heading","woolybear.ad.layout/section-heading",160737988,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70691){
-return cljs.core.map_QMARK_(G__70691);
-})], null),(function (G__70691){
-return cljs.core.map_QMARK_(G__70691);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","section-heading","woolybear.ad.layout/section-heading",160737988,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70646){
+return cljs.core.map_QMARK_(G__70646);
+})], null),(function (G__70646){
+return cljs.core.map_QMARK_(G__70646);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -451,14 +451,14 @@ return cljs.core.map_QMARK_(G__70691);
  */
 woolybear.ad.layout.text_block = (function woolybear$ad$layout$text_block(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70897 = arguments.length;
-var i__4865__auto___70898 = (0);
+var len__4864__auto___70902 = arguments.length;
+var i__4865__auto___70903 = (0);
 while(true){
-if((i__4865__auto___70898 < len__4864__auto___70897)){
-args__4870__auto__.push((arguments[i__4865__auto___70898]));
+if((i__4865__auto___70903 < len__4864__auto___70902)){
+args__4870__auto__.push((arguments[i__4865__auto___70903]));
 
-var G__70899 = (i__4865__auto___70898 + (1));
-i__4865__auto___70898 = G__70899;
+var G__70904 = (i__4865__auto___70903 + (1));
+i__4865__auto___70903 = G__70904;
 continue;
 } else {
 }
@@ -470,36 +470,36 @@ return woolybear.ad.layout.text_block.cljs$core$IFn$_invoke$arity$variadic(argse
 });
 
 (woolybear.ad.layout.text_block.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70697 = woolybear.ad.utils.extract_args(args);
-var map__70700 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70697,(0),null);
-var map__70700__$1 = cljs.core.__destructure_map(map__70700);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70700__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70700__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70697,(1),null);
+var vec__70649 = woolybear.ad.utils.extract_args(args);
+var map__70652 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70649,(0),null);
+var map__70652__$1 = cljs.core.__destructure_map(map__70652);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70652__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70652__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70649,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70900__delegate = function (args__$1){
-var vec__70701 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70701,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70701,(1),null);
+var G__70905__delegate = function (args__$1){
+var vec__70653 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70653,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70653,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"content","content",15833224),new cljs.core.Keyword(null,"wb-text-block","wb-text-block",-2033665553),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70900 = function (var_args){
+var G__70905 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70901__i = 0, G__70901__a = new Array(arguments.length -  0);
-while (G__70901__i < G__70901__a.length) {G__70901__a[G__70901__i] = arguments[G__70901__i + 0]; ++G__70901__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70901__a,0,null);
+var G__70907__i = 0, G__70907__a = new Array(arguments.length -  0);
+while (G__70907__i < G__70907__a.length) {G__70907__a[G__70907__i] = arguments[G__70907__i + 0]; ++G__70907__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70907__a,0,null);
 } 
-return G__70900__delegate.call(this,args__$1);};
-G__70900.cljs$lang$maxFixedArity = 0;
-G__70900.cljs$lang$applyTo = (function (arglist__70902){
-var args__$1 = cljs.core.seq(arglist__70902);
-return G__70900__delegate(args__$1);
+return G__70905__delegate.call(this,args__$1);};
+G__70905.cljs$lang$maxFixedArity = 0;
+G__70905.cljs$lang$applyTo = (function (arglist__70908){
+var args__$1 = cljs.core.seq(arglist__70908);
+return G__70905__delegate(args__$1);
 });
-G__70900.cljs$core$IFn$_invoke$arity$variadic = G__70900__delegate;
-return G__70900;
+G__70905.cljs$core$IFn$_invoke$arity$variadic = G__70905__delegate;
+return G__70905;
 })()
 ;
 }));
@@ -507,15 +507,15 @@ return G__70900;
 (woolybear.ad.layout.text_block.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.text_block.cljs$lang$applyTo = (function (seq70693){
+(woolybear.ad.layout.text_block.cljs$lang$applyTo = (function (seq70648){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70693));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70648));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","text-block","woolybear.ad.layout/text-block",-846015342,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70705){
-return cljs.core.map_QMARK_(G__70705);
-})], null),(function (G__70705){
-return cljs.core.map_QMARK_(G__70705);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","text-block","woolybear.ad.layout/text-block",-846015342,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70665){
+return cljs.core.map_QMARK_(G__70665);
+})], null),(function (G__70665){
+return cljs.core.map_QMARK_(G__70665);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -524,14 +524,14 @@ return cljs.core.map_QMARK_(G__70705);
  */
 woolybear.ad.layout.centered = (function woolybear$ad$layout$centered(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70905 = arguments.length;
-var i__4865__auto___70906 = (0);
+var len__4864__auto___70909 = arguments.length;
+var i__4865__auto___70910 = (0);
 while(true){
-if((i__4865__auto___70906 < len__4864__auto___70905)){
-args__4870__auto__.push((arguments[i__4865__auto___70906]));
+if((i__4865__auto___70910 < len__4864__auto___70909)){
+args__4870__auto__.push((arguments[i__4865__auto___70910]));
 
-var G__70907 = (i__4865__auto___70906 + (1));
-i__4865__auto___70906 = G__70907;
+var G__70911 = (i__4865__auto___70910 + (1));
+i__4865__auto___70910 = G__70911;
 continue;
 } else {
 }
@@ -543,36 +543,36 @@ return woolybear.ad.layout.centered.cljs$core$IFn$_invoke$arity$variadic(argseq_
 });
 
 (woolybear.ad.layout.centered.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70714 = woolybear.ad.utils.extract_args(args);
-var map__70717 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70714,(0),null);
-var map__70717__$1 = cljs.core.__destructure_map(map__70717);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70717__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70717__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70714,(1),null);
+var vec__70677 = woolybear.ad.utils.extract_args(args);
+var map__70680 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70677,(0),null);
+var map__70680__$1 = cljs.core.__destructure_map(map__70680);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70680__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70680__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70677,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70909__delegate = function (args__$1){
-var vec__70718 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70718,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70718,(1),null);
+var G__70912__delegate = function (args__$1){
+var vec__70681 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70681,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70681,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"container","container",-1736937707),new cljs.core.Keyword(null,"wb-centered","wb-centered",-104933398),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70909 = function (var_args){
+var G__70912 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70913__i = 0, G__70913__a = new Array(arguments.length -  0);
-while (G__70913__i < G__70913__a.length) {G__70913__a[G__70913__i] = arguments[G__70913__i + 0]; ++G__70913__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70913__a,0,null);
+var G__70916__i = 0, G__70916__a = new Array(arguments.length -  0);
+while (G__70916__i < G__70916__a.length) {G__70916__a[G__70916__i] = arguments[G__70916__i + 0]; ++G__70916__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70916__a,0,null);
 } 
-return G__70909__delegate.call(this,args__$1);};
-G__70909.cljs$lang$maxFixedArity = 0;
-G__70909.cljs$lang$applyTo = (function (arglist__70914){
-var args__$1 = cljs.core.seq(arglist__70914);
-return G__70909__delegate(args__$1);
+return G__70912__delegate.call(this,args__$1);};
+G__70912.cljs$lang$maxFixedArity = 0;
+G__70912.cljs$lang$applyTo = (function (arglist__70917){
+var args__$1 = cljs.core.seq(arglist__70917);
+return G__70912__delegate(args__$1);
 });
-G__70909.cljs$core$IFn$_invoke$arity$variadic = G__70909__delegate;
-return G__70909;
+G__70912.cljs$core$IFn$_invoke$arity$variadic = G__70912__delegate;
+return G__70912;
 })()
 ;
 }));
@@ -580,15 +580,15 @@ return G__70909;
 (woolybear.ad.layout.centered.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.centered.cljs$lang$applyTo = (function (seq70713){
+(woolybear.ad.layout.centered.cljs$lang$applyTo = (function (seq70672){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70713));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70672));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","centered","woolybear.ad.layout/centered",1669955587,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70721){
-return cljs.core.map_QMARK_(G__70721);
-})], null),(function (G__70721){
-return cljs.core.map_QMARK_(G__70721);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","centered","woolybear.ad.layout/centered",1669955587,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70691){
+return cljs.core.map_QMARK_(G__70691);
+})], null),(function (G__70691){
+return cljs.core.map_QMARK_(G__70691);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -597,14 +597,14 @@ return cljs.core.map_QMARK_(G__70721);
  */
 woolybear.ad.layout.caption = (function woolybear$ad$layout$caption(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70915 = arguments.length;
-var i__4865__auto___70916 = (0);
+var len__4864__auto___70919 = arguments.length;
+var i__4865__auto___70920 = (0);
 while(true){
-if((i__4865__auto___70916 < len__4864__auto___70915)){
-args__4870__auto__.push((arguments[i__4865__auto___70916]));
+if((i__4865__auto___70920 < len__4864__auto___70919)){
+args__4870__auto__.push((arguments[i__4865__auto___70920]));
 
-var G__70917 = (i__4865__auto___70916 + (1));
-i__4865__auto___70916 = G__70917;
+var G__70921 = (i__4865__auto___70920 + (1));
+i__4865__auto___70920 = G__70921;
 continue;
 } else {
 }
@@ -616,36 +616,36 @@ return woolybear.ad.layout.caption.cljs$core$IFn$_invoke$arity$variadic(argseq__
 });
 
 (woolybear.ad.layout.caption.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70732 = woolybear.ad.utils.extract_args(args);
-var map__70735 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70732,(0),null);
-var map__70735__$1 = cljs.core.__destructure_map(map__70735);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70735__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70735__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70732,(1),null);
+var vec__70703 = woolybear.ad.utils.extract_args(args);
+var map__70706 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70703,(0),null);
+var map__70706__$1 = cljs.core.__destructure_map(map__70706);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70706__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70706__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70703,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70929__delegate = function (args__$1){
-var vec__70736 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70736,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70736,(1),null);
+var G__70922__delegate = function (args__$1){
+var vec__70708 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70708,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70708,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"wb-caption","wb-caption",-1579190567),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70929 = function (var_args){
+var G__70922 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70930__i = 0, G__70930__a = new Array(arguments.length -  0);
-while (G__70930__i < G__70930__a.length) {G__70930__a[G__70930__i] = arguments[G__70930__i + 0]; ++G__70930__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70930__a,0,null);
+var G__70925__i = 0, G__70925__a = new Array(arguments.length -  0);
+while (G__70925__i < G__70925__a.length) {G__70925__a[G__70925__i] = arguments[G__70925__i + 0]; ++G__70925__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70925__a,0,null);
 } 
-return G__70929__delegate.call(this,args__$1);};
-G__70929.cljs$lang$maxFixedArity = 0;
-G__70929.cljs$lang$applyTo = (function (arglist__70931){
-var args__$1 = cljs.core.seq(arglist__70931);
-return G__70929__delegate(args__$1);
+return G__70922__delegate.call(this,args__$1);};
+G__70922.cljs$lang$maxFixedArity = 0;
+G__70922.cljs$lang$applyTo = (function (arglist__70926){
+var args__$1 = cljs.core.seq(arglist__70926);
+return G__70922__delegate(args__$1);
 });
-G__70929.cljs$core$IFn$_invoke$arity$variadic = G__70929__delegate;
-return G__70929;
+G__70922.cljs$core$IFn$_invoke$arity$variadic = G__70922__delegate;
+return G__70922;
 })()
 ;
 }));
@@ -653,15 +653,15 @@ return G__70929;
 (woolybear.ad.layout.caption.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.caption.cljs$lang$applyTo = (function (seq70723){
+(woolybear.ad.layout.caption.cljs$lang$applyTo = (function (seq70699){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70723));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70699));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","caption","woolybear.ad.layout/caption",23480296,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70739){
-return cljs.core.map_QMARK_(G__70739);
-})], null),(function (G__70739){
-return cljs.core.map_QMARK_(G__70739);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","caption","woolybear.ad.layout/caption",23480296,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70712){
+return cljs.core.map_QMARK_(G__70712);
+})], null),(function (G__70712){
+return cljs.core.map_QMARK_(G__70712);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -670,14 +670,14 @@ return cljs.core.map_QMARK_(G__70739);
  */
 woolybear.ad.layout.frame = (function woolybear$ad$layout$frame(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70932 = arguments.length;
-var i__4865__auto___70933 = (0);
+var len__4864__auto___70927 = arguments.length;
+var i__4865__auto___70928 = (0);
 while(true){
-if((i__4865__auto___70933 < len__4864__auto___70932)){
-args__4870__auto__.push((arguments[i__4865__auto___70933]));
+if((i__4865__auto___70928 < len__4864__auto___70927)){
+args__4870__auto__.push((arguments[i__4865__auto___70928]));
 
-var G__70934 = (i__4865__auto___70933 + (1));
-i__4865__auto___70933 = G__70934;
+var G__70929 = (i__4865__auto___70928 + (1));
+i__4865__auto___70928 = G__70929;
 continue;
 } else {
 }
@@ -689,36 +689,36 @@ return woolybear.ad.layout.frame.cljs$core$IFn$_invoke$arity$variadic(argseq__48
 });
 
 (woolybear.ad.layout.frame.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70741 = woolybear.ad.utils.extract_args(args);
-var map__70744 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70741,(0),null);
-var map__70744__$1 = cljs.core.__destructure_map(map__70744);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70744__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70744__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70741,(1),null);
+var vec__70722 = woolybear.ad.utils.extract_args(args);
+var map__70725 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70722,(0),null);
+var map__70725__$1 = cljs.core.__destructure_map(map__70725);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70725__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70725__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70722,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70935__delegate = function (args__$1){
-var vec__70748 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70748,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70748,(1),null);
+var G__70930__delegate = function (args__$1){
+var vec__70726 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70726,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70726,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"box","box",1530920394),new cljs.core.Keyword(null,"wb-frame","wb-frame",1523785400),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70935 = function (var_args){
+var G__70930 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70936__i = 0, G__70936__a = new Array(arguments.length -  0);
-while (G__70936__i < G__70936__a.length) {G__70936__a[G__70936__i] = arguments[G__70936__i + 0]; ++G__70936__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70936__a,0,null);
+var G__70933__i = 0, G__70933__a = new Array(arguments.length -  0);
+while (G__70933__i < G__70933__a.length) {G__70933__a[G__70933__i] = arguments[G__70933__i + 0]; ++G__70933__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70933__a,0,null);
 } 
-return G__70935__delegate.call(this,args__$1);};
-G__70935.cljs$lang$maxFixedArity = 0;
-G__70935.cljs$lang$applyTo = (function (arglist__70937){
-var args__$1 = cljs.core.seq(arglist__70937);
-return G__70935__delegate(args__$1);
+return G__70930__delegate.call(this,args__$1);};
+G__70930.cljs$lang$maxFixedArity = 0;
+G__70930.cljs$lang$applyTo = (function (arglist__70934){
+var args__$1 = cljs.core.seq(arglist__70934);
+return G__70930__delegate(args__$1);
 });
-G__70935.cljs$core$IFn$_invoke$arity$variadic = G__70935__delegate;
-return G__70935;
+G__70930.cljs$core$IFn$_invoke$arity$variadic = G__70930__delegate;
+return G__70930;
 })()
 ;
 }));
@@ -726,15 +726,15 @@ return G__70935;
 (woolybear.ad.layout.frame.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.frame.cljs$lang$applyTo = (function (seq70740){
+(woolybear.ad.layout.frame.cljs$lang$applyTo = (function (seq70720){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70740));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70720));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","frame","woolybear.ad.layout/frame",-614377238,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70751){
-return cljs.core.map_QMARK_(G__70751);
-})], null),(function (G__70751){
-return cljs.core.map_QMARK_(G__70751);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","frame","woolybear.ad.layout/frame",-614377238,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70734){
+return cljs.core.map_QMARK_(G__70734);
+})], null),(function (G__70734){
+return cljs.core.map_QMARK_(G__70734);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -745,14 +745,14 @@ return cljs.core.map_QMARK_(G__70751);
  */
 woolybear.ad.layout.columns = (function woolybear$ad$layout$columns(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70941 = arguments.length;
-var i__4865__auto___70942 = (0);
+var len__4864__auto___70939 = arguments.length;
+var i__4865__auto___70940 = (0);
 while(true){
-if((i__4865__auto___70942 < len__4864__auto___70941)){
-args__4870__auto__.push((arguments[i__4865__auto___70942]));
+if((i__4865__auto___70940 < len__4864__auto___70939)){
+args__4870__auto__.push((arguments[i__4865__auto___70940]));
 
-var G__70943 = (i__4865__auto___70942 + (1));
-i__4865__auto___70942 = G__70943;
+var G__70941 = (i__4865__auto___70940 + (1));
+i__4865__auto___70940 = G__70941;
 continue;
 } else {
 }
@@ -764,36 +764,36 @@ return woolybear.ad.layout.columns.cljs$core$IFn$_invoke$arity$variadic(argseq__
 });
 
 (woolybear.ad.layout.columns.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70753 = woolybear.ad.utils.extract_args(args);
-var map__70756 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70753,(0),null);
-var map__70756__$1 = cljs.core.__destructure_map(map__70756);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70756__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70756__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70753,(1),null);
+var vec__70743 = woolybear.ad.utils.extract_args(args);
+var map__70746 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70743,(0),null);
+var map__70746__$1 = cljs.core.__destructure_map(map__70746);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70746__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70746__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70743,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70953__delegate = function (args__$1){
-var vec__70757 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70757,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70757,(1),null);
+var G__70942__delegate = function (args__$1){
+var vec__70747 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70747,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70747,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"columns","columns",1998437288),new cljs.core.Keyword(null,"wb-columns","wb-columns",2045610332),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70953 = function (var_args){
+var G__70942 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70954__i = 0, G__70954__a = new Array(arguments.length -  0);
-while (G__70954__i < G__70954__a.length) {G__70954__a[G__70954__i] = arguments[G__70954__i + 0]; ++G__70954__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70954__a,0,null);
+var G__70945__i = 0, G__70945__a = new Array(arguments.length -  0);
+while (G__70945__i < G__70945__a.length) {G__70945__a[G__70945__i] = arguments[G__70945__i + 0]; ++G__70945__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70945__a,0,null);
 } 
-return G__70953__delegate.call(this,args__$1);};
-G__70953.cljs$lang$maxFixedArity = 0;
-G__70953.cljs$lang$applyTo = (function (arglist__70955){
-var args__$1 = cljs.core.seq(arglist__70955);
-return G__70953__delegate(args__$1);
+return G__70942__delegate.call(this,args__$1);};
+G__70942.cljs$lang$maxFixedArity = 0;
+G__70942.cljs$lang$applyTo = (function (arglist__70946){
+var args__$1 = cljs.core.seq(arglist__70946);
+return G__70942__delegate(args__$1);
 });
-G__70953.cljs$core$IFn$_invoke$arity$variadic = G__70953__delegate;
-return G__70953;
+G__70942.cljs$core$IFn$_invoke$arity$variadic = G__70942__delegate;
+return G__70942;
 })()
 ;
 }));
@@ -801,15 +801,15 @@ return G__70953;
 (woolybear.ad.layout.columns.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.columns.cljs$lang$applyTo = (function (seq70752){
+(woolybear.ad.layout.columns.cljs$lang$applyTo = (function (seq70738){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70752));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70738));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","columns","woolybear.ad.layout/columns",-126852370,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70760){
-return cljs.core.map_QMARK_(G__70760);
-})], null),(function (G__70760){
-return cljs.core.map_QMARK_(G__70760);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","columns","woolybear.ad.layout/columns",-126852370,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70752){
+return cljs.core.map_QMARK_(G__70752);
+})], null),(function (G__70752){
+return cljs.core.map_QMARK_(G__70752);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -821,14 +821,14 @@ return cljs.core.map_QMARK_(G__70760);
  */
 woolybear.ad.layout.column = (function woolybear$ad$layout$column(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70956 = arguments.length;
-var i__4865__auto___70957 = (0);
+var len__4864__auto___70947 = arguments.length;
+var i__4865__auto___70948 = (0);
 while(true){
-if((i__4865__auto___70957 < len__4864__auto___70956)){
-args__4870__auto__.push((arguments[i__4865__auto___70957]));
+if((i__4865__auto___70948 < len__4864__auto___70947)){
+args__4870__auto__.push((arguments[i__4865__auto___70948]));
 
-var G__70958 = (i__4865__auto___70957 + (1));
-i__4865__auto___70957 = G__70958;
+var G__70949 = (i__4865__auto___70948 + (1));
+i__4865__auto___70948 = G__70949;
 continue;
 } else {
 }
@@ -840,36 +840,36 @@ return woolybear.ad.layout.column.cljs$core$IFn$_invoke$arity$variadic(argseq__4
 });
 
 (woolybear.ad.layout.column.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70765 = woolybear.ad.utils.extract_args(args);
-var map__70768 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70765,(0),null);
-var map__70768__$1 = cljs.core.__destructure_map(map__70768);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70768__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70768__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70765,(1),null);
+var vec__70758 = woolybear.ad.utils.extract_args(args);
+var map__70761 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70758,(0),null);
+var map__70761__$1 = cljs.core.__destructure_map(map__70761);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70761__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70761__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70758,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70959__delegate = function (args__$1){
-var vec__70769 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70769,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70769,(1),null);
+var G__70950__delegate = function (args__$1){
+var vec__70763 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70763,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70763,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"column","column",2078222095),new cljs.core.Keyword(null,"wb-column","wb-column",121230934),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70959 = function (var_args){
+var G__70950 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70960__i = 0, G__70960__a = new Array(arguments.length -  0);
-while (G__70960__i < G__70960__a.length) {G__70960__a[G__70960__i] = arguments[G__70960__i + 0]; ++G__70960__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70960__a,0,null);
+var G__70951__i = 0, G__70951__a = new Array(arguments.length -  0);
+while (G__70951__i < G__70951__a.length) {G__70951__a[G__70951__i] = arguments[G__70951__i + 0]; ++G__70951__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70951__a,0,null);
 } 
-return G__70959__delegate.call(this,args__$1);};
-G__70959.cljs$lang$maxFixedArity = 0;
-G__70959.cljs$lang$applyTo = (function (arglist__70961){
-var args__$1 = cljs.core.seq(arglist__70961);
-return G__70959__delegate(args__$1);
+return G__70950__delegate.call(this,args__$1);};
+G__70950.cljs$lang$maxFixedArity = 0;
+G__70950.cljs$lang$applyTo = (function (arglist__70952){
+var args__$1 = cljs.core.seq(arglist__70952);
+return G__70950__delegate(args__$1);
 });
-G__70959.cljs$core$IFn$_invoke$arity$variadic = G__70959__delegate;
-return G__70959;
+G__70950.cljs$core$IFn$_invoke$arity$variadic = G__70950__delegate;
+return G__70950;
 })()
 ;
 }));
@@ -877,15 +877,15 @@ return G__70959;
 (woolybear.ad.layout.column.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.column.cljs$lang$applyTo = (function (seq70761){
+(woolybear.ad.layout.column.cljs$lang$applyTo = (function (seq70757){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70761));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70757));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","column","woolybear.ad.layout/column",-1169322919,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70776){
-return cljs.core.map_QMARK_(G__70776);
-})], null),(function (G__70776){
-return cljs.core.map_QMARK_(G__70776);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","column","woolybear.ad.layout/column",-1169322919,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70767){
+return cljs.core.map_QMARK_(G__70767);
+})], null),(function (G__70767){
+return cljs.core.map_QMARK_(G__70767);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -895,14 +895,14 @@ return cljs.core.map_QMARK_(G__70776);
  */
 woolybear.ad.layout.padded = (function woolybear$ad$layout$padded(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70963 = arguments.length;
-var i__4865__auto___70964 = (0);
+var len__4864__auto___70954 = arguments.length;
+var i__4865__auto___70955 = (0);
 while(true){
-if((i__4865__auto___70964 < len__4864__auto___70963)){
-args__4870__auto__.push((arguments[i__4865__auto___70964]));
+if((i__4865__auto___70955 < len__4864__auto___70954)){
+args__4870__auto__.push((arguments[i__4865__auto___70955]));
 
-var G__70965 = (i__4865__auto___70964 + (1));
-i__4865__auto___70964 = G__70965;
+var G__70956 = (i__4865__auto___70955 + (1));
+i__4865__auto___70955 = G__70956;
 continue;
 } else {
 }
@@ -914,36 +914,36 @@ return woolybear.ad.layout.padded.cljs$core$IFn$_invoke$arity$variadic(argseq__4
 });
 
 (woolybear.ad.layout.padded.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70779 = woolybear.ad.utils.extract_args(args);
-var map__70782 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70779,(0),null);
-var map__70782__$1 = cljs.core.__destructure_map(map__70782);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70782__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70782__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70779,(1),null);
+var vec__70776 = woolybear.ad.utils.extract_args(args);
+var map__70779 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70776,(0),null);
+var map__70779__$1 = cljs.core.__destructure_map(map__70779);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70779__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70779__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70776,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70966__delegate = function (args__$1){
-var vec__70783 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70783,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70783,(1),null);
+var G__70957__delegate = function (args__$1){
+var vec__70781 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70781,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70781,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"wb-padded","wb-padded",1088866598),extra_classes,dynamic_classes], 0))], null)], null),children);
 };
-var G__70966 = function (var_args){
+var G__70957 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70972__i = 0, G__70972__a = new Array(arguments.length -  0);
-while (G__70972__i < G__70972__a.length) {G__70972__a[G__70972__i] = arguments[G__70972__i + 0]; ++G__70972__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70972__a,0,null);
+var G__70958__i = 0, G__70958__a = new Array(arguments.length -  0);
+while (G__70958__i < G__70958__a.length) {G__70958__a[G__70958__i] = arguments[G__70958__i + 0]; ++G__70958__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70958__a,0,null);
 } 
-return G__70966__delegate.call(this,args__$1);};
-G__70966.cljs$lang$maxFixedArity = 0;
-G__70966.cljs$lang$applyTo = (function (arglist__70973){
-var args__$1 = cljs.core.seq(arglist__70973);
-return G__70966__delegate(args__$1);
+return G__70957__delegate.call(this,args__$1);};
+G__70957.cljs$lang$maxFixedArity = 0;
+G__70957.cljs$lang$applyTo = (function (arglist__70959){
+var args__$1 = cljs.core.seq(arglist__70959);
+return G__70957__delegate(args__$1);
 });
-G__70966.cljs$core$IFn$_invoke$arity$variadic = G__70966__delegate;
-return G__70966;
+G__70957.cljs$core$IFn$_invoke$arity$variadic = G__70957__delegate;
+return G__70957;
 })()
 ;
 }));
@@ -951,15 +951,15 @@ return G__70966;
 (woolybear.ad.layout.padded.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.padded.cljs$lang$applyTo = (function (seq70777){
+(woolybear.ad.layout.padded.cljs$lang$applyTo = (function (seq70775){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70777));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70775));
 }));
 
-cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","padded","woolybear.ad.layout/padded",1473497980,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70786){
-return cljs.core.map_QMARK_(G__70786);
-})], null),(function (G__70786){
-return cljs.core.map_QMARK_(G__70786);
+cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","padded","woolybear.ad.layout/padded",1473497980,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"opts","opts",155075701),new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.map_spec_impl(cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"req-un","req-un",1074571008),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.Keyword(null,"gfn","gfn",791517474),new cljs.core.Keyword(null,"pred-exprs","pred-exprs",1792271395),new cljs.core.Keyword(null,"keys-pred","keys-pred",858984739),new cljs.core.Keyword(null,"opt-keys","opt-keys",1262688261),new cljs.core.Keyword(null,"req-specs","req-specs",553962313),new cljs.core.Keyword(null,"req","req",-326448303),new cljs.core.Keyword(null,"req-keys","req-keys",514319221),new cljs.core.Keyword(null,"opt-specs","opt-specs",-384905450),new cljs.core.Keyword(null,"pred-forms","pred-forms",172611832),new cljs.core.Keyword(null,"opt","opt",-794706369)],[null,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),null,new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(function (G__70785){
+return cljs.core.map_QMARK_(G__70785);
+})], null),(function (G__70785){
+return cljs.core.map_QMARK_(G__70785);
 }),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843),new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596)], null),cljs.core.PersistentVector.EMPTY,null,cljs.core.PersistentVector.EMPTY,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.core","fn","cljs.core/fn",-1065745098,null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Symbol(null,"%","%",-950237169,null)], null),cljs.core.list(new cljs.core.Symbol("cljs.core","map?","cljs.core/map?",-1390345523,null),new cljs.core.Symbol(null,"%","%",-950237169,null)))], null),null])),cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"opts","opts",155075701),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","keys","cljs.spec.alpha/keys",1109346032,null),new cljs.core.Keyword(null,"opt-un","opt-un",883442496),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword("ad","extra-classes","ad/extra-classes",-630830756),new cljs.core.Keyword("ad","subscribe-to-classes","ad/subscribe-to-classes",173180261)], null)),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
 /**
  * 
@@ -969,14 +969,14 @@ return cljs.core.map_QMARK_(G__70786);
  */
 woolybear.ad.layout.zero_pad = (function woolybear$ad$layout$zero_pad(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70974 = arguments.length;
-var i__4865__auto___70975 = (0);
+var len__4864__auto___70960 = arguments.length;
+var i__4865__auto___70961 = (0);
 while(true){
-if((i__4865__auto___70975 < len__4864__auto___70974)){
-args__4870__auto__.push((arguments[i__4865__auto___70975]));
+if((i__4865__auto___70961 < len__4864__auto___70960)){
+args__4870__auto__.push((arguments[i__4865__auto___70961]));
 
-var G__70976 = (i__4865__auto___70975 + (1));
-i__4865__auto___70975 = G__70976;
+var G__70962 = (i__4865__auto___70961 + (1));
+i__4865__auto___70961 = G__70962;
 continue;
 } else {
 }
@@ -994,9 +994,9 @@ return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVect
 (woolybear.ad.layout.zero_pad.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.zero_pad.cljs$lang$applyTo = (function (seq70796){
+(woolybear.ad.layout.zero_pad.cljs$lang$applyTo = (function (seq70793){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70796));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70793));
 }));
 
 cljs.spec.alpha.def_impl(new cljs.core.Symbol("woolybear.ad.layout","zero-pad","woolybear.ad.layout/zero-pad",-1416385755,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","fspec","cljs.spec.alpha/fspec",-1289128341,null),new cljs.core.Keyword(null,"args","args",1315556576),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),new cljs.core.Keyword(null,"ret","ret",-468222814),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null)),cljs.spec.alpha.fspec_impl(cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.cat_impl(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"children","children",-940561982)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.spec.alpha.rep_PLUS_impl(new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null),cljs.core.any_QMARK_)], null),new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))], null)),null,null),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","cat","cljs.spec.alpha/cat",-1471398329,null),new cljs.core.Keyword(null,"children","children",-940561982),cljs.core.list(new cljs.core.Symbol("cljs.spec.alpha","+","cljs.spec.alpha/+",2101263265,null),new cljs.core.Symbol("cljs.core","any?","cljs.core/any?",-2068111842,null))),cljs.spec.alpha.spec_impl.cljs$core$IFn$_invoke$arity$4(new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),cljs.core.vector_QMARK_,null,null),new cljs.core.Symbol("cljs.core","vector?","cljs.core/vector?",-1550392028,null),null,null,null));
@@ -1016,14 +1016,14 @@ return new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMP
  */
 woolybear.ad.layout.markdown_block = (function woolybear$ad$layout$markdown_block(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___70977 = arguments.length;
-var i__4865__auto___70978 = (0);
+var len__4864__auto___70964 = arguments.length;
+var i__4865__auto___70966 = (0);
 while(true){
-if((i__4865__auto___70978 < len__4864__auto___70977)){
-args__4870__auto__.push((arguments[i__4865__auto___70978]));
+if((i__4865__auto___70966 < len__4864__auto___70964)){
+args__4870__auto__.push((arguments[i__4865__auto___70966]));
 
-var G__70979 = (i__4865__auto___70978 + (1));
-i__4865__auto___70978 = G__70979;
+var G__70967 = (i__4865__auto___70966 + (1));
+i__4865__auto___70966 = G__70967;
 continue;
 } else {
 }
@@ -1035,38 +1035,38 @@ return woolybear.ad.layout.markdown_block.cljs$core$IFn$_invoke$arity$variadic(a
 });
 
 (woolybear.ad.layout.markdown_block.cljs$core$IFn$_invoke$arity$variadic = (function (args){
-var vec__70812 = woolybear.ad.utils.extract_args(args);
-var map__70815 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70812,(0),null);
-var map__70815__$1 = cljs.core.__destructure_map(map__70815);
-var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70815__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
-var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70815__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70812,(1),null);
+var vec__70801 = woolybear.ad.utils.extract_args(args);
+var map__70804 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70801,(0),null);
+var map__70804__$1 = cljs.core.__destructure_map(map__70804);
+var extra_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70804__$1,new cljs.core.Keyword(null,"extra-classes","extra-classes",-630819843));
+var subscribe_to_classes = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__70804__$1,new cljs.core.Keyword(null,"subscribe-to-classes","subscribe-to-classes",173193596));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70801,(1),null);
 var classes_sub = woolybear.ad.utils.subscribe_to(subscribe_to_classes);
 return (function() { 
-var G__70980__delegate = function (args__$1){
-var vec__70816 = woolybear.ad.utils.extract_args(args__$1);
-var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70816,(0),null);
-var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70816,(1),null);
+var G__70968__delegate = function (args__$1){
+var vec__70817 = woolybear.ad.utils.extract_args(args__$1);
+var ___$1 = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70817,(0),null);
+var children = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__70817,(1),null);
 var dynamic_classes = cljs.core.deref(classes_sub);
 return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"class","class",-2030961996),woolybear.ad.utils.css__GT_str.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.Keyword(null,"content","content",15833224),new cljs.core.Keyword(null,"wb-text-block","wb-text-block",-2033665553),extra_classes,dynamic_classes], 0))], null)], null),cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (c){
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,">",">",-555517146),shadow.js.shim.module$react_markdown,new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"source","source",-433931539),c], null)], null);
 }),children));
 };
-var G__70980 = function (var_args){
+var G__70968 = function (var_args){
 var args__$1 = null;
 if (arguments.length > 0) {
-var G__70982__i = 0, G__70982__a = new Array(arguments.length -  0);
-while (G__70982__i < G__70982__a.length) {G__70982__a[G__70982__i] = arguments[G__70982__i + 0]; ++G__70982__i;}
-  args__$1 = new cljs.core.IndexedSeq(G__70982__a,0,null);
+var G__70969__i = 0, G__70969__a = new Array(arguments.length -  0);
+while (G__70969__i < G__70969__a.length) {G__70969__a[G__70969__i] = arguments[G__70969__i + 0]; ++G__70969__i;}
+  args__$1 = new cljs.core.IndexedSeq(G__70969__a,0,null);
 } 
-return G__70980__delegate.call(this,args__$1);};
-G__70980.cljs$lang$maxFixedArity = 0;
-G__70980.cljs$lang$applyTo = (function (arglist__70983){
-var args__$1 = cljs.core.seq(arglist__70983);
-return G__70980__delegate(args__$1);
+return G__70968__delegate.call(this,args__$1);};
+G__70968.cljs$lang$maxFixedArity = 0;
+G__70968.cljs$lang$applyTo = (function (arglist__70970){
+var args__$1 = cljs.core.seq(arglist__70970);
+return G__70968__delegate(args__$1);
 });
-G__70980.cljs$core$IFn$_invoke$arity$variadic = G__70980__delegate;
-return G__70980;
+G__70968.cljs$core$IFn$_invoke$arity$variadic = G__70968__delegate;
+return G__70968;
 })()
 ;
 }));
@@ -1074,9 +1074,9 @@ return G__70980;
 (woolybear.ad.layout.markdown_block.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(woolybear.ad.layout.markdown_block.cljs$lang$applyTo = (function (seq70798){
+(woolybear.ad.layout.markdown_block.cljs$lang$applyTo = (function (seq70794){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70798));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq70794));
 }));
 
 

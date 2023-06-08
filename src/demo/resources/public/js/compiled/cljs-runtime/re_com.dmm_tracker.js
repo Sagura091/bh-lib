@@ -23,7 +23,7 @@ throw (new Error("Couldn't find addEventListener method in document-event-listen
  */
 re_com.dmm_tracker.IMouseMoveTracker = function(){};
 
-var re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$dyn_72850 = (function (this$,event){
+var re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$dyn_72833 = (function (this$,event){
 var x__4550__auto__ = (((this$ == null))?null:this$);
 var m__4551__auto__ = (re_com.dmm_tracker.captureMouseMoves[goog.typeOf(x__4550__auto__)]);
 if((!((m__4551__auto__ == null)))){
@@ -41,11 +41,11 @@ re_com.dmm_tracker.captureMouseMoves = (function re_com$dmm_tracker$captureMouse
 if((((!((this$ == null)))) && ((!((this$.re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$arity$2 == null)))))){
 return this$.re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$arity$2(this$,event);
 } else {
-return re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$dyn_72850(this$,event);
+return re_com$dmm_tracker$IMouseMoveTracker$captureMouseMoves$dyn_72833(this$,event);
 }
 });
 
-var re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$dyn_72854 = (function (this$,event){
+var re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$dyn_72834 = (function (this$,event){
 var x__4550__auto__ = (((this$ == null))?null:this$);
 var m__4551__auto__ = (re_com.dmm_tracker._releaseMouseMoves[goog.typeOf(x__4550__auto__)]);
 if((!((m__4551__auto__ == null)))){
@@ -63,11 +63,11 @@ re_com.dmm_tracker._releaseMouseMoves = (function re_com$dmm_tracker$_releaseMou
 if((((!((this$ == null)))) && ((!((this$.re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$arity$2 == null)))))){
 return this$.re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$arity$2(this$,event);
 } else {
-return re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$dyn_72854(this$,event);
+return re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$dyn_72834(this$,event);
 }
 });
 
-var re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$dyn_72855 = (function (this$,event){
+var re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$dyn_72836 = (function (this$,event){
 var x__4550__auto__ = (((this$ == null))?null:this$);
 var m__4551__auto__ = (re_com.dmm_tracker._onMouseMove[goog.typeOf(x__4550__auto__)]);
 if((!((m__4551__auto__ == null)))){
@@ -85,7 +85,7 @@ re_com.dmm_tracker._onMouseMove = (function re_com$dmm_tracker$_onMouseMove(this
 if((((!((this$ == null)))) && ((!((this$.re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$arity$2 == null)))))){
 return this$.re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$arity$2(this$,event);
 } else {
-return re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$dyn_72855(this$,event);
+return re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$dyn_72836(this$,event);
 }
 });
 
@@ -109,12 +109,12 @@ this.y = y;
 var self__ = this;
 var this$__$1 = this;
 if(((cljs.core.not(self__.eventMoveToken)) && (cljs.core.not(self__.eventUpToken)))){
-(self__.eventMoveToken = re_com.dmm_tracker.document_event_listener("mousemove",(function (p1__72833_SHARP_){
-return this$__$1.re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$arity$2(null,p1__72833_SHARP_);
+(self__.eventMoveToken = re_com.dmm_tracker.document_event_listener("mousemove",(function (p1__72816_SHARP_){
+return this$__$1.re_com$dmm_tracker$IMouseMoveTracker$_onMouseMove$arity$2(null,p1__72816_SHARP_);
 })));
 
-(self__.eventUpToken = re_com.dmm_tracker.document_event_listener("mouseup",(function (p1__72834_SHARP_){
-return this$__$1.re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$arity$2(null,p1__72834_SHARP_);
+(self__.eventUpToken = re_com.dmm_tracker.document_event_listener("mouseup",(function (p1__72817_SHARP_){
+return this$__$1.re_com$dmm_tracker$IMouseMoveTracker$_releaseMouseMoves$arity$2(null,p1__72817_SHARP_);
 })));
 } else {
 }
@@ -154,10 +154,10 @@ if(cljs.core.truth_(self__.isDragging_QMARK_)){
 
 (self__.y = null);
 
-var G__72836 = event.ctrlKey;
-var G__72837 = event.shiftKey;
-var G__72838 = event;
-return (self__.on_drag_end.cljs$core$IFn$_invoke$arity$3 ? self__.on_drag_end.cljs$core$IFn$_invoke$arity$3(G__72836,G__72837,G__72838) : self__.on_drag_end.call(null,G__72836,G__72837,G__72838));
+var G__72821 = event.ctrlKey;
+var G__72822 = event.shiftKey;
+var G__72823 = event;
+return (self__.on_drag_end.cljs$core$IFn$_invoke$arity$3 ? self__.on_drag_end.cljs$core$IFn$_invoke$arity$3(G__72821,G__72822,G__72823) : self__.on_drag_end.call(null,G__72821,G__72822,G__72823));
 } else {
 return null;
 }
@@ -170,14 +170,14 @@ var curr_x = event.clientX;
 var curr_y = event.clientY;
 var delta_x = (curr_x - self__.x);
 var delta_y = (curr_y - self__.y);
-var G__72841_72856 = delta_x;
-var G__72842_72857 = delta_y;
-var G__72843_72858 = curr_x;
-var G__72844_72859 = curr_y;
-var G__72845_72860 = event.ctrlKey;
-var G__72846_72861 = event.shiftKey;
-var G__72847_72862 = event;
-(self__.on_change.cljs$core$IFn$_invoke$arity$7 ? self__.on_change.cljs$core$IFn$_invoke$arity$7(G__72841_72856,G__72842_72857,G__72843_72858,G__72844_72859,G__72845_72860,G__72846_72861,G__72847_72862) : self__.on_change.call(null,G__72841_72856,G__72842_72857,G__72843_72858,G__72844_72859,G__72845_72860,G__72846_72861,G__72847_72862));
+var G__72824_72837 = delta_x;
+var G__72825_72838 = delta_y;
+var G__72826_72839 = curr_x;
+var G__72827_72840 = curr_y;
+var G__72828_72841 = event.ctrlKey;
+var G__72829_72842 = event.shiftKey;
+var G__72830_72843 = event;
+(self__.on_change.cljs$core$IFn$_invoke$arity$7 ? self__.on_change.cljs$core$IFn$_invoke$arity$7(G__72824_72837,G__72825_72838,G__72826_72839,G__72827_72840,G__72828_72841,G__72829_72842,G__72830_72843) : self__.on_change.call(null,G__72824_72837,G__72825_72838,G__72826_72839,G__72827_72840,G__72828_72841,G__72829_72842,G__72830_72843));
 
 (self__.x = curr_x);
 

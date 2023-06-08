@@ -22,9 +22,9 @@ module.exports = {
       },
     },
 
-    entry: ['./src/demo/resources/public/js/compiled/requires.js'],
+    entry: ['./demo/resources/public/js/compiled/requires.js'],
     output: {
-        path: path.resolve(__dirname, './src/demo/resources/public/js/compiled'),
+        path: path.resolve(__dirname, './demo/resources/public/js/compiled'),
         filename: 'bundle.js',
         sourcePrefix: '',
         //clean: true,

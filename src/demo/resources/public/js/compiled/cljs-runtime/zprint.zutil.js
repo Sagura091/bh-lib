@@ -16,8 +16,8 @@ zprint.zutil.whitespace_QMARK_ = (function zprint$zutil$whitespace_QMARK_(zloc){
 return ((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.tag.call(null,zloc)),new cljs.core.Keyword(null,"whitespace","whitespace",-1340035483))) || (((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.tag.call(null,zloc)),new cljs.core.Keyword(null,"newline","newline",1790071323))) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.tag.call(null,zloc)),new cljs.core.Keyword(null,"comma","comma",1699024745))))));
 });
 zprint.zutil.skip_whitespace = (function zprint$zutil$skip_whitespace(var_args){
-var G__53505 = arguments.length;
-switch (G__53505) {
+var G__53472 = arguments.length;
+switch (G__53472) {
 case 1:
 return zprint.zutil.skip_whitespace.cljs$core$IFn$_invoke$arity$1((arguments[(0)]));
 
@@ -56,9 +56,9 @@ zprint.zutil.zreplace = rewrite_clj.zip.editz.replace;
  *   case, floc isn't a zipper, but was turned into a path early on.
  */
 zprint.zutil.zfocus = (function zprint$zutil$zfocus(zloc,floc){
-var vec__53506 = (zprint.zutil.find_root_and_path.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.find_root_and_path.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.find_root_and_path.call(null,zloc));
-var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53506,(0),null);
-var zpath = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53506,(1),null);
+var vec__53473 = (zprint.zutil.find_root_and_path.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.find_root_and_path.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.find_root_and_path.call(null,zloc));
+var _ = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53473,(0),null);
+var zpath = cljs.core.nth.cljs$core$IFn$_invoke$arity$3(vec__53473,(1),null);
 return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(zpath,floc);
 });
 /**
@@ -212,44 +212,44 @@ return null;
  * Find the third non-whitespace zloc inside of this zloc.
  */
 zprint.zutil.zthird = (function zprint$zutil$zthird(zloc){
-var G__53509 = zprint.zutil.zfirst(zloc);
-var G__53509__$1 = (((G__53509 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53509) : zprint.zutil.right_STAR_.call(null,G__53509)));
-var G__53509__$2 = (((G__53509__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53509__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53509__$1)));
-var G__53509__$3 = (((G__53509__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53509__$2) : zprint.zutil.right_STAR_.call(null,G__53509__$2)));
-if((G__53509__$3 == null)){
+var G__53482 = zprint.zutil.zfirst(zloc);
+var G__53482__$1 = (((G__53482 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53482) : zprint.zutil.right_STAR_.call(null,G__53482)));
+var G__53482__$2 = (((G__53482__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53482__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53482__$1)));
+var G__53482__$3 = (((G__53482__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53482__$2) : zprint.zutil.right_STAR_.call(null,G__53482__$2)));
+if((G__53482__$3 == null)){
 return null;
 } else {
-return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53509__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53509__$3));
+return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53482__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53482__$3));
 }
 });
 /**
  * Find the third non-whitespace zloc inside of this zloc.
  */
 zprint.zutil.zthird_no_comment = (function zprint$zutil$zthird_no_comment(zloc){
-var G__53510 = zprint.zutil.zfirst_no_comment(zloc);
-var G__53510__$1 = (((G__53510 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53510) : zprint.zutil.right_STAR_.call(null,G__53510)));
-var G__53510__$2 = (((G__53510__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53510__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53510__$1)));
-var G__53510__$3 = (((G__53510__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53510__$2) : zprint.zutil.right_STAR_.call(null,G__53510__$2)));
-if((G__53510__$3 == null)){
+var G__53483 = zprint.zutil.zfirst_no_comment(zloc);
+var G__53483__$1 = (((G__53483 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53483) : zprint.zutil.right_STAR_.call(null,G__53483)));
+var G__53483__$2 = (((G__53483__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53483__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53483__$1)));
+var G__53483__$3 = (((G__53483__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53483__$2) : zprint.zutil.right_STAR_.call(null,G__53483__$2)));
+if((G__53483__$3 == null)){
 return null;
 } else {
-return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53510__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53510__$3));
+return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53483__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_or_comment_QMARK_,G__53483__$3));
 }
 });
 /**
  * Find the fourth non-whitespace zloc inside of this zloc.
  */
 zprint.zutil.zfourth = (function zprint$zutil$zfourth(zloc){
-var G__53511 = zprint.zutil.zfirst(zloc);
-var G__53511__$1 = (((G__53511 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53511) : zprint.zutil.right_STAR_.call(null,G__53511)));
-var G__53511__$2 = (((G__53511__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$1)));
-var G__53511__$3 = (((G__53511__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53511__$2) : zprint.zutil.right_STAR_.call(null,G__53511__$2)));
-var G__53511__$4 = (((G__53511__$3 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$3)));
-var G__53511__$5 = (((G__53511__$4 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53511__$4) : zprint.zutil.right_STAR_.call(null,G__53511__$4)));
-if((G__53511__$5 == null)){
+var G__53484 = zprint.zutil.zfirst(zloc);
+var G__53484__$1 = (((G__53484 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53484) : zprint.zutil.right_STAR_.call(null,G__53484)));
+var G__53484__$2 = (((G__53484__$1 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$1) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$1)));
+var G__53484__$3 = (((G__53484__$2 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53484__$2) : zprint.zutil.right_STAR_.call(null,G__53484__$2)));
+var G__53484__$4 = (((G__53484__$3 == null))?null:(zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$3) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$3)));
+var G__53484__$5 = (((G__53484__$4 == null))?null:(zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(G__53484__$4) : zprint.zutil.right_STAR_.call(null,G__53484__$4)));
+if((G__53484__$5 == null)){
 return null;
 } else {
-return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$5) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53511__$5));
+return (zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3 ? zprint.zutil.skip.cljs$core$IFn$_invoke$arity$3(zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$5) : zprint.zutil.skip.call(null,zprint.zutil.right_STAR_,zprint.zutil.whitespace_QMARK_,G__53484__$5));
 }
 });
 /**
@@ -297,10 +297,10 @@ while(true){
 if(cljs.core.not(nloc)){
 return ploc;
 } else {
-var G__53699 = zprint.zutil.zrightnws(nloc);
-var G__53700 = nloc;
-nloc = G__53699;
-ploc = G__53700;
+var G__53697 = zprint.zutil.zrightnws(nloc);
+var G__53698 = nloc;
+nloc = G__53697;
+ploc = G__53698;
 continue;
 }
 break;
@@ -332,10 +332,10 @@ while(true){
 if(cljs.core.not(nloc)){
 return ploc;
 } else {
-var G__53701 = zprint.zutil.zleftnws(nloc);
-var G__53702 = nloc;
-nloc = G__53701;
-ploc = G__53702;
+var G__53699 = zprint.zutil.zleftnws(nloc);
+var G__53700 = nloc;
+nloc = G__53699;
+ploc = G__53700;
 continue;
 }
 break;
@@ -363,10 +363,10 @@ while(true){
 if((((nloc == null)) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(i,(0))))){
 return nloc;
 } else {
-var G__53703 = zprint.zutil.zrightnws(nloc);
-var G__53704 = (i - (1));
-nloc = G__53703;
-i = G__53704;
+var G__53701 = zprint.zutil.zrightnws(nloc);
+var G__53702 = (i - (1));
+nloc = G__53701;
+i = G__53702;
 continue;
 }
 break;
@@ -384,10 +384,10 @@ if((!((nloc == null)))){
 if(cljs.core.truth_((zthing_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zthing_QMARK_.cljs$core$IFn$_invoke$arity$1(nloc) : zthing_QMARK_.call(null,nloc)))){
 return i;
 } else {
-var G__53705 = zprint.zutil.zrightnws(nloc);
-var G__53706 = (i + (1));
-nloc = G__53705;
-i = G__53706;
+var G__53703 = zprint.zutil.zrightnws(nloc);
+var G__53704 = (i + (1));
+nloc = G__53703;
+i = G__53704;
 continue;
 }
 } else {
@@ -398,8 +398,8 @@ break;
 });
 zprint.zutil.znl = (function zprint$zutil$znl(){
 
-var G__53512 = rewrite_clj.parser.parse_string("\n");
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53512) : zprint.zutil.edn_STAR_.call(null,G__53512));
+var G__53491 = rewrite_clj.parser.parse_string("\n");
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53491) : zprint.zutil.edn_STAR_.call(null,G__53491));
 });
 /**
  * Return a sequence of zloc newlines.
@@ -416,9 +416,9 @@ return cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.vector,cljs.core.
 zprint.zutil.split_newline_from_comment = (function zprint$zutil$split_newline_from_comment(zloc){
 var comment_no_nl = rewrite_clj.parser.parse_string(clojure.string.replace_first((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.string.call(null,zloc)),"\n",""));
 var new_comment = (zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2(zloc,comment_no_nl) : zprint.zutil.replace_STAR_.call(null,zloc,comment_no_nl));
-var new_comment__$1 = (function (){var G__53513 = new_comment;
-var G__53514 = rewrite_clj.parser.parse_string("\n");
-return (zprint.zutil.insert_right_STAR_.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.insert_right_STAR_.cljs$core$IFn$_invoke$arity$2(G__53513,G__53514) : zprint.zutil.insert_right_STAR_.call(null,G__53513,G__53514));
+var new_comment__$1 = (function (){var G__53495 = new_comment;
+var G__53496 = rewrite_clj.parser.parse_string("\n");
+return (zprint.zutil.insert_right_STAR_.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.insert_right_STAR_.cljs$core$IFn$_invoke$arity$2(G__53495,G__53496) : zprint.zutil.insert_right_STAR_.call(null,G__53495,G__53496));
 })();
 return new_comment__$1;
 });
@@ -474,9 +474,9 @@ return and__4251__auto__;
 }
 }
 })())?(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zfn.call(null,nloc__$1)):null);
-var G__53707 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
-var G__53708 = ((blank_QMARK_)?((ws_QMARK_) || (nl_QMARK_)):nl_QMARK_);
-var G__53709 = (cljs.core.truth_((function (){var or__4253__auto__ = result;
+var G__53705 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
+var G__53706 = ((blank_QMARK_)?((ws_QMARK_) || (nl_QMARK_)):nl_QMARK_);
+var G__53707 = (cljs.core.truth_((function (){var or__4253__auto__ = result;
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
 } else {
@@ -495,14 +495,14 @@ return or__4253__auto__;
 return emit_nl_QMARK_;
 }
 })():previous_was_nl_QMARK_);
-var G__53710 = comment_QMARK_;
-var G__53711 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
+var G__53708 = comment_QMARK_;
+var G__53709 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
 ));
-nloc = G__53707;
-blank_QMARK_ = G__53708;
-previous_was_nl_QMARK_ = G__53709;
-previous_comment_QMARK_ = G__53710;
-out = G__53711;
+nloc = G__53705;
+blank_QMARK_ = G__53706;
+previous_was_nl_QMARK_ = G__53707;
+previous_comment_QMARK_ = G__53708;
+out = G__53709;
 continue;
 }
 break;
@@ -530,11 +530,11 @@ var result = (((!(zprint.zutil.whitespace_QMARK_(nloc__$1))))?(zfn.cljs$core$IFn
 var nl_len = ((nl_QMARK_)?(zprint.zutil.length.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.length.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.length.call(null,nloc__$1)):null);
 var multi_nl_QMARK_ = ((nl_QMARK_)?((zprint.zutil.length.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.length.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.length.call(null,nloc__$1)) > (1)):null);
 var nl_to_emit = ((nl_QMARK_)?(cljs.core.truth_(multi_nl_QMARK_)?cljs.core.mapv.cljs$core$IFn$_invoke$arity$2(zfn,zprint.zutil.multi_nl(nl_len)):new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zfn.call(null,nloc__$1))], null)):null);
-var G__53716 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
-var G__53717 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
+var G__53714 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
+var G__53715 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
 ));
-nloc = G__53716;
-out = G__53717;
+nloc = G__53714;
+out = G__53715;
 continue;
 }
 break;
@@ -561,11 +561,11 @@ var result = (((((!(zprint.zutil.whitespace_QMARK_(nloc__$1)))) || (comma_QMARK_
 var nl_len = ((nl_QMARK_)?(zprint.zutil.length.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.length.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.length.call(null,nloc__$1)):null);
 var multi_nl_QMARK_ = ((nl_QMARK_)?((zprint.zutil.length.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.length.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.length.call(null,nloc__$1)) > (1)):null);
 var nl_to_emit = ((nl_QMARK_)?(cljs.core.truth_(multi_nl_QMARK_)?cljs.core.mapv.cljs$core$IFn$_invoke$arity$2(zfn,zprint.zutil.multi_nl(nl_len)):new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zfn.call(null,nloc__$1))], null)):null);
-var G__53718 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
-var G__53719 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
+var G__53716 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
+var G__53717 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):(cljs.core.truth_(nl_to_emit)?cljs.core.apply.cljs$core$IFn$_invoke$arity$3(cljs.core.conj,out,nl_to_emit):out
 ));
-nloc = G__53718;
-out = G__53719;
+nloc = G__53716;
+out = G__53717;
 continue;
 }
 break;
@@ -599,12 +599,12 @@ return and__4251__auto__;
 }
 }
 })())?(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zfn.call(null,nloc__$1)):null);
-var G__53720 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
-var G__53721 = comment_QMARK_;
-var G__53722 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):out);
-nloc = G__53720;
-previous_comment_QMARK_ = G__53721;
-out = G__53722;
+var G__53718 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc__$1) : zprint.zutil.right_STAR_.call(null,nloc__$1));
+var G__53719 = comment_QMARK_;
+var G__53720 = (cljs.core.truth_(result)?cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result):out);
+nloc = G__53718;
+previous_comment_QMARK_ = G__53719;
+out = G__53720;
 continue;
 }
 break;
@@ -621,8 +621,8 @@ while(true){
 if(cljs.core.not(nloc)){
 return out;
 } else {
-var G__53723 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-var G__53724 = (function (){var temp__5751__auto__ = (((!(zprint.zutil.whitespace_QMARK_(nloc))))?(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc) : zfn.call(null,nloc)):null);
+var G__53721 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
+var G__53722 = (function (){var temp__5751__auto__ = (((!(zprint.zutil.whitespace_QMARK_(nloc))))?(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc) : zfn.call(null,nloc)):null);
 if(cljs.core.truth_(temp__5751__auto__)){
 var result = temp__5751__auto__;
 return cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result);
@@ -630,8 +630,8 @@ return cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,result);
 return out;
 }
 })();
-nloc = G__53723;
-out = G__53724;
+nloc = G__53721;
+out = G__53722;
 continue;
 }
 break;
@@ -648,10 +648,10 @@ while(true){
 if(cljs.core.not(nloc)){
 return i;
 } else {
-var G__53725 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-var G__53726 = (((!(zprint.zutil.whitespace_QMARK_(nloc))))?(i + (1)):i);
-nloc = G__53725;
-i = G__53726;
+var G__53723 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
+var G__53724 = (((!(zprint.zutil.whitespace_QMARK_(nloc))))?(i + (1)):i);
+nloc = G__53723;
+i = G__53724;
 continue;
 }
 break;
@@ -668,10 +668,10 @@ while(true){
 if(cljs.core.not(nloc)){
 return out;
 } else {
-var G__53727 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-var G__53728 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc) : zfn.call(null,nloc)));
-nloc = G__53727;
-out = G__53728;
+var G__53725 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
+var G__53726 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,(zfn.cljs$core$IFn$_invoke$arity$1 ? zfn.cljs$core$IFn$_invoke$arity$1(nloc) : zfn.call(null,nloc)));
+nloc = G__53725;
+out = G__53726;
 continue;
 }
 break;
@@ -707,10 +707,10 @@ while(true){
 if(cljs.core.truth_((zprint.zutil.rightmost_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.rightmost_QMARK_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.rightmost_QMARK_.call(null,nloc)))){
 return nloc;
 } else {
-var G__53729 = (function (){var G__53517 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-return (zprint.zutil.zremove.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.zremove.cljs$core$IFn$_invoke$arity$1(G__53517) : zprint.zutil.zremove.call(null,G__53517));
+var G__53727 = (function (){var G__53515 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
+return (zprint.zutil.zremove.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.zremove.cljs$core$IFn$_invoke$arity$1(G__53515) : zprint.zutil.zremove.call(null,G__53515));
 })();
-nloc = G__53729;
+nloc = G__53727;
 continue;
 }
 break;
@@ -727,14 +727,14 @@ var nloc = (zprint.zutil.down_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil
 var index = (0);
 while(true){
 if((index >= n)){
-var G__53518 = zprint.zutil.zremove_right((zprint.zutil.zreplace.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.zreplace.cljs$core$IFn$_invoke$arity$2(nloc,end_struct) : zprint.zutil.zreplace.call(null,nloc,end_struct)));
-return (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(G__53518) : zprint.zutil.up_STAR_.call(null,G__53518));
+var G__53516 = zprint.zutil.zremove_right((zprint.zutil.zreplace.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.zreplace.cljs$core$IFn$_invoke$arity$2(nloc,end_struct) : zprint.zutil.zreplace.call(null,nloc,end_struct)));
+return (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(G__53516) : zprint.zutil.up_STAR_.call(null,G__53516));
 } else {
 var xloc = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-var G__53730 = xloc;
-var G__53731 = ((zprint.zutil.whitespace_QMARK_(xloc))?index:(index + (1)));
-nloc = G__53730;
-index = G__53731;
+var G__53728 = xloc;
+var G__53729 = ((zprint.zutil.whitespace_QMARK_(xloc))?index:(index + (1)));
+nloc = G__53728;
+index = G__53729;
 continue;
 }
 break;
@@ -747,11 +747,11 @@ break;
  *   which is a zloc).
  */
 zprint.zutil.zcount_zloc_seq_nc_nws = (function zprint$zutil$zcount_zloc_seq_nc_nws(zloc_seq){
-return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53520_SHARP_,p2__53519_SHARP_){
-if(cljs.core.truth_((zprint.zutil.whitespace_or_comment_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.whitespace_or_comment_QMARK_.cljs$core$IFn$_invoke$arity$1(p2__53519_SHARP_) : zprint.zutil.whitespace_or_comment_QMARK_.call(null,p2__53519_SHARP_)))){
-return p1__53520_SHARP_;
+return cljs.core.reduce.cljs$core$IFn$_invoke$arity$3((function (p1__53518_SHARP_,p2__53517_SHARP_){
+if(cljs.core.truth_((zprint.zutil.whitespace_or_comment_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.whitespace_or_comment_QMARK_.cljs$core$IFn$_invoke$arity$1(p2__53517_SHARP_) : zprint.zutil.whitespace_or_comment_QMARK_.call(null,p2__53517_SHARP_)))){
+return p1__53518_SHARP_;
 } else {
-return (p1__53520_SHARP_ + (1));
+return (p1__53518_SHARP_ + (1));
 }
 }),(0),zloc_seq);
 });
@@ -771,21 +771,21 @@ if(cljs.core.not((zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint
 if(cljs.core.not((zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc)))){
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [nloc,out], null);
 } else {
-var G__53732 = (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc));
-var G__53733 = (0);
-var G__53734 = cljs.core.cons(left,out);
-nloc = G__53732;
-left = G__53733;
-out = G__53734;
+var G__53730 = (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc));
+var G__53731 = (0);
+var G__53732 = cljs.core.cons(left,out);
+nloc = G__53730;
+left = G__53731;
+out = G__53732;
 continue;
 }
 } else {
-var G__53735 = (zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.left_STAR_.call(null,nloc));
-var G__53736 = (left + (1));
-var G__53737 = out;
-nloc = G__53735;
-left = G__53736;
-out = G__53737;
+var G__53733 = (zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.left_STAR_.call(null,nloc));
+var G__53734 = (left + (1));
+var G__53735 = out;
+nloc = G__53733;
+left = G__53734;
+out = G__53735;
 continue;
 }
 break;
@@ -810,21 +810,21 @@ if(cljs.core.not((zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint
 if(cljs.core.not((zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc)))){
 return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [nloc,out], null);
 } else {
-var G__53739 = (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc));
-var G__53740 = (0);
-var G__53741 = cljs.core.cons(left,out);
-nloc = G__53739;
-left = G__53740;
-out = G__53741;
+var G__53736 = (zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.up_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.up_STAR_.call(null,nloc));
+var G__53737 = (0);
+var G__53738 = cljs.core.cons(left,out);
+nloc = G__53736;
+left = G__53737;
+out = G__53738;
 continue;
 }
 } else {
-var G__53742 = (zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.left_STAR_.call(null,nloc));
-var G__53743 = ((zprint.zutil.whitespace_QMARK_(nloc))?left:(left + (1)));
-var G__53744 = out;
-nloc = G__53742;
-left = G__53743;
-out = G__53744;
+var G__53739 = (zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.left_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.left_STAR_.call(null,nloc));
+var G__53740 = ((zprint.zutil.whitespace_QMARK_(nloc))?left:(left + (1)));
+var G__53741 = out;
+nloc = G__53739;
+left = G__53740;
+out = G__53741;
 continue;
 }
 break;
@@ -842,8 +842,8 @@ while(true){
 if(cljs.core.not((rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.up.call(null,nloc)))){
 return nloc;
 } else {
-var G__53746 = (rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.up.call(null,nloc));
-nloc = G__53746;
+var G__53742 = (rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.up.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.up.call(null,nloc));
+nloc = G__53742;
 continue;
 }
 break;
@@ -859,10 +859,10 @@ while(true){
 if((remaining_right === (0))){
 return nloc;
 } else {
-var G__53747 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
-var G__53748 = (remaining_right - (1));
-nloc = G__53747;
-remaining_right = G__53748;
+var G__53743 = (zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.right_STAR_.cljs$core$IFn$_invoke$arity$1(nloc) : zprint.zutil.right_STAR_.call(null,nloc));
+var G__53744 = (remaining_right - (1));
+nloc = G__53743;
+remaining_right = G__53744;
 continue;
 }
 break;
@@ -901,8 +901,8 @@ return null;
 zprint.zutil.zsexpr_QMARK_ = (function zprint$zutil$zsexpr_QMARK_(zloc){
 var and__4251__auto__ = zloc;
 if(cljs.core.truth_(and__4251__auto__)){
-return ((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"fn","fn",-1175266204),(zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.tag.call(null,zloc)))) && (cljs.core.not((function (){var G__53521 = (rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.node.call(null,zloc));
-return (rewrite_clj.node.printable_only_QMARK_.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.printable_only_QMARK_.cljs$core$IFn$_invoke$arity$1(G__53521) : rewrite_clj.node.printable_only_QMARK_.call(null,G__53521));
+return ((cljs.core.not_EQ_.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"fn","fn",-1175266204),(zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.tag.cljs$core$IFn$_invoke$arity$1(zloc) : zprint.zutil.tag.call(null,zloc)))) && (cljs.core.not((function (){var G__53519 = (rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.node.call(null,zloc));
+return (rewrite_clj.node.printable_only_QMARK_.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.printable_only_QMARK_.cljs$core$IFn$_invoke$arity$1(G__53519) : rewrite_clj.node.printable_only_QMARK_.call(null,G__53519));
 })())));
 } else {
 return and__4251__auto__;
@@ -958,8 +958,8 @@ return and__4251__auto__;
 zprint.zutil.zreader_cond_w_symbol_QMARK_ = (function zprint$zutil$zreader_cond_w_symbol_QMARK_(zloc){
 var result = ((zprint.zutil.zreader_macro_QMARK_(zloc))?(function (){var element = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.string.call(null,element)),"?")){
-var element__$1 = (function (){var G__53522 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.right.call(null,element));
-return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53522) : rewrite_clj.zip.down.call(null,G__53522));
+var element__$1 = (function (){var G__53520 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.right.call(null,element));
+return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53520) : rewrite_clj.zip.down.call(null,G__53520));
 })();
 if(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.string.call(null,element__$1)),":clj")) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.string.call(null,element__$1)),":cljs")))){
 return zprint.zutil.zsymbol_QMARK_((rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.right.call(null,element__$1)));
@@ -979,8 +979,8 @@ return result;
 zprint.zutil.zreader_cond_w_coll_QMARK_ = (function zprint$zutil$zreader_cond_w_coll_QMARK_(zloc){
 var result = ((zprint.zutil.zreader_macro_QMARK_(zloc))?(function (){var element = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.string.call(null,element)),"?")){
-var element__$1 = (function (){var G__53523 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.right.call(null,element));
-return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53523) : rewrite_clj.zip.down.call(null,G__53523));
+var element__$1 = (function (){var G__53521 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element) : rewrite_clj.zip.right.call(null,element));
+return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53521) : rewrite_clj.zip.down.call(null,G__53521));
 })();
 if(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.string.call(null,element__$1)),":clj")) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.string.call(null,element__$1)),":cljs")))){
 return zprint.zutil.z_coll_QMARK_((rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(element__$1) : rewrite_clj.zip.right.call(null,element__$1)));
@@ -997,8 +997,8 @@ return result;
  * Return a zloc that will turn into a string of three dots.
  */
 zprint.zutil.zdotdotdot = (function zprint$zutil$zdotdotdot(){
-var G__53524 = rewrite_clj.parser.parse_string("...");
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53524) : zprint.zutil.edn_STAR_.call(null,G__53524));
+var G__53522 = rewrite_clj.parser.parse_string("...");
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53522) : zprint.zutil.edn_STAR_.call(null,G__53522));
 });
 /**
  * Returns true if this is a keyword, string, or number, in other words,
@@ -1007,8 +1007,8 @@ return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_
 zprint.zutil.zconstant_QMARK_ = (function zprint$zutil$zconstant_QMARK_(zloc){
 var ztag = (rewrite_clj.zip.tag.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.tag.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.tag.call(null,zloc));
 if(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(ztag,new cljs.core.Keyword(null,"unquote","unquote",1649741032))) || (((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(ztag,new cljs.core.Keyword(null,"quote","quote",-262615245))) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(ztag,new cljs.core.Keyword(null,"syntax-quote","syntax-quote",-1233164847))))))){
-var G__53525 = zprint.zutil.zfirst(zloc);
-return (zprint.zutil.zconstant_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.zconstant_QMARK_.cljs$core$IFn$_invoke$arity$1(G__53525) : zprint.zutil.zconstant_QMARK_.call(null,G__53525));
+var G__53523 = zprint.zutil.zfirst(zloc);
+return (zprint.zutil.zconstant_QMARK_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.zconstant_QMARK_.cljs$core$IFn$_invoke$arity$1(G__53523) : zprint.zutil.zconstant_QMARK_.call(null,G__53523));
 } else {
 var and__4251__auto__ = cljs.core.not(zprint.zutil.z_coll_QMARK_(zloc));
 if(and__4251__auto__){
@@ -1042,18 +1042,18 @@ return cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2((rewrite_clj.zip.string.cljs
 return and__4251__auto__;
 }
 })())){
-if(typeof (function (){var G__53526 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.right.call(null,nloc));
-return (zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1(G__53526) : zprint.zutil.sexpr.call(null,G__53526));
+if(typeof (function (){var G__53524 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.right.call(null,nloc));
+return (zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1(G__53524) : zprint.zutil.sexpr.call(null,G__53524));
 })() === 'string'){
 return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.right.call(null,nloc));
 } else {
 return null;
 }
 } else {
-var G__53753 = (function (){var G__53527 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.right.call(null,nloc));
-return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53527) : rewrite_clj.zip.right.call(null,G__53527));
+var G__53757 = (function (){var G__53525 = (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(nloc) : rewrite_clj.zip.right.call(null,nloc));
+return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53525) : rewrite_clj.zip.right.call(null,G__53525));
 })();
-nloc = G__53753;
+nloc = G__53757;
 continue;
 }
 } else {
@@ -1066,14 +1066,14 @@ break;
  * Find a docstring in a zipper of a function.
  */
 zprint.zutil.find_docstring = (function zprint$zutil$find_docstring(zloc){
-var fn_name = (function (){var G__53528 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
-return (rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(G__53528) : rewrite_clj.zip.string.call(null,G__53528));
+var fn_name = (function (){var G__53526 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
+return (rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(G__53526) : rewrite_clj.zip.string.call(null,G__53526));
 })();
 if(((cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(fn_name,"defn")) || (cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(fn_name,"defmacro")))){
-var docloc = (function (){var G__53529 = (function (){var G__53530 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
-return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53530) : rewrite_clj.zip.right.call(null,G__53530));
+var docloc = (function (){var G__53527 = (function (){var G__53528 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
+return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53528) : rewrite_clj.zip.right.call(null,G__53528));
 })();
-return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53529) : rewrite_clj.zip.right.call(null,G__53529));
+return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53527) : rewrite_clj.zip.right.call(null,G__53527));
 })();
 if(typeof (zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1(docloc) : zprint.zutil.sexpr.call(null,docloc)) === 'string'){
 return docloc;
@@ -1082,10 +1082,10 @@ return null;
 }
 } else {
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(fn_name,"def")){
-var maploc = (function (){var G__53531 = (function (){var G__53532 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
-return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53532) : rewrite_clj.zip.right.call(null,G__53532));
+var maploc = (function (){var G__53529 = (function (){var G__53530 = (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(zloc) : rewrite_clj.zip.down.call(null,zloc));
+return (rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.right.cljs$core$IFn$_invoke$arity$1(G__53530) : rewrite_clj.zip.right.call(null,G__53530));
 })();
-return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53531) : rewrite_clj.zip.down.call(null,G__53531));
+return (rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.down.cljs$core$IFn$_invoke$arity$1(G__53529) : rewrite_clj.zip.down.call(null,G__53529));
 })();
 if(cljs.core.truth_((rewrite_clj.zip.map_QMARK_.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.map_QMARK_.cljs$core$IFn$_invoke$arity$1(maploc) : rewrite_clj.zip.map_QMARK_.call(null,maploc)))){
 return zprint.zutil.find_doc_in_map(maploc);
@@ -1109,16 +1109,16 @@ zprint.zutil.add_spec_to_docstring = (function zprint$zutil$add_spec_to_docstrin
 var temp__5751__auto__ = zprint.zutil.find_docstring(zloc);
 if(cljs.core.truth_(temp__5751__auto__)){
 var doc_zloc = temp__5751__auto__;
-var new_doc_zloc = (function (){var G__53533 = doc_zloc;
-var G__53534 = (function (){var G__53535 = (function (){var G__53536 = rewrite_clj.parser.parse_string(["\"",cljs.core.str.cljs$core$IFn$_invoke$arity$1((zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1(doc_zloc) : zprint.zutil.sexpr.call(null,doc_zloc))),cljs.core.str.cljs$core$IFn$_invoke$arity$1(spec_str),"\""].join(''));
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53536) : zprint.zutil.edn_STAR_.call(null,G__53536));
+var new_doc_zloc = (function (){var G__53531 = doc_zloc;
+var G__53532 = (function (){var G__53533 = (function (){var G__53534 = rewrite_clj.parser.parse_string(["\"",cljs.core.str.cljs$core$IFn$_invoke$arity$1((zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.sexpr.cljs$core$IFn$_invoke$arity$1(doc_zloc) : zprint.zutil.sexpr.call(null,doc_zloc))),cljs.core.str.cljs$core$IFn$_invoke$arity$1(spec_str),"\""].join(''));
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53534) : zprint.zutil.edn_STAR_.call(null,G__53534));
 })();
-return (rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1(G__53535) : rewrite_clj.zip.node.call(null,G__53535));
+return (rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.node.cljs$core$IFn$_invoke$arity$1(G__53533) : rewrite_clj.zip.node.call(null,G__53533));
 })();
-return (zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2(G__53533,G__53534) : zprint.zutil.replace_STAR_.call(null,G__53533,G__53534));
+return (zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2 ? zprint.zutil.replace_STAR_.cljs$core$IFn$_invoke$arity$2(G__53531,G__53532) : zprint.zutil.replace_STAR_.call(null,G__53531,G__53532));
 })();
-var G__53537 = (rewrite_clj.zip.root.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.root.cljs$core$IFn$_invoke$arity$1(new_doc_zloc) : rewrite_clj.zip.root.call(null,new_doc_zloc));
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53537) : zprint.zutil.edn_STAR_.call(null,G__53537));
+var G__53535 = (rewrite_clj.zip.root.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.root.cljs$core$IFn$_invoke$arity$1(new_doc_zloc) : rewrite_clj.zip.root.call(null,new_doc_zloc));
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53535) : zprint.zutil.edn_STAR_.call(null,G__53535));
 } else {
 return zloc;
 }
@@ -1136,14 +1136,14 @@ return zloc;
  *   in seqs with more than one element have the same namespace. Returns
  *   the [namespace pair-seq] or nil.
  */
-zprint.zutil.zlift_ns = (function zprint$zutil$zlift_ns(p__53538,pair_seq,ns){
-var map__53539 = p__53538;
-var map__53539__$1 = cljs.core.__destructure_map(map__53539);
-var map_options = map__53539__$1;
-var in_code_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53539__$1,new cljs.core.Keyword(null,"in-code?","in-code?",194866464));
-var lift_ns_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53539__$1,new cljs.core.Keyword(null,"lift-ns?","lift-ns?",2021372853));
-var lift_ns_in_code_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53539__$1,new cljs.core.Keyword(null,"lift-ns-in-code?","lift-ns-in-code?",1444279377));
-var unlift_ns_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53539__$1,new cljs.core.Keyword(null,"unlift-ns?","unlift-ns?",1065087867));
+zprint.zutil.zlift_ns = (function zprint$zutil$zlift_ns(p__53536,pair_seq,ns){
+var map__53537 = p__53536;
+var map__53537__$1 = cljs.core.__destructure_map(map__53537);
+var map_options = map__53537__$1;
+var in_code_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53537__$1,new cljs.core.Keyword(null,"in-code?","in-code?",194866464));
+var lift_ns_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53537__$1,new cljs.core.Keyword(null,"lift-ns?","lift-ns?",2021372853));
+var lift_ns_in_code_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53537__$1,new cljs.core.Keyword(null,"lift-ns-in-code?","lift-ns-in-code?",1444279377));
+var unlift_ns_QMARK_ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__53537__$1,new cljs.core.Keyword(null,"unlift-ns?","unlift-ns?",1065087867));
 if(cljs.core.truth_((function (){var and__4251__auto__ = lift_ns_QMARK_;
 if(cljs.core.truth_(and__4251__auto__)){
 if(cljs.core.truth_(in_code_QMARK_)){
@@ -1169,13 +1169,13 @@ var ns__$1 = null;
 var pair_seq__$1 = pair_seq;
 var out = cljs.core.PersistentVector.EMPTY;
 while(true){
-var vec__53547 = cljs.core.first(pair_seq__$1);
-var seq__53548 = cljs.core.seq(vec__53547);
-var first__53549 = cljs.core.first(seq__53548);
-var seq__53548__$1 = cljs.core.next(seq__53548);
-var k = first__53549;
-var rest_of_pair = seq__53548__$1;
-var pair = vec__53547;
+var vec__53545 = cljs.core.first(pair_seq__$1);
+var seq__53546 = cljs.core.seq(vec__53545);
+var first__53547 = cljs.core.first(seq__53546);
+var seq__53546__$1 = cljs.core.next(seq__53546);
+var k = first__53547;
+var rest_of_pair = seq__53546__$1;
+var pair = vec__53545;
 var current_ns = (cljs.core.truth_((function (){var and__4251__auto__ = rest_of_pair;
 if(and__4251__auto__){
 var and__4251__auto____$1 = (!(clojure.string.starts_with_QMARK_((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.string.call(null,k)),"::")));
@@ -1205,10 +1205,10 @@ if(cljs.core.truth_(ns__$1)){
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(ns__$1,current_ns)){
 var G__53759 = ns__$1;
 var G__53760 = cljs.core.next(pair_seq__$1);
-var G__53761 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53550 = (function (){var G__53551 = strip_ns((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)));
-return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53551) : rewrite_clj.node.token_node.call(null,G__53551));
+var G__53761 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53548 = (function (){var G__53549 = strip_ns((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)));
+return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53549) : rewrite_clj.node.token_node.call(null,G__53549));
 })();
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53550) : zprint.zutil.edn_STAR_.call(null,G__53550));
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53548) : zprint.zutil.edn_STAR_.call(null,G__53548));
 })(),rest_of_pair));
 ns__$1 = G__53759;
 pair_seq__$1 = G__53760;
@@ -1220,10 +1220,10 @@ return null;
 } else {
 var G__53762 = current_ns;
 var G__53763 = cljs.core.next(pair_seq__$1);
-var G__53764 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53552 = (function (){var G__53553 = strip_ns((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)));
-return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53553) : rewrite_clj.node.token_node.call(null,G__53553));
+var G__53764 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53550 = (function (){var G__53551 = strip_ns((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)));
+return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53551) : rewrite_clj.node.token_node.call(null,G__53551));
 })();
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53552) : zprint.zutil.edn_STAR_.call(null,G__53552));
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53550) : zprint.zutil.edn_STAR_.call(null,G__53550));
 })(),rest_of_pair));
 ns__$1 = G__53762;
 pair_seq__$1 = G__53763;
@@ -1263,13 +1263,13 @@ return and__4251__auto__;
 var pair_seq__$1 = pair_seq;
 var out = cljs.core.PersistentVector.EMPTY;
 while(true){
-var vec__53559 = cljs.core.first(pair_seq__$1);
-var seq__53560 = cljs.core.seq(vec__53559);
-var first__53561 = cljs.core.first(seq__53560);
-var seq__53560__$1 = cljs.core.next(seq__53560);
-var k = first__53561;
-var rest_of_pair = seq__53560__$1;
-var pair = vec__53559;
+var vec__53557 = cljs.core.first(pair_seq__$1);
+var seq__53558 = cljs.core.seq(vec__53557);
+var first__53559 = cljs.core.first(seq__53558);
+var seq__53558__$1 = cljs.core.next(seq__53558);
+var k = first__53559;
+var rest_of_pair = seq__53558__$1;
+var pair = vec__53557;
 var current_ns = (cljs.core.truth_((function (){var and__4251__auto__ = rest_of_pair;
 if(and__4251__auto__){
 var and__4251__auto____$1 = (!(clojure.string.starts_with_QMARK_((rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.string.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.string.call(null,k)),"::")));
@@ -1301,10 +1301,10 @@ out = G__53769;
 continue;
 } else {
 var G__53770 = cljs.core.next(pair_seq__$1);
-var G__53771 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53562 = (function (){var G__53563 = cljs.core.symbol.cljs$core$IFn$_invoke$arity$1([cljs.core.str.cljs$core$IFn$_invoke$arity$1(ns),"/",cljs.core.name((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)))].join(''));
-return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53563) : rewrite_clj.node.token_node.call(null,G__53563));
+var G__53771 = cljs.core.conj.cljs$core$IFn$_invoke$arity$2(out,cljs.core.cons((function (){var G__53560 = (function (){var G__53561 = cljs.core.symbol.cljs$core$IFn$_invoke$arity$1([cljs.core.str.cljs$core$IFn$_invoke$arity$1(ns),"/",cljs.core.name((rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.zip.sexpr.cljs$core$IFn$_invoke$arity$1(k) : rewrite_clj.zip.sexpr.call(null,k)))].join(''));
+return (rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1 ? rewrite_clj.node.token_node.cljs$core$IFn$_invoke$arity$1(G__53561) : rewrite_clj.node.token_node.call(null,G__53561));
 })();
-return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53562) : zprint.zutil.edn_STAR_.call(null,G__53562));
+return (zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1 ? zprint.zutil.edn_STAR_.cljs$core$IFn$_invoke$arity$1(G__53560) : zprint.zutil.edn_STAR_.call(null,G__53560));
 })(),rest_of_pair));
 pair_seq__$1 = G__53770;
 out = G__53771;
@@ -1326,408 +1326,408 @@ return new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMP
  *   call the function of no arguments passed in.
  */
 zprint.zutil.zredef_call = (function zprint$zutil$zredef_call(body_fn){
-var zstring_orig_val__53564 = zprint.zfns.zstring;
-var znumstr_orig_val__53565 = zprint.zfns.znumstr;
-var zbyte_array_QMARK__orig_val__53566 = zprint.zfns.zbyte_array_QMARK_;
-var zcomment_QMARK__orig_val__53567 = zprint.zfns.zcomment_QMARK_;
-var zsexpr_orig_val__53568 = zprint.zfns.zsexpr;
-var zseqnws_orig_val__53569 = zprint.zfns.zseqnws;
-var zseqnws_w_nl_orig_val__53570 = zprint.zfns.zseqnws_w_nl;
-var zseqnws_w_bl_orig_val__53571 = zprint.zfns.zseqnws_w_bl;
-var zfocus_style_orig_val__53572 = zprint.zfns.zfocus_style;
-var zstart_orig_val__53573 = zprint.zfns.zstart;
-var zfirst_orig_val__53574 = zprint.zfns.zfirst;
-var zfirst_no_comment_orig_val__53575 = zprint.zfns.zfirst_no_comment;
-var zsecond_orig_val__53576 = zprint.zfns.zsecond;
-var zsecond_no_comment_orig_val__53577 = zprint.zfns.zsecond_no_comment;
-var zthird_orig_val__53578 = zprint.zfns.zthird;
-var zthird_no_comment_orig_val__53579 = zprint.zfns.zthird_no_comment;
-var zfourth_orig_val__53580 = zprint.zfns.zfourth;
-var znextnws_orig_val__53581 = zprint.zfns.znextnws;
-var znextnws_w_nl_orig_val__53582 = zprint.zfns.znextnws_w_nl;
-var znthnext_orig_val__53583 = zprint.zfns.znthnext;
-var zcount_orig_val__53584 = zprint.zfns.zcount;
-var zcount_zloc_seq_nc_nws_orig_val__53585 = zprint.zfns.zcount_zloc_seq_nc_nws;
-var zmap_orig_val__53586 = zprint.zfns.zmap;
-var zmap_w_nl_orig_val__53587 = zprint.zfns.zmap_w_nl;
-var zmap_w_bl_orig_val__53588 = zprint.zfns.zmap_w_bl;
-var zmap_w_nl_comma_orig_val__53589 = zprint.zfns.zmap_w_nl_comma;
-var zanonfn_QMARK__orig_val__53590 = zprint.zfns.zanonfn_QMARK_;
-var zfn_obj_QMARK__orig_val__53591 = zprint.zfns.zfn_obj_QMARK_;
-var zfocus_orig_val__53592 = zprint.zfns.zfocus;
-var zfind_path_orig_val__53593 = zprint.zfns.zfind_path;
-var zwhitespace_QMARK__orig_val__53594 = zprint.zfns.zwhitespace_QMARK_;
-var zlist_QMARK__orig_val__53595 = zprint.zfns.zlist_QMARK_;
-var zvector_QMARK__orig_val__53596 = zprint.zfns.zvector_QMARK_;
-var zmap_QMARK__orig_val__53597 = zprint.zfns.zmap_QMARK_;
-var znamespacedmap_QMARK__orig_val__53598 = zprint.zfns.znamespacedmap_QMARK_;
-var zset_QMARK__orig_val__53599 = zprint.zfns.zset_QMARK_;
-var zcoll_QMARK__orig_val__53600 = zprint.zfns.zcoll_QMARK_;
-var zuneval_QMARK__orig_val__53601 = zprint.zfns.zuneval_QMARK_;
-var zmeta_QMARK__orig_val__53602 = zprint.zfns.zmeta_QMARK_;
-var ztag_orig_val__53603 = zprint.zfns.ztag;
-var zlast_orig_val__53604 = zprint.zfns.zlast;
-var zarray_QMARK__orig_val__53605 = zprint.zfns.zarray_QMARK_;
-var zatom_QMARK__orig_val__53606 = zprint.zfns.zatom_QMARK_;
-var zderef_orig_val__53607 = zprint.zfns.zderef;
-var zrecord_QMARK__orig_val__53608 = zprint.zfns.zrecord_QMARK_;
-var zns_QMARK__orig_val__53609 = zprint.zfns.zns_QMARK_;
-var zobj_to_vec_orig_val__53610 = zprint.zfns.zobj_to_vec;
-var zexpandarray_orig_val__53611 = zprint.zfns.zexpandarray;
-var znewline_QMARK__orig_val__53612 = zprint.zfns.znewline_QMARK_;
-var zwhitespaceorcomment_QMARK__orig_val__53613 = zprint.zfns.zwhitespaceorcomment_QMARK_;
-var zmap_all_orig_val__53614 = zprint.zfns.zmap_all;
-var zpromise_QMARK__orig_val__53615 = zprint.zfns.zpromise_QMARK_;
-var zfuture_QMARK__orig_val__53616 = zprint.zfns.zfuture_QMARK_;
-var zdelay_QMARK__orig_val__53617 = zprint.zfns.zdelay_QMARK_;
-var zkeyword_QMARK__orig_val__53618 = zprint.zfns.zkeyword_QMARK_;
-var zconstant_QMARK__orig_val__53619 = zprint.zfns.zconstant_QMARK_;
-var zagent_QMARK__orig_val__53620 = zprint.zfns.zagent_QMARK_;
-var zreader_macro_QMARK__orig_val__53621 = zprint.zfns.zreader_macro_QMARK_;
-var zarray_to_shift_seq_orig_val__53622 = zprint.zfns.zarray_to_shift_seq;
-var zdotdotdot_orig_val__53623 = zprint.zfns.zdotdotdot;
-var zsymbol_QMARK__orig_val__53624 = zprint.zfns.zsymbol_QMARK_;
-var znil_QMARK__orig_val__53625 = zprint.zfns.znil_QMARK_;
-var zreader_cond_w_symbol_QMARK__orig_val__53626 = zprint.zfns.zreader_cond_w_symbol_QMARK_;
-var zreader_cond_w_coll_QMARK__orig_val__53627 = zprint.zfns.zreader_cond_w_coll_QMARK_;
-var zlift_ns_orig_val__53628 = zprint.zfns.zlift_ns;
-var zfind_orig_val__53629 = zprint.zfns.zfind;
-var ztake_append_orig_val__53630 = zprint.zfns.ztake_append;
-var zstring_temp_val__53631 = rewrite_clj.zip.string;
-var znumstr_temp_val__53632 = zprint.zutil.znumstr;
-var zbyte_array_QMARK__temp_val__53633 = cljs.core.constantly(false);
-var zcomment_QMARK__temp_val__53634 = zprint.zutil.zcomment_QMARK_;
-var zsexpr_temp_val__53635 = zprint.zutil.sexpr;
-var zseqnws_temp_val__53636 = zprint.zutil.zseqnws;
-var zseqnws_w_nl_temp_val__53637 = zprint.zutil.zseqnws_w_nl;
-var zseqnws_w_bl_temp_val__53638 = zprint.zutil.zseqnws_w_bl;
-var zfocus_style_temp_val__53639 = zprint.zutil.zfocus_style;
-var zstart_temp_val__53640 = zprint.zutil.zstart;
-var zfirst_temp_val__53641 = zprint.zutil.zfirst;
-var zfirst_no_comment_temp_val__53642 = zprint.zutil.zfirst_no_comment;
-var zsecond_temp_val__53643 = zprint.zutil.zsecond;
-var zsecond_no_comment_temp_val__53644 = zprint.zutil.zsecond_no_comment;
-var zthird_temp_val__53645 = zprint.zutil.zthird;
-var zthird_no_comment_temp_val__53646 = zprint.zutil.zthird_no_comment;
-var zfourth_temp_val__53647 = zprint.zutil.zfourth;
-var znextnws_temp_val__53648 = zprint.zutil.zrightnws;
-var znextnws_w_nl_temp_val__53649 = zprint.zutil.znextnws_w_nl;
-var znthnext_temp_val__53650 = zprint.zutil.znthnext;
-var zcount_temp_val__53651 = zprint.zutil.zcount;
-var zcount_zloc_seq_nc_nws_temp_val__53652 = zprint.zutil.zcount_zloc_seq_nc_nws;
-var zmap_temp_val__53653 = zprint.zutil.zmap;
-var zmap_w_nl_temp_val__53654 = zprint.zutil.zmap_w_nl;
-var zmap_w_bl_temp_val__53655 = zprint.zutil.zmap_w_bl;
-var zmap_w_nl_comma_temp_val__53656 = zprint.zutil.zmap_w_nl_comma;
-var zanonfn_QMARK__temp_val__53657 = zprint.zutil.zanonfn_QMARK_;
-var zfn_obj_QMARK__temp_val__53658 = cljs.core.constantly(false);
-var zfocus_temp_val__53659 = zprint.zutil.zfocus;
-var zfind_path_temp_val__53660 = zprint.zutil.find_root_and_path_nw;
-var zwhitespace_QMARK__temp_val__53661 = zprint.zutil.whitespace_QMARK_;
-var zlist_QMARK__temp_val__53662 = rewrite_clj.zip.list_QMARK_;
-var zvector_QMARK__temp_val__53663 = rewrite_clj.zip.vector_QMARK_;
-var zmap_QMARK__temp_val__53664 = rewrite_clj.zip.map_QMARK_;
-var znamespacedmap_QMARK__temp_val__53665 = zprint.zutil.znamespacedmap_QMARK_;
-var zset_QMARK__temp_val__53666 = rewrite_clj.zip.set_QMARK_;
-var zcoll_QMARK__temp_val__53667 = zprint.zutil.z_coll_QMARK_;
-var zuneval_QMARK__temp_val__53668 = zprint.zutil.zuneval_QMARK_;
-var zmeta_QMARK__temp_val__53669 = zprint.zutil.zmeta_QMARK_;
-var ztag_temp_val__53670 = zprint.zutil.ztag;
-var zlast_temp_val__53671 = zprint.zutil.zlast;
-var zarray_QMARK__temp_val__53672 = cljs.core.constantly(false);
-var zatom_QMARK__temp_val__53673 = cljs.core.constantly(false);
-var zderef_temp_val__53674 = cljs.core.constantly(false);
-var zrecord_QMARK__temp_val__53675 = cljs.core.constantly(false);
-var zns_QMARK__temp_val__53676 = cljs.core.constantly(false);
-var zobj_to_vec_temp_val__53677 = cljs.core.constantly(null);
-var zexpandarray_temp_val__53678 = cljs.core.constantly(null);
-var znewline_QMARK__temp_val__53679 = zprint.zutil.znewline_QMARK_;
-var zwhitespaceorcomment_QMARK__temp_val__53680 = zprint.zutil.whitespace_or_comment_QMARK_;
-var zmap_all_temp_val__53681 = zprint.zutil.zmap_all;
-var zpromise_QMARK__temp_val__53682 = cljs.core.constantly(false);
-var zfuture_QMARK__temp_val__53683 = cljs.core.constantly(false);
-var zdelay_QMARK__temp_val__53684 = cljs.core.constantly(false);
-var zkeyword_QMARK__temp_val__53685 = zprint.zutil.zkeyword_QMARK_;
-var zconstant_QMARK__temp_val__53686 = zprint.zutil.zconstant_QMARK_;
-var zagent_QMARK__temp_val__53687 = cljs.core.constantly(false);
-var zreader_macro_QMARK__temp_val__53688 = zprint.zutil.zreader_macro_QMARK_;
-var zarray_to_shift_seq_temp_val__53689 = cljs.core.constantly(null);
-var zdotdotdot_temp_val__53690 = zprint.zutil.zdotdotdot;
-var zsymbol_QMARK__temp_val__53691 = zprint.zutil.zsymbol_QMARK_;
-var znil_QMARK__temp_val__53692 = zprint.zutil.znil_QMARK_;
-var zreader_cond_w_symbol_QMARK__temp_val__53693 = zprint.zutil.zreader_cond_w_symbol_QMARK_;
-var zreader_cond_w_coll_QMARK__temp_val__53694 = zprint.zutil.zreader_cond_w_coll_QMARK_;
-var zlift_ns_temp_val__53695 = zprint.zutil.zlift_ns;
-var zfind_temp_val__53696 = zprint.zutil.zfind;
-var ztake_append_temp_val__53697 = zprint.zutil.ztake_append;
-(zprint.zfns.zstring = zstring_temp_val__53631);
+var zstring_orig_val__53562 = zprint.zfns.zstring;
+var znumstr_orig_val__53563 = zprint.zfns.znumstr;
+var zbyte_array_QMARK__orig_val__53564 = zprint.zfns.zbyte_array_QMARK_;
+var zcomment_QMARK__orig_val__53565 = zprint.zfns.zcomment_QMARK_;
+var zsexpr_orig_val__53566 = zprint.zfns.zsexpr;
+var zseqnws_orig_val__53567 = zprint.zfns.zseqnws;
+var zseqnws_w_nl_orig_val__53568 = zprint.zfns.zseqnws_w_nl;
+var zseqnws_w_bl_orig_val__53569 = zprint.zfns.zseqnws_w_bl;
+var zfocus_style_orig_val__53570 = zprint.zfns.zfocus_style;
+var zstart_orig_val__53571 = zprint.zfns.zstart;
+var zfirst_orig_val__53572 = zprint.zfns.zfirst;
+var zfirst_no_comment_orig_val__53573 = zprint.zfns.zfirst_no_comment;
+var zsecond_orig_val__53574 = zprint.zfns.zsecond;
+var zsecond_no_comment_orig_val__53575 = zprint.zfns.zsecond_no_comment;
+var zthird_orig_val__53576 = zprint.zfns.zthird;
+var zthird_no_comment_orig_val__53577 = zprint.zfns.zthird_no_comment;
+var zfourth_orig_val__53578 = zprint.zfns.zfourth;
+var znextnws_orig_val__53579 = zprint.zfns.znextnws;
+var znextnws_w_nl_orig_val__53580 = zprint.zfns.znextnws_w_nl;
+var znthnext_orig_val__53581 = zprint.zfns.znthnext;
+var zcount_orig_val__53582 = zprint.zfns.zcount;
+var zcount_zloc_seq_nc_nws_orig_val__53583 = zprint.zfns.zcount_zloc_seq_nc_nws;
+var zmap_orig_val__53584 = zprint.zfns.zmap;
+var zmap_w_nl_orig_val__53585 = zprint.zfns.zmap_w_nl;
+var zmap_w_bl_orig_val__53586 = zprint.zfns.zmap_w_bl;
+var zmap_w_nl_comma_orig_val__53587 = zprint.zfns.zmap_w_nl_comma;
+var zanonfn_QMARK__orig_val__53588 = zprint.zfns.zanonfn_QMARK_;
+var zfn_obj_QMARK__orig_val__53589 = zprint.zfns.zfn_obj_QMARK_;
+var zfocus_orig_val__53590 = zprint.zfns.zfocus;
+var zfind_path_orig_val__53591 = zprint.zfns.zfind_path;
+var zwhitespace_QMARK__orig_val__53592 = zprint.zfns.zwhitespace_QMARK_;
+var zlist_QMARK__orig_val__53593 = zprint.zfns.zlist_QMARK_;
+var zvector_QMARK__orig_val__53594 = zprint.zfns.zvector_QMARK_;
+var zmap_QMARK__orig_val__53595 = zprint.zfns.zmap_QMARK_;
+var znamespacedmap_QMARK__orig_val__53596 = zprint.zfns.znamespacedmap_QMARK_;
+var zset_QMARK__orig_val__53597 = zprint.zfns.zset_QMARK_;
+var zcoll_QMARK__orig_val__53598 = zprint.zfns.zcoll_QMARK_;
+var zuneval_QMARK__orig_val__53599 = zprint.zfns.zuneval_QMARK_;
+var zmeta_QMARK__orig_val__53600 = zprint.zfns.zmeta_QMARK_;
+var ztag_orig_val__53601 = zprint.zfns.ztag;
+var zlast_orig_val__53602 = zprint.zfns.zlast;
+var zarray_QMARK__orig_val__53603 = zprint.zfns.zarray_QMARK_;
+var zatom_QMARK__orig_val__53604 = zprint.zfns.zatom_QMARK_;
+var zderef_orig_val__53605 = zprint.zfns.zderef;
+var zrecord_QMARK__orig_val__53606 = zprint.zfns.zrecord_QMARK_;
+var zns_QMARK__orig_val__53607 = zprint.zfns.zns_QMARK_;
+var zobj_to_vec_orig_val__53608 = zprint.zfns.zobj_to_vec;
+var zexpandarray_orig_val__53609 = zprint.zfns.zexpandarray;
+var znewline_QMARK__orig_val__53610 = zprint.zfns.znewline_QMARK_;
+var zwhitespaceorcomment_QMARK__orig_val__53611 = zprint.zfns.zwhitespaceorcomment_QMARK_;
+var zmap_all_orig_val__53612 = zprint.zfns.zmap_all;
+var zpromise_QMARK__orig_val__53613 = zprint.zfns.zpromise_QMARK_;
+var zfuture_QMARK__orig_val__53614 = zprint.zfns.zfuture_QMARK_;
+var zdelay_QMARK__orig_val__53615 = zprint.zfns.zdelay_QMARK_;
+var zkeyword_QMARK__orig_val__53616 = zprint.zfns.zkeyword_QMARK_;
+var zconstant_QMARK__orig_val__53617 = zprint.zfns.zconstant_QMARK_;
+var zagent_QMARK__orig_val__53618 = zprint.zfns.zagent_QMARK_;
+var zreader_macro_QMARK__orig_val__53619 = zprint.zfns.zreader_macro_QMARK_;
+var zarray_to_shift_seq_orig_val__53620 = zprint.zfns.zarray_to_shift_seq;
+var zdotdotdot_orig_val__53621 = zprint.zfns.zdotdotdot;
+var zsymbol_QMARK__orig_val__53622 = zprint.zfns.zsymbol_QMARK_;
+var znil_QMARK__orig_val__53623 = zprint.zfns.znil_QMARK_;
+var zreader_cond_w_symbol_QMARK__orig_val__53624 = zprint.zfns.zreader_cond_w_symbol_QMARK_;
+var zreader_cond_w_coll_QMARK__orig_val__53625 = zprint.zfns.zreader_cond_w_coll_QMARK_;
+var zlift_ns_orig_val__53626 = zprint.zfns.zlift_ns;
+var zfind_orig_val__53627 = zprint.zfns.zfind;
+var ztake_append_orig_val__53628 = zprint.zfns.ztake_append;
+var zstring_temp_val__53629 = rewrite_clj.zip.string;
+var znumstr_temp_val__53630 = zprint.zutil.znumstr;
+var zbyte_array_QMARK__temp_val__53631 = cljs.core.constantly(false);
+var zcomment_QMARK__temp_val__53632 = zprint.zutil.zcomment_QMARK_;
+var zsexpr_temp_val__53633 = zprint.zutil.sexpr;
+var zseqnws_temp_val__53634 = zprint.zutil.zseqnws;
+var zseqnws_w_nl_temp_val__53635 = zprint.zutil.zseqnws_w_nl;
+var zseqnws_w_bl_temp_val__53636 = zprint.zutil.zseqnws_w_bl;
+var zfocus_style_temp_val__53637 = zprint.zutil.zfocus_style;
+var zstart_temp_val__53638 = zprint.zutil.zstart;
+var zfirst_temp_val__53639 = zprint.zutil.zfirst;
+var zfirst_no_comment_temp_val__53640 = zprint.zutil.zfirst_no_comment;
+var zsecond_temp_val__53641 = zprint.zutil.zsecond;
+var zsecond_no_comment_temp_val__53642 = zprint.zutil.zsecond_no_comment;
+var zthird_temp_val__53643 = zprint.zutil.zthird;
+var zthird_no_comment_temp_val__53644 = zprint.zutil.zthird_no_comment;
+var zfourth_temp_val__53645 = zprint.zutil.zfourth;
+var znextnws_temp_val__53646 = zprint.zutil.zrightnws;
+var znextnws_w_nl_temp_val__53647 = zprint.zutil.znextnws_w_nl;
+var znthnext_temp_val__53648 = zprint.zutil.znthnext;
+var zcount_temp_val__53649 = zprint.zutil.zcount;
+var zcount_zloc_seq_nc_nws_temp_val__53650 = zprint.zutil.zcount_zloc_seq_nc_nws;
+var zmap_temp_val__53651 = zprint.zutil.zmap;
+var zmap_w_nl_temp_val__53652 = zprint.zutil.zmap_w_nl;
+var zmap_w_bl_temp_val__53653 = zprint.zutil.zmap_w_bl;
+var zmap_w_nl_comma_temp_val__53654 = zprint.zutil.zmap_w_nl_comma;
+var zanonfn_QMARK__temp_val__53655 = zprint.zutil.zanonfn_QMARK_;
+var zfn_obj_QMARK__temp_val__53656 = cljs.core.constantly(false);
+var zfocus_temp_val__53657 = zprint.zutil.zfocus;
+var zfind_path_temp_val__53658 = zprint.zutil.find_root_and_path_nw;
+var zwhitespace_QMARK__temp_val__53659 = zprint.zutil.whitespace_QMARK_;
+var zlist_QMARK__temp_val__53660 = rewrite_clj.zip.list_QMARK_;
+var zvector_QMARK__temp_val__53661 = rewrite_clj.zip.vector_QMARK_;
+var zmap_QMARK__temp_val__53662 = rewrite_clj.zip.map_QMARK_;
+var znamespacedmap_QMARK__temp_val__53663 = zprint.zutil.znamespacedmap_QMARK_;
+var zset_QMARK__temp_val__53664 = rewrite_clj.zip.set_QMARK_;
+var zcoll_QMARK__temp_val__53665 = zprint.zutil.z_coll_QMARK_;
+var zuneval_QMARK__temp_val__53666 = zprint.zutil.zuneval_QMARK_;
+var zmeta_QMARK__temp_val__53667 = zprint.zutil.zmeta_QMARK_;
+var ztag_temp_val__53668 = zprint.zutil.ztag;
+var zlast_temp_val__53669 = zprint.zutil.zlast;
+var zarray_QMARK__temp_val__53670 = cljs.core.constantly(false);
+var zatom_QMARK__temp_val__53671 = cljs.core.constantly(false);
+var zderef_temp_val__53672 = cljs.core.constantly(false);
+var zrecord_QMARK__temp_val__53673 = cljs.core.constantly(false);
+var zns_QMARK__temp_val__53674 = cljs.core.constantly(false);
+var zobj_to_vec_temp_val__53675 = cljs.core.constantly(null);
+var zexpandarray_temp_val__53676 = cljs.core.constantly(null);
+var znewline_QMARK__temp_val__53677 = zprint.zutil.znewline_QMARK_;
+var zwhitespaceorcomment_QMARK__temp_val__53678 = zprint.zutil.whitespace_or_comment_QMARK_;
+var zmap_all_temp_val__53679 = zprint.zutil.zmap_all;
+var zpromise_QMARK__temp_val__53680 = cljs.core.constantly(false);
+var zfuture_QMARK__temp_val__53681 = cljs.core.constantly(false);
+var zdelay_QMARK__temp_val__53682 = cljs.core.constantly(false);
+var zkeyword_QMARK__temp_val__53683 = zprint.zutil.zkeyword_QMARK_;
+var zconstant_QMARK__temp_val__53684 = zprint.zutil.zconstant_QMARK_;
+var zagent_QMARK__temp_val__53685 = cljs.core.constantly(false);
+var zreader_macro_QMARK__temp_val__53686 = zprint.zutil.zreader_macro_QMARK_;
+var zarray_to_shift_seq_temp_val__53687 = cljs.core.constantly(null);
+var zdotdotdot_temp_val__53688 = zprint.zutil.zdotdotdot;
+var zsymbol_QMARK__temp_val__53689 = zprint.zutil.zsymbol_QMARK_;
+var znil_QMARK__temp_val__53690 = zprint.zutil.znil_QMARK_;
+var zreader_cond_w_symbol_QMARK__temp_val__53691 = zprint.zutil.zreader_cond_w_symbol_QMARK_;
+var zreader_cond_w_coll_QMARK__temp_val__53692 = zprint.zutil.zreader_cond_w_coll_QMARK_;
+var zlift_ns_temp_val__53693 = zprint.zutil.zlift_ns;
+var zfind_temp_val__53694 = zprint.zutil.zfind;
+var ztake_append_temp_val__53695 = zprint.zutil.ztake_append;
+(zprint.zfns.zstring = zstring_temp_val__53629);
 
-(zprint.zfns.znumstr = znumstr_temp_val__53632);
+(zprint.zfns.znumstr = znumstr_temp_val__53630);
 
-(zprint.zfns.zbyte_array_QMARK_ = zbyte_array_QMARK__temp_val__53633);
+(zprint.zfns.zbyte_array_QMARK_ = zbyte_array_QMARK__temp_val__53631);
 
-(zprint.zfns.zcomment_QMARK_ = zcomment_QMARK__temp_val__53634);
+(zprint.zfns.zcomment_QMARK_ = zcomment_QMARK__temp_val__53632);
 
-(zprint.zfns.zsexpr = zsexpr_temp_val__53635);
+(zprint.zfns.zsexpr = zsexpr_temp_val__53633);
 
-(zprint.zfns.zseqnws = zseqnws_temp_val__53636);
+(zprint.zfns.zseqnws = zseqnws_temp_val__53634);
 
-(zprint.zfns.zseqnws_w_nl = zseqnws_w_nl_temp_val__53637);
+(zprint.zfns.zseqnws_w_nl = zseqnws_w_nl_temp_val__53635);
 
-(zprint.zfns.zseqnws_w_bl = zseqnws_w_bl_temp_val__53638);
+(zprint.zfns.zseqnws_w_bl = zseqnws_w_bl_temp_val__53636);
 
-(zprint.zfns.zfocus_style = zfocus_style_temp_val__53639);
+(zprint.zfns.zfocus_style = zfocus_style_temp_val__53637);
 
-(zprint.zfns.zstart = zstart_temp_val__53640);
+(zprint.zfns.zstart = zstart_temp_val__53638);
 
-(zprint.zfns.zfirst = zfirst_temp_val__53641);
+(zprint.zfns.zfirst = zfirst_temp_val__53639);
 
-(zprint.zfns.zfirst_no_comment = zfirst_no_comment_temp_val__53642);
+(zprint.zfns.zfirst_no_comment = zfirst_no_comment_temp_val__53640);
 
-(zprint.zfns.zsecond = zsecond_temp_val__53643);
+(zprint.zfns.zsecond = zsecond_temp_val__53641);
 
-(zprint.zfns.zsecond_no_comment = zsecond_no_comment_temp_val__53644);
+(zprint.zfns.zsecond_no_comment = zsecond_no_comment_temp_val__53642);
 
-(zprint.zfns.zthird = zthird_temp_val__53645);
+(zprint.zfns.zthird = zthird_temp_val__53643);
 
-(zprint.zfns.zthird_no_comment = zthird_no_comment_temp_val__53646);
+(zprint.zfns.zthird_no_comment = zthird_no_comment_temp_val__53644);
 
-(zprint.zfns.zfourth = zfourth_temp_val__53647);
+(zprint.zfns.zfourth = zfourth_temp_val__53645);
 
-(zprint.zfns.znextnws = znextnws_temp_val__53648);
+(zprint.zfns.znextnws = znextnws_temp_val__53646);
 
-(zprint.zfns.znextnws_w_nl = znextnws_w_nl_temp_val__53649);
+(zprint.zfns.znextnws_w_nl = znextnws_w_nl_temp_val__53647);
 
-(zprint.zfns.znthnext = znthnext_temp_val__53650);
+(zprint.zfns.znthnext = znthnext_temp_val__53648);
 
-(zprint.zfns.zcount = zcount_temp_val__53651);
+(zprint.zfns.zcount = zcount_temp_val__53649);
 
-(zprint.zfns.zcount_zloc_seq_nc_nws = zcount_zloc_seq_nc_nws_temp_val__53652);
+(zprint.zfns.zcount_zloc_seq_nc_nws = zcount_zloc_seq_nc_nws_temp_val__53650);
 
-(zprint.zfns.zmap = zmap_temp_val__53653);
+(zprint.zfns.zmap = zmap_temp_val__53651);
 
-(zprint.zfns.zmap_w_nl = zmap_w_nl_temp_val__53654);
+(zprint.zfns.zmap_w_nl = zmap_w_nl_temp_val__53652);
 
-(zprint.zfns.zmap_w_bl = zmap_w_bl_temp_val__53655);
+(zprint.zfns.zmap_w_bl = zmap_w_bl_temp_val__53653);
 
-(zprint.zfns.zmap_w_nl_comma = zmap_w_nl_comma_temp_val__53656);
+(zprint.zfns.zmap_w_nl_comma = zmap_w_nl_comma_temp_val__53654);
 
-(zprint.zfns.zanonfn_QMARK_ = zanonfn_QMARK__temp_val__53657);
+(zprint.zfns.zanonfn_QMARK_ = zanonfn_QMARK__temp_val__53655);
 
-(zprint.zfns.zfn_obj_QMARK_ = zfn_obj_QMARK__temp_val__53658);
+(zprint.zfns.zfn_obj_QMARK_ = zfn_obj_QMARK__temp_val__53656);
 
-(zprint.zfns.zfocus = zfocus_temp_val__53659);
+(zprint.zfns.zfocus = zfocus_temp_val__53657);
 
-(zprint.zfns.zfind_path = zfind_path_temp_val__53660);
+(zprint.zfns.zfind_path = zfind_path_temp_val__53658);
 
-(zprint.zfns.zwhitespace_QMARK_ = zwhitespace_QMARK__temp_val__53661);
+(zprint.zfns.zwhitespace_QMARK_ = zwhitespace_QMARK__temp_val__53659);
 
-(zprint.zfns.zlist_QMARK_ = zlist_QMARK__temp_val__53662);
+(zprint.zfns.zlist_QMARK_ = zlist_QMARK__temp_val__53660);
 
-(zprint.zfns.zvector_QMARK_ = zvector_QMARK__temp_val__53663);
+(zprint.zfns.zvector_QMARK_ = zvector_QMARK__temp_val__53661);
 
-(zprint.zfns.zmap_QMARK_ = zmap_QMARK__temp_val__53664);
+(zprint.zfns.zmap_QMARK_ = zmap_QMARK__temp_val__53662);
 
-(zprint.zfns.znamespacedmap_QMARK_ = znamespacedmap_QMARK__temp_val__53665);
+(zprint.zfns.znamespacedmap_QMARK_ = znamespacedmap_QMARK__temp_val__53663);
 
-(zprint.zfns.zset_QMARK_ = zset_QMARK__temp_val__53666);
+(zprint.zfns.zset_QMARK_ = zset_QMARK__temp_val__53664);
 
-(zprint.zfns.zcoll_QMARK_ = zcoll_QMARK__temp_val__53667);
+(zprint.zfns.zcoll_QMARK_ = zcoll_QMARK__temp_val__53665);
 
-(zprint.zfns.zuneval_QMARK_ = zuneval_QMARK__temp_val__53668);
+(zprint.zfns.zuneval_QMARK_ = zuneval_QMARK__temp_val__53666);
 
-(zprint.zfns.zmeta_QMARK_ = zmeta_QMARK__temp_val__53669);
+(zprint.zfns.zmeta_QMARK_ = zmeta_QMARK__temp_val__53667);
 
-(zprint.zfns.ztag = ztag_temp_val__53670);
+(zprint.zfns.ztag = ztag_temp_val__53668);
 
-(zprint.zfns.zlast = zlast_temp_val__53671);
+(zprint.zfns.zlast = zlast_temp_val__53669);
 
-(zprint.zfns.zarray_QMARK_ = zarray_QMARK__temp_val__53672);
+(zprint.zfns.zarray_QMARK_ = zarray_QMARK__temp_val__53670);
 
-(zprint.zfns.zatom_QMARK_ = zatom_QMARK__temp_val__53673);
+(zprint.zfns.zatom_QMARK_ = zatom_QMARK__temp_val__53671);
 
-(zprint.zfns.zderef = zderef_temp_val__53674);
+(zprint.zfns.zderef = zderef_temp_val__53672);
 
-(zprint.zfns.zrecord_QMARK_ = zrecord_QMARK__temp_val__53675);
+(zprint.zfns.zrecord_QMARK_ = zrecord_QMARK__temp_val__53673);
 
-(zprint.zfns.zns_QMARK_ = zns_QMARK__temp_val__53676);
+(zprint.zfns.zns_QMARK_ = zns_QMARK__temp_val__53674);
 
-(zprint.zfns.zobj_to_vec = zobj_to_vec_temp_val__53677);
+(zprint.zfns.zobj_to_vec = zobj_to_vec_temp_val__53675);
 
-(zprint.zfns.zexpandarray = zexpandarray_temp_val__53678);
+(zprint.zfns.zexpandarray = zexpandarray_temp_val__53676);
 
-(zprint.zfns.znewline_QMARK_ = znewline_QMARK__temp_val__53679);
+(zprint.zfns.znewline_QMARK_ = znewline_QMARK__temp_val__53677);
 
-(zprint.zfns.zwhitespaceorcomment_QMARK_ = zwhitespaceorcomment_QMARK__temp_val__53680);
+(zprint.zfns.zwhitespaceorcomment_QMARK_ = zwhitespaceorcomment_QMARK__temp_val__53678);
 
-(zprint.zfns.zmap_all = zmap_all_temp_val__53681);
+(zprint.zfns.zmap_all = zmap_all_temp_val__53679);
 
-(zprint.zfns.zpromise_QMARK_ = zpromise_QMARK__temp_val__53682);
+(zprint.zfns.zpromise_QMARK_ = zpromise_QMARK__temp_val__53680);
 
-(zprint.zfns.zfuture_QMARK_ = zfuture_QMARK__temp_val__53683);
+(zprint.zfns.zfuture_QMARK_ = zfuture_QMARK__temp_val__53681);
 
-(zprint.zfns.zdelay_QMARK_ = zdelay_QMARK__temp_val__53684);
+(zprint.zfns.zdelay_QMARK_ = zdelay_QMARK__temp_val__53682);
 
-(zprint.zfns.zkeyword_QMARK_ = zkeyword_QMARK__temp_val__53685);
+(zprint.zfns.zkeyword_QMARK_ = zkeyword_QMARK__temp_val__53683);
 
-(zprint.zfns.zconstant_QMARK_ = zconstant_QMARK__temp_val__53686);
+(zprint.zfns.zconstant_QMARK_ = zconstant_QMARK__temp_val__53684);
 
-(zprint.zfns.zagent_QMARK_ = zagent_QMARK__temp_val__53687);
+(zprint.zfns.zagent_QMARK_ = zagent_QMARK__temp_val__53685);
 
-(zprint.zfns.zreader_macro_QMARK_ = zreader_macro_QMARK__temp_val__53688);
+(zprint.zfns.zreader_macro_QMARK_ = zreader_macro_QMARK__temp_val__53686);
 
-(zprint.zfns.zarray_to_shift_seq = zarray_to_shift_seq_temp_val__53689);
+(zprint.zfns.zarray_to_shift_seq = zarray_to_shift_seq_temp_val__53687);
 
-(zprint.zfns.zdotdotdot = zdotdotdot_temp_val__53690);
+(zprint.zfns.zdotdotdot = zdotdotdot_temp_val__53688);
 
-(zprint.zfns.zsymbol_QMARK_ = zsymbol_QMARK__temp_val__53691);
+(zprint.zfns.zsymbol_QMARK_ = zsymbol_QMARK__temp_val__53689);
 
-(zprint.zfns.znil_QMARK_ = znil_QMARK__temp_val__53692);
+(zprint.zfns.znil_QMARK_ = znil_QMARK__temp_val__53690);
 
-(zprint.zfns.zreader_cond_w_symbol_QMARK_ = zreader_cond_w_symbol_QMARK__temp_val__53693);
+(zprint.zfns.zreader_cond_w_symbol_QMARK_ = zreader_cond_w_symbol_QMARK__temp_val__53691);
 
-(zprint.zfns.zreader_cond_w_coll_QMARK_ = zreader_cond_w_coll_QMARK__temp_val__53694);
+(zprint.zfns.zreader_cond_w_coll_QMARK_ = zreader_cond_w_coll_QMARK__temp_val__53692);
 
-(zprint.zfns.zlift_ns = zlift_ns_temp_val__53695);
+(zprint.zfns.zlift_ns = zlift_ns_temp_val__53693);
 
-(zprint.zfns.zfind = zfind_temp_val__53696);
+(zprint.zfns.zfind = zfind_temp_val__53694);
 
-(zprint.zfns.ztake_append = ztake_append_temp_val__53697);
+(zprint.zfns.ztake_append = ztake_append_temp_val__53695);
 
 try{return (body_fn.cljs$core$IFn$_invoke$arity$0 ? body_fn.cljs$core$IFn$_invoke$arity$0() : body_fn.call(null));
-}finally {(zprint.zfns.ztake_append = ztake_append_orig_val__53630);
+}finally {(zprint.zfns.ztake_append = ztake_append_orig_val__53628);
 
-(zprint.zfns.zfind = zfind_orig_val__53629);
+(zprint.zfns.zfind = zfind_orig_val__53627);
 
-(zprint.zfns.zlift_ns = zlift_ns_orig_val__53628);
+(zprint.zfns.zlift_ns = zlift_ns_orig_val__53626);
 
-(zprint.zfns.zreader_cond_w_coll_QMARK_ = zreader_cond_w_coll_QMARK__orig_val__53627);
+(zprint.zfns.zreader_cond_w_coll_QMARK_ = zreader_cond_w_coll_QMARK__orig_val__53625);
 
-(zprint.zfns.zreader_cond_w_symbol_QMARK_ = zreader_cond_w_symbol_QMARK__orig_val__53626);
+(zprint.zfns.zreader_cond_w_symbol_QMARK_ = zreader_cond_w_symbol_QMARK__orig_val__53624);
 
-(zprint.zfns.znil_QMARK_ = znil_QMARK__orig_val__53625);
+(zprint.zfns.znil_QMARK_ = znil_QMARK__orig_val__53623);
 
-(zprint.zfns.zsymbol_QMARK_ = zsymbol_QMARK__orig_val__53624);
+(zprint.zfns.zsymbol_QMARK_ = zsymbol_QMARK__orig_val__53622);
 
-(zprint.zfns.zdotdotdot = zdotdotdot_orig_val__53623);
+(zprint.zfns.zdotdotdot = zdotdotdot_orig_val__53621);
 
-(zprint.zfns.zarray_to_shift_seq = zarray_to_shift_seq_orig_val__53622);
+(zprint.zfns.zarray_to_shift_seq = zarray_to_shift_seq_orig_val__53620);
 
-(zprint.zfns.zreader_macro_QMARK_ = zreader_macro_QMARK__orig_val__53621);
+(zprint.zfns.zreader_macro_QMARK_ = zreader_macro_QMARK__orig_val__53619);
 
-(zprint.zfns.zagent_QMARK_ = zagent_QMARK__orig_val__53620);
+(zprint.zfns.zagent_QMARK_ = zagent_QMARK__orig_val__53618);
 
-(zprint.zfns.zconstant_QMARK_ = zconstant_QMARK__orig_val__53619);
+(zprint.zfns.zconstant_QMARK_ = zconstant_QMARK__orig_val__53617);
 
-(zprint.zfns.zkeyword_QMARK_ = zkeyword_QMARK__orig_val__53618);
+(zprint.zfns.zkeyword_QMARK_ = zkeyword_QMARK__orig_val__53616);
 
-(zprint.zfns.zdelay_QMARK_ = zdelay_QMARK__orig_val__53617);
+(zprint.zfns.zdelay_QMARK_ = zdelay_QMARK__orig_val__53615);
 
-(zprint.zfns.zfuture_QMARK_ = zfuture_QMARK__orig_val__53616);
+(zprint.zfns.zfuture_QMARK_ = zfuture_QMARK__orig_val__53614);
 
-(zprint.zfns.zpromise_QMARK_ = zpromise_QMARK__orig_val__53615);
+(zprint.zfns.zpromise_QMARK_ = zpromise_QMARK__orig_val__53613);
 
-(zprint.zfns.zmap_all = zmap_all_orig_val__53614);
+(zprint.zfns.zmap_all = zmap_all_orig_val__53612);
 
-(zprint.zfns.zwhitespaceorcomment_QMARK_ = zwhitespaceorcomment_QMARK__orig_val__53613);
+(zprint.zfns.zwhitespaceorcomment_QMARK_ = zwhitespaceorcomment_QMARK__orig_val__53611);
 
-(zprint.zfns.znewline_QMARK_ = znewline_QMARK__orig_val__53612);
+(zprint.zfns.znewline_QMARK_ = znewline_QMARK__orig_val__53610);
 
-(zprint.zfns.zexpandarray = zexpandarray_orig_val__53611);
+(zprint.zfns.zexpandarray = zexpandarray_orig_val__53609);
 
-(zprint.zfns.zobj_to_vec = zobj_to_vec_orig_val__53610);
+(zprint.zfns.zobj_to_vec = zobj_to_vec_orig_val__53608);
 
-(zprint.zfns.zns_QMARK_ = zns_QMARK__orig_val__53609);
+(zprint.zfns.zns_QMARK_ = zns_QMARK__orig_val__53607);
 
-(zprint.zfns.zrecord_QMARK_ = zrecord_QMARK__orig_val__53608);
+(zprint.zfns.zrecord_QMARK_ = zrecord_QMARK__orig_val__53606);
 
-(zprint.zfns.zderef = zderef_orig_val__53607);
+(zprint.zfns.zderef = zderef_orig_val__53605);
 
-(zprint.zfns.zatom_QMARK_ = zatom_QMARK__orig_val__53606);
+(zprint.zfns.zatom_QMARK_ = zatom_QMARK__orig_val__53604);
 
-(zprint.zfns.zarray_QMARK_ = zarray_QMARK__orig_val__53605);
+(zprint.zfns.zarray_QMARK_ = zarray_QMARK__orig_val__53603);
 
-(zprint.zfns.zlast = zlast_orig_val__53604);
+(zprint.zfns.zlast = zlast_orig_val__53602);
 
-(zprint.zfns.ztag = ztag_orig_val__53603);
+(zprint.zfns.ztag = ztag_orig_val__53601);
 
-(zprint.zfns.zmeta_QMARK_ = zmeta_QMARK__orig_val__53602);
+(zprint.zfns.zmeta_QMARK_ = zmeta_QMARK__orig_val__53600);
 
-(zprint.zfns.zuneval_QMARK_ = zuneval_QMARK__orig_val__53601);
+(zprint.zfns.zuneval_QMARK_ = zuneval_QMARK__orig_val__53599);
 
-(zprint.zfns.zcoll_QMARK_ = zcoll_QMARK__orig_val__53600);
+(zprint.zfns.zcoll_QMARK_ = zcoll_QMARK__orig_val__53598);
 
-(zprint.zfns.zset_QMARK_ = zset_QMARK__orig_val__53599);
+(zprint.zfns.zset_QMARK_ = zset_QMARK__orig_val__53597);
 
-(zprint.zfns.znamespacedmap_QMARK_ = znamespacedmap_QMARK__orig_val__53598);
+(zprint.zfns.znamespacedmap_QMARK_ = znamespacedmap_QMARK__orig_val__53596);
 
-(zprint.zfns.zmap_QMARK_ = zmap_QMARK__orig_val__53597);
+(zprint.zfns.zmap_QMARK_ = zmap_QMARK__orig_val__53595);
 
-(zprint.zfns.zvector_QMARK_ = zvector_QMARK__orig_val__53596);
+(zprint.zfns.zvector_QMARK_ = zvector_QMARK__orig_val__53594);
 
-(zprint.zfns.zlist_QMARK_ = zlist_QMARK__orig_val__53595);
+(zprint.zfns.zlist_QMARK_ = zlist_QMARK__orig_val__53593);
 
-(zprint.zfns.zwhitespace_QMARK_ = zwhitespace_QMARK__orig_val__53594);
+(zprint.zfns.zwhitespace_QMARK_ = zwhitespace_QMARK__orig_val__53592);
 
-(zprint.zfns.zfind_path = zfind_path_orig_val__53593);
+(zprint.zfns.zfind_path = zfind_path_orig_val__53591);
 
-(zprint.zfns.zfocus = zfocus_orig_val__53592);
+(zprint.zfns.zfocus = zfocus_orig_val__53590);
 
-(zprint.zfns.zfn_obj_QMARK_ = zfn_obj_QMARK__orig_val__53591);
+(zprint.zfns.zfn_obj_QMARK_ = zfn_obj_QMARK__orig_val__53589);
 
-(zprint.zfns.zanonfn_QMARK_ = zanonfn_QMARK__orig_val__53590);
+(zprint.zfns.zanonfn_QMARK_ = zanonfn_QMARK__orig_val__53588);
 
-(zprint.zfns.zmap_w_nl_comma = zmap_w_nl_comma_orig_val__53589);
+(zprint.zfns.zmap_w_nl_comma = zmap_w_nl_comma_orig_val__53587);
 
-(zprint.zfns.zmap_w_bl = zmap_w_bl_orig_val__53588);
+(zprint.zfns.zmap_w_bl = zmap_w_bl_orig_val__53586);
 
-(zprint.zfns.zmap_w_nl = zmap_w_nl_orig_val__53587);
+(zprint.zfns.zmap_w_nl = zmap_w_nl_orig_val__53585);
 
-(zprint.zfns.zmap = zmap_orig_val__53586);
+(zprint.zfns.zmap = zmap_orig_val__53584);
 
-(zprint.zfns.zcount_zloc_seq_nc_nws = zcount_zloc_seq_nc_nws_orig_val__53585);
+(zprint.zfns.zcount_zloc_seq_nc_nws = zcount_zloc_seq_nc_nws_orig_val__53583);
 
-(zprint.zfns.zcount = zcount_orig_val__53584);
+(zprint.zfns.zcount = zcount_orig_val__53582);
 
-(zprint.zfns.znthnext = znthnext_orig_val__53583);
+(zprint.zfns.znthnext = znthnext_orig_val__53581);
 
-(zprint.zfns.znextnws_w_nl = znextnws_w_nl_orig_val__53582);
+(zprint.zfns.znextnws_w_nl = znextnws_w_nl_orig_val__53580);
 
-(zprint.zfns.znextnws = znextnws_orig_val__53581);
+(zprint.zfns.znextnws = znextnws_orig_val__53579);
 
-(zprint.zfns.zfourth = zfourth_orig_val__53580);
+(zprint.zfns.zfourth = zfourth_orig_val__53578);
 
-(zprint.zfns.zthird_no_comment = zthird_no_comment_orig_val__53579);
+(zprint.zfns.zthird_no_comment = zthird_no_comment_orig_val__53577);
 
-(zprint.zfns.zthird = zthird_orig_val__53578);
+(zprint.zfns.zthird = zthird_orig_val__53576);
 
-(zprint.zfns.zsecond_no_comment = zsecond_no_comment_orig_val__53577);
+(zprint.zfns.zsecond_no_comment = zsecond_no_comment_orig_val__53575);
 
-(zprint.zfns.zsecond = zsecond_orig_val__53576);
+(zprint.zfns.zsecond = zsecond_orig_val__53574);
 
-(zprint.zfns.zfirst_no_comment = zfirst_no_comment_orig_val__53575);
+(zprint.zfns.zfirst_no_comment = zfirst_no_comment_orig_val__53573);
 
-(zprint.zfns.zfirst = zfirst_orig_val__53574);
+(zprint.zfns.zfirst = zfirst_orig_val__53572);
 
-(zprint.zfns.zstart = zstart_orig_val__53573);
+(zprint.zfns.zstart = zstart_orig_val__53571);
 
-(zprint.zfns.zfocus_style = zfocus_style_orig_val__53572);
+(zprint.zfns.zfocus_style = zfocus_style_orig_val__53570);
 
-(zprint.zfns.zseqnws_w_bl = zseqnws_w_bl_orig_val__53571);
+(zprint.zfns.zseqnws_w_bl = zseqnws_w_bl_orig_val__53569);
 
-(zprint.zfns.zseqnws_w_nl = zseqnws_w_nl_orig_val__53570);
+(zprint.zfns.zseqnws_w_nl = zseqnws_w_nl_orig_val__53568);
 
-(zprint.zfns.zseqnws = zseqnws_orig_val__53569);
+(zprint.zfns.zseqnws = zseqnws_orig_val__53567);
 
-(zprint.zfns.zsexpr = zsexpr_orig_val__53568);
+(zprint.zfns.zsexpr = zsexpr_orig_val__53566);
 
-(zprint.zfns.zcomment_QMARK_ = zcomment_QMARK__orig_val__53567);
+(zprint.zfns.zcomment_QMARK_ = zcomment_QMARK__orig_val__53565);
 
-(zprint.zfns.zbyte_array_QMARK_ = zbyte_array_QMARK__orig_val__53566);
+(zprint.zfns.zbyte_array_QMARK_ = zbyte_array_QMARK__orig_val__53564);
 
-(zprint.zfns.znumstr = znumstr_orig_val__53565);
+(zprint.zfns.znumstr = znumstr_orig_val__53563);
 
-(zprint.zfns.zstring = zstring_orig_val__53564);
+(zprint.zfns.zstring = zstring_orig_val__53562);
 }});
 
 //# sourceMappingURL=zprint.zutil.js.map

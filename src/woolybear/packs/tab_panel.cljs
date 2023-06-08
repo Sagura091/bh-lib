@@ -5,7 +5,8 @@
             [woolybear.ad.utils :as adu]
             [woolybear.ad.buttons :as buttons]
             [woolybear.ad.containers :as containers]
-            [woolybear.tools.interceptors :as interceptors]))
+            [woolybear.tools.interceptors :as interceptors]
+            [taoensso.timbre :as log]))
 
 ;;; Factory Functions
 
@@ -25,6 +26,9 @@
   "Given the data path to the component data for the tab panel,
   and a new value, update the component data with the new value."
   [db [_ data-path new-value]]
+
+  (log/info ":tab-panel/on-click" data-path new-value)
+
   (assoc-in db (conj data-path :value) new-value))
 
 (re-frame/reg-event-db
@@ -36,27 +40,31 @@
 ;;; Views
 
 (s/def :tab-bar/options (s/keys :req-un [:ad/subscribe-to-component-data]
-                                :opt-un [:ad/extra-classes
-                                         :ad/subscribe-to-classes]))
+                          :opt-un [:ad/extra-classes
+                                   :ad/subscribe-to-classes]))
 
 (defn prep-buttons
   "Used to map over the buttons in a tab bar, setting up the on-click dispatchers
   appropriately."
   [data-path child]
   (if-not (= (first child) buttons/tab-button)
-    child                     ;; if not a tab-button, just pass thru
+    child                                                   ;; if not a tab-button, just pass thru
     (let [[tag opts & more] child
-          _ (if-not (map? opts)
-              (throw (ex-info "Missing opts map on tab button" child)))
+          _        (if-not (map? opts)
+                     (throw (ex-info "Missing opts map on tab button" child)))
           panel-id (or (:panel-id opts)
-                       (throw (ex-info "Missing panel-id on tab button" child)))
+                     (throw (ex-info "Missing panel-id on tab button" child)))
           on-click (:on-click child)
           on-click (if on-click
                      (adu/append-to-dispatcher on-click data-path panel-id)
                      [:tab-panel/on-click data-path panel-id])
           on-click (adu/mk-dispatcher on-click)
-          opts (assoc opts :on-click on-click)]
+          opts     (assoc opts :on-click on-click)]
       (into [tag opts] more))))
+
+
+(def last-opts (atom nil))
+(def last-children (atom nil))
 
 (defn tab-bar
   "
@@ -64,31 +72,46 @@
   the panel.
   "
   [opts & children]
+
+  (reset! last-opts opts)
+  (reset! last-children children)
+
   (let [{:keys [subscribe-to-component-data extra-classes subscribe-to-classes]} opts
-        data-sub (adu/subscribe-to subscribe-to-component-data)
+        data-sub  (adu/subscribe-to subscribe-to-component-data)
         ;; NOTE subscribe-to-classes just gets passed through to the containers/bar component for rendering
         data-path (:data-path @data-sub)
-        buttons (mapv (partial prep-buttons data-path) children)]
+        buttons   (mapv (partial prep-buttons data-path) children)]
     (fn [_ & _]
-      (let [data @data-sub
+      (let [data             @data-sub
             current-panel-id (:value data)]
         (into [containers/bar {:extra-classes           (adu/css+css :wb-tab-bar extra-classes)
                                :ad/subscribe-to-classes subscribe-to-classes}]
-              (for [button buttons :let [active? (= current-panel-id
-                                                    (adu/get-option button :panel-id))]]
-                (if active?
-                  ^{:key (str "tab-bar-button-" (adu/get-option :key button) "-" active?)}
-                  (adu/add-option button :active? true)
-                  button)))))))
+          (for [button buttons :let [active? (= current-panel-id
+                                               (adu/get-option button :panel-id))]]
+            (if active?
+              ^{:key (str "tab-bar-button-" (adu/get-option :key button) "-" active?)}
+              (adu/add-option button :active? true)
+              button)))))))
+
+
+(comment
+  (do
+    (def subscribe-to-component-data (:subscribe-to-component-data @last-opts))
+    (def data-sub (adu/subscribe-to subscribe-to-component-data))
+    (def data-path (:data-path @data-sub))
+    (def buttons (mapv (partial prep-buttons data-path) @last-children)))
+
+
+  ())
 
 (s/fdef tab-bar
   :args (s/cat :opts :tab-bar/options
-               :children (s/+ any?)))
+          :children (s/+ any?)))
 
 (s/def :tab-sub-panel/panel-id keyword?)
 (s/def :tab-sub-panel/options (s/keys :req-un [:tab-sub-panel/panel-id]
-                                      :opt-un [:ad/extra-classes
-                                               :ad/subscribe-to-classes]))
+                                :opt-un [:ad/extra-classes
+                                         :ad/subscribe-to-classes]))
 
 (defn sub-panel
   "
@@ -106,14 +129,14 @@
       (let [dynamic-classes @classes-sub]
         [:div {
                :class (adu/css->str :wb-tab-sub-panel
-                                    extra-classes
-                                    dynamic-classes)}
+                        extra-classes
+                        dynamic-classes)}
          (into [containers/v-scroll-pane {:height "100%"}]
-               children)]))))
+           children)]))))
 
 (s/fdef sub-panel
   :args (s/cat :opts (s/? :tab-sub-panel/options)
-               :children (s/+ any?))
+          :children (s/+ any?))
   :ret vector?)
 
 (defn- attach-subpanel
@@ -127,8 +150,8 @@
 
 (s/def :tab-panel/subscribe-to-selected-tab :ad/subscription)
 (s/def :tab-panel/options (s/keys :req-un [:tab-panel/subscribe-to-selected-tab]
-                                  :opt-un [:ad/extra-classes
-                                           :ad/subscribe-to-classes]))
+                            :opt-un [:ad/extra-classes
+                                     :ad/subscribe-to-classes]))
 
 (defn tab-panel
   "
@@ -142,25 +165,25 @@
   [opts & children]
   (let [{:keys [extra-classes subscribe-to-classes
                 subscribe-to-selected-tab]} opts
-        classes-sub (adu/subscribe-to subscribe-to-classes)
+        classes-sub      (adu/subscribe-to subscribe-to-classes)
         selected-tab-sub (adu/subscribe-to subscribe-to-selected-tab)
-        panels (reduce attach-subpanel {} children)]
+        panels           (reduce attach-subpanel {} children)]
 
     (fn [_ & _]
       (let [dynamic-classes @classes-sub
             ;; If selected-tab-sub returns a nil, use arbitrary key
-            selected-tab (or @selected-tab-sub
-                             (first (keys panels)))
-            current-panel (get panels selected-tab)]
+            selected-tab    (or @selected-tab-sub
+                              (first (keys panels)))
+            current-panel   (get panels selected-tab)]
         [:div {:class (adu/css->str :wb-tab-panel
-                                    :container
-                                    extra-classes
-                                    dynamic-classes)}
+                        :container
+                        extra-classes
+                        dynamic-classes)}
          ^{:key selected-tab}
          current-panel]))))
 
 (s/fdef tab-panel
   :args (s/cat :opts (s/? :tab-panel/options)
-               :children (s/+ any?))
+          :children (s/+ any?))
   :ret vector?)
 

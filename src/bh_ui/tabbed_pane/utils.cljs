@@ -3,11 +3,11 @@
             [re-frame.core :as re-frame]
             [woolybear.packs.tab-panel :as tab-panel]
 
-            [events :as events]))
+            [bh-ui.events :as events]))
 
 
 (defn init-tabbed-panel [base-id initial-value]
-  ;(log/info "init-tabbed-panel" base-id)
+  (log/info "init-tabbed-panel" base-id)
 
   (let [formal-id (keyword base-id)
         data-path [formal-id :tab-panel]
@@ -37,3 +37,12 @@
         (:value tab-panel)))
 
     (re-frame/dispatch-sync [::events/init-locals formal-id init-db])))
+
+
+
+(comment
+
+
+
+  ())
+

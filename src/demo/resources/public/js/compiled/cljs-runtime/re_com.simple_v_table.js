@@ -1,9 +1,9 @@
 goog.provide('re_com.simple_v_table');
-re_com.simple_v_table.swap_BANG__sort_by_column = (function re_com$simple_v_table$swap_BANG__sort_by_column(p__72949,new_key_fn,new_comp){
-var map__72950 = p__72949;
-var map__72950__$1 = cljs.core.__destructure_map(map__72950);
-var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72950__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
-var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72950__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
+re_com.simple_v_table.swap_BANG__sort_by_column = (function re_com$simple_v_table$swap_BANG__sort_by_column(p__72943,new_key_fn,new_comp){
+var map__72944 = p__72943;
+var map__72944__$1 = cljs.core.__destructure_map(map__72944);
+var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
+var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72944__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(key_fn,new_key_fn)){
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"asc","asc",356854569),order)){
 return new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"key-fn","key-fn",-636154479),key_fn,new cljs.core.Keyword(null,"comp","comp",1191953630),new_comp,new cljs.core.Keyword(null,"order","order",-1254677256),new cljs.core.Keyword(null,"desc","desc",2093485764)], null);
@@ -23,26 +23,26 @@ return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMP
 re_com.simple_v_table.arrow_up_icon = (function re_com$simple_v_table$arrow_up_icon(){
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"svg","svg",856789142),new cljs.core.PersistentArrayMap(null, 3, [new cljs.core.Keyword(null,"height","height",1025178622),"24",new cljs.core.Keyword(null,"viewBox","viewBox",-469489477),"0 0 24 24",new cljs.core.Keyword(null,"width","width",-384071477),"24"], null),new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"path","path",-188191168),new cljs.core.PersistentArrayMap(null, 1, [new cljs.core.Keyword(null,"d","d",1972142424),"M7 14l5-5 5 5H7z"], null)], null)], null);
 });
-re_com.simple_v_table.column_header_item = (function re_com$simple_v_table$column_header_item(p__72951,parts,sort_by_column){
-var map__72952 = p__72951;
-var map__72952__$1 = cljs.core.__destructure_map(map__72952);
-var column = map__72952__$1;
-var id = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"id","id",-1388402092));
-var row_label_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"row-label-fn","row-label-fn",1457434308));
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"width","width",-384071477));
-var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"height","height",1025178622));
-var align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"align","align",1964212802));
-var vertical_align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"vertical-align","vertical-align",651007333));
-var header_label = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"header-label","header-label",765876429));
-var sort_by = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72952__$1,new cljs.core.Keyword(null,"sort-by","sort-by",-322599303));
-var map__72953 = sort_by;
-var map__72953__$1 = cljs.core.__destructure_map(map__72953);
-var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72953__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479),row_label_fn);
-var comp = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72953__$1,new cljs.core.Keyword(null,"comp","comp",1191953630),cljs.core.compare);
-var map__72954 = cljs.core.deref(sort_by_column);
-var map__72954__$1 = cljs.core.__destructure_map(map__72954);
-var current_key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
-var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
+re_com.simple_v_table.column_header_item = (function re_com$simple_v_table$column_header_item(p__72945,parts,sort_by_column){
+var map__72946 = p__72945;
+var map__72946__$1 = cljs.core.__destructure_map(map__72946);
+var column = map__72946__$1;
+var id = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"id","id",-1388402092));
+var row_label_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"row-label-fn","row-label-fn",1457434308));
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"width","width",-384071477));
+var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"height","height",1025178622));
+var align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"align","align",1964212802));
+var vertical_align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"vertical-align","vertical-align",651007333));
+var header_label = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"header-label","header-label",765876429));
+var sort_by = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72946__$1,new cljs.core.Keyword(null,"sort-by","sort-by",-322599303));
+var map__72947 = sort_by;
+var map__72947__$1 = cljs.core.__destructure_map(map__72947);
+var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72947__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479),row_label_fn);
+var comp = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72947__$1,new cljs.core.Keyword(null,"comp","comp",1191953630),cljs.core.compare);
+var map__72948 = cljs.core.deref(sort_by_column);
+var map__72948__$1 = cljs.core.__destructure_map(map__72948);
+var current_key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72948__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
+var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72948__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
 var on_click = (function (){
 return cljs.core.swap_BANG_.cljs$core$IFn$_invoke$arity$4(sort_by_column,re_com.simple_v_table.swap_BANG__sort_by_column,key_fn,comp);
 });
@@ -56,25 +56,25 @@ return cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVect
 re_com.v_table.show_row_data_on_alt_click(columns,(0),event);
 
 return null;
-})], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-column-header","simple-column-header",-1241463404),new cljs.core.Keyword(null,"attr","attr",-604132353)], null))], 0))], null),(function (){var iter__4652__auto__ = (function re_com$simple_v_table$column_header_renderer_$_iter__72958(s__72959){
+})], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-column-header","simple-column-header",-1241463404),new cljs.core.Keyword(null,"attr","attr",-604132353)], null))], 0))], null),(function (){var iter__4652__auto__ = (function re_com$simple_v_table$column_header_renderer_$_iter__72949(s__72950){
 return (new cljs.core.LazySeq(null,(function (){
-var s__72959__$1 = s__72959;
+var s__72950__$1 = s__72950;
 while(true){
-var temp__5753__auto__ = cljs.core.seq(s__72959__$1);
+var temp__5753__auto__ = cljs.core.seq(s__72950__$1);
 if(temp__5753__auto__){
-var s__72959__$2 = temp__5753__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__72959__$2)){
-var c__4650__auto__ = cljs.core.chunk_first(s__72959__$2);
+var s__72950__$2 = temp__5753__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__72950__$2)){
+var c__4650__auto__ = cljs.core.chunk_first(s__72950__$2);
 var size__4651__auto__ = cljs.core.count(c__4650__auto__);
-var b__72961 = cljs.core.chunk_buffer(size__4651__auto__);
-if((function (){var i__72960 = (0);
+var b__72952 = cljs.core.chunk_buffer(size__4651__auto__);
+if((function (){var i__72951 = (0);
 while(true){
-if((i__72960 < size__4651__auto__)){
-var column = cljs.core._nth(c__4650__auto__,i__72960);
-cljs.core.chunk_append(b__72961,new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.column_header_item,column,parts,sort_by_column], null));
+if((i__72951 < size__4651__auto__)){
+var column = cljs.core._nth(c__4650__auto__,i__72951);
+cljs.core.chunk_append(b__72952,new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.column_header_item,column,parts,sort_by_column], null));
 
-var G__72983 = (i__72960 + (1));
-i__72960 = G__72983;
+var G__72994 = (i__72951 + (1));
+i__72951 = G__72994;
 continue;
 } else {
 return true;
@@ -82,13 +82,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__72961),re_com$simple_v_table$column_header_renderer_$_iter__72958(cljs.core.chunk_rest(s__72959__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__72952),re_com$simple_v_table$column_header_renderer_$_iter__72949(cljs.core.chunk_rest(s__72950__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__72961),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__72952),null);
 }
 } else {
-var column = cljs.core.first(s__72959__$2);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.column_header_item,column,parts,sort_by_column], null),re_com$simple_v_table$column_header_renderer_$_iter__72958(cljs.core.rest(s__72959__$2)));
+var column = cljs.core.first(s__72950__$2);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.column_header_item,column,parts,sort_by_column], null),re_com$simple_v_table$column_header_renderer_$_iter__72949(cljs.core.rest(s__72950__$2)));
 }
 } else {
 return null;
@@ -103,15 +103,15 @@ return iter__4652__auto__(columns);
 /**
  * Render a single row item (column) of a single row
  */
-re_com.simple_v_table.row_item = (function re_com$simple_v_table$row_item(row,p__72962,cell_style,parts){
-var map__72963 = p__72962;
-var map__72963__$1 = cljs.core.__destructure_map(map__72963);
-var column = map__72963__$1;
-var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72963__$1,new cljs.core.Keyword(null,"width","width",-384071477));
-var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72963__$1,new cljs.core.Keyword(null,"height","height",1025178622));
-var align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72963__$1,new cljs.core.Keyword(null,"align","align",1964212802));
-var vertical_align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72963__$1,new cljs.core.Keyword(null,"vertical-align","vertical-align",651007333));
-var row_label_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72963__$1,new cljs.core.Keyword(null,"row-label-fn","row-label-fn",1457434308));
+re_com.simple_v_table.row_item = (function re_com$simple_v_table$row_item(row,p__72953,cell_style,parts){
+var map__72954 = p__72953;
+var map__72954__$1 = cljs.core.__destructure_map(map__72954);
+var column = map__72954__$1;
+var width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"width","width",-384071477));
+var height = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"height","height",1025178622));
+var align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"align","align",1964212802));
+var vertical_align = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"vertical-align","vertical-align",651007333));
+var row_label_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72954__$1,new cljs.core.Keyword(null,"row-label-fn","row-label-fn",1457434308));
 return new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"div","div",1057191632),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"class","class",-2030961996),["rc-simple-v-table-row-item ",cljs.core.str.cljs$core$IFn$_invoke$arity$1(cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-row-item","simple-row-item",1270085292),new cljs.core.Keyword(null,"class","class",-2030961996)], null)))].join(''),new cljs.core.Keyword(null,"style","style",-496642736),cljs.core.merge.cljs$core$IFn$_invoke$arity$variadic(cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([cljs.core.PersistentHashMap.fromArrays([new cljs.core.Keyword(null,"text-overflow","text-overflow",-1022366814),new cljs.core.Keyword(null,"text-align","text-align",1786091845),new cljs.core.Keyword(null,"vertical-align","vertical-align",651007333),new cljs.core.Keyword(null,"white-space","white-space",-707351930),new cljs.core.Keyword(null,"overflow","overflow",2058931880),new cljs.core.Keyword(null,"width","width",-384071477),new cljs.core.Keyword(null,"padding","padding",1660304693),new cljs.core.Keyword(null,"display","display",242065432),new cljs.core.Keyword(null,"height","height",1025178622)],["ellipsis",align,vertical_align,"nowrap","hidden",re_com.util.px(width),["0px ","12px"].join(''),"inline-block",re_com.util.px(height)]),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-row-item","simple-row-item",1270085292),new cljs.core.Keyword(null,"style","style",-496642736)], null)),((cljs.core.fn_QMARK_(cell_style))?(cell_style.cljs$core$IFn$_invoke$arity$2 ? cell_style.cljs$core$IFn$_invoke$arity$2(row,column) : cell_style.call(null,row,column)):cell_style)], 0))], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-row-item","simple-row-item",1270085292),new cljs.core.Keyword(null,"attr","attr",-604132353)], null))], 0)),(row_label_fn.cljs$core$IFn$_invoke$arity$1 ? row_label_fn.cljs$core$IFn$_invoke$arity$1(row) : row_label_fn.call(null,row))], null);
 });
 /**
@@ -135,25 +135,25 @@ return null;
 (on_leave_row.cljs$core$IFn$_invoke$arity$1 ? on_leave_row.cljs$core$IFn$_invoke$arity$1(row_index) : on_leave_row.call(null,row_index));
 
 return null;
-}):null)], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-row","simple-row",-252554766),new cljs.core.Keyword(null,"attr","attr",-604132353)], null))], 0))], null),(function (){var iter__4652__auto__ = (function re_com$simple_v_table$row_renderer_$_iter__72964(s__72965){
+}):null)], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-row","simple-row",-252554766),new cljs.core.Keyword(null,"attr","attr",-604132353)], null))], 0))], null),(function (){var iter__4652__auto__ = (function re_com$simple_v_table$row_renderer_$_iter__72958(s__72959){
 return (new cljs.core.LazySeq(null,(function (){
-var s__72965__$1 = s__72965;
+var s__72959__$1 = s__72959;
 while(true){
-var temp__5753__auto__ = cljs.core.seq(s__72965__$1);
+var temp__5753__auto__ = cljs.core.seq(s__72959__$1);
 if(temp__5753__auto__){
-var s__72965__$2 = temp__5753__auto__;
-if(cljs.core.chunked_seq_QMARK_(s__72965__$2)){
-var c__4650__auto__ = cljs.core.chunk_first(s__72965__$2);
+var s__72959__$2 = temp__5753__auto__;
+if(cljs.core.chunked_seq_QMARK_(s__72959__$2)){
+var c__4650__auto__ = cljs.core.chunk_first(s__72959__$2);
 var size__4651__auto__ = cljs.core.count(c__4650__auto__);
-var b__72967 = cljs.core.chunk_buffer(size__4651__auto__);
-if((function (){var i__72966 = (0);
+var b__72961 = cljs.core.chunk_buffer(size__4651__auto__);
+if((function (){var i__72960 = (0);
 while(true){
-if((i__72966 < size__4651__auto__)){
-var column = cljs.core._nth(c__4650__auto__,i__72966);
-cljs.core.chunk_append(b__72967,new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.row_item,row,column,cell_style,parts], null));
+if((i__72960 < size__4651__auto__)){
+var column = cljs.core._nth(c__4650__auto__,i__72960);
+cljs.core.chunk_append(b__72961,new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.row_item,row,column,cell_style,parts], null));
 
-var G__72984 = (i__72966 + (1));
-i__72966 = G__72984;
+var G__72997 = (i__72960 + (1));
+i__72960 = G__72997;
 continue;
 } else {
 return true;
@@ -161,13 +161,13 @@ return true;
 break;
 }
 })()){
-return cljs.core.chunk_cons(cljs.core.chunk(b__72967),re_com$simple_v_table$row_renderer_$_iter__72964(cljs.core.chunk_rest(s__72965__$2)));
+return cljs.core.chunk_cons(cljs.core.chunk(b__72961),re_com$simple_v_table$row_renderer_$_iter__72958(cljs.core.chunk_rest(s__72959__$2)));
 } else {
-return cljs.core.chunk_cons(cljs.core.chunk(b__72967),null);
+return cljs.core.chunk_cons(cljs.core.chunk(b__72961),null);
 }
 } else {
-var column = cljs.core.first(s__72965__$2);
-return cljs.core.cons(new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.row_item,row,column,cell_style,parts], null),re_com$simple_v_table$row_renderer_$_iter__72964(cljs.core.rest(s__72965__$2)));
+var column = cljs.core.first(s__72959__$2);
+return cljs.core.cons(new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.simple_v_table.row_item,row,column,cell_style,parts], null),re_com$simple_v_table$row_renderer_$_iter__72958(cljs.core.rest(s__72959__$2)));
 }
 } else {
 return null;
@@ -181,14 +181,14 @@ return iter__4652__auto__(columns);
 });
 re_com.simple_v_table.simple_v_table_exclusive_parts_desc = ((re_com.config.include_args_desc_QMARK_)?new cljs.core.PersistentVector(null, 5, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"simple-wrapper","simple-wrapper",-507652041),new cljs.core.Keyword(null,"level","level",1290497552),(0),new cljs.core.Keyword(null,"class","class",-2030961996),"rc-simple-v-table-wrapper",new cljs.core.Keyword(null,"impl","impl",1677848700),"[simple-v-table]",new cljs.core.Keyword(null,"notes","notes",-1039600523),"Outer container of the simple-v-table"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"simple-column-header","simple-column-header",-1241463404),new cljs.core.Keyword(null,"level","level",1290497552),(5),new cljs.core.Keyword(null,"class","class",-2030961996),"rc-simple-v-table-column-header",new cljs.core.Keyword(null,"impl","impl",1677848700),"[:div]",new cljs.core.Keyword(null,"notes","notes",-1039600523),"Simple-v-table's container for column headers (placed under v-table's :column-header-content/:top-left)"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"simple-column-header-item","simple-column-header-item",-1259129102),new cljs.core.Keyword(null,"level","level",1290497552),(6),new cljs.core.Keyword(null,"class","class",-2030961996),"rc-simple-v-table-column-header-item",new cljs.core.Keyword(null,"impl","impl",1677848700),"[:div]",new cljs.core.Keyword(null,"notes","notes",-1039600523),"Individual column header item/cell components"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"simple-row","simple-row",-252554766),new cljs.core.Keyword(null,"level","level",1290497552),(5),new cljs.core.Keyword(null,"class","class",-2030961996),"rc-simple-v-table-row",new cljs.core.Keyword(null,"impl","impl",1677848700),"[:div]",new cljs.core.Keyword(null,"notes","notes",-1039600523),"Simple-v-table's container for rows (placed under v-table's :row-content/:row-header-content)"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"simple-row-item","simple-row-item",1270085292),new cljs.core.Keyword(null,"level","level",1290497552),(6),new cljs.core.Keyword(null,"class","class",-2030961996),"rc-simple-v-table-row-item",new cljs.core.Keyword(null,"impl","impl",1677848700),"[:div]",new cljs.core.Keyword(null,"notes","notes",-1039600523),"Individual row item/cell components"], null)], null):null);
 re_com.simple_v_table.simple_v_table_exclusive_parts = ((re_com.config.include_args_desc_QMARK_)?cljs.core.set(cljs.core.map.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"name","name",1843675177),re_com.simple_v_table.simple_v_table_exclusive_parts_desc)):null);
-re_com.simple_v_table.simple_v_table_parts_desc = ((re_com.config.include_args_desc_QMARK_)?cljs.core.into.cljs$core$IFn$_invoke$arity$2(re_com.simple_v_table.simple_v_table_exclusive_parts_desc,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__72968_SHARP_){
-return cljs.core.update.cljs$core$IFn$_invoke$arity$3(p1__72968_SHARP_,new cljs.core.Keyword(null,"level","level",1290497552),cljs.core.inc);
+re_com.simple_v_table.simple_v_table_parts_desc = ((re_com.config.include_args_desc_QMARK_)?cljs.core.into.cljs$core$IFn$_invoke$arity$2(re_com.simple_v_table.simple_v_table_exclusive_parts_desc,cljs.core.map.cljs$core$IFn$_invoke$arity$2((function (p1__72962_SHARP_){
+return cljs.core.update.cljs$core$IFn$_invoke$arity$3(p1__72962_SHARP_,new cljs.core.Keyword(null,"level","level",1290497552),cljs.core.inc);
 }),re_com.v_table.v_table_parts_desc)):null);
 re_com.simple_v_table.simple_v_table_parts = ((re_com.config.include_args_desc_QMARK_)?cljs.core.set(cljs.core.map.cljs$core$IFn$_invoke$arity$2(new cljs.core.Keyword(null,"name","name",1843675177),re_com.simple_v_table.simple_v_table_parts_desc)):null);
-re_com.simple_v_table.simple_v_table_args_desc = ((re_com.config.include_args_desc_QMARK_)?new cljs.core.PersistentVector(null, 20, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"model","model",331153215),new cljs.core.Keyword(null,"required","required",1807647006),true,new cljs.core.Keyword(null,"type","type",1174270348),"r/atom containing vec of maps",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),re_com.validate.vector_atom_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"one element for each row in the table."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"columns","columns",1998437288),new cljs.core.Keyword(null,"required","required",1807647006),true,new cljs.core.Keyword(null,"type","type",1174270348),"vector of maps",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),re_com.validate.vector_of_maps_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 28, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"one element for each column in the table. Must contain ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":id"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":header-label"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":row-label-fn"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":width"], null),", and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":height"], null),". Optionally contains ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":sort-by"], null),", ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":align"], null)," and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":vertical-align"], null),". ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":sort-by"], null)," can be ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),"true"], null)," or a map optionally containing ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":key-fn"], null)," and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":comp"], null)," ala ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),"cljs.core/sort-by"], null),"."], null)], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"fixed-column-count","fixed-column-count",721535030),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(0),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"the number of fixed (non-scrolling) columns on the left."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"fixed-column-border-color","fixed-column-border-color",2036669142),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),"#BBBEC0",new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"The CSS color of the horizontal border between the fixed columns on the left, and the other columns on the right. ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":fixed-column-count"], null)," must be > 0 to be visible."], null)], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(31),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"px height of the column header section. Typically, equals ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":row-height"], null)," * number-of-column-header-rows."], null)], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"cols parts sort-by-col -> hiccup",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"You can provide a renderer function to override the inbuilt renderer for the columns headings"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"max-width","max-width",-1939924051),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"standard CSS max-width setting of the entire table. Literally constrains the table to the given width so that if the table is wider than this it will add scrollbars. Ignored if value is larger than the combined width of all the columns and table padding."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"max-rows","max-rows",-2131113613),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"The maximum number of rows to display in the table without scrolling. If not provided will take up all available vertical space."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"row-height","row-height",527360749),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(31),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"px height of each row."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"table-padding","table-padding",-702873839),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(19),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"Padding in pixels for the entire table."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"table-row-line-color","table-row-line-color",680569135),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),"#EAEEF1",new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"The CSS color of the lines between rows."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-click-row","on-click-row",-383826673),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user clicks a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-enter-row","on-enter-row",-139996948),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user's mouse pointer enters a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-leave-row","on-leave-row",1361264390),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user's mouse pointer leaves a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"row-style","row-style",1352472052),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map | function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),(function (p1__72969_SHARP_){
-return ((cljs.core.fn_QMARK_(p1__72969_SHARP_)) || (cljs.core.map_QMARK_(p1__72969_SHARP_)));
-}),new cljs.core.Keyword(null,"description","description",-1428560544),"Style each row container either statically by passing a CSS map or dynamically by passing a function which receives the data for that row."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"cell-style","cell-style",1087536089),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map | function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),(function (p1__72970_SHARP_){
-return ((cljs.core.fn_QMARK_(p1__72970_SHARP_)) || (cljs.core.map_QMARK_(p1__72970_SHARP_)));
+re_com.simple_v_table.simple_v_table_args_desc = ((re_com.config.include_args_desc_QMARK_)?new cljs.core.PersistentVector(null, 20, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"model","model",331153215),new cljs.core.Keyword(null,"required","required",1807647006),true,new cljs.core.Keyword(null,"type","type",1174270348),"r/atom containing vec of maps",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),re_com.validate.vector_atom_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"one element for each row in the table."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"columns","columns",1998437288),new cljs.core.Keyword(null,"required","required",1807647006),true,new cljs.core.Keyword(null,"type","type",1174270348),"vector of maps",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),re_com.validate.vector_of_maps_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 28, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"one element for each column in the table. Must contain ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":id"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":header-label"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":row-label-fn"], null),",",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":width"], null),", and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":height"], null),". Optionally contains ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":sort-by"], null),", ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":align"], null)," and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":vertical-align"], null),". ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":sort-by"], null)," can be ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),"true"], null)," or a map optionally containing ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":key-fn"], null)," and ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":comp"], null)," ala ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),"cljs.core/sort-by"], null),"."], null)], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"fixed-column-count","fixed-column-count",721535030),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(0),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"the number of fixed (non-scrolling) columns on the left."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"fixed-column-border-color","fixed-column-border-color",2036669142),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),"#BBBEC0",new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"The CSS color of the horizontal border between the fixed columns on the left, and the other columns on the right. ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":fixed-column-count"], null)," must be > 0 to be visible."], null)], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(31),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 4, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"px height of the column header section. Typically, equals ",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":row-height"], null)," * number-of-column-header-rows."], null)], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"cols parts sort-by-col -> hiccup",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"You can provide a renderer function to override the inbuilt renderer for the columns headings"], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"max-width","max-width",-1939924051),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"standard CSS max-width setting of the entire table. Literally constrains the table to the given width so that if the table is wider than this it will add scrollbars. Ignored if value is larger than the combined width of all the columns and table padding."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"max-rows","max-rows",-2131113613),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"The maximum number of rows to display in the table without scrolling. If not provided will take up all available vertical space."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"row-height","row-height",527360749),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(31),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"px height of each row."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"table-padding","table-padding",-702873839),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),(19),new cljs.core.Keyword(null,"type","type",1174270348),"integer",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.number_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"Padding in pixels for the entire table."], null),new cljs.core.PersistentArrayMap(null, 6, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"table-row-line-color","table-row-line-color",680569135),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"default","default",-1987822328),"#EAEEF1",new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"The CSS color of the lines between rows."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-click-row","on-click-row",-383826673),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user clicks a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-enter-row","on-enter-row",-139996948),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user's mouse pointer enters a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"on-leave-row","on-leave-row",1361264390),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.ifn_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"This function is called when the user's mouse pointer leaves a row. Called with the row index. Do not use for adjusting row styles, use styling instead."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"row-style","row-style",1352472052),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map | function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),(function (p1__72963_SHARP_){
+return ((cljs.core.fn_QMARK_(p1__72963_SHARP_)) || (cljs.core.map_QMARK_(p1__72963_SHARP_)));
+}),new cljs.core.Keyword(null,"description","description",-1428560544),"Style each row container either statically by passing a CSS map or dynamically by passing a function which receives the data for that row."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"cell-style","cell-style",1087536089),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map | function",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),(function (p1__72964_SHARP_){
+return ((cljs.core.fn_QMARK_(p1__72964_SHARP_)) || (cljs.core.map_QMARK_(p1__72964_SHARP_)));
 }),new cljs.core.Keyword(null,"description","description",-1428560544),"Style each cell in a row either statically by passing a CSS map or dynamically by passing a function which receives the data for that row and the cell definition from the columns arg."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"class","class",-2030961996),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"string",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.string_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),"CSS class names, space separated (applies to the outer container)."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"parts","parts",849007691),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),re_com.validate.parts_QMARK_(re_com.simple_v_table.simple_v_table_parts),new cljs.core.Keyword(null,"description","description",-1428560544),"See Parts section below."], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"src","src",-1651076051),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.map_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 6, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"Used in dev builds to assist with debugging. Source code coordinates map containing keys",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":file"], null),"and",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":line"], null),". See 'Debugging'."], null)], null),new cljs.core.PersistentArrayMap(null, 5, [new cljs.core.Keyword(null,"name","name",1843675177),new cljs.core.Keyword(null,"debug-as","debug-as",283322354),new cljs.core.Keyword(null,"required","required",1807647006),false,new cljs.core.Keyword(null,"type","type",1174270348),"map",new cljs.core.Keyword(null,"validate-fn","validate-fn",1430169944),cljs.core.map_QMARK_,new cljs.core.Keyword(null,"description","description",-1428560544),new cljs.core.PersistentVector(null, 6, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"span","span",1394872991),"Used in dev builds to assist with debugging, when one component is used implement another component, and we want the implementation component to masquerade as the original component in debug output, such as component stacks. A map optionally containing keys",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":component"], null),"and",new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"code","code",1586293142),":args"], null),"."], null)], null)], null):null);
 /**
  * Render a v-table and introduce the concept of columns (provide a spec for each).
@@ -202,14 +202,14 @@ return ((cljs.core.fn_QMARK_(p1__72970_SHARP_)) || (cljs.core.map_QMARK_(p1__729
  */
 re_com.simple_v_table.simple_v_table = (function re_com$simple_v_table$simple_v_table(var_args){
 var args__4870__auto__ = [];
-var len__4864__auto___72994 = arguments.length;
-var i__4865__auto___72995 = (0);
+var len__4864__auto___72998 = arguments.length;
+var i__4865__auto___72999 = (0);
 while(true){
-if((i__4865__auto___72995 < len__4864__auto___72994)){
-args__4870__auto__.push((arguments[i__4865__auto___72995]));
+if((i__4865__auto___72999 < len__4864__auto___72998)){
+args__4870__auto__.push((arguments[i__4865__auto___72999]));
 
-var G__72996 = (i__4865__auto___72995 + (1));
-i__4865__auto___72995 = G__72996;
+var G__73000 = (i__4865__auto___72999 + (1));
+i__4865__auto___72999 = G__73000;
 continue;
 } else {
 }
@@ -220,41 +220,41 @@ var argseq__4871__auto__ = ((((0) < args__4870__auto__.length))?(new cljs.core.I
 return re_com.simple_v_table.simple_v_table.cljs$core$IFn$_invoke$arity$variadic(argseq__4871__auto__);
 });
 
-(re_com.simple_v_table.simple_v_table.cljs$core$IFn$_invoke$arity$variadic = (function (p__72974){
-var map__72975 = p__72974;
-var map__72975__$1 = cljs.core.__destructure_map(map__72975);
-var args = map__72975__$1;
-var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72975__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+(re_com.simple_v_table.simple_v_table.cljs$core$IFn$_invoke$arity$variadic = (function (p__72976){
+var map__72977 = p__72976;
+var map__72977__$1 = cljs.core.__destructure_map(map__72977);
+var args = map__72977__$1;
+var src = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
 var or__4253__auto__ = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.simple_v_table.simple_v_table_args_desc),args));
 if(cljs.core.truth_(or__4253__auto__)){
 return or__4253__auto__;
 } else {
 var sort_by_column = reagent.core.atom.cljs$core$IFn$_invoke$arity$1(null);
 return (function() { 
-var re_com$simple_v_table$simple_v_table_render__delegate = function (p__72976){
-var map__72977 = p__72976;
-var map__72977__$1 = cljs.core.__destructure_map(map__72977);
-var args__$1 = map__72977__$1;
-var cell_style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"cell-style","cell-style",1087536089));
-var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"model","model",331153215));
-var on_leave_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"on-leave-row","on-leave-row",1361264390));
-var columns = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"columns","columns",1998437288));
-var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
-var on_enter_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"on-enter-row","on-enter-row",-139996948));
-var row_height = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749),(31));
-var max_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"max-width","max-width",-1939924051));
-var src__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
-var on_click_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"on-click-row","on-click-row",-383826673));
-var table_row_line_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"table-row-line-color","table-row-line-color",680569135),"#EAEEF1");
-var table_padding = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"table-padding","table-padding",-702873839),(19));
-var column_header_height = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),(31));
-var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
-var max_rows = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"max-rows","max-rows",-2131113613));
-var row_style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"row-style","row-style",1352472052));
-var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72977__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
-var fixed_column_border_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"fixed-column-border-color","fixed-column-border-color",2036669142),"#BBBEC0");
-var column_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),re_com.simple_v_table.column_header_renderer);
-var fixed_column_count = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72977__$1,new cljs.core.Keyword(null,"fixed-column-count","fixed-column-count",721535030),(0));
+var re_com$simple_v_table$simple_v_table_render__delegate = function (p__72978){
+var map__72979 = p__72978;
+var map__72979__$1 = cljs.core.__destructure_map(map__72979);
+var args__$1 = map__72979__$1;
+var cell_style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"cell-style","cell-style",1087536089));
+var model = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"model","model",331153215));
+var on_leave_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"on-leave-row","on-leave-row",1361264390));
+var columns = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"columns","columns",1998437288));
+var parts = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"parts","parts",849007691));
+var on_enter_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"on-enter-row","on-enter-row",-139996948));
+var row_height = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"row-height","row-height",527360749),(31));
+var max_width = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"max-width","max-width",-1939924051));
+var src__$1 = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"src","src",-1651076051));
+var on_click_row = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"on-click-row","on-click-row",-383826673));
+var table_row_line_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"table-row-line-color","table-row-line-color",680569135),"#EAEEF1");
+var table_padding = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"table-padding","table-padding",-702873839),(19));
+var column_header_height = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),(31));
+var debug_as = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"debug-as","debug-as",283322354));
+var max_rows = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"max-rows","max-rows",-2131113613));
+var row_style = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"row-style","row-style",1352472052));
+var class$ = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72979__$1,new cljs.core.Keyword(null,"class","class",-2030961996));
+var fixed_column_border_color = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"fixed-column-border-color","fixed-column-border-color",2036669142),"#BBBEC0");
+var column_header_renderer = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),re_com.simple_v_table.column_header_renderer);
+var fixed_column_count = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72979__$1,new cljs.core.Keyword(null,"fixed-column-count","fixed-column-count",721535030),(0));
 var or__4253__auto____$1 = (((!(goog.DEBUG)))?null:re_com.validate.validate_args(re_com.validate.extract_arg_data(re_com.simple_v_table.simple_v_table_args_desc),args__$1));
 if(cljs.core.truth_(or__4253__auto____$1)){
 return or__4253__auto____$1;
@@ -273,11 +273,11 @@ var actual_table_width = (((((fixed_content_width + (((fixed_column_count > (0))
 var internal_model = reagent.core.track((function (){
 var temp__5751__auto__ = cljs.core.deref(sort_by_column);
 if(cljs.core.truth_(temp__5751__auto__)){
-var map__72978 = temp__5751__auto__;
-var map__72978__$1 = cljs.core.__destructure_map(map__72978);
-var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72978__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
-var comp = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72978__$1,new cljs.core.Keyword(null,"comp","comp",1191953630),cljs.core.compare);
-var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72978__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
+var map__72992 = temp__5751__auto__;
+var map__72992__$1 = cljs.core.__destructure_map(map__72992);
+var key_fn = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72992__$1,new cljs.core.Keyword(null,"key-fn","key-fn",-636154479));
+var comp = cljs.core.get.cljs$core$IFn$_invoke$arity$3(map__72992__$1,new cljs.core.Keyword(null,"comp","comp",1191953630),cljs.core.compare);
+var order = cljs.core.get.cljs$core$IFn$_invoke$arity$2(map__72992__$1,new cljs.core.Keyword(null,"order","order",-1254677256));
 var sorted = cljs.core.sort_by.cljs$core$IFn$_invoke$arity$3(key_fn,comp,re_com.util.deref_or_value(model));
 if(cljs.core._EQ_.cljs$core$IFn$_invoke$arity$2(order,new cljs.core.Keyword(null,"desc","desc",2093485764))){
 return cljs.core.vec(cljs.core.reverse(sorted));
@@ -300,27 +300,27 @@ return or__4253__auto____$2;
 } else {
 return re_com.util.px(actual_table_width);
 }
-})(),new cljs.core.Keyword(null,"border","border",1444987323),table_border_style,new cljs.core.Keyword(null,"border-radius","border-radius",419594011),"3px"], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-wrapper","simple-wrapper",-507652041),new cljs.core.Keyword(null,"style","style",-496642736)], null))], 0)),new cljs.core.Keyword(null,"attr","attr",-604132353),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-wrapper","simple-wrapper",-507652041),new cljs.core.Keyword(null,"attr","attr",-604132353)], null)),new cljs.core.Keyword(null,"child","child",623967545),new cljs.core.PersistentVector(null, 25, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.v_table.v_table,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"re_com/simple_v_table.cljs",new cljs.core.Keyword(null,"line","line",212345235),271], null)),new cljs.core.Keyword(null,"model","model",331153215),internal_model,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),cljs.core.partial.cljs$core$IFn$_invoke$arity$4(column_header_renderer,content_cols,parts,sort_by_column),new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),column_header_height,new cljs.core.Keyword(null,"row-header-renderer","row-header-renderer",-355094585),cljs.core.partial.cljs$core$IFn$_invoke$arity$variadic(re_com.simple_v_table.row_renderer,fixed_cols,on_click_row,on_enter_row,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([on_leave_row,row_height,row_style,cell_style,parts,table_row_line_color], 0)),new cljs.core.Keyword(null,"row-renderer","row-renderer",314053346),cljs.core.partial.cljs$core$IFn$_invoke$arity$variadic(re_com.simple_v_table.row_renderer,content_cols,on_click_row,on_enter_row,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([on_leave_row,row_height,row_style,cell_style,parts,table_row_line_color], 0)),new cljs.core.Keyword(null,"row-content-width","row-content-width",-1986261648),content_width,new cljs.core.Keyword(null,"row-height","row-height",527360749),row_height,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688),(cljs.core.truth_(max_rows)?(max_rows * row_height):null),new cljs.core.Keyword(null,"top-left-renderer","top-left-renderer",2010514596),cljs.core.partial.cljs$core$IFn$_invoke$arity$4(column_header_renderer,fixed_cols,parts,sort_by_column),new cljs.core.Keyword(null,"class","class",-2030961996),class$,new cljs.core.Keyword(null,"parts","parts",849007691),(function (){var G__72979 = re_com.util.assoc_in_if_empty(re_com.util.assoc_in_if_empty(cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.dissoc,cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [parts], null),re_com.simple_v_table.simple_v_table_exclusive_parts)),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"wrapper","wrapper",-969103524),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"font-size","font-size",-1847940346)], null),"13px"),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"wrapper","wrapper",-969103524),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"cursor","cursor",1011937484)], null),"default");
+})(),new cljs.core.Keyword(null,"border","border",1444987323),table_border_style,new cljs.core.Keyword(null,"border-radius","border-radius",419594011),"3px"], null),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-wrapper","simple-wrapper",-507652041),new cljs.core.Keyword(null,"style","style",-496642736)], null))], 0)),new cljs.core.Keyword(null,"attr","attr",-604132353),cljs.core.get_in.cljs$core$IFn$_invoke$arity$2(parts,new cljs.core.PersistentVector(null, 2, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"simple-wrapper","simple-wrapper",-507652041),new cljs.core.Keyword(null,"attr","attr",-604132353)], null)),new cljs.core.Keyword(null,"child","child",623967545),new cljs.core.PersistentVector(null, 25, 5, cljs.core.PersistentVector.EMPTY_NODE, [re_com.v_table.v_table,new cljs.core.Keyword(null,"src","src",-1651076051),(((!(goog.DEBUG)))?null:new cljs.core.PersistentArrayMap(null, 2, [new cljs.core.Keyword(null,"file","file",-1269645878),"re_com/simple_v_table.cljs",new cljs.core.Keyword(null,"line","line",212345235),271], null)),new cljs.core.Keyword(null,"model","model",331153215),internal_model,new cljs.core.Keyword(null,"column-header-renderer","column-header-renderer",-1886265578),cljs.core.partial.cljs$core$IFn$_invoke$arity$4(column_header_renderer,content_cols,parts,sort_by_column),new cljs.core.Keyword(null,"column-header-height","column-header-height",-1680092558),column_header_height,new cljs.core.Keyword(null,"row-header-renderer","row-header-renderer",-355094585),cljs.core.partial.cljs$core$IFn$_invoke$arity$variadic(re_com.simple_v_table.row_renderer,fixed_cols,on_click_row,on_enter_row,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([on_leave_row,row_height,row_style,cell_style,parts,table_row_line_color], 0)),new cljs.core.Keyword(null,"row-renderer","row-renderer",314053346),cljs.core.partial.cljs$core$IFn$_invoke$arity$variadic(re_com.simple_v_table.row_renderer,content_cols,on_click_row,on_enter_row,cljs.core.prim_seq.cljs$core$IFn$_invoke$arity$2([on_leave_row,row_height,row_style,cell_style,parts,table_row_line_color], 0)),new cljs.core.Keyword(null,"row-content-width","row-content-width",-1986261648),content_width,new cljs.core.Keyword(null,"row-height","row-height",527360749),row_height,new cljs.core.Keyword(null,"max-row-viewport-height","max-row-viewport-height",2061202688),(cljs.core.truth_(max_rows)?(max_rows * row_height):null),new cljs.core.Keyword(null,"top-left-renderer","top-left-renderer",2010514596),cljs.core.partial.cljs$core$IFn$_invoke$arity$4(column_header_renderer,fixed_cols,parts,sort_by_column),new cljs.core.Keyword(null,"class","class",-2030961996),class$,new cljs.core.Keyword(null,"parts","parts",849007691),(function (){var G__72993 = re_com.util.assoc_in_if_empty(re_com.util.assoc_in_if_empty(cljs.core.apply.cljs$core$IFn$_invoke$arity$2(cljs.core.dissoc,cljs.core.into.cljs$core$IFn$_invoke$arity$2(new cljs.core.PersistentVector(null, 1, 5, cljs.core.PersistentVector.EMPTY_NODE, [parts], null),re_com.simple_v_table.simple_v_table_exclusive_parts)),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"wrapper","wrapper",-969103524),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"font-size","font-size",-1847940346)], null),"13px"),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"wrapper","wrapper",-969103524),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"cursor","cursor",1011937484)], null),"default");
 if((fixed_column_count > (0))){
-return re_com.util.assoc_in_if_empty(re_com.util.assoc_in_if_empty(G__72979,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"top-left","top-left",-1396159636),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"border-right","border-right",-668932860)], null),fixed_col_border_style),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"row-headers","row-headers",1790514903),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"border-right","border-right",-668932860)], null),fixed_col_border_style);
+return re_com.util.assoc_in_if_empty(re_com.util.assoc_in_if_empty(G__72993,new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"top-left","top-left",-1396159636),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"border-right","border-right",-668932860)], null),fixed_col_border_style),new cljs.core.PersistentVector(null, 3, 5, cljs.core.PersistentVector.EMPTY_NODE, [new cljs.core.Keyword(null,"row-headers","row-headers",1790514903),new cljs.core.Keyword(null,"style","style",-496642736),new cljs.core.Keyword(null,"border-right","border-right",-668932860)], null),fixed_col_border_style);
 } else {
-return G__72979;
+return G__72993;
 }
 })()], null)], null);
 }
 };
 var re_com$simple_v_table$simple_v_table_render = function (var_args){
-var p__72976 = null;
+var p__72978 = null;
 if (arguments.length > 0) {
-var G__73002__i = 0, G__73002__a = new Array(arguments.length -  0);
-while (G__73002__i < G__73002__a.length) {G__73002__a[G__73002__i] = arguments[G__73002__i + 0]; ++G__73002__i;}
-  p__72976 = new cljs.core.IndexedSeq(G__73002__a,0,null);
+var G__73001__i = 0, G__73001__a = new Array(arguments.length -  0);
+while (G__73001__i < G__73001__a.length) {G__73001__a[G__73001__i] = arguments[G__73001__i + 0]; ++G__73001__i;}
+  p__72978 = new cljs.core.IndexedSeq(G__73001__a,0,null);
 } 
-return re_com$simple_v_table$simple_v_table_render__delegate.call(this,p__72976);};
+return re_com$simple_v_table$simple_v_table_render__delegate.call(this,p__72978);};
 re_com$simple_v_table$simple_v_table_render.cljs$lang$maxFixedArity = 0;
-re_com$simple_v_table$simple_v_table_render.cljs$lang$applyTo = (function (arglist__73003){
-var p__72976 = cljs.core.seq(arglist__73003);
-return re_com$simple_v_table$simple_v_table_render__delegate(p__72976);
+re_com$simple_v_table$simple_v_table_render.cljs$lang$applyTo = (function (arglist__73002){
+var p__72978 = cljs.core.seq(arglist__73002);
+return re_com$simple_v_table$simple_v_table_render__delegate(p__72978);
 });
 re_com$simple_v_table$simple_v_table_render.cljs$core$IFn$_invoke$arity$variadic = re_com$simple_v_table$simple_v_table_render__delegate;
 return re_com$simple_v_table$simple_v_table_render;
@@ -332,9 +332,9 @@ return re_com$simple_v_table$simple_v_table_render;
 (re_com.simple_v_table.simple_v_table.cljs$lang$maxFixedArity = (0));
 
 /** @this {Function} */
-(re_com.simple_v_table.simple_v_table.cljs$lang$applyTo = (function (seq72973){
+(re_com.simple_v_table.simple_v_table.cljs$lang$applyTo = (function (seq72970){
 var self__4852__auto__ = this;
-return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72973));
+return self__4852__auto__.cljs$core$IFn$_invoke$arity$variadic(cljs.core.seq(seq72970));
 }));
 
 

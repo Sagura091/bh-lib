@@ -1,7 +1,7 @@
 (ns bh-ui.data-source-handler
   (:require [re-frame.core :as rf]
             [taoensso.timbre :as log]
-            [events :as events]))
+            [bh-ui.events :as events]))
 
 
 

@@ -1,25 +1,25 @@
-{:nrepl        {:port 8777}
- :socket-repl  {:port 8999}
- :dev-http     {8081 "src/demo/resources/public"}
+{:nrepl       {:port 8877}
+ :socket-repl {:port 8999}
+ :dev-http    {8888 "demo/resources/public"}
 
- :deps true
+ :deps        true
 
- :builds       {:app
-                {:target       :browser
-                 :output-dir   "src/demo/resources/public/js/compiled"
-                 :asset-path   "/js/compiled"
-                 :compiler-options {:infer-externs true}
-                 :source-map   true,
-                 :pretty-print true,
-                 :modules      {:app {:init-fn demo.core/init}}
-                 :devtools     {:preloads [re-frame-flow.preload
-                                           day8.re-frame-10x.preload]}
-                 :js-options {:entry-keys ["browser" "module" "main"]
-                              :js-provider :external
-                              :external-index "src/demo/resources/public/js/compiled/requires.js"}
-                 :dev          {:compiler-options
-                                {;:output-feature-set :es-next
-                                 :infer-externs true
-                                 :closure-defines {re-frame.trace.trace-enabled?              true
-                                                   day8.re-frame.tracing.trace-enabled?       true
-                                                   re-com.config/root-url-for-compiler-output true}}}}}}
+ :builds      {:app
+               {:target           :browser
+                :output-dir       "demo/resources/public/js/compiled"
+                :asset-path       "/js/compiled"
+                :compiler-options {:infer-externs true}
+                :source-map       true,
+                :pretty-print     true,
+                :modules          {:app {:init-fn demo.core/init}}
+                :devtools         {:preloads [re-frame-flow.preload
+                                              day8.re-frame-10x.preload]}
+                :js-options       {:entry-keys     ["browser" "module" "main"]
+                                   :js-provider    :external
+                                   :external-index "demo/resources/public/js/compiled/requires.js"}
+                :dev              {:compiler-options
+                                   {;:output-feature-set :es-next
+                                    :infer-externs   true
+                                    :closure-defines {re-frame.trace.trace-enabled?              true
+                                                      day8.re-frame.tracing.trace-enabled?       true
+                                                      re-com.config/root-url-for-compiler-output true}}}}}}
