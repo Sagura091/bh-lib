@@ -15,15 +15,12 @@
 
 
 (defn ww-example []
-  (let [container-id     "coverage-plan-demo-ww"
-        logged-in?       (re-frame/subscribe [:subs/logged-in?])
-        pub-sub-started? (re-frame/subscribe [:bh.subs/pub-sub-started?])]
+  (let [container-id     "coverage-plan-demo-ww"]
 
-    (if (not @logged-in?)
-      (re-frame/dispatch [:events/login "test-user" "test-pwd"]))
+   
 
     (fn []
-      (if (and @logged-in? @pub-sub-started?)
+      
         (acu/demo "Coverage Plan using a Grid for layout (Worldwind globe) WIP"
           "This experiment uses a GRID to layout the various UI components that make up the 'composite'.
           Constructs 'coverage-plan', drawing the layout from `:grid-layout` which provides X/Y/W/H for each
@@ -45,19 +42,15 @@
           "Coverage Plan"
           [rc/alert-box :src (rc/at)
            :alert-type :info
-           :heading "Waiting for (demo) Log-in"])))))
+           :heading "Waiting for (demo) Log-in"]))))
 
 
 (defn r-example []
-  (let [container-id     "coverage-plan-demo-r"
-        logged-in?       (re-frame/subscribe [:subs/logged-in?])
-        pub-sub-started? (re-frame/subscribe [:bh.subs/pub-sub-started?])]
+  (let [container-id     "coverage-plan-demo-r"]
 
-    (if (not @logged-in?)
-      (re-frame/dispatch [:events/login "test-user" "test-pwd"]))
+   
 
     (fn []
-      (if (and @logged-in? @pub-sub-started?)
         (acu/demo "Coverage Plan using a Grid for layout (Resium globe)"
           "This experiment uses a GRID to layout the various UI components that make up the 'composite'.  Constructs
           'coverage-plan', drawing the layout from `:grid-layout` which provides X/Y/W/H for each component
@@ -88,12 +81,9 @@
 
 
 (defn twoD-example []
-  (let [container-id     "coverage-plan-demo-2D"
-        logged-in?       (re-frame/subscribe [:subs/logged-in?])
-        pub-sub-started? (re-frame/subscribe [:bh.subs/pub-sub-started?])]
+  (let [container-id     "coverage-plan-demo-2D"]
 
-    (if (not @logged-in?)
-      (re-frame/dispatch [:events/login "test-user" "test-pwd"]))
+    
 
     (fn []
       (if (and @logged-in? @pub-sub-started?)

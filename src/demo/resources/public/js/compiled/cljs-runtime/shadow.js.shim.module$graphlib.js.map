@@ -1,9 +1,0 @@
-{
-"version":3,
-"file":"shadow.js.shim.module$graphlib.js",
-"lineCount":5,
-"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,gCAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,uCAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,eAAf,GAAiCC,aAAA,CAAc,UAAd,CAAjC;AACAC,qCAAsCC,CAAAA,OAAtC,GAAgDN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,eAA/D;;",
-"sources":["shadow.js.shim.module$graphlib.js"],
-"sourcesContent":["goog.provide(\"shadow.js.shim.module$graphlib\");\ngoog.provide(\"module$shadow_js_shim_module$graphlib\");\nshadow.js.shim.module$graphlib = shadow$bridge(\"graphlib\");\nmodule$shadow_js_shim_module$graphlib.default = shadow.js.shim.module$graphlib;\n"],
-"names":["goog","provide","shadow","js","shim","module$graphlib","shadow$bridge","module$shadow_js_shim_module$graphlib","default"]
-}

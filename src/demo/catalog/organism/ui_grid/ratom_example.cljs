@@ -98,17 +98,13 @@
 
 
 (defn example []
-  (let [logged-in?       (re-frame/subscribe [:subs/logged-in?])
-        pub-sub-started? (re-frame/subscribe [:bhui.subs/pub-sub-started?])]
-
-    (if (not @logged-in?)
-      (re-frame/dispatch [:events/login "test-user" "test-pwd"]))
+  (let []
 
     (fn []
       (acu/demo "Widget Grid (ratom-based)"
         "A grid of widget, which are composed of UI Components using a data structure that defines a directed graph."
 
-        (if (and @logged-in? @pub-sub-started?)
+       
           [layout/page {:extra-classes :is-fluid}
 
            [rc/v-box :src (rc/at)
@@ -126,4 +122,4 @@
         '[grid/component
           :widgets widgets
           :layout layout
-          :container-id container-id]))))
+          :container-id container-id])))

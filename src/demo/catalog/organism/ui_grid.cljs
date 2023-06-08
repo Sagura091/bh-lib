@@ -4,7 +4,7 @@
 
 
 (defn page []
-  [:div])
-   ;[ratom-example/example]
-   ;[sub-example/example]])
+  [:div
+  [ratom-example/example]
+   [sub-example/example]])
 

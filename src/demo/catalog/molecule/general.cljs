@@ -18,15 +18,15 @@
 
 (defn catalog []
 
-  [:div])
-   ;[chart-remote-data/example]
-   ;[simple-multi-chart/example]
-   ;[simple-multi-chart-2/example]
-   ;[multi-chart-widget/example]
-   ;[with-fn/example]
-   ;[coverage-plan/ww-example]
-   ;[coverage-plan/r-example]
-   ;[coverage-plan/twoD-example]
-   ;[header-bar/example]
-   ;[login/example]
-   ;[two-d-three-d-globe/example]])
+  [:div
+   [chart-remote-data/example]
+   [simple-multi-chart/example]
+   [simple-multi-chart-2/example]
+   [multi-chart-widget/example]
+   [with-fn/example]
+   [coverage-plan/ww-example]
+   [coverage-plan/r-example]
+   [coverage-plan/twoD-example]
+   [header-bar/example]
+   [login/example]
+   [two-d-three-d-globe/example]])

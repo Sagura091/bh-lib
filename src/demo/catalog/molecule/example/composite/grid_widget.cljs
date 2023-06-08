@@ -9,15 +9,9 @@
 
 
 (defn example []
-  (let [container-id     "widget-grid-demo"
-        logged-in?       (re-frame/subscribe [:subs/logged-in?])
-        pub-sub-started? (re-frame/subscribe [:bhui.subs/pub-sub-started?])]
-
-    (if (not @logged-in?)
-      (re-frame/dispatch [:events/login "test-user" "test-pwd"]))
+  (let [container-id     "widget-grid-demo"]
 
     (fn []
-      (if (and @logged-in? @pub-sub-started?)
         (acu/demo "Coverage Plan using a Grid for layout"
           "This experiment uses a GRID to layout the various UI components that make up the 'composite'.  Constructs 'coverage-plan', drawing the layout from `:grid-layout` which provides X/Y/W/H for each component on the widget's internal grid."
           [layout/frame
@@ -31,4 +25,4 @@
           "Coverage Plan"
           [rc/alert-box :src (rc/at)
            :alert-type :info
-           :heading "Waiting for (demo) Log-in"])))))
+           :heading "Waiting for (demo) Log-in"]))))

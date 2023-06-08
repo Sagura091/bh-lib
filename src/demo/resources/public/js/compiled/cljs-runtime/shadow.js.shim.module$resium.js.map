@@ -1,9 +1,0 @@
-{
-"version":3,
-"file":"shadow.js.shim.module$resium.js",
-"lineCount":5,
-"mappings":"AAAAA,IAAKC,CAAAA,OAAL,CAAa,8BAAb,CAAA;AACAD,IAAKC,CAAAA,OAAL,CAAa,qCAAb,CAAA;AACAC,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,aAAf,GAA+BC,aAAA,CAAc,QAAd,CAA/B;AACAC,mCAAoCC,CAAAA,OAApC,GAA8CN,MAAOC,CAAAA,EAAGC,CAAAA,IAAKC,CAAAA,aAA7D;;",
-"sources":["shadow.js.shim.module$resium.js"],
-"sourcesContent":["goog.provide(\"shadow.js.shim.module$resium\");\ngoog.provide(\"module$shadow_js_shim_module$resium\");\nshadow.js.shim.module$resium = shadow$bridge(\"resium\");\nmodule$shadow_js_shim_module$resium.default = shadow.js.shim.module$resium;\n"],
-"names":["goog","provide","shadow","js","shim","module$resium","shadow$bridge","module$shadow_js_shim_module$resium","default"]
-}

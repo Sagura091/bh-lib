@@ -117,10 +117,11 @@
             "Your browser does not support HTML5 Canvas."]))})))
 
 
-(defn- globe-inter [& {:keys [shapes current-time component-id]}]
+(defn- globe-inter [& {:keys [shapes ;layers current-time component-id]}]
   (let [shape-layers (->> shapes (map shape/make-shape) (into []))
         all-layer    (reduce conj
                        (base-layers component-id)
+                             ;layers 
                        shape-layers)]
 
     ;(log/info "globe-inter" (map :id all-layer) "//" current-time "//" (count all-layer))
