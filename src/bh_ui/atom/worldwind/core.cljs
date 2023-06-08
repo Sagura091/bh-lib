@@ -9,6 +9,7 @@
             [bh-ui.atom.worldwind.globe.projection :as projection]
             [bh-ui.atom.worldwind.globe.react-support :as react-support]
             [bh-ui.atom.worldwind.globe.shape :as shape]
+            [bh-ui.atom.worldwind.globe.volume :as volume]
             [bh-ui.atom.worldwind.globe.shape.core]))
 
 
@@ -31,6 +32,7 @@
 (def getLayer layer/getLayer)
 (def addLayer layer/addLayer)
 (def removeLayer layer/removeLayer)
+(def make-layer layer/make-layer)
 
 (def location location/location)
 (def position location/position)

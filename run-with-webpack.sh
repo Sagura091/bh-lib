@@ -5,7 +5,7 @@ set -e
 
 #cd ../../bases/rccst
 
-echo "Updating NPM dependencies and running WEB{ACK"
+echo "Updating NPM dependencies and running WEBPACK"
 mkdir -p node_modules
 ./wpb.sh dev
 

@@ -116,7 +116,7 @@
   which case subscribe-to will return the result of calling that function."
   [sub]
 
-  (log/info "subscribe-to" sub)
+  ;(log/info "subscribe-to" sub)
 
   (reset! last-sub sub)
 

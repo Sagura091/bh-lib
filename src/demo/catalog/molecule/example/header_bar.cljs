@@ -19,15 +19,14 @@
       [layout/centered
 
        [header-bar/header-bar
-        :children [[:h1 "RCCST"]
+        :children [[:h1 "Black Hammer UI Catalog"]
                    [rc/h-box :src (rc/at)
                     :gap "10px"
                     :align :center
                     :children [[:h5.is-small "version: " (or @version "unknown")]
-                               [:h5.is-small (or @uuid "none")]
                                [button/button
                                 "Log Off"
-                                #(re-frame/dispatch [::events/logoff]) "Log Off"]]]]]]
+                                #() "Log Off"]]]]]]
       '[])))
 
 

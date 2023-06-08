@@ -39,7 +39,7 @@
                      (into-array))
         polygon    (WorldWind/SurfacePolygon. locs attributes)]
     (set! (.-displayName polygon) id)
-    (wrap-shape id (vector polygon) (or z 5))))
+    polygon))
 
 
 ; :shape/circle
@@ -47,7 +47,7 @@
                                              fill-color outline-color
                                              width radius z]}]
 
-  ;(log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
+  (log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
 
   (let [attributes (attributes/shape-attributes
                      {:fill-color    fill-color
@@ -56,7 +56,7 @@
         circle     (WorldWind/SurfaceCircle. (location/location location)
                      radius attributes)]
     (set! (.-displayName circle) id)
-    (wrap-shape id (vector circle) (or z 5))))
+    circle))
 
 
 ; :shape/polyline
@@ -72,7 +72,7 @@
                      (into-array))
         polyline   (WorldWind/SurfacePolyline. locs attributes)]
     (set! (.-displayName polyline) id)
-    (wrap-shape id (vector polyline) (or z 5))))
+    polyline))
 
 
 ;:shape/label
@@ -86,7 +86,7 @@
                       :outline-color outline-color
                       :width         width})]
     (set! (.-attributes label) attributes)
-    (wrap-shape id (vector label) (or z 10))))
+    label))
 
 
 

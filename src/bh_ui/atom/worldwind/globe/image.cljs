@@ -19,18 +19,18 @@
                                       surfaceImage (WorldWind/SurfaceImage. (sector/sector bounding-box) url)]
                                   (set! (.-resamplingMode surfaceImage) (.-FILTER_NEAREST WorldWind))
 
-                                  (shape/wrap-shape id [surfaceImage] (or z 10)))
+                                  surfaceImage)
 
     ; bounding-box, but NOT locations
     (and (not (seq locations))
       (seq bounding-box)) (let [surfaceImage (WorldWind/SurfaceImage. (sector/sector bounding-box) url)]
                             (set! (.-resamplingMode surfaceImage) (.-FILTER_NEAREST WorldWind))
-                            (shape/wrap-shape id [surfaceImage] (or z 10)))
+                            surfaceImage)
 
     ; default to bounding-box, if it exists
     (seq bounding-box) (let [surfaceImage (WorldWind/SurfaceImage. (sector/sector bounding-box) url)]
                          (set! (.-resamplingMode surfaceImage) (.-FILTER_NEAREST WorldWind))
-                         (shape/wrap-shape id [surfaceImage] (or z 10)))
+                         surfaceImage)
 
     ; if BOTH are missing, "fail"
     :else [:div ":shape/image is missing both :bounding-box AND :locations parameters"]))
