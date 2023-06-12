@@ -1,6 +1,7 @@
 (ns bh-ui.molecule.composite.util.signals
   (:require [bh-ui.utils :as ui-utils]
             [bh-ui.events :as events]
+            [bh-ui.subs :as subs]
             [bh-ui.utils.locals :as ul]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [woolybear.ad.containers :as containers]
@@ -48,10 +49,10 @@
              (if (= direction :outputs)
                {source-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
-                              [:subs/source remote])}
+                              [::subs/source remote])}
                {target-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
-                              [:subs/source remote])}))))
+                              [::subs/source remote])}))))
     (into {})))
 
 
@@ -110,7 +111,7 @@
     (re-frame/dispatch-sync [::events/subscribe-to #{remote}])
 
     ; 2. return the signal vector to the new data-source key
-    [:subs/source remote]))
+    [::subs/source remote]))
 
 
 ; :source/fn
