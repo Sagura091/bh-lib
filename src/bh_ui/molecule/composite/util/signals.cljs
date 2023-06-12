@@ -1,5 +1,6 @@
 (ns bh-ui.molecule.composite.util.signals
   (:require [bh-ui.utils :as ui-utils]
+            [bh-ui.events :as events]
             [bh-ui.utils.locals :as ul]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [woolybear.ad.containers :as containers]
@@ -106,7 +107,7 @@
     ;(log/info "component->ui :source/remote" node "//" remote)
 
     ; 1. subscribe to the server (if needed)
-    (re-frame/dispatch-sync [:events/subscribe-to #{remote}])
+    (re-frame/dispatch-sync [::events/subscribe-to #{remote}])
 
     ; 2. return the signal vector to the new data-source key
     [:subs/source remote]))
