@@ -1,5 +1,5 @@
 (ns bh-ui.core
-  (:require [csrf]
+  (:require [bh-ui.csrf]
             [bh-ui.events :as events]
             [bh-ui.data-source-handler]
             [bh-ui.subs]
