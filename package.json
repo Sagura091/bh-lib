@@ -37,6 +37,7 @@
 		"react-leaflet": "4.0.2",
 		"react-markdown": "4.0.6",
 		"react-split-pane": "0.1.92",
+		"react-table": "^7.8.0",
 		"recharts": "2.1.9",
 		"resium": "1.14.3",
 		"vega": "5.22.1",
