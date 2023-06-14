@@ -1,7 +1,9 @@
 (ns bh-ui.atom.diagram.diagram.composite-dag-support
   (:require [bh-ui.molecule.composite.util.ui :as ui]
             [taoensso.timbre :as log]
-            ["react-flow-renderer" :refer (MarkerType) :default ReactFlow]))
+            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            ["reactflow" :refer (MarkerType)]))
+            ;["react-flow-renderer" :refer (MarkerType) :default ReactFlow]))
 
 
 (log/info "bh-ui.atom.diagram.diagram.composite-dag-support")
@@ -33,6 +35,9 @@
                            ":source/remote" "#FFA500"
                            ":source/local"  "#0000ff"
                            ":source/fn"     "#FFC0CB"})
+(def custom-node-types {":ui/component" (partial cn/custom-node :ui/component)})
+
+
 (def default-node-types {":ui/component"  (partial default-custom-node :ui/component)
                          ":source/remote" (partial default-custom-node :source/remote)
                          ":source/local"  (partial default-custom-node :source/local)
@@ -46,6 +51,8 @@
                          :source/remote {:label ":source/remote" :type :source/remote :color "orange" :text-color :black}
                          :source/local  {:label ":source/local" :type :source/local :color "blue" :text-color :white}
                          :source/fn     {:label ":source/fn" :type :source/fn :color "pink" :text-color :black}})
+
+(def custom-tool-types {:ui/component  {:label ":ui/component" :type :ui/component :color "green" :text-color :white}})
 
 
 (def sample-data

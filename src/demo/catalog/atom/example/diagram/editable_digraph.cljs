@@ -6,6 +6,7 @@
             [reagent.core :as r]))
 
 
+
 (defn example []
   (let [container-id "editable-flow-diagram-demo"]
     [:<>
@@ -18,6 +19,17 @@
       :component digraph/component
       :component-id (utils/path->keyword container-id "editable-digraph")
       :source-code digraph/source-code]
+
+     [example/component-example
+      :title "Editable Digraph"
+      :description "An Editable Digraph, built using custom node"
+      :data (r/atom digraph/sample-data)
+      :node-types support/custom-node-types
+      :tool-types support/custom-tool-types
+      :component digraph/component
+      :component-id (utils/path->keyword container-id "editable-digraph")
+      :source-code digraph/source-code]
+
 
      [example/component-example
       :title "Editable Digraph using data used for building Composite UI components (ie, \"widgets\")"

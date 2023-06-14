@@ -8,6 +8,7 @@
             [reagent.core :as r]
             [taoensso.timbre :as log]
             ["react" :as react]
+            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
             ["react-flow-renderer" :refer (ReactFlowProvider MiniMap Controls
                                                              Handle MarkerType
                                                              Background
@@ -80,9 +81,13 @@
 
 
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
-(def default-node-style {:padding      "3px" :max-width "180px"
+(def default-node-style {
+                         :minHeight "30px"
+                         :width "100%"
+                         :height "100%"
                          :borderRadius "5px" :margin :auto
                          :background   :white :color :black})
+
 (def node-style {:ui/component  {:background :green :color :white}
                  :source/remote {:background :orange :color :black}
                  :source/local  {:background :blue :color :white}
@@ -159,27 +164,28 @@
        (.preventDefault event)
        (set! (.-dropEffect (.-dataTransfer event)) "move"))
 
+(defn- on-drop [component-id data reactFlowInstance set-nodes-fn wrapper update-node-kind-fn event]
+  (.preventDefault event)
 
-(defn- on-drop [component-id reactFlowInstance set-nodes-fn wrapper event]
-       (.preventDefault event)
-
-       (let [node-type (.getData (.-dataTransfer event) "editable-flow")
-             x (.-clientX event)
-             y (.-clientY event)
-             reactFlowBounds (.getBoundingClientRect @wrapper)]
-
-            (when (not= node-type "undefined")
-                  (let [new-id (str node-type "-new")
-                        position ((.-project @reactFlowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
-                                                                           :y (- y (.-top reactFlowBounds))}))
-                        new-node {:id       new-id
-                                  :type     node-type
-                                  :data     {:label   new-id
-                                             :inputs  []
-                                             :outputs []}
-                                  :position position}]
-
-                       (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
+  (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
+        x               (.-clientX event)
+        y               (.-clientY event)
+        reactFlowBounds (.getBoundingClientRect @wrapper)]
+    (when (not= node-type "undefined")
+      (let [new-id   (str node-type "-" (count (:nodes @data)))
+            kind     ":ui/table"
+            position ((.-project @reactFlowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
+                                                               :y (- y (.-top reactFlowBounds))}))
+            new-node {:id       new-id
+                      :type     node-type
+                      :data     {:label   new-id
+                                 :kind     kind
+                                 :update-node-kind-fn update-node-kind-fn
+                                 :inputs  []
+                                 :outputs []}
+                      :position position}]
+        (swap! data assoc :nodes (conj (:nodes @data) new-node))
+        (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
 
 
 (defn- make-draggable-node [[k {:keys [label type color text-color]} :as node]]
@@ -195,6 +201,23 @@
                        :onDragStart #(on-drag-start type %)
                        :draggable   true}
                       label])
+
+(defn on-connect [data set-edges-fn event]
+
+  (let [event-map (js->clj event :keywordize-keys true)
+        source-id (:source event-map)
+        target-id (:target event-map)
+        new-edge  {:id     (str source-id "->" target-id)
+                   :source source-id
+                   :target target-id
+                   :style  {:stroke :green :strokeWidth 2}}]
+    ;(log/info "connecting" new-edge)
+
+    ;add the new nodes to the original nodes data (an atom)...
+    (swap! data assoc :edges (conj (:edges @data) new-edge))
+
+    ; and this updates the data internal to the React diagram component..
+    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
 ;; endregion
 
@@ -253,8 +276,8 @@
              [:> Background]
              [:> Controls]]))
 
-
 (defn- editable-flow [& {:keys [component-id
+                                data
                                 nodes edges
                                 node-types edge-types
                                 minimap-styles on-drop on-drag-over
@@ -267,7 +290,16 @@
                                    {:nodes nodes :edges edges})
              [ns set-nodes on-change-nodes] (useNodesState (clj->js n))
              [es set-edges on-change-edges] (useEdgesState (clj->js e))
-             !wrapper (clojure.core/atom nil)]
+             !wrapper (clojure.core/atom nil)
+             update-node-kind-fn (fn [kind node-id]
+                                   (set-nodes (fn [nds]
+                                                (let [index (->> (js->clj nds)
+                                                                 (keep-indexed (fn [index map]
+                                                                                 (when (= (get map "id") node-id))
+                                                                                 index))
+                                                                first)]
+
+                                                  (clj->js (assoc-in (js->clj nds) [index "data" "kind"] kind))))))]
 
             [:> ReactFlowProvider
              [:div#wrapper {:style {:width "800px" :height "700px"}
@@ -281,10 +313,10 @@
                :node-types node-types
                :edge-types edge-types
                :minimap-styles minimap-styles
-               :connectFn connectFn
+               :connectFn (partial on-connect data set-edges)
                :zoom-on-scroll zoom-on-scroll
                :preventScrolling preventScrolling
-               :on-drop (partial on-drop component-id flowInstance set-nodes !wrapper)
+               :on-drop (partial on-drop component-id data flowInstance set-nodes !wrapper update-node-kind-fn)
                :on-drag-over on-drag-over
                :flowInstance flowInstance]]]))
 
@@ -315,6 +347,7 @@
                 :children [[tool-panel open-details? (:components @d) component-id tool-types]
                            [:f> editable-flow
                             :component-id component-id
+                            :data d
                             :nodes (:nodes @d)
                             :edges (:edges @d)
                             :node-types n-types
@@ -327,30 +360,3 @@
                             :preventScrolling preventScrolling
                             :flowInstance flowInstance
                             :force-layout? force-layout?]]])))
-
-
-
-
-(comment
-  (:nodes @sample-data)
-  (swap! sample-data assoc :nodes (conj (:nodes @sample-data)
-                                        {:id "dummy-node" :position {:x 0 :y 0}}))
-
-  (def node-types {":ui/component"  (partial bh-ui.molecule.composite.util.ui/custom-node :ui/component)
-                   ":source/remote" (partial bh-ui.molecule.composite.util.ui/custom-node :source/remote)
-                   ":source/local"  (partial bh-ui.molecule.composite.util.ui/custom-node :source/local)
-                   ":source/fn"     (partial bh-ui.molecule.composite.util.ui/custom-node :source/fn)})
-  (def open-details? (r/atom ""))
-
-  (defn- dummy [a b c d]
-         (+ a b c d))
-
-  ((partial (partial dummy 1 1) 1 1))
-  (->> node-types
-       (map (fn [[k v]]
-                {k (partial v open-details?)}))
-       (into {})
-       (clj->js))
-
-  ())
-
