@@ -1,21 +1,19 @@
 (ns bh-ui.atom.diagram.editable-digraph
-  (:require [bh-ui.atom.diagram.diagram.dagre-support :as dagre]
-            [bh-ui.molecule.composite.util.node-config-ui :as config]
-            [bh-ui.molecule.composite.util.ui]
-            [bh-ui.utils.helpers :as h]
+  (:require [taoensso.timbre :as log]
             [clojure.set :as set]
-            [re-com.core :as rc]
-            [reagent.core :as r]
-            [taoensso.timbre :as log]
-            ["react" :as react]
             [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
-            ["react-flow-renderer" :refer (ReactFlowProvider MiniMap Controls
-                                                             Handle MarkerType
-                                                             Background
-                                                             applyNodeChanges
-                                                             applyEdgeChanges
-                                                             useNodesState
-                                                             useEdgesState) :default ReactFlow]))
+            [bh-ui.atom.diagram.diagram.composite-dag-support :as s]
+            ["reactflow$default" :as ReactFlow]
+            ["reactflow" :refer (ReactFlowProvider MiniMap Controls
+                                  Handle MarkerType
+                                  Background
+                                  applyNodeChanges
+                                  applyEdgeChanges
+                                  useNodesState
+                                  useEdgesState
+                                  useCallBack Handle Position)]
+            ["react" :refer (useMemo)]
+            [reagent.core :as r]))
 
 
 (log/info "bh-ui.atom.diagram.editable-digraph")
@@ -26,19 +24,19 @@
 
 (def sample-data
   {:nodes [{:id       ":ui/targets"
-            ;:type     ":ui/component"
+            :type     ":ui/component"
             :data     {:label   ":ui/targets"
                        :inputs  []
                        :outputs []}
             :position {:x 0 :y 100}}
            {:id       ":topic/target-data"
-            ;:type     ":source/remote"
+            :type     ":source/remote"
             :data     {:label   ":topic/target-data"
                        :inputs  []
                        :outputs []}
             :position {:x 100 :y 0}}
            {:id       ":topic/selected-targets"
-            ;:type     ":source/local"
+            :type     ":source/local"
             :data     {:label   ":topic/selected-targets"
                        :inputs  []
                        :outputs []}
@@ -82,9 +80,9 @@
 
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
 (def default-node-style {
-                         :minHeight "30px"
-                         :width "100%"
-                         :height "100%"
+                         :minHeight    "30px"
+                         :width        "100%"
+                         :height       "100%"
                          :borderRadius "5px" :margin :auto
                          :background   :white :color :black})
 
@@ -100,51 +98,51 @@
 ;; region ; adding handles to nodes in the digraph
 
 (defn- input-handles
-       "
-       NOTE: the inputs (values in the hash-map) are STRINGS!
-       "
-       [label inputs position]
-       [:<>
-        (doall
-          (->> inputs
-               (map-indexed (fn [idx [target ports]]
-                                (let [[source-port target-port] ports]
-                                     ;(log/info "input-handle" label target-port)
-                                     [:> Handle {:id    target-port :type "target" :position position
-                                                 :style (merge handle-style {:left (+ 20 (* 10 idx))})}])))
-               (into [:<>])))])
+  "
+  NOTE: the inputs (values in the hash-map) are STRINGS!
+  "
+  [label inputs position]
+  [:<>
+   (doall
+     (->> inputs
+       (map-indexed (fn [idx [target ports]]
+                      (let [[source-port target-port] ports]
+                        ;(log/info "input-handle" label target-port)
+                        [:> Handle {:id    target-port :type "target" :position position
+                                    :style (merge handle-style {:left (+ 20 (* 10 idx))})}])))
+       (into [:<>])))])
 
 
 (defn- output-handles
-       "
-       NOTE: the inputs (values in the hash-map) are STRINGS!
-       "
-       [label outputs position]
-       [:<>
-        (doall
-          (->> outputs
-               (map-indexed (fn [idx [target ports]]
-                                (let [[source-port target-port] ports]
-                                     ;(log/info "output-handle" label source-port)
-                                     [:> Handle {:id    source-port :type "source" :position position
-                                                 :style (merge handle-style {:right (+ 20 (* 10 idx))})}])))
-               (into [:<>])))])
+  "
+  NOTE: the inputs (values in the hash-map) are STRINGS!
+  "
+  [label outputs position]
+  [:<>
+   (doall
+     (->> outputs
+       (map-indexed (fn [idx [target ports]]
+                      (let [[source-port target-port] ports]
+                        ;(log/info "output-handle" label source-port)
+                        [:> Handle {:id    source-port :type "source" :position position
+                                    :style (merge handle-style {:right (+ 20 (* 10 idx))})}])))
+       (into [:<>])))])
 
 
 (defn- apply-handles [label inputs outputs input-position output-position]
-       (let [i (->> inputs
-                    (map (fn [[k [s d]]] [k s d])
-                         (into #{})))
-             o (->> outputs
-                    (map (fn [[k [s d]]] [k s d])
-                         (into #{})))
-             in-out (set/intersection i o)
-             in-only (set/difference (set/difference i o) in-out)
-             out-only (set/difference (set/difference o i) in-out)]
+  (let [i        (->> inputs
+                   (map (fn [[k [s d]]] [k s d])
+                     (into #{})))
+        o        (->> outputs
+                   (map (fn [[k [s d]]] [k s d])
+                     (into #{})))
+        in-out   (set/intersection i o)
+        in-only  (set/difference (set/difference i o) in-out)
+        out-only (set/difference (set/difference o i) in-out)]
 
-            (input-handles label in-out input-position)
-            (input-handles label in-only input-position)
-            (output-handles label out-only output-position)))
+    (input-handles label in-out input-position)
+    (input-handles label in-only input-position)
+    (output-handles label out-only output-position)))
 
 ;; endregion
 
@@ -152,65 +150,79 @@
 (def color-black "#000000")
 (def color-white "#ffffff")
 
+(defonce next-id (atom 0))
 
-;; region ; digraph drag-and-drop support
 
 (defn- on-drag-start [node-type event]
-       (.setData (.-dataTransfer event) "editable-flow" node-type)
-       (set! (.-effectAllowed (.-dataTransfer event)) "move"))
+  ;(print node-type)
+  (.setData (.-dataTransfer event) "editable-flow" node-type)
+  (set! (.-effectAllowed (.-dataTransfer event)) "move"))
 
 
 (defn- on-drag-over [event]
-       (.preventDefault event)
-       (set! (.-dropEffect (.-dataTransfer event)) "move"))
+  (.preventDefault event)
+  (set! (.-dropEffect (.-dataTransfer event)) "move"))
 
-(defn- on-drop [component-id data reactFlowInstance set-nodes-fn wrapper update-node-kind-fn event]
+
+(defn- on-drop [reactFlowInstance data set-nodes-fn wrapper event]
+  ;(log/info "on-drop" (js->clj @reactFlowInstance) @data)
+
   (.preventDefault event)
 
   (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
         x               (.-clientX event)
         y               (.-clientY event)
         reactFlowBounds (.getBoundingClientRect @wrapper)]
+    ;(println "on-drop" node-type)
+
     (when (not= node-type "undefined")
-      (let [new-id   (str node-type "-" (count (:nodes @data)))
-            kind     ":ui/table"
+      (let [new-id   (str "node-" (swap! next-id inc))
             position ((.-project @reactFlowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
                                                                :y (- y (.-top reactFlowBounds))}))
             new-node {:id       new-id
                       :type     node-type
                       :data     {:label   new-id
-                                 :kind     kind
-                                 :update-node-kind-fn update-node-kind-fn
                                  :inputs  []
                                  :outputs []}
                       :position position}]
+
+        ;add the new nodes to the original nodes data (an atom)...
         (swap! data assoc :nodes (conj (:nodes @data) new-node))
+        ; and this updates the data internal to the React diagram component...
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
 
+;(println "on-drop" @data)))
 
-(defn- make-draggable-node [[k {:keys [label type color text-color]} :as node]]
-       ^{:key label} [:div.draggable
-                      {:style       {:width           "150px" :height "50px"
-                                     :margin-bottom   "5px"
-                                     :display         :flex
-                                     :justify-content :center
-                                     :align-items     :center
-                                     :cursor          :grab
-                                     :border-radius   "3px" :padding "2px"
-                                     :background      color :color text-color}
-                       :onDragStart #(on-drag-start type %)
-                       :draggable   true}
-                      label])
 
-(defn on-connect [data set-edges-fn event]
+
+(defn make-draggable-node [label node-type color]
+  ;(println "make-draggable-node" node-type)
+
+  ^{:key label}
+  [:div.draggable
+   {:style       {:width           "150px" :height "50px"
+                  :background      (-> cn/node-style color :background)
+                  :color           (-> cn/node-style color :color)
+                  :margin-bottom   "5px"
+                  :display         :flex
+                  :justify-content :center
+                  :align-items     :center
+                  :cursor          :grab
+                  :border-radius   "3px" :padding "2px"}
+
+    :onDragStart #(on-drag-start node-type %)
+    :draggable   true} label])
+
+
+(defn on-connect [flowInstance data set-edges-fn wrapper event]
+  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
 
   (let [event-map (js->clj event :keywordize-keys true)
         source-id (:source event-map)
         target-id (:target event-map)
         new-edge  {:id     (str source-id "->" target-id)
                    :source source-id
-                   :target target-id
-                   :style  {:stroke :green :strokeWidth 2}}]
+                   :target target-id}]
     ;(log/info "connecting" new-edge)
 
     ;add the new nodes to the original nodes data (an atom)...
@@ -219,144 +231,67 @@
     ; and this updates the data internal to the React diagram component..
     (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
-;; endregion
 
 
-(defn- details-panel [components component-id node]
-       (let [details (get node "data")]
+(defn- diagram* [{:keys [data
+                         nodes edges
+                         node-types edge-type
+                         on-change-nodes on-change-edges
+                         onDrop onConnect
+                         wrapper flowInstance]}]
+  (log/info "diagram(star)")
 
-            [config/make-config-panel details]))
-
-
-(defn- tool-panel [open-details? components component-id tool-types]
-
-       [:div#tool-panel {:display         :flex
-                         :flex-direction  :column
-                         :justify-content :center
-                         :align-items     :center
-                         :style           {:width         "20%" :height "100%"
-                                           :border-radius "5px" :padding "15px 10px"
-                                           :background    :white :box-shadow "5px 5px 5px #888888"}}
-        [rc/v-box :src (rc/at)
-         :gap "2px"
-         :children [[rc/v-box :src (rc/at)
-                     :gap "2px"
-                     :justify :center
-                     :align :center
-                     :children [(doall
-                                  (map make-draggable-node tool-types))]]
-                    [rc/line :size "2px"]
-                    [:div {:style {:width "20%" :height "100%"}}
-                     [config/make-config-panel @open-details?]]]]])
-
-
-(defn- flow* [& {:keys [component-id nodes edges
-                        node-types edge-types
-                        minimap-styles
-                        on-change-nodes on-change-edges on-drop on-drag-over
-                        zoom-on-scroll preventScrolling connectFn flowInstance] :as params}]
-
-       (let [params (apply merge {:nodes               nodes
-                                  :edges               edges
-                                  :onNodesChange       on-change-nodes
-                                  :onEdgesChange       on-change-edges
-                                  :zoomOnScroll        (or zoom-on-scroll false)
-                                  :preventScrolling    (or preventScrolling false)
-                                  :onConnect           (or connectFn #())
-                                  :fitView             true
-                                  :attributionPosition "bottom-left"
-                                  :onDrop              (or on-drop #())
-                                  :onDragOver          (or on-drag-over #())
-                                  :onInit              (fn [generatedFlowInstance] (reset! flowInstance generatedFlowInstance))}
-                           (when node-types {:node-types node-types})
-                           (when edge-types {:edge-types edge-types}))]
-
-            [:> ReactFlow params
-             [:> MiniMap (if minimap-styles minimap-styles {})]
-             [:> Background]
-             [:> Controls]]))
-
-(defn- editable-flow [& {:keys [component-id
-                                data
-                                nodes edges
-                                node-types edge-types
-                                minimap-styles on-drop on-drag-over
-                                zoom-on-scroll preventScrolling connectFn
-                                flowInstance
-                                force-layout?] :as params}]
-
-       (let [{n :nodes e :edges} (if force-layout?
-                                   (dagre/build-layout nodes edges)
-                                   {:nodes nodes :edges edges})
-             [ns set-nodes on-change-nodes] (useNodesState (clj->js n))
-             [es set-edges on-change-edges] (useEdgesState (clj->js e))
-             !wrapper (clojure.core/atom nil)
-             update-node-kind-fn (fn [kind node-id]
-                                   (set-nodes (fn [nds]
-                                                (let [index (->> (js->clj nds)
-                                                                 (keep-indexed (fn [index map]
-                                                                                 (when (= (get map "id") node-id))
-                                                                                 index))
-                                                                first)]
-
-                                                  (clj->js (assoc-in (js->clj nds) [index "data" "kind"] kind))))))]
-
-            [:> ReactFlowProvider
-             [:div#wrapper {:style {:width "800px" :height "700px"}
-                            :ref   (fn [el]
-                                       (reset! !wrapper el))}
-              [flow*
-               :component-id component-id
-               :nodes ns :edges es
-               :on-change-nodes on-change-nodes
-               :on-change-edges on-change-edges
-               :node-types node-types
-               :edge-types edge-types
-               :minimap-styles minimap-styles
-               :connectFn (partial on-connect data set-edges)
-               :zoom-on-scroll zoom-on-scroll
-               :preventScrolling preventScrolling
-               :on-drop (partial on-drop component-id data flowInstance set-nodes !wrapper update-node-kind-fn)
-               :on-drag-over on-drag-over
-               :flowInstance flowInstance]]]))
+  [:> ReactFlow {:nodes            nodes
+                 :edges            edges
+                 :onNodesChange    on-change-nodes
+                 :onEdgesChange    on-change-edges
+                 :nodeTypes        s/default-node-types
+                 ; :edge-types       (or edge-type {})
+                 :fitView          true
+                 :defaultViewport  {:x 0 :y 0 :zoom 1.5}
+                 :zoomOnScroll     false
+                 :preventScrolling false
+                 :onInit           (fn [r] (reset! flowInstance r))
+                 :onDrop           onDrop
+                 :onDragOver       (or on-drag-over #())
+                 :onConnect        onConnect}
+   [:> Controls]
+   [:> MiniMap]
+   [:> Background]])
 
 
-(defn component [& {:keys [data
-                           node-types edge-types
-                           minimap-styles
-                           tool-types
-                           connectFn zoom-on-scroll preventScrolling
-                           component-id container-id
-                           force-layout?]}]
+(defn- diagram [{:keys [data node-types flowInstance]}]
+  (let [nodes     (:nodes @data)
+        edges     (:edges @data)
+        [node-state set-nodes on-change-nodes] (useNodesState (clj->js nodes))
+        [edge-state set-edges on-change-edges] (useEdgesState (clj->js edges))
+        nodeTypes (clj->js node-types)
+        wrapper   (clojure.core/atom nil)]
 
-      (let [d (h/resolve-value data)
-            open-details? (r/atom {})
-            n-types (->> node-types
-                         (map (fn [[k v]]
-                                  {k (partial v open-details?)}))
-                         (into {})
-                         (clj->js))
-            flowInstance (clojure.core/atom nil)]
+    (log/info "diagram")
+    ;@data "//" (:nodes @data) "//" (js->clj node-state))
+
+    [:> ReactFlowProvider
+     [:div#wrapper {:style {:width "800px" :height "800px"}
+                    :ref   (fn [el] (reset! wrapper el))}
+      [diagram* {:data            data
+                 :nodes           node-state
+                 :edges           edge-state
+                 :node-types      node-types
+                 :on-change-nodes on-change-nodes
+                 :on-change-edges on-change-edges
+                 :onDrop          (partial on-drop flowInstance data set-nodes wrapper)
+                 :onConnect       (partial on-connect flowInstance data set-edges wrapper)
+                 :wrapper         wrapper
+                 :flowInstance    flowInstance}]]]))
 
 
-           ;(log/info "component (DIGRAPH)" "//" data "//" @d "// node-types" node-types "// n-types" (js->clj n-types))
-
-           (fn []
-               [rc/h-box :src (rc/at)
-                :gap "10px"
-                :children [[tool-panel open-details? (:components @d) component-id tool-types]
-                           [:f> editable-flow
-                            :component-id component-id
-                            :data d
-                            :nodes (:nodes @d)
-                            :edges (:edges @d)
-                            :node-types n-types
-                            :edge-types edge-types
-                            :on-drop on-drop
-                            :on-drag-over on-drag-over
-                            :minimap-styles (or minimap-styles {})
-                            :connectFn connectFn
-                            :zoom-on-scroll zoom-on-scroll
-                            :preventScrolling preventScrolling
-                            :flowInstance flowInstance
-                            :force-layout? force-layout?]]])))
+(defn component [& {:keys [data node-types edge-type component component-id]}]
+  (let [flowInstance (clojure.core/atom nil)]               ; this is why we have 3 functions to make this one component...
+    (fn []
+      [:f> diagram {:data         data
+                    :node-types   node-types
+                    ;:edge-types   edge-type
+                    :component    component
+                    :component-id component-id
+                    :flowInstance flowInstance}])))

@@ -3,7 +3,6 @@
             [taoensso.timbre :as log]
             [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
             ["reactflow" :refer (MarkerType)]))
-            ;["react-flow-renderer" :refer (MarkerType) :default ReactFlow]))
 
 
 (log/info "bh-ui.atom.diagram.diagram.composite-dag-support")
@@ -38,10 +37,10 @@
 (def custom-node-types {":ui/component" (partial cn/custom-node :ui/component)})
 
 
-(def default-node-types {":ui/component"  (partial default-custom-node :ui/component)
-                         ":source/remote" (partial default-custom-node :source/remote)
-                         ":source/local"  (partial default-custom-node :source/local)
-                         ":source/fn"     (partial default-custom-node :source/fn)})
+(def default-node-types {":ui/component"  (partial bh-ui.molecule.composite.util.ui/custom-node :ui/component)})
+                         ;":source/remote" (partial default-custom-node :source/remote)
+                         ;":source/local"  (partial default-custom-node :source/local)
+                         ;":source/fn"     (partial default-custom-node :source/fn)})
 (def default-minimap-styles {:nodeStrokeColor  (partial custom-minimap-node-color
                                                  default-color-pallet color-white)
                              :node-color       (partial custom-minimap-node-color
