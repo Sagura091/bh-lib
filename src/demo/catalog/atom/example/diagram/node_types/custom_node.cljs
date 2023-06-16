@@ -1,5 +1,6 @@
 (ns demo.catalog.atom.example.diagram.node-types.custom-node
   (:require [reagent.core :as r]
+            [re-frame.core :as rf]
             ["reactflow" :refer (Handle Position NodeToolbar NodeResizer)]
             [taoensso.timbre :as log]
             ["react" :refer (useState)]))
@@ -38,40 +39,34 @@
   ^{:key label} [handle label direction style position true])
 
 
-(def ui-component-registry-almost {":ui/table"      {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
-                                                               {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
-                                                     :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
-                                                               {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}
-
-                                   ":ui/bar-chart"  {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
-                                                               {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
-                                                     :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
-                                                               {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}
-
-                                   ":ui/slider"     {:inputs  [{:label "position-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
-                                                               {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
-                                                     :outputs [{:label "position-out" :style {:top 10 :background "#999"} :position (.-Right Position)}]}
-
-                                   ":source/remote" {:inputs  [{:label "data-in" :style {:background "#555"} :position (.-Left Position)}]
-                                                     :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}})
-
-
-(defn look-up-ui-component [ui-name]
-  (get ui-component-registry-almost ui-name))
-
-
-(defn lookup-ui-types []
-  (keys ui-component-registry-almost))
+(defn look-up-ui-component [node-type]
+  (-> @(rf/subscribe [:meta-data-registry])
+    (get node-type)
+    :handles))
 
 
 (defn node-data [node-type node-id node-kind position]
-  {:id       node-id
-   :type     node-type
-   :data     {:label   node-id
-              :kind    node-kind
-              :inputs  (:inputs (get ui-component-registry-almost node-kind))
-              :outputs (:outputs (get ui-component-registry-almost node-kind))}
-   :position position})
+  (log/info "node-data" node-type node-id node-kind)
+
+  (let [handles (-> @(rf/subscribe [:meta-data-registry]) node-kind :handles)]
+    {:id       node-id
+     :type     node-type
+     :data     {:label   node-id
+                :kind    node-kind
+                :inputs  (:inputs handles) ;(:inputs (get ui-component-registry-almost node-kind))
+                :outputs (:outputs handles)} ;(:outputs (get ui-component-registry-almost node-kind))}
+     :position position}))
+
+
+(comment
+  (def handles (-> @(rf/subscribe [:meta-data-registry])
+                 :rechart/bar
+                 :handles))
+
+  (:inputs handles)
+
+
+  ())
 
 
 (defn custom-node
@@ -90,7 +85,7 @@
         style               (merge default-node-style (node-type node-style))
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    ;(log/info "custom-node" label node-type kind-of-element "///" data "///" inputs "///" outputs "//" extras?)
+    (log/info "custom-node" label node-type @kind-of-element "///" data "///" inputs "///" outputs "//" extras?)
 
     (r/as-element
 

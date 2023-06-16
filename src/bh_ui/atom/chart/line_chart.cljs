@@ -12,7 +12,8 @@
             [reagent.core :as r]
             [taoensso.timbre :as log]
             [woolybear.ad.layout :as layout]
-            ["recharts" :refer [ResponsiveContainer LineChart Line Brush]]))
+            ["recharts" :refer [ResponsiveContainer LineChart Line Brush]]
+            ["reactflow" :refer (Position)]))
 
 
 (def source-code '[:> LineChart {:data d}
@@ -139,10 +140,13 @@
     (reduce into [wrapper/base-chart] (seq input-params))))
 
 
-(def meta-data {:rechart/line {:component component
-                               ;:configurable-component configurable-component
-                               :ports     {:data   :port/sink
-                                           :config :port/sink}}})
+(def meta-data {":rechart/line" {:component component
+                                 :ports     {:data   :port/sink
+                                             :config :port/sink}
+                                 :handles {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
+                                                     {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
+                                           :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
+                                                     {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}}})
 
 
 (rf/dispatch-sync [:register-meta meta-data])

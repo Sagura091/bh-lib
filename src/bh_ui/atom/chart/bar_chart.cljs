@@ -13,7 +13,8 @@
             [taoensso.timbre :as log]
             [woolybear.ad.layout :as layout]
             ["recharts" :refer [ResponsiveContainer BarChart Bar Brush
-                                XAxis YAxis CartesianGrid Tooltip Legend]]))
+                                XAxis YAxis CartesianGrid Tooltip Legend]]
+            ["reactflow" :refer (Position)]))
 
 
 (log/info "bh-ui.atom.chart.bar-chart")
@@ -25,8 +26,8 @@
                                    :isAnimationActive @isAnimationActive?
                                    :stroke            (ui-utils/resolve-sub subscriptions [a :stroke])
                                    :fill              (ui-utils/resolve-sub subscriptions [a :fill])}
-                                  (when (seq (ui-utils/resolve-sub subscriptions [a :stackId]))
-                                    {:stackId (ui-utils/resolve-sub subscriptions [a :stackId])}))]])
+                             (when (seq (ui-utils/resolve-sub subscriptions [a :stackId]))
+                               {:stackId (ui-utils/resolve-sub subscriptions [a :stackId])}))]])
 
 
 (def sample-data example-data/meta-tabular-data)
@@ -111,9 +112,9 @@
               keys
               (map (fn [a]
                      (if (ui-utils/resolve-sub subscriptions [a :include])
-                       [:> Bar (merge {:type "monotone" :dataKey a
+                       [:> Bar (merge {:type              "monotone" :dataKey a
                                        :isAnimationActive @isAnimationActive?
-                                       :fill (ui-utils/resolve-sub subscriptions [a :fill])}
+                                       :fill              (ui-utils/resolve-sub subscriptions [a :fill])}
                                  (when (seq (ui-utils/resolve-sub subscriptions [a :stackId]))
                                    {:stackId (ui-utils/resolve-sub subscriptions [a :stackId])}))]
                        [])))
@@ -126,7 +127,7 @@
 
 (defn- component* [& {:keys [data component-id container-id
                              subscriptions isAnimationActive?]
-                      :as params}]
+                      :as   params}]
   (let [d (if (empty? data) [] (get data :data))]
 
     [:> ResponsiveContainer
@@ -151,9 +152,13 @@
     (reduce into [wrapper/base-chart] (seq input-params))))
 
 
-(def meta-data {:rechart/bar {:component component
-                              :ports     {:data   :port/sink
-                                          :config :port/sink}}})
+(def meta-data {":rechart/bar" {:component component
+                                :ports     {:data   :port/sink
+                                            :config :port/sink}
+                                :handles   {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
+                                                      {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
+                                            :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
+                                                      {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}}})
 
 
 (rf/dispatch-sync [:register-meta meta-data])
