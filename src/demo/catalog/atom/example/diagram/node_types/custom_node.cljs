@@ -64,12 +64,6 @@
   (keys ui-component-registry-almost))
 
 
-(def custom-handles {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
-                               {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
-                     :outputs [{:label "data-out" :style {:bottom 20 :top "auto" :background "#555"} :position (.-Right Position)}
-                               {:label "config-out" :style {:bottom 10 :top "auto" :background "#555"} :position (.-Right Position)}]})
-
-
 (defn node-data [node-type node-id node-kind position]
   {:id       node-id
    :type     node-type
@@ -78,6 +72,7 @@
               :inputs  (:inputs (get ui-component-registry-almost node-kind))
               :outputs (:outputs (get ui-component-registry-almost node-kind))}
    :position position})
+
 
 (defn custom-node
   "build a custom node for the flow diagram, this time for :ui/component, so

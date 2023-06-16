@@ -30,8 +30,7 @@
 (defn default-node-kind [node-type]
   (condp = node-type
     ":ui/component" ":ui/table"
-    ":source/remote" ":source/remote"
-    :else "unknown"))
+    node-type))
 
 
 (defn- dsl->react-flow []
