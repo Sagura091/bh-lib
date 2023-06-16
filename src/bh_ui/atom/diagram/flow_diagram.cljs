@@ -12,7 +12,9 @@
                                   useNodesState
                                   useEdgesState
                                   useCallBack Handle Position)]
-            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]))
+    ; TODO: migrate handle-style into a better namespace
+            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            [bh-ui.utils.helpers :as h]))
 
 
 
@@ -249,11 +251,8 @@
 ;; endregion
 
 
-(defn- diagram* [& {:keys [component-id
-                           data
-                           nodes edges
+(defn- diagram* [& {:keys [nodes edges
                            node-types edge-types
-                           node-kind-fn
                            minimap-styles
                            flowInstance
                            on-change-nodes on-change-edges on-drop on-drag-over
@@ -325,11 +324,7 @@
 
 
 (defn component [& {:keys [data
-                           node-types edge-types
-                           node-data node-kind-fn
-                           minimap-styles
-                           tool-types
-                           connectFn zoom-on-scroll preventScrolling
+                           config
                            component-id container-id
                            force-layout?]}]
 
@@ -337,14 +332,19 @@
   ;  ;data @data
   ;  node-types)
 
-  (let [d             data
+  (let [d (h/resolve-value data)
+        {:keys [node-types edge-types
+                node-data node-kind-fn
+                minimap-styles
+                tool-types
+                connectFn zoom-on-scroll preventScrolling]} @(h/resolve-value config)
         open-details? (r/atom {})
-        n-types       (->> node-types
-                        (map (fn [[k v]]
-                               {k (partial v open-details?)}))
-                        (into {})
-                        (clj->js))
-        flowInstance  (clojure.core/atom nil)]
+        n-types (->> node-types
+                  (map (fn [[k v]]
+                         {k (partial v open-details?)}))
+                  (into {})
+                  (clj->js))
+        flowInstance (clojure.core/atom nil)]
 
     ;(log/info "component (DIGRAPH)" "//" data "//" @d "// node-types" node-types "// n-types" (js->clj n-types))
 
@@ -364,4 +364,8 @@
        :flowInstance flowInstance
        :force-layout? force-layout?])))
 
+(comment
+  (let [{:keys [one two]} {:one "1" :two "2"}]
+    [one two])
 
+  ())

@@ -53,8 +53,8 @@
      :type     node-type
      :data     {:label   node-id
                 :kind    node-kind
-                :inputs  (:inputs handles) ;(:inputs (get ui-component-registry-almost node-kind))
-                :outputs (:outputs handles)} ;(:outputs (get ui-component-registry-almost node-kind))}
+                :inputs  (:inputs handles)                  ;(:inputs (get ui-component-registry-almost node-kind))
+                :outputs (:outputs handles)}                ;(:outputs (get ui-component-registry-almost node-kind))}
      :position position}))
 
 
@@ -83,9 +83,10 @@
         outputs             (get-in data ["data" "outputs"])
         update-node-kind-fn (get-in data ["data" "update-node-kind-fn"])
         style               (merge default-node-style (node-type node-style))
+        handles             (look-up-ui-component @kind-of-element)
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    (log/info "custom-node" label node-type @kind-of-element "///" data "///" inputs "///" outputs "//" extras?)
+    ;(log/info "custom-node" label node-type @kind-of-element "///" data "///" inputs "///" outputs "//" extras?)
 
     (r/as-element
 
@@ -93,8 +94,8 @@
 
        [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
 
-       (map #(make-handle "target" %) (:inputs (look-up-ui-component @kind-of-element)))
+       (map #(make-handle "target" %) (:inputs handles))
 
        [:div {:style (merge {:textAlign :center} style)} label]
 
-       (map #(make-handle "source" %) (:outputs (look-up-ui-component @kind-of-element)))])))
+       (map #(make-handle "source" %) (:outputs handles))])))

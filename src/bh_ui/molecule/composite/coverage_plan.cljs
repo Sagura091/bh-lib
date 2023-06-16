@@ -14,7 +14,7 @@
             [taoensso.timbre :as log]
             ["dagre" :as dagre]
             ["graphlib" :as graphlib]
-            ["react-flow-renderer" :refer (ReactFlowProvider Controls Handle Background) :default ReactFlow]))
+            ["reactflow" :refer (Position)]))
 
 
 (log/info "bh-ui.molecule.composite.coverage-plan")
@@ -222,14 +222,15 @@
 ; register meta-data for all these functions
 ;
 (re-frame/dispatch-sync [:register-meta
-                         {:coverage-plan/fn-coverage {:function fn-coverage
-                                                      :ports {:targets          :port/sink :satellites :port/sink
-                                                              :selected-targets :port/sink :selected-satellites :port/sink
-                                                              :coverages        :port/sink :current-time :port/sink
-                                                              :shapes           :port/source}}
-                          :coverage-plan/fn-range {:function fn-range
-                                                   :ports {:data :port/sink
-                                                           :range :port/source}}
+                         {":coverage-plan/fn-coverage" {:function fn-coverage
+                                                        :ports {:targets          :port/sink :satellites :port/sink
+                                                                :selected-targets :port/sink :selected-satellites :port/sink
+                                                                :coverages        :port/sink :current-time :port/sink
+                                                                :shapes           :port/source}}
+                          ":coverage-plan/fn-range" {:function fn-range
+                                                     :ports {:data :port/sink :range :port/source}
+                                                     :handles {:inputs [{:label "data" :style {:background "#999"} :position (.-Left Position)}]
+                                                               :outputs [{:label "range" :style {:background "#999"} :position (.-Right Position)}]}}
                           :coverage-plan/fn-current-time {:function fn-current-time
                                                           :ports {:value :port/sink
                                                                   :current-time :port/source}}
