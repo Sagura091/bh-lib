@@ -222,28 +222,28 @@
 ; register meta-data for all these functions
 ;
 (re-frame/dispatch-sync [:register-meta
-                         {":coverage-plan/fn-coverage" {:function fn-coverage
-                                                        :ports {:targets          :port/sink :satellites :port/sink
-                                                                :selected-targets :port/sink :selected-satellites :port/sink
-                                                                :coverages        :port/sink :current-time :port/sink
-                                                                :shapes           :port/source}}
-                          ":coverage-plan/fn-range" {:function fn-range
-                                                     :ports {:data :port/sink :range :port/source}
-                                                     :handles {:inputs [{:label "data" :style {:background "#999"} :position (.-Left Position)}]
-                                                               :outputs [{:label "range" :style {:background "#999"} :position (.-Right Position)}]}}
-                          :coverage-plan/fn-current-time {:function fn-current-time
-                                                          :ports {:value :port/sink
-                                                                  :current-time :port/source}}
-                          :coverage-plan/fn-color-targets {:function fn-color-targets
-                                                           :ports {:data :port/sink
-                                                                   :colored :port/source}}
-                          :coverage-plan/fn-color-satellites {:function fn-color-satellites
-                                                              :ports {:data :port/sink
-                                                                      :colored :port/source}}
-                          :coverage-plan/fn-filtered-targets {:function fn-filtered-targets
-                                                              :ports {:targets          :port/sink
-                                                                      :filter-value     :port/sink
-                                                                      :filtered-targets :port/source}}}])
+                         {":coverage-plan/fn-coverage"         {:function fn-coverage
+                                                                :ports    {:targets          :port/sink :satellites :port/sink
+                                                                           :selected-targets :port/sink :selected-satellites :port/sink
+                                                                           :coverages        :port/sink :current-time :port/sink
+                                                                           :shapes           :port/source}}
+                          ":coverage-plan/fn-range"            {:function fn-range
+                                                                :ports    {:data :port/sink :range :port/source}
+                                                                :handles  {:inputs  [{:label "data" :style {:background "#999"} :position (.-Left Position)}]
+                                                                           :outputs [{:label "range" :style {:background "#999"} :position (.-Right Position)}]}}
+                          ":coverage-plan/fn-current-time"     {:function fn-current-time
+                                                                :ports    {:value        :port/sink
+                                                                           :current-time :port/source}}
+                          ":coverage-plan/fn-color-targets"    {:function fn-color-targets
+                                                                :ports    {:data    :port/sink
+                                                                           :colored :port/source}}
+                          ":coverage-plan/fn-color-satellites" {:function fn-color-satellites
+                                                                :ports    {:data    :port/sink
+                                                                           :colored :port/source}}
+                          ":coverage-plan/fn-filtered-targets" {:function fn-filtered-targets
+                                                                :ports    {:targets          :port/sink
+                                                                           :filter-value     :port/sink
+                                                                           :filtered-targets :port/source}}}])
 
 ;; endregion
 
@@ -505,15 +505,15 @@
 
 ; register these as bh-uis
 (re-frame/dispatch-sync [:register-meta
-                         {:coverage-plan/target-table {:component target-table
-                                                       :ports {:data :port/sink
-                                                               :selection :port/sink
-                                                               :colors :port/sink}}
-                          :coverage-plan/satellite-table {:component satellite-table
-                                                          :ports {:data :port/sink
-                                                                  :selection :port/sink}}
+                         {:coverage-plan/target-table        {:component target-table
+                                                              :ports     {:data      :port/sink
+                                                                          :selection :port/sink
+                                                                          :colors    :port/sink}}
+                          :coverage-plan/satellite-table     {:component satellite-table
+                                                              :ports     {:data      :port/sink
+                                                                          :selection :port/sink}}
                           :coverage-plan/target-filter-input {:component target-filter-input
-                                                              :ports {:value :port/sink}}}])
+                                                              :ports     {:value :port/sink}}}])
 
 
 ;; endregion
@@ -558,12 +558,12 @@
                                    :topic/filtered-targets    {:type :source/local :name :filtered-targets}
 
                                    ; transformation functions
-                                   :fn/coverage               {:type  :source/fn :name :coverage-plan/fn-coverage}
-                                   :fn/range                  {:type  :source/fn :name :coverage-plan/fn-range}
-                                   :fn/current-time           {:type  :source/fn :name :coverage-plan/fn-current-time}
-                                   :fn/color-targets          {:type  :source/fn :name :coverage-plan/fn-color-targets}
-                                   :fn/color-satellites       {:type  :source/fn :name :coverage-plan/fn-color-satellites}
-                                   :fn/filtered-targets       {:type  :source/fn :name :coverage-plan/fn-filtered-targets}}
+                                   :fn/coverage               {:type :source/fn :name :coverage-plan/fn-coverage}
+                                   :fn/range                  {:type :source/fn :name :coverage-plan/fn-range}
+                                   :fn/current-time           {:type :source/fn :name :coverage-plan/fn-current-time}
+                                   :fn/color-targets          {:type :source/fn :name :coverage-plan/fn-color-targets}
+                                   :fn/color-satellites       {:type :source/fn :name :coverage-plan/fn-color-satellites}
+                                   :fn/filtered-targets       {:type :source/fn :name :coverage-plan/fn-filtered-targets}}
 
                     :links        {:ui/targets                {;:data      {:topic/target-data :data}
                                                                :selection {:topic/selected-targets :data}

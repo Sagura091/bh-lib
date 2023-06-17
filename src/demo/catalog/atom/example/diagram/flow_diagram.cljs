@@ -27,18 +27,27 @@
                     :target "300" :targetHandle "data-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
                    {:id     "e10-20",
-                    :source "10", :sourceHandle "data-out"
+                    :source "10", :sourceHandle "data"
                     :target "20" :targetHandle "data"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
                    {:id     "e20-300",
                     :source "20", :sourceHandle "range"
                     :target "300" :targetHandle "config-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
-(def initialNodes [{:id "100", :type ":source/remote" :position {:x 100, :y 100}, :data {:label "data-source" :kind ":source/remote"}}
+(def initialNodes [{:id "100", :type ":source/remote" :position {:x 100, :y 100}, :data {:label "lightning" :kind ":source/lightning"}}
                    {:id "10", :type ":source/local" :position {:x 100, :y 150}, :data {:label "config" :kind ":source/local"}}
-                   {:id "20", :type ":source/fn" :position {:x 150, :y 150}, :data {:label "range" :kind ":coverage-plan/fn-range"}}
-                   {:id "200", :type ":ui/component" :position {:x 200, :y 120}, :data {:label "table" :kind ":rechart/line"}}
+                   {:id "20", :type ":source/fn" :position {:x 150, :y 150}, :data {:label "time-range" :kind ":coverage-plan/fn-range"}}
+                   {:id "200", :type ":ui/component" :position {:x 200, :y 120}, :data {:label "line-chart" :kind ":rechart/line"}}
                    {:id "300", :type ":ui/component" :position {:x 300, :y 200}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
+
+
+(def remote-sources [":source/lightning" ":source/targets" ":source/platforms"])
+(def remote-source-handles {:handles {:outputs [{:label "data" :style {:background "#999"} :position (.-Right Position)}]}})
+
+
+(defn register-remotes [sources]
+  (doall
+    (map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) sources)))
 
 
 (defn default-node-kind [node-type]
@@ -83,10 +92,13 @@
 
     (r/atom {:nodes nodes :edges edges})))
 
+(def data (dsl->react-flow))
 
 (defn example []
-  (let [container-id "flow-diagram-demo"
-        data         (dsl->react-flow)]
+  (register-remotes remote-sources)
+
+  (let [container-id "flow-diagram-demo"]
+        ;data         (dsl->react-flow)]
 
     [example/component-example
      :container-id container-id

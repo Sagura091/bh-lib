@@ -3,7 +3,9 @@
             [re-frame.core :as rf]
             ["reactflow" :refer (Handle Position NodeToolbar NodeResizer)]
             [taoensso.timbre :as log]
-            ["react" :refer (useState)]))
+            ["react" :refer (useState)]
+            [re-com.core :as rc]
+            [bh-ui.atom.re-com.label :as label]))
 
 
 (log/info "demo.catalog.atom.example.diagram.node-types.custom-node")
@@ -14,8 +16,8 @@
                  :source/remote {:background :orange :color :black}
                  :source/local  {:background :blue :color :white}
                  :source/fn     {:background :pink :color :black}})
-(def default-node-style {
-                         :minHeight    "30px"
+(def default-node-style {:minHeight    "20px"
+                         :minWidth     "100px"
                          :width        "100%"
                          :height       "100%"
                          :borderRadius "5px" :margin :auto
@@ -58,17 +60,6 @@
      :position position}))
 
 
-(comment
-  (def handles (-> @(rf/subscribe [:meta-data-registry])
-                 :rechart/bar
-                 :handles))
-
-  (:inputs handles)
-
-
-  ())
-
-
 (defn custom-node
   "build a custom node for the flow diagram, this time for :ui/component, so
   green, since this is a 'view', and one Handle for each input (along the top)
@@ -77,7 +68,7 @@
   [node-type open-details? node & extras?]
   (let [data                (js->clj node)
         node-id             (get data "id")
-        label               (get-in data ["data" "label"])
+        text                (get-in data ["data" "label"])
         kind-of-element     (r/atom (get-in data ["data" "kind"]))
         inputs              (get-in data ["data" "inputs"])
         outputs             (get-in data ["data" "outputs"])
@@ -96,6 +87,11 @@
 
        (map #(make-handle "target" %) (:inputs handles))
 
-       [:div {:style (merge {:textAlign :center} style)} label]
+       [rc/v-box
+        :gap "1px"
+        :children [[label/label :style (merge {:textAlign :center} style)
+                    :value text]
+                   [label/label-sm :style (merge {:textAlign :center} style)
+                    :value @kind-of-element]]]
 
        (map #(make-handle "source" %) (:outputs handles))])))
