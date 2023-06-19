@@ -39,13 +39,13 @@
 (defn- make-params [configuration node direction container-id]
   (->> configuration
     :denorm
-    node
+    ((fn [x] (get x node)))
     direction
     (map (fn [[target ports]]
            (let [[source-port target-port] ports
-                 target-type (-> configuration :components target :type)
-                 remote      (-> configuration :components target :name)]
-             ;(log/info "make-params" target target-type remote)
+                 target-type (get-in configuration [:components target :type])
+                 remote      (get-in configuration [:components target :name])]
+             (log/info "make-params" target target-type remote)
              (if (= direction :outputs)
                {source-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
@@ -63,12 +63,10 @@
 ; :ui/component
 (defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id]}]
 
-  (let [ui-type      (->> configuration :components node :name)
-        bh-ui (if (keyword? ui-type)
-                       (->> registry ui-type :component)
-                       ui-type)]
+  (let [ui-type (get-in configuration [:components node :name])
+        bh-ui   (get-in registry [ui-type :component])]
 
-    ;(log/info "component->ui :ui/component" node "//" ui-type)
+    ;(log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui)
 
     {node
      ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
@@ -116,10 +114,8 @@
 
 ; :source/fn
 (defmethod component->ui :source/fn [{:keys [node configuration container-id] :as inputs}]
-  (let [fn-name   (->> configuration :components node :name)
-        actual-fn (if (keyword fn-name)
-                    (-> @(re-frame/subscribe [:meta-data-registry]) fn-name :function)
-                    fn-name)
+  (let [fn-name   (get-in configuration [:components node :name])
+        actual-fn (get-in @(re-frame/subscribe [:meta-data-registry]) [fn-name :function])
         params    (merge
                     {:container-id container-id}
                     (make-params configuration node :inputs container-id)
@@ -131,9 +127,6 @@
 
 
 (defn process-components [configuration node-type registry container-id]
-  ;(log/info "process-components" container-id node-type
-  ;  "//" components "//" all-exist)
-
   (doall
     (->> configuration
       :components

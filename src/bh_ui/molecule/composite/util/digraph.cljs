@@ -86,7 +86,7 @@
   WORK-IN-PROGRESS
   "
   (->> links
-    node
+    ((fn [x] (get x node)))
     (map (fn [[node-port target-meta]]
            (apply merge
              (map (fn [[target target-port]]
