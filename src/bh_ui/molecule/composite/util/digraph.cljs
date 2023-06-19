@@ -4,7 +4,7 @@
             [loom.graph :as lg]
             ["dagre" :as dagre]
             ["graphlib" :as graphlib]
-            ["react-flow-renderer" :refer (ReactFlowProvider Controls Handle Background) :default ReactFlow]))
+            ["reactflow" :refer (ReactFlowProvider Controls Handle Background)]))
 
 
 (defn expand-components [data registry]

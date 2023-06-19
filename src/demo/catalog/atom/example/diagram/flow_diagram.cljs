@@ -92,13 +92,11 @@
 
     (r/atom {:nodes nodes :edges edges})))
 
-(def data (dsl->react-flow))
-
 (defn example []
   (register-remotes remote-sources)
 
-  (let [container-id "flow-diagram-demo"]
-        ;data         (dsl->react-flow)]
+  (let [container-id "flow-diagram-demo"
+        data         (dsl->react-flow)]
 
     [example/component-example
      :container-id container-id

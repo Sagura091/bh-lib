@@ -29,6 +29,7 @@
 
 
 (defn- handle [id t style position isConnectable]
+  ; (log/info "handle" id t style)
   [:> Handle {:id            id
               :type          t
               :position      position
