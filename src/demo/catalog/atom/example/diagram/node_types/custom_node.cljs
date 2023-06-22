@@ -29,6 +29,7 @@
 
 
 (defn string->keyword [s]
+  ; TODO: needs to handle the case where we don't have a ":" to start the string
   (if (clojure.string/index-of (subs s 1) "/")
     (keyword
       (subs (subs s 1)
@@ -57,34 +58,6 @@
   (-> @(rf/subscribe [:meta-data-registry])
     (get (string->keyword node-type))
     :handles))
-
-(comment
-  (def node-type ":rechart/line")
-  (def node-type ":line")
-
-  (subs node-type 1)
-  (clojure.string/index-of (subs node-type 1) "/")
-  (subs (subs node-type 1)
-    0 (clojure.string/index-of (subs node-type 1) "/"))
-  (subs (subs node-type 1)
-    (inc (clojure.string/index-of (subs node-type 1) "/")))
-
-  (if (clojure.string/index-of (subs node-type 1) "/")
-    (keyword
-      (subs (subs node-type 1)
-        0 (clojure.string/index-of (subs node-type 1) "/"))
-      (subs (subs node-type 1)
-        (inc (clojure.string/index-of (subs node-type 1) "/"))))
-    (keyword
-      (subs node-type 1)))
-
-  (string->keyword ":source/fn")
-
-  (look-up-ui-component ":source/fn")
-
-
-  ())
-
 
 
 (defn node-data [node-type node-id node-kind position]
