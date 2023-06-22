@@ -3,4 +3,4 @@
 
 
 (defn markdown [content]
-  [:> ReactMarkdown {:source content}])
+  [:> ReactMarkdown {:children content}])

@@ -360,7 +360,7 @@
                               extra-classes
                               dynamic-classes)}]
           (map (fn [c]
-                 [:> ReactMarkdown {:source c}])
+                 [:> ReactMarkdown {:children c}])
             children))))))
 
 

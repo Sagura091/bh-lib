@@ -56,7 +56,7 @@
     [:div.demo-container
      [:div.demo-name name]
      (if notes
-       [:> ReactMarkdown {:source notes}]
+       [:> ReactMarkdown {:children notes}]
        "")
      [:div.demo-display component]
      [containers/spoiler {:show-label "Show Code"

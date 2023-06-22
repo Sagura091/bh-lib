@@ -78,7 +78,7 @@
     [:div.demo-container
      [:div.demo-name name]
      (if notes
-       [:> ReactMarkdown {:source notes}]
+       [:> ReactMarkdown {:children notes}]
        "")
      [config-display chart-events data-panel config-panel component]
      [containers/spoiler {:show-label "Show Code"
