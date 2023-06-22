@@ -117,7 +117,7 @@
   ;(log/info "globe-render" props children)
 
   (let [state    (atom {:children children})
-        dom-node (r/atom nil)]
+        dom-node (atom nil)]
 
     (r/create-class
       {:display-name         (:id props)
@@ -145,7 +145,9 @@
          (let [cursor          (if (:isDropArmed @state) "crosshair" "default")
                backgroundColor (or (:backgroundColor @state) DEFAULT_BACKGROUND_COLOR)]
 
-           [:canvas (merge props {:id (:canvasId @state)})
+           [:canvas (merge props {:id (:canvasId @state)
+                                  :ref (fn [el] (reset! dom-node el))})
+
             "Your browser does not support HTML5 Canvas."]))})))
 
 

@@ -46,10 +46,6 @@
 (defn component-did-mount [dom-node state this]
   ;(log/info "component-did-mount" @state)
 
-  (let [node (rdom/dom-node this)]
-    ;; This will trigger a re-render of the component.
-    (reset! dom-node node))
-
   (let [canvasId (.-id @dom-node)
         props    (r/props this)]
 
