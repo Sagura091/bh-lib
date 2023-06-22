@@ -22,8 +22,8 @@
                                     :isAnimationActive @isAnimationActive?
                                     :stroke            (ui-utils/resolve-sub subscriptions [a :stroke])
                                     :fill              (ui-utils/resolve-sub subscriptions [a :fill])}
-                                   (when (seq (ui-utils/resolve-sub subscriptions [a :stackId]))
-                                     {:stackId (ui-utils/resolve-sub subscriptions [a :stackId])}))]])
+                              (when (seq (ui-utils/resolve-sub subscriptions [a :stackId]))
+                                {:stackId (ui-utils/resolve-sub subscriptions [a :stackId])}))]])
 
 
 (def sample-data example-data/meta-tabular-data)
@@ -35,25 +35,25 @@
   (merge
     {:brush false}
     (->> (get-in @data [:metadata :fields])
-         (filter (fn [[k v]] (= :number v)))
-         keys
-         (map-indexed (fn [idx a]
-                        ;(log/info "line color" idx a (ui-utils/get-color idx))
-                        {a {:include true
-                            :stroke  (color/get-color idx)
-                            :fill    (color/get-color idx)}}))
-         (into {}))))
+      (filter (fn [[k v]] (= :number v)))
+      keys
+      (map-indexed (fn [idx a]
+                     ;(log/info "line color" idx a (ui-utils/get-color idx))
+                     {a {:include true
+                         :stroke  (color/get-color idx)
+                         :fill    (color/get-color idx)}}))
+      (into {}))))
 
 
 (defn- config [component-id data]
   (-> ui-utils/default-pub-sub
-      (merge
-        utils/default-config
-        {:type      "line-chart"
-         :tab-panel {:value     (keyword component-id "config")
-                     :data-path [:containers (keyword component-id) :tab-panel]}}
-        (local-config data))
-      (assoc-in [:x-axis :dataKey] (get-in @data [:metadata :id]))))
+    (merge
+      utils/default-config
+      {:type      "line-chart"
+       :tab-panel {:value     (keyword component-id "config")
+                   :data-path [:containers (keyword component-id) :tab-panel]}}
+      (local-config data))
+    (assoc-in [:x-axis :dataKey] (get-in @data [:metadata :id]))))
 
 
 (defn- line-config [component-id label path position]
@@ -68,11 +68,11 @@
 
 (defn- make-line-config [component-id data]
   (->> (get-in @data [:metadata :fields])
-       (filter (fn [[k v]] (= :number v)))
-       keys
-       (map-indexed (fn [idx a]
-                      [line-config component-id a [a] :above-right]))
-       (into [])))
+    (filter (fn [[k v]] (= :number v)))
+    keys
+    (map-indexed (fn [idx a]
+                   [line-config component-id a [a] :above-right]))
+    (into [])))
 
 
 (defn config-panel [data component-id]
@@ -98,17 +98,17 @@
 
   ;(log/info "make-line-display" data)
   (->> (get-in data [:metadata :fields])
-       (filter (fn [[_ v]] (= :number v)))
-       keys
-       (map (fn [a]
-              (if (ui-utils/resolve-sub subscriptions [a :include])
-                [:> Line {:type              "monotone" :dataKey a
-                          :isAnimationActive @isAnimationActive?
-                          :stroke            (ui-utils/resolve-sub subscriptions [a :stroke])
-                          :fill              (ui-utils/resolve-sub subscriptions [a :fill])}]
-                [])))
-       (remove empty?)
-       (into [:<>])))
+    (filter (fn [[_ v]] (= :number v)))
+    keys
+    (map (fn [a]
+           (if (ui-utils/resolve-sub subscriptions [a :include])
+             [:> Line {:type              "monotone" :dataKey a
+                       :isAnimationActive @isAnimationActive?
+                       :stroke            (ui-utils/resolve-sub subscriptions [a :stroke])
+                       :fill              (ui-utils/resolve-sub subscriptions [a :fill])}]
+             [])))
+    (remove empty?)
+    (into [:<>])))
 
 
 (defn- component* [& {:keys [data component-id container-id
@@ -140,10 +140,10 @@
     (reduce into [wrapper/base-chart] (seq input-params))))
 
 
-(def meta-data {":rechart/line" {:component component
-                                 :ports     {:data   :port/sink
-                                             :config :port/sink}
-                                 :handles {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
+(def meta-data {:rechart/line {:component component
+                               :ports     {:data   :port/sink
+                                           :config :port/sink}
+                               :handles   {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
                                                      {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
                                            :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
                                                      {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}}})

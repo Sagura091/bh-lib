@@ -39,13 +39,13 @@
 (defn- make-params [configuration node direction container-id]
   (->> configuration
     :denorm
-    ((fn [x] (get x node)))
+    ((fn [n] (get n node)))
     direction
     (map (fn [[target ports]]
            (let [[source-port target-port] ports
                  target-type (get-in configuration [:components target :type])
                  remote      (get-in configuration [:components target :name])]
-             (log/info "make-params" target target-type remote)
+             ;(log/info "make-params" target target-type remote)
              (if (= direction :outputs)
                {source-port (if (= :source/local target-type)
                               [(ui-utils/path->keyword container-id :blackboard target)]
@@ -64,7 +64,9 @@
 (defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id]}]
 
   (let [ui-type (get-in configuration [:components node :name])
-        bh-ui   (get-in registry [ui-type :component])]
+        bh-ui   (if (keyword? ui-type)
+                  (->> registry ui-type :component)
+                  ui-type)]
 
     ;(log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui)
 
@@ -115,7 +117,9 @@
 ; :source/fn
 (defmethod component->ui :source/fn [{:keys [node configuration container-id] :as inputs}]
   (let [fn-name   (get-in configuration [:components node :name])
-        actual-fn (get-in @(re-frame/subscribe [:meta-data-registry]) [fn-name :function])
+        actual-fn (if (keyword fn-name)
+                    (-> @(re-frame/subscribe [:meta-data-registry]) fn-name :function)
+                    fn-name)
         params    (merge
                     {:container-id container-id}
                     (make-params configuration node :inputs container-id)

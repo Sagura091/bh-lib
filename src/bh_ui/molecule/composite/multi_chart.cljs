@@ -105,56 +105,54 @@
 
 
 (def ui-definition
-  {:components  {:ui/line        {:type :ui/component :name :rechart/line}
-                 :ui/bar         {:type :ui/component :name :rechart/bar}
-                 :ui/area        {:type :ui/component :name :rechart/area}
-                 :ui/config      {:type :ui/component :name :multi-chart/config-panel}
-                 :topic/data     {:type :source/local :name :topic/data :default sample-data}
-                 :topic/config   {:type :source/local :name :topic/config :default {}}
-                 :fn/make-config {:type  :source/fn :name :multi-chart/fn-make-config}}
-                                  ;:ports {:data :port/sink :config-data :port/source-sink}}}
+  {:components  {":ui/line"        {:type :ui/component :name :rechart/line}
+                 ":ui/bar"         {:type :ui/component :name :rechart/bar}
+                 ":ui/area"        {:type :ui/component :name :rechart/area}
+                 ":ui/config"      {:type :ui/component :name :multi-chart/config-panel}
+                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                 ":topic/config"   {:type :source/local :name :topic/config :default {}}
+                 ":fn/make-config" {:type :source/fn :name :multi-chart/fn-make-config}}
 
-   :links       {:ui/config      {:config-data {:topic/config :data}}
-                 :topic/data     {:data {:ui/line        :data
-                                         :ui/bar         :data
-                                         :ui/area        :data
-                                         :fn/make-config :data}}
-                 :topic/config   {:data {:ui/line   :config-data
-                                         :ui/bar    :config-data
-                                         :ui/area   :config-data
-                                         :ui/config :config-data}}
-                 :fn/make-config {:config-data {:topic/config :data}}}
+   :links       {":ui/config"      {:config-data {":topic/config" :data}}
+                 ":topic/data"     {:data {":ui/line"        :data
+                                           ":ui/bar"         :data
+                                           ":ui/area"        :data
+                                           ":fn/make-config" :data}}
+                 ":topic/config"   {:data {":ui/line"   :config-data
+                                           ":ui/bar"    :config-data
+                                           ":ui/area"   :config-data
+                                           ":ui/config" :config-data}}
+                 ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-   :grid-layout [{:i :ui/config :x 0 :y 0 :w 20 :h 5 :static true}
-                 {:i :ui/line :x 0 :y 5 :w 7 :h 11 :static true}
-                 {:i :ui/bar :x 7 :y 5 :w 6 :h 11 :static true}
-                 {:i :ui/area :x 13 :y 5 :w 7 :h 11 :static true}]})
+   :grid-layout [{:i ":ui/config" :x 0 :y 0 :w 20 :h 5 :static true}
+                 {:i ":ui/line" :x 0 :y 5 :w 7 :h 11 :static true}
+                 {:i ":ui/bar" :x 7 :y 5 :w 6 :h 11 :static true}
+                 {:i ":ui/area" :x 13 :y 5 :w 7 :h 11 :static true}]})
 
 
-(def source-code '(let [def {:components  {:ui/line        {:type :ui/component :name :rechart/bar}
-                                           :ui/bar         {:type :ui/component :name :rechart/bar}
-                                           :ui/area        {:type :ui/component :name :rechart/bar}
-                                           :ui/config      {:type :ui/component :name config-panel}
-                                           :topic/data     {:type :source/local :name :topic/data :default @sample-data}
-                                           :topic/config   {:type :source/local :name :topic/config :default {}}
-                                           :fn/make-config {:type  :source/fn :name fn-make-config
-                                                            :ports {:data :port/sink :config-data :port/source-sink}}}
+(def source-code '(let [def {:components  {":ui/line"        {:type :ui/component :name :rechart/line}
+                                           ":ui/bar"         {:type :ui/component :name :rechart/bar}
+                                           ":ui/area"        {:type :ui/component :name :rechart/area}
+                                           ":ui/config"      {:type :ui/component :name :multi-chart/config-panel}
+                                           ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                                           ":topic/config"   {:type :source/local :name :topic/config :default {}}
+                                           ":fn/make-config" {:type :source/fn :name :multi-chart/fn-make-config}}
 
-                             :links       {:ui/config      {:config-data {:topic/config :data}}
-                                           :topic/data     {:data {:ui/line        :data
-                                                                   :ui/bar         :data
-                                                                   :ui/area        :data
-                                                                   :fn/make-config :data}}
-                                           :topic/config   {:data {:ui/line   :config-data
-                                                                   :ui/bar    :config-data
-                                                                   :ui/area   :config-data
-                                                                   :ui/config :config-data}}
-                                           :fn/make-config {:config-data {:topic/config :data}}}
+                             :links       {":ui/config"      {:config-data {":topic/config" :data}}
+                                           ":topic/data"     {:data {":ui/line"        :data
+                                                                     ":ui/bar"         :data
+                                                                     ":ui/area"        :data
+                                                                     ":fn/make-config" :data}}
+                                           ":topic/config"   {:data {":ui/line"   :config-data
+                                                                     ":ui/bar"    :config-data
+                                                                     ":ui/area"   :config-data
+                                                                     ":ui/config" :config-data}}
+                                           ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-                             :grid-layout [{:i :ui/config :x 0 :y 0 :w 12 :h 5 :static true}
-                                           {:i :ui/line :x 0 :y 5 :w 4 :h 11 :static true}
-                                           {:i :ui/bar :x 4 :y 5 :w 4 :h 11 :static true}
-                                           {:i :ui/area :x 8 :y 5 :w 4 :h 11 :static true}]}]
+                             :grid-layout [{:i ":ui/config" :x 0 :y 0 :w 20 :h 5 :static true}
+                                           {:i ":ui/line" :x 0 :y 5 :w 7 :h 11 :static true}
+                                           {:i ":ui/bar" :x 7 :y 5 :w 6 :h 11 :static true}
+                                           {:i ":ui/area" :x 13 :y 5 :w 7 :h 11 :static true}]}]
                     [grid-widget/component
                      :data def
                      :component-id (h/path->keyword container-id "widget")]))

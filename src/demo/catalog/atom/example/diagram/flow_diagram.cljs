@@ -18,25 +18,26 @@
                           ":source/local"  (partial cn/node-data :source/local)
                           ":source/fn"     (partial cn/node-data :source/fn)})
 
-(def initialEdges [{:id     "e100-200",
+(def initialEdges [{:id     "lightning->line-chart",
                     :source "100", :sourceHandle "data-out"
                     :target "200" :targetHandle "data-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-                   {:id     "e100-300",
+                   {:id     "lightning->bar-chart",
                     :source "100", :sourceHandle "data-out"
                     :target "300" :targetHandle "data-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-                   {:id     "e10-20",
+                   {:id     "config->time-range",
                     :source "10", :sourceHandle "data"
                     :target "20" :targetHandle "data"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-                   {:id     "e20-300",
+                   {:id     "time-range->bar-chart",
                     :source "20", :sourceHandle "range"
                     :target "300" :targetHandle "config-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
-(def initialNodes [{:id "100", :type ":source/remote" :position {:x 100, :y 100}, :data {:label "lightning" :kind ":source/lightning"}}
+; TODO: how to manage :source/*
+(def initialNodes [{:id "100", :type ":source/local" :position {:x 100, :y 100}, :data {:label "lightning" :kind ":source/local"}}
                    {:id "10", :type ":source/local" :position {:x 100, :y 150}, :data {:label "config" :kind ":source/local"}}
-                   {:id "20", :type ":source/fn" :position {:x 150, :y 150}, :data {:label "time-range" :kind ":coverage-plan/fn-range"}}
+                   {:id "20", :type ":source/fn" :position {:x 150, :y 150}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
                    {:id "200", :type ":ui/component" :position {:x 200, :y 120}, :data {:label "line-chart" :kind ":rechart/line"}}
                    {:id "300", :type ":ui/component" :position {:x 300, :y 200}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
 
@@ -56,13 +57,13 @@
     node-type))
 
 ; TODO: migrate to the correct namespace within bh-ui...
-(def meta-data {":source/remote" {:ports   {:data :port/source}
-                                  :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                ":source/local"  {:ports   {:data :port/source}
-                                  :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                ":source/fn"     {:ports   {:data :port/source-sink}
-                                  :handles {:inputs  [{:label "data-in" :style {:background "#999"} :position (.-Left Position)}]
-                                            :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
+(def meta-data {:source/remote {:ports   {:data :port/source}
+                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
+                :source/local  {:ports   {:data :port/source}
+                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
+                :source/fn     {:ports   {:data :port/source-sink}
+                                :handles {:inputs  [{:label "data-in" :style {:background "#999"} :position (.-Left Position)}]
+                                          :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
 (rf/dispatch-sync [:register-meta meta-data])
 
 

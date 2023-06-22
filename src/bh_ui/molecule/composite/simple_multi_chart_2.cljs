@@ -4,7 +4,8 @@
             [bh-ui.utils.helpers :as h]
             [bh-ui.utils.locals :as l]
             [re-frame.core :as re-frame]
-            [taoensso.timbre :as log]))
+            [taoensso.timbre :as log]
+            ["reactflow" :refer (Position)]))
 
 
 (log/info "bh-ui.molecule.composite.simple-multi-chart-2")
@@ -45,41 +46,42 @@
 
 
 (re-frame/dispatch-sync [:register-meta {:simple-multi-chart-2/fn-make-config {:function fn-make-config
-                                                                               :ports {:data :port/sink :config-data :port/source-sink}}}])
+                                                                               :ports {:data :port/sink :config-data :port/source-sink}
+                                                                               :handles {:inputs [{:label "data-in" :style {:background "#555"} :position (.-Left Position)}]
+                                                                                         :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}}])
 
 
 (def ui-definition
-  {:components  {:ui/bar-chart   {:type :ui/component :name :rechart/bar}
-                 :ui/line-chart  {:type :ui/component :name :rechart/line}
-                 :topic/data     {:type :source/local :name :topic/data :default sample-data}
-                 :topic/config   {:type :source/local :name :topic/config :default {}}
-                 :fn/make-config {:type  :source/fn :name :simple-multi-chart-2/fn-make-config}}
-   :links       {:topic/data     {:data {:ui/bar-chart   :data
-                                         :ui/line-chart  :data
-                                         :fn/make-config :data}}
-                 :topic/config   {:data {:ui/line-chart :config-data
-                                         :ui/bar-chart  :config-data}}
-                 :fn/make-config {:config-data {:topic/config :data}}}
+  {:components  {":ui/bar-chart"   {:type :ui/component :name :rechart/bar}
+                 ":ui/line-chart"  {:type :ui/component :name :rechart/line}
+                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                 ":topic/config"   {:type :source/local :name :topic/config :default {}}
+                 ":fn/make-config" {:type :source/fn :name :simple-multi-chart-2/fn-make-config}}
+   :links       {":topic/data"     {:data {":ui/bar-chart"   :data
+                                           ":ui/line-chart"  :data
+                                           ":fn/make-config" :data}}
+                 ":topic/config"   {:data {":ui/line-chart" :config-data
+                                           ":ui/bar-chart"  :config-data}}
+                 ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-   :grid-layout [{:i :ui/line-chart :x 0 :y 0 :w 10 :h 11 :static true}
-                 {:i :ui/bar-chart :x 10 :y 0 :w 10 :h 11 :static true}]})
+   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                 {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
-(def source-code '(let [def {:components  {:ui/bar-chart   {:type :ui/component :name :rechart/bar}
-                                           :ui/line-chart  {:type :ui/component :name :rechart/line}
-                                           :topic/data     {:type :source/local :name :topic/data :default sample-data}
-                                           :topic/config   {:type :source/local :name :topic/config :default {}}
-                                           :fn/make-config {:type  :source/fn :name fn-make-config
-                                                            :ports {:data :port/sink :config-data :port/source-sink}}}
-                             :links       {:topic/data     {:data {:ui/bar-chart   :data
-                                                                   :ui/line-chart  :data
-                                                                   :fn/make-config :data}}
-                                           :topic/config   {:data {:ui/line-chart :config-data
-                                                                   :ui/bar-chart  :config-data}}
-                                           :fn/make-config {:config-data {:topic/config :data}}}
+(def source-code '(let [def {:components  {":ui/bar-chart"   {:type :ui/component :name :rechart/bar}
+                                           ":ui/line-chart"  {:type :ui/component :name :rechart/line}
+                                           ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                                           ":topic/config"   {:type :source/local :name :topic/config :default {}}
+                                           ":fn/make-config" {:type :source/fn :name :simple-multi-chart-2/fn-make-config}}
+                             :links       {":topic/data"     {:data {":ui/bar-chart"   :data
+                                                                     ":ui/line-chart"  :data
+                                                                     ":fn/make-config" :data}}
+                                           ":topic/config"   {:data {":ui/line-chart" :config-data
+                                                                     ":ui/bar-chart"  :config-data}}
+                                           ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-                             :grid-layout [{:i :ui/line-chart :x 0 :y 0 :w 7 :h 11 :static true}
-                                           {:i :ui/bar-chart :x 7 :y 0 :w 7 :h 11 :static true}]}]
+                             :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                                           {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]}]
                     [grid-widget/component
                      :data def
                      :component-id (h/path->keyword container-id "widget")]))

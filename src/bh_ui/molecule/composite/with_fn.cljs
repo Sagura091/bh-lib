@@ -10,20 +10,19 @@
 (def sample-data example-data/meta-tabular-data)
 
 
-(def source-code '{:components  {:ui/bar-chart   {:type        :ui/component :name :rechart/bar
-                                                  :config-data []}
-                                 :ui/line-chart  {:type        :ui/component :name :rechart/line
-                                                  :config-data []}
-                                 :topic/data     {:type :source/local :name :topic/data :default sample-data}
-                                 :topic/computed {:type :source/local :name :topic/computed}
-                                 :fn/data-fn     {:type  :source/fn :name compute-new-data
-                                                  :ports {:data :port/sink :computed :port/source}}}
-                   :links       {:topic/data      {:data {:ui/line-chart :data
-                                                          :fn/data-fn    :data}}
-                                 :fn/data-fn      {:computed {:topic/computed :data}}
-                                 :topic/computed {:data {:ui/bar-chart :data}}}
-                   :grid-layout [{:i :ui/line-chart :x 0 :y 0 :w 10 :h 11 :static true}
-                                 {:i :ui/bar-chart :x 10 :y 0 :w 10 :h 11 :static true}]})
+(def source-code '{:components  {":ui/pie-chart"   {:type        :ui/component :name :rechart/colored-pie
+                                                    :config-data {}}
+                                 ":ui/line-chart"  {:type        :ui/component :name :rechart/line
+                                                    :config-data {}}
+                                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                                 ":topic/computed" {:type :source/local :name :topic/computed}
+                                 ":fn/data-fn"     {:type :source/fn :name :with-fn/compute-new-data}}
+                   :links       {":topic/data"     {:data {":ui/line-chart" :data
+                                                           ":fn/data-fn"    :data}}
+                                 ":fn/data-fn"     {:computed {":topic/computed" :data}}
+                                 ":topic/computed" {:data {":ui/pie-chart" :data}}}
+                   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                                 {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
 (defn compute-new-data [{:keys [data computed]}]
@@ -51,17 +50,17 @@
 
 
 (def ui-definition
-  {:components  {:ui/pie-chart   {:type        :ui/component :name :rechart/colored-pie
-                                  :config-data {}}
-                 :ui/line-chart  {:type        :ui/component :name :rechart/line
-                                  :config-data {}}
-                 :topic/data     {:type :source/local :name :topic/data :default sample-data}
-                 :topic/computed {:type :source/local :name :topic/computed}
-                 :fn/data-fn     {:type  :source/fn :name :with-fn/compute-new-data}}
-   :links       {:topic/data      {:data {:ui/line-chart :data
-                                          :fn/data-fn    :data}}
-                 :fn/data-fn      {:computed {:topic/computed :data}}
-                 :topic/computed {:data {:ui/pie-chart :data}}}
-   :grid-layout [{:i :ui/line-chart :x 0 :y 0 :w 10 :h 11 :static true}
-                 {:i :ui/pie-chart :x 10 :y 0 :w 10 :h 11 :static true}]})
+  {:components  {":ui/pie-chart"   {:type        :ui/component :name :rechart/colored-pie
+                                    :config-data {}}
+                 ":ui/line-chart"  {:type        :ui/component :name :rechart/line
+                                    :config-data {}}
+                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
+                 ":topic/computed" {:type :source/local :name :topic/computed}
+                 ":fn/data-fn"     {:type :source/fn :name :with-fn/compute-new-data}}
+   :links       {":topic/data"     {:data {":ui/line-chart" :data
+                                           ":fn/data-fn"    :data}}
+                 ":fn/data-fn"     {:computed {":topic/computed" :data}}
+                 ":topic/computed" {:data {":ui/pie-chart" :data}}}
+   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                 {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 

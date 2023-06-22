@@ -28,8 +28,19 @@
   (reset! open-details? (js->clj node)))
 
 
+(defn string->keyword [s]
+  (if (clojure.string/index-of (subs s 1) "/")
+    (keyword
+      (subs (subs s 1)
+        0 (clojure.string/index-of (subs s 1) "/"))
+      (subs (subs s 1)
+        (inc (clojure.string/index-of (subs s 1) "/"))))
+    (keyword
+      (subs s 1))))
+
+
 (defn- handle [id t style position isConnectable]
-  ; (log/info "handle" id t style)
+  (log/info "handle" id t style)
   [:> Handle {:id            id
               :type          t
               :position      position
@@ -44,8 +55,36 @@
 
 (defn look-up-ui-component [node-type]
   (-> @(rf/subscribe [:meta-data-registry])
-    (get node-type)
+    (get (string->keyword node-type))
     :handles))
+
+(comment
+  (def node-type ":rechart/line")
+  (def node-type ":line")
+
+  (subs node-type 1)
+  (clojure.string/index-of (subs node-type 1) "/")
+  (subs (subs node-type 1)
+    0 (clojure.string/index-of (subs node-type 1) "/"))
+  (subs (subs node-type 1)
+    (inc (clojure.string/index-of (subs node-type 1) "/")))
+
+  (if (clojure.string/index-of (subs node-type 1) "/")
+    (keyword
+      (subs (subs node-type 1)
+        0 (clojure.string/index-of (subs node-type 1) "/"))
+      (subs (subs node-type 1)
+        (inc (clojure.string/index-of (subs node-type 1) "/"))))
+    (keyword
+      (subs node-type 1)))
+
+  (string->keyword ":source/fn")
+
+  (look-up-ui-component ":source/fn")
+
+
+  ())
+
 
 
 (defn node-data [node-type node-id node-kind position]
@@ -78,7 +117,12 @@
         handles             (look-up-ui-component @kind-of-element)
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    ;(log/info "custom-node" label node-type @kind-of-element "///" data "///" inputs "///" outputs "//" extras?)
+    (log/info "custom-node" text node-type @kind-of-element (type node-type)
+      "///" handles)
+      ;"///" data
+      ;"///" inputs
+      ;"///" outputs
+      ;"//" extras?)
 
     (r/as-element
 
