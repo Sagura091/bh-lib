@@ -86,7 +86,7 @@
   (do
     (def component-id :widget-grid-demo.grid-widget)
     (def item :topic/target-data)
-    (def components   @(l/subscribe-local component-id [:blackboard :defs :source :components]))
+    (def components   @(l/subscribe-local component-id [:blackboard :defs :source :mol/components]))
     (def details      ((h/string->keyword item) components))
     (def detail-types (:type details)))
 

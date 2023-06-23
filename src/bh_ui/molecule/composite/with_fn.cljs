@@ -10,19 +10,19 @@
 (def sample-data example-data/meta-tabular-data)
 
 
-(def source-code '{:components  {":ui/pie-chart"   {:type        :ui/component :name :rechart/colored-pie
-                                                    :config-data {}}
-                                 ":ui/line-chart"  {:type        :ui/component :name :rechart/line
-                                                    :config-data {}}
-                                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
-                                 ":topic/computed" {:type :source/local :name :topic/computed}
-                                 ":fn/data-fn"     {:type :source/fn :name :with-fn/compute-new-data}}
-                   :links       {":topic/data"     {:data {":ui/line-chart" :data
-                                                           ":fn/data-fn"    :data}}
-                                 ":fn/data-fn"     {:computed {":topic/computed" :data}}
-                                 ":topic/computed" {:data {":ui/pie-chart" :data}}}
-                   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
-                                 {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
+(def source-code '{:mol/components  {":ui/pie-chart"   {:atm/role    :ui/component :atm/kind :rechart/colored-pie
+                                                        :config-data {}}
+                                     ":ui/line-chart"  {:atm/role    :ui/component :atm/kind :rechart/line
+                                                        :config-data {}}
+                                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
+                                     ":topic/computed" {:atm/role :source/local :atm/kind :topic/computed}
+                                     ":fn/data-fn"     {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
+                   :mol/links       {":topic/data"     {:data {":ui/line-chart" :data
+                                                               ":fn/data-fn"    :data}}
+                                     ":fn/data-fn"     {:computed {":topic/computed" :data}}
+                                     ":topic/computed" {:data {":ui/pie-chart" :data}}}
+                   :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                                     {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
 (defn compute-new-data [{:keys [data computed]}]
@@ -30,10 +30,10 @@
     (first computed)
     :<- data
     (fn [d _]
-      (let [m (:metadata d)
-            fields (-> (:fields m)
-                     (dissoc :uv :pv :tv :amt)
-                     (assoc :uv*pv :number :tv*amt :number))
+      (let [m        (:metadata d)
+            fields   (-> (:fields m)
+                       (dissoc :uv :pv :tv :amt)
+                       (assoc :uv*pv :number :tv*amt :number))
             metadata (assoc m :fields fields)]
         (->> d
           :data
@@ -46,21 +46,21 @@
 
 
 (re-frame/dispatch-sync [:register-meta {:with-fn/compute-new-data {:function compute-new-data
-                                                                    :ports {:data :port/sink :computed :port/source}}}])
+                                                                    :ports    {:data :port/sink :computed :port/source}}}])
 
 
 (def ui-definition
-  {:components  {":ui/pie-chart"   {:type        :ui/component :name :rechart/colored-pie
-                                    :config-data {}}
-                 ":ui/line-chart"  {:type        :ui/component :name :rechart/line
-                                    :config-data {}}
-                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
-                 ":topic/computed" {:type :source/local :name :topic/computed}
-                 ":fn/data-fn"     {:type :source/fn :name :with-fn/compute-new-data}}
-   :links       {":topic/data"     {:data {":ui/line-chart" :data
-                                           ":fn/data-fn"    :data}}
-                 ":fn/data-fn"     {:computed {":topic/computed" :data}}
-                 ":topic/computed" {:data {":ui/pie-chart" :data}}}
-   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
-                 {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
+  {:mol/components  {":ui/pie-chart"   {:atm/role    :ui/component :atm/kind :rechart/colored-pie
+                                        :config-data {}}
+                     ":ui/line-chart"  {:atm/role    :ui/component :atm/kind :rechart/line
+                                        :config-data {}}
+                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
+                     ":topic/computed" {:atm/role :source/local :atm/kind :topic/computed}
+                     ":fn/data-fn"     {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
+   :mol/links       {":topic/data"     {:data {":ui/line-chart" :data
+                                               ":fn/data-fn"    :data}}
+                     ":fn/data-fn"     {:computed {":topic/computed" :data}}
+                     ":topic/computed" {:data {":ui/pie-chart" :data}}}
+   :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                     {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 

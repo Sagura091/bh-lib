@@ -43,8 +43,8 @@
     direction
     (map (fn [[target ports]]
            (let [[source-port target-port] ports
-                 target-type (get-in configuration [:components target :type])
-                 remote      (get-in configuration [:components target :name])]
+                 target-type (get-in configuration [:mol/components target :atm/role])
+                 remote      (get-in configuration [:mol/components target :atm/kind])]
              ;(log/info "make-params" target target-type remote)
              (if (= direction :outputs)
                {source-port (if (= :source/local target-type)
@@ -63,7 +63,7 @@
 ; :ui/component
 (defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id]}]
 
-  (let [ui-type (get-in configuration [:components node :name])
+  (let [ui-type (get-in configuration [:mol/components node :atm/kind])
         bh-ui   (if (keyword? ui-type)
                   (->> registry ui-type :component)
                   ui-type)]
@@ -103,7 +103,7 @@
 ;source/remote
 (defmethod component->ui :source/remote [{:keys [node meta-data]}]
   ; get the meta-data for the node and use the "actual name" as the thing to subscribe to
-  (let [remote (:name meta-data)]
+  (let [remote (:atm/kind meta-data)]
 
     ;(log/info "component->ui :source/remote" node "//" remote)
 
@@ -113,10 +113,12 @@
     ; 2. return the signal vector to the new data-source key
     [::subs/source remote]))
 
+(def last-inputs (atom {}))
 
 ; :source/fn
 (defmethod component->ui :source/fn [{:keys [node configuration container-id] :as inputs}]
-  (let [fn-name   (get-in configuration [:components node :name])
+  (reset! last-inputs inputs)
+  (let [fn-name   (get-in configuration [:mol/components node :atm/kind])
         actual-fn (if (keyword fn-name)
                     (-> @(re-frame/subscribe [:meta-data-registry]) fn-name :function)
                     fn-name)
@@ -125,7 +127,7 @@
                     (make-params configuration node :inputs container-id)
                     (make-params configuration node :outputs container-id))]
 
-    ;(log/info "component->ui :source/fn" node "//" params)
+    (log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
 
     (actual-fn params)))
 
@@ -133,13 +135,13 @@
 (defn process-components [configuration node-type registry container-id]
   (doall
     (->> configuration
-      :components
+      :mol/components
       (filter (fn [[_ meta-data]]
-                (= node-type (:type meta-data))))
+                (= node-type (:atm/role meta-data))))
       (map (fn [[node meta-data]]
-             ;(log/info "process-components (nodes)" node "//" meta-data "//" (:type meta-data))
+             ;(log/info "process-components (nodes)" node "//" meta-data "//" (:atm/role meta-data))
              (component->ui {:node          node
-                             :type          (:type meta-data)
+                             :type          (:atm/role meta-data)
                              :meta-data     meta-data
                              :configuration configuration
                              :registry      registry
