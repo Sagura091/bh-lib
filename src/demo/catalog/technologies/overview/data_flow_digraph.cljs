@@ -136,12 +136,12 @@ In Our system, UI element are described like this:
 
 ```
 (def ui-definition
-  {:mol/components   {:topic/measurements {:type :source/remote :name :source/measurements}
-                  :ui/bar-chart       {:type :ui/component :name :rechart/bar}}
+  {:mol/components   {\"measurements\" {:atm/role :source/remote :atm/kind :source/measurements}
+                      \"bar-chart\"    {:atm/role :ui/component :atm/kind :rechart/bar}}
 
-   :mol/links        {:topic/measurements {:data {:ui/bar-chart :data}}}
+   :mol/links        {\"measurements\" {:data {:ui/bar-chart :data}}}
 
-   :mol/grid-layout  [{:i :ui/bar-chart :x 0 :y 0 :w 20 :h 11 :static true}]})
+   :mol/grid-layout  [{:i \"bar-chart\" :x 0 :y 0 :w 20 :h 11 :static true}]})
 ```"]])
 
 
