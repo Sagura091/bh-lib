@@ -1,7 +1,7 @@
 {:paths     ["src"]
 
  :deps      {org.clojure/clojure                             {:mvn/version "1.10.3"}
-             org.clojure/clojurescript                       {:mvn/version "1.11.4"}
+             org.clojure/clojurescript                       {:mvn/version "1.11.60"}
              com.google.javascript/closure-compiler-unshaded {:mvn/version "v20211006"}
              org.clojure/core.async                          {:mvn/version "1.6.673"}
              org.clojure/tools.logging                       {:mvn/version "1.2.4"}
