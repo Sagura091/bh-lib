@@ -19,7 +19,7 @@
    :gap "10px"
    :width "100%"
    :height "100%"
-   :children [[:div.chart-part {:style {:width "100%" :height "70%"}}
+   :children [[:div.chart-part.h-w-100pc
                (reduce into [component] (seq params))]
 
               [rc/v-box

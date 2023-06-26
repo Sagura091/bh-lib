@@ -1,0 +1,189 @@
+.center-text{
+ text-align: center;
+}
+
+.h-w-100pc{
+   height: 100%;
+   width: 100%;
+}
+
+.slider-progress-bar{
+   width: 400px;
+}
+
+
+.default-card{
+   width: 100%;
+   height: 100%;
+   margin: auto;
+   overflow: hidden;
+   background: #9CA8B3;
+}
+
+.img-flippable-default-card{
+   width: 100%;
+   height: 100%
+   overflow: hidden;
+   background: #9CA8B3;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center
+   display: flex;
+}
+
+.chart-config-panel{
+   width: 40%;
+   height: 100%;
+}
+
+.chart-content{
+ width: 60%;
+ height: 100%;
+}
+
+.img-bg-size{
+ background-size: contain;
+}
+
+.img-style{
+   width: 75px;
+   height: 75px;
+   margin-left: auto;
+   margin-right: auto;
+   display: block;
+}
+
+.component-panel{
+   width: 400px;
+   height: 500px;
+}
+
+bhui-thead{
+   position: sticky;
+   top: 0;
+   background: darkslategray;
+}
+
+.draggable-node{
+   width: 150px;
+   height: 50px;
+   margin-bottom: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: grab;
+   border-radius: 3px;
+   padding: 2px;
+}
+
+.coverage-plan-table-container{
+   width: 100%;
+   height: 100%;
+   overflow-y: auto;
+   white-space: nowrap;
+   border: 1px outset gray;
+}
+
+.coverage-plan-thead{
+   position: sticky;
+   top: 0;
+   background: lightgray;
+}
+
+.config-panel{
+   width: 100%;
+   height: 90%;
+   margin: 10px;
+   padding: 5px;
+   background: #fff8dc;
+   box-shadow: 5px 5px 5px #888888;
+}
+
+.globe-container{
+   width: 500px
+   height: 500px;
+}
+
+.slider-label-container{
+   width: 300px;
+   height: 100px;
+}
+
+.selectable-table-container{
+   width: 300px;
+   height: 200px;
+}
+
+.widget-content-container{
+   width: 100%;
+   height: 100%;
+   background: #faeee8;
+}
+
+.widget.widget-content{
+    width: 100%;
+    height: 90%;
+    cursor: default;
+    align-items: stretch;
+    display: flex;
+}
+
+.editable-container{
+   display: inline-block;
+   vertical-align: middle;
+   width: 195px;
+   height: 30px;
+}
+
+.cell-input{
+   display: inline-block;
+   vertical-align: middle;
+}
+
+.cell-input-btn{
+   display: inline-block;
+   vertical-align: middle;
+   padding: 2px;
+}
+
+.header-row{
+   display: inline-block;
+   text-align: center;
+}
+
+.cell-span{
+   position: static;
+   border-radius: 2px;
+   border: solid grey 2px;
+   vertical-align: middle;
+   display: inline-block;
+   text-align: center;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   color: black;
+   cursor: pointer;
+}
+
+.symbol-td{
+   color: white;
+   text-align: center;
+}
+
+.sensor-color-td{
+    background-color: transparent;
+    border-width: 1px;
+    text-align: center;
+    width: 100px;
+}
+
+.ui-element{
+   width: 200px;
+   margin: auto;
+}
+
+.molecule-content{
+   width: 100%;
+   min-height: 400px;
+}
+

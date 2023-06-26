@@ -26,7 +26,7 @@
            ;; in order to actually draw the Recharts components. just saying "100%" doesn't work, since the
            ;; that really means "be as big as you need" and ResponsiveContainer then doesn't know what to do.
            ;;
-           [:div {:style {:width "100%" :min-height "400px"}}
+           [:div.molecule-content
             [grid/component
              :data (r/atom chart-remote-data/ui-definition)
              :component-id (h/path->keyword container-id "widget")

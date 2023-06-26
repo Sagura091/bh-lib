@@ -199,16 +199,9 @@
   ;(println "make-draggable-node" node-type)
 
   ^{:key label}
-  [:div.draggable
-   {:style       {:width           "150px" :height "50px"
-                  :background      (-> cn/node-style color :background)
-                  :color           (-> cn/node-style color :color)
-                  :margin-bottom   "5px"
-                  :display         :flex
-                  :justify-content :center
-                  :align-items     :center
-                  :cursor          :grab
-                  :border-radius   "3px" :padding "2px"}
+  [:div.draggable.draggable-node
+   {:style       {:background      (-> cn/node-style color :background)
+                  :color           (-> cn/node-style color :color)}
 
     :onDragStart #(on-drag-start node-type %)
     :draggable   true} label])

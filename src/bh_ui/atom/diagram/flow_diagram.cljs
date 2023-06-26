@@ -211,15 +211,9 @@
 
 (defn- make-draggable-node [[k {:keys [label type color text-color]} :as node]]
   ;(log/info "make-draggable-node" label type "//" node)
-  ^{:key label} [:div.draggable
-                 {:style       {:width           "150px" :height "50px"
-                                :margin-bottom   "5px"
-                                :display         :flex
-                                :justify-content :center
-                                :align-items     :center
-                                :cursor          :grab
-                                :border-radius   "3px" :padding "2px"
-                                :background      color :color text-color}
+  ^{:key label} [:div.draggable.draggable-node
+                 {:style       {:background color
+                                :color      text-color}
                   :onDragStart #(on-drag-start type %)
                   :draggable   true}
                  label])

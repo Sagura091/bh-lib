@@ -66,7 +66,7 @@
         t (h/resolve-value current-time)]
     ;(log/info "globe OUTER" shapes component-id)
     (fn []
-      [:> Viewer {:style {:width "100%" :height "100%"}}
+      [:> Viewer {:class "h-w-100pc"}
        [:> Globe {:enableLighting true}
         [:> Clock {:currentTime (.fromDate JulianDate (or @t (coerce/to-date (cljs-time/now))))}]
         (into [:<>]

@@ -11,8 +11,7 @@
 (defn- make-widget [[id title content bk-color txt-color]]
   ;(log/info "make-widget" id "//" title)
 
-  [:div.widget-parent {:key   id
-                       :style {:width "100%" :height "100%"}}
+  [:div.widget-parent.h-w-100pc {:key   id}
    [:div.grid-toolbar.title-wrapper.move-cursor
     [:div {:style {:background-color bk-color
                    :color            txt-color
@@ -21,12 +20,7 @@
                    :font-size        "1.1em"}}
      title]]
    [:div.widget.widget-content
-    {:style         {:width       "100%"
-                     :height      "90%"
-                     :cursor      :default
-                     :align-items :stretch
-                     :display     :flex}
-     :on-mouse-down #(.stopPropagation %)}
+    {:on-mouse-down #(.stopPropagation %)}
     content]])
 
 

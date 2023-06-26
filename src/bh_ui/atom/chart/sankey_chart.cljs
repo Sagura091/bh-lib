@@ -274,9 +274,7 @@
     ; NOTE: super hack here!!! we need the config-data change to force a re-render
     ; because the sankey only redraws the nodes and links when the cursor moves over them
     ; otherwise
-    [:div {:class
-           (subs (str @(ui-utils/subscribe-local component-id [])) 0 10)
-           :style {:width "100%" :height "100%"}}
+    [:div.h-w-100pc {:class (subs (str @(ui-utils/subscribe-local component-id [])) 0 10)}
 
      [:> ResponsiveContainer
       [:> Sankey

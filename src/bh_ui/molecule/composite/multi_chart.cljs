@@ -81,10 +81,7 @@
     ;(log/info "config-panel" params
     ;  "//" config-data "//" @c)
 
-    [:div.card {:style {:width      "100%" :height "90%"
-                        :margin     "10px" :padding "5px"
-                        :background "#fff8dc"
-                        :box-shadow "5px 5px 5px #888888"}}
+    [:div.card.config-panel
      [rc/scroller
       :v-scroll :auto
       :height "90%"

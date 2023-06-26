@@ -283,9 +283,8 @@
 
 (defn- display-checkbox [id name under-consideration toggle-fn]
   ^{:key (str "check-" id)}
-  [:td.is-narrow
-   {:style    {:text-align :center}
-    :on-click (rc/handler-fn
+  [:td.is-narrow.center-text
+   {:on-click (rc/handler-fn
                 (toggle-fn))}
 
    (if (contains? under-consideration id)
@@ -306,8 +305,7 @@
       ;"//" @showing?
 
       ^{:key (str "symb-" name)}
-      [:td {:style {:color      :white
-                    :text-align :center}}
+      [:td.symbol-td
        [rc/popover-anchor-wrapper :src (rc/at)
         :showing? @showing?
         :position :below-right
@@ -362,11 +360,7 @@
       ;"//" @showing?
 
       ^{:key (str "color-" name)}
-      [:td
-       {:style {:background-color :transparent
-                :border-width     "1px"
-                :text-align       :center
-                :width            100}}
+      [:td.sensor-color-td
        [rc/popover-anchor-wrapper :src (rc/at)
         :showing? @showing?
         :position :below-right
@@ -422,13 +416,9 @@
 
     (fn []
       ;(log/info "target-table (d)" @d "//" @s)
-      [:div.table-container {:style {:width       "100%"
-                                     :height      "100%"
-                                     :overflow-y  :auto
-                                     :white-space :nowrap
-                                     :border      "1px outset gray"}}
+      [:div.table-container.coverage-plan-table-container
        [:table.table
-        [:thead {:style {:position :sticky :top 0 :background :lightgray}}
+        [:thead.coverage-plan-thead
          [:tr
           (doall (->> target-row-def :columns (map column-header-cell)))]]
 
@@ -461,13 +451,9 @@
     ;(log/info "satellites-table (s)" @d "//" @s)
 
     (fn []
-      [:div.table-container {:style {:width       "100%"
-                                     :height      "100%"
-                                     :overflow-y  :auto
-                                     :white-space :nowrap
-                                     :border      "1px outset gray"}}
+      [:div.table-container.coverage-plan-table-container
        [:table.table
-        [:thead {:style {:position :sticky :top 0 :background :lightgray}}
+        [:thead.coverage-plan-thead
          [:tr
           (doall (->> satellite-row-def :columns (map column-header-cell)))]]
 

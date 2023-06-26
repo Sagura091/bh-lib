@@ -41,7 +41,7 @@
      :cell-style (or cell-style-fn #())
      :parts {:simple-wrapper {:style {:border false}}}]))
 
-
+;TODO: pass in all style related props in a map
 (defn- non-meta-table [& {:keys [data max-rows width height cell-style-fn
                                  on-click-row-fn row-line-color]}]
 
@@ -59,7 +59,7 @@
         :on-click-row (or on-click-row-fn #())
         :cell-style-fn (or cell-style-fn #())]])))
 
-
+;TODO: pass in all style related props in a map
 (defn meta-table [& {:keys [data max-rows width height cell-style-fn
                             on-click-row-fn row-line-color]}]
   (let [d    (h/resolve-value data)
@@ -96,7 +96,7 @@
                                         :data (h/resolve-value (if (:c-o-c @d) (:c-o-c @d) []))
                                         :max-rows 3]]]])]]])))
 
-
+;TODO: pass in all style related props in a map
 (defn table [& {:keys [data max-rows width height cell-style-fn
                        on-click-row-fn row-line-color]}]
 

@@ -21,7 +21,7 @@
 
     ;(log/info "config-panel (resolve-value)" @c)
 
-    [:div.card {:style {:width "100%" :height "100%"}}
+    [:div.card.h-w-100pc
      (map (fn [[k v]]
             ^{:key k} [lf/labeled-field (str k) v])
        @c)]))
@@ -35,9 +35,9 @@
         clicked (r/atom 0)]
     (fn [& {:keys [data selection component-id container-id]}]
       ;(log/info "selectable-table RENDER")
-      [:div.card {:style {:width "300px" :height "200px"}}
-       [:h2 {:style {:text-align :center}} "Selectable Table"]
-       [:div {:style {:width "200px" :margin :auto}}
+      [:div.card.selectable-table-container
+       [:h2.center-text "Selectable Table"]
+       [:div.ui-element
         [lf/labeled-field "data" @source]
         [:button.button {:on-click #(do
                                       (swap! clicked inc)
@@ -53,9 +53,9 @@
         t (re-frame/subscribe current-time)]
     (fn [& {:keys [layers current-time component-id container-id]}]
       ;(log/info "three-d-globe RENDER")
-      [:div.card {:style {:width "500px" :height "500px"}}
-       [:h2 {:style {:text-align :center}} "3D Globe Table"]
-       [:div {:style {:width "200px" :margin :auto}}
+      [:div.card.globe-container
+       [:h2.center-text "3D Globe Table"]
+       [:div.ui-element
         [rc/input-textarea
          :src (rc/at)
          :model (r/atom (str @l))
@@ -73,8 +73,8 @@
     (fn [& {:keys [value range]}]
       ;(log/info "slider RENDER")
       (let [[min max] @r]
-        [:div.card {:style {:width "300px" :height "100px"}}
-         [:h2 {:style {:text-align :center}} "Slider"]
+        [:div.card.slider-label-container
+         [:h2.center-text "Slider"]
          [rc/slider
           :src (rc/at)
           :model (str @v)
@@ -86,7 +86,7 @@
                         ;(log/info "slider" (str %))
                         (re-frame/dispatch-sync (conj value %)))
           :disabled? false]
-         [:div {:style {:width "200px" :margin :auto}}
+         [:div.ui-element
           [lf/labeled-field "Value" @v]
           [lf/labeled-field "Range" @r]]]))))
 
@@ -98,9 +98,9 @@
   (let [v (re-frame/subscribe value)]
     ;(log/info "label RENDER")
     (fn [& {:keys [value]}]
-      [:div.card {:style {:width "300px" :height "100px"}}
-       [:h2 {:style {:text-align :center}} "Label"]
-       [:div {:style {:width "200px" :margin :auto}}
+      [:div.card.slider-label-container
+       [:h2.center-text "Label"]
+       [:div.ui-element
         [lf/labeled-field "Value" @v]]])))
 
 

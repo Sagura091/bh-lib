@@ -5,7 +5,7 @@
             ["react-colorful" :refer [HexColorPicker RgbaColorPicker]]
             [taoensso.timbre :as log]))
 
-
+;TODO: register into meta-data registry so it can be used in Molecule DSL
 (defn rgba-color-picker [& {:keys [color on-change]}]
   ;(log/info "rgba-color-picker" color)
   [:> RgbaColorPicker {:color     color

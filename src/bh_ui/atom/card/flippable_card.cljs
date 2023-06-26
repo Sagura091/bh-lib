@@ -1,23 +1,15 @@
 (ns bh-ui.atom.card.flippable-card)
 
 
-(def source-code '[:div.flip-card {:style (or style default-style)}
+(def source-code '[:div.flip-card (or style default-style)
                    [:div.flip-card-inner
                     [:div.flip-card-front front]
                     [:div.flip-card-back back]]])
 
 
-(def default-background "#9CA8B3")
-(def default-color "#FF")
-(def default-style {:width           "100%" :height "100%"
-                    :overflow        "hidden"
-                    :background      default-background
-                    :color           default-color
-                    :display         :flex
-                    :backgroundSize  "contain"
-                    :flex-direction  :column
-                    :justify-content :center
-                    :align-items     :center})
+;(def default-background "#9CA8B3")
+;(def default-color "#FF")
+(def default-style {:class "img-flippable-default-card img-bg-size"})
 (def default-size {:width "100%" :height 400})
 
 (defn card
@@ -44,7 +36,7 @@
   "
   [& {:keys [front back style]}]
 
-  [:div.flip-card {:style (or style default-style)}
+  [:div.flip-card (or style default-style)
    [:div.flip-card-inner
     [:div.flip-card-front front]
     [:div.flip-card-back back]]])

@@ -7,15 +7,16 @@
 
 (def default-background "#9CA8B3")
 (def default-color "#FF")
-(def node-style-square {:width           "300px" :height "500px"
-                        :overflow        "hidden"
-                        :margin          :auto
-                        ;:background      default-background
-                        ;:color           default-color
-                        :display         :flex
-                        :flex-direction  :column
-                        :justify-content :center
-                        :align-items     :center})
+(def node-style-square {:style {:width "300px"
+                                :height "500px"
+                                :overflow        "hidden"
+                                :margin          :auto
+                                ;:background      default-background
+                                ;:color           default-color
+                                :display         :flex
+                                :flex-direction  :column
+                                :justify-content :center
+                                :align-items     :center}})
 (def image-style {:width        "200px" :height "200px"
                   :display      :block
                   :margin-left  :auto

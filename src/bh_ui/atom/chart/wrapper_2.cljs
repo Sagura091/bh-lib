@@ -92,15 +92,15 @@
                      :width "100%"
                      :height "90%"
                      :children (if @open?
-                                 [[:div.chart-config-panel {:style {:width "40%" :height "100%"}}
+                                 [[:div.chart-config-panel
                                    [ui-utils/chart-config
                                     chart-events
                                     [data-panel d]
                                     [config-panel d component-id]]]
-                                  [:div.chart-content {:style {:width "60%" :height "100%"}}
+                                  [:div.chart-content
                                    (reduce into [component-panel] (seq params))]]
 
-                                 [[:div.chart-content {:style {:width "100%" :height "100%"}}
+                                 [[:div.h-w-100pc
                                    (reduce into [component-panel] (seq params))]])]]]))))
 
 
@@ -126,7 +126,7 @@
         (ui-utils/init-container-locals @id c)
         (ui-utils/dispatch-local @id [:container] container-id))
 
-      [:div.base-chart {:style {:width "100%" :height "100%"}}
+      [:div.base-chart.h-w-100pc
        (if not-configurable?
          (reduce into [component-panel] (seq params))
 

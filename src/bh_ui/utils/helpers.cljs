@@ -23,7 +23,7 @@
   ;(log/info "chart-config" config data panel tab)
   (let [data-or-config [[config "config"]
                         [data "data"]]]
-    [:div.chart-config {:style {:width "100%" :height "100%"}}
+    [:div.chart-config.h-w-100pc
      [navbar/navbar data-or-config [panel]]
      [rc/scroller :src (rc/at)
       :v-scroll :auto

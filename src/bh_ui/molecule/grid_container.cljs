@@ -41,12 +41,7 @@
     {:style {:height "1.5em"}}
     (or label (name id))]
    [:div.widget.widget-content
-    {:style         {:width       "100%"
-                     :height      "90%"
-                     :cursor      :default
-                     :align-items :stretch
-                     :display     :flex}
-     :on-mouse-down #(.stopPropagation %)}
+    {:on-mouse-down #(.stopPropagation %)}
     component]])
 
 
@@ -121,7 +116,7 @@
        :gap "2px"
        :children [(when resizable [ct/configure-toggle open? #(locals/apply-local component-id
                                                                 [:layout] toggle-editable)])
-                  [:div.grid-container {:style {:width "100%" :height "100%"}}
+                  [:div.grid-container.h-w-100pc
                    [grid/grid
                     :id component-id
                     :class "layout"
@@ -160,7 +155,7 @@
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
                      {:id :definition :tooltip "Text view"  :label [:i {:class "zmdi zmdi-format-subject"}]}]]
 
-        [:div.box {:style {:width "100%" :height "100%" :background "#faeee8"}}
+        [:div.box.widget-content-container
          [rc/v-box :src (rc/at)
           ;:justify :start
           :width "100%"

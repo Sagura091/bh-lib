@@ -26,12 +26,8 @@
 
 
 (defn- edit-comp [[dataset editing-cell editing-cell-content]]
-  [:div#editable {:style {:display        "inline-block"
-                          :vertical-align "middle"
-                          :width          (px 195)
-                          :height         (px 30)}}
-   [:div#input {:style {:display        "inline-block"
-                        :vertical-align "middle"}}
+  [:div#editable.editable-container
+   [:div#input.cell-input
     [rc/input-text :src (rc/at)
      :model editing-cell-content
      :width (px 135)
@@ -41,9 +37,7 @@
      :on-change #(do
                    ;(log/info "edit-comp" %)
                    (reset! editing-cell-content %))]]
-   [:div#check {:style {:display        "inline-block"
-                        :vertical-align "middle"
-                        :padding        (px 2)}}
+   [:div#check.cell-input-btn
     [rc/md-icon-button :src (rc/at)
      :style {:display "inline-block"}
      :md-icon-name "zmdi-check"
@@ -55,9 +49,7 @@
                     @editing-cell-content)
                   (reset! editing-cell nil)
                   (reset! editing-cell-content nil))]]
-   [:div#cancel {:style {:display        "inline-block"
-                         :vertical-align "middle"
-                         :padding        (px 2)}}
+   [:div#cancel.cell-input-btn
     [rc/md-icon-button :src (rc/at)
      :style {:display "inline-block"}
      :md-icon-name "zmdi-delete"
@@ -81,21 +73,10 @@
     (if (and @is-editing?
           (not (= colidx -1)))
       [edit-comp [dataset editing-cell editing-cell-content]]
-      [:span {:style    {:position         "static"
-                         :width            (px width)
-                         :height           (px height)
-                         :border-radius    "2px"
-                         :border           "solid grey 2px"
-                         :vertical-align   "middle"
-                         :background-color background
-                         :display          "inline-block"
-                         :text-align       "center"
-                         :white-space      "nowrap"
-                         :overflow         "hidden"
-                         :text-overflow    "ellipsis"
-                         :color            "black"
-                         :font-size        font-size
-                         :cursor           "pointer"}
+      [:span.cell-span {:style {:width            (px width)
+                                :height           (px height)
+                                :background-color background
+                                :font-size        font-size}
               :on-click #(cell-click
                            [dataset editing-cell editing-cell-content]
                            [rowidx colidx] colname name)}
@@ -106,9 +87,7 @@
                      height vals]
   ;(log/info "build-header" vals)
 
-  [:div {:class "headers"
-         :style {:display    "inline-block"
-                 :text-align "center"}}
+  [:div.headers.header-row
    (doall
      (map-indexed
        (fn [idx v]
@@ -130,9 +109,7 @@
 
   (let [values (vals row)
         ks     (into [] (keys row))]
-    [:div {:class (str "row" row_index)
-           :style {:display    "inline-block"
-                   :text-align "center"}}
+    [:div.header-row {:class (str "row" row_index)}
      (doall
        (map-indexed
          (fn [idx v]

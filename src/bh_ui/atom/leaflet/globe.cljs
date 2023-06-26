@@ -65,7 +65,7 @@
         t (h/resolve-value current-time)]
     ;(log/info "globe OUTER" shapes component-id)
     (fn []
-     [:div {:style {:width "100%" :height "100%"}}
+     [:div.h-w-100pc
       [:> MapContainer {:center [32, -82]  :zoom 2 :scrollWheelZoom false}
        [:> TileLayer {:url "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                       :attribution "&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors"}]

@@ -103,7 +103,7 @@
 (defn- component-panel
   [data component-id]
 
-  [:div {:style {:width "400px" :height "500px"}}
+  [:div.component-panel
    [oz/vega-lite @data]])
 
 
