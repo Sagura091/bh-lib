@@ -52,36 +52,36 @@
 
 
 (def ui-definition
-  {:components  {":ui/bar-chart"   {:type :ui/component :name :rechart/bar}
-                 ":ui/line-chart"  {:type :ui/component :name :rechart/line}
-                 ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
-                 ":topic/config"   {:type :source/local :name :topic/config :default {}}
-                 ":fn/make-config" {:type :source/fn :name :simple-multi-chart-2/fn-make-config}}
-   :links       {":topic/data"     {:data {":ui/bar-chart"   :data
-                                           ":ui/line-chart"  :data
-                                           ":fn/make-config" :data}}
-                 ":topic/config"   {:data {":ui/line-chart" :config-data
-                                           ":ui/bar-chart"  :config-data}}
-                 ":fn/make-config" {:config-data {":topic/config" :data}}}
+  {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
+                     ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
+                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
+                     ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :default {}}
+                     ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
+   :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
+                                               ":ui/line-chart"  :data
+                                               ":fn/make-config" :data}}
+                     ":topic/config"   {:data {":ui/line-chart" :config-data
+                                               ":ui/bar-chart"  :config-data}}
+                     ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-   :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
-                 {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
+   :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                     {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
-(def source-code '(let [def {:components  {":ui/bar-chart"   {:type :ui/component :name :rechart/bar}
-                                           ":ui/line-chart"  {:type :ui/component :name :rechart/line}
-                                           ":topic/data"     {:type :source/local :name :topic/data :default sample-data}
-                                           ":topic/config"   {:type :source/local :name :topic/config :default {}}
-                                           ":fn/make-config" {:type :source/fn :name :simple-multi-chart-2/fn-make-config}}
-                             :links       {":topic/data"     {:data {":ui/bar-chart"   :data
-                                                                     ":ui/line-chart"  :data
-                                                                     ":fn/make-config" :data}}
-                                           ":topic/config"   {:data {":ui/line-chart" :config-data
-                                                                     ":ui/bar-chart"  :config-data}}
-                                           ":fn/make-config" {:config-data {":topic/config" :data}}}
+(def source-code '(let [def {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
+                                               ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
+                                               ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
+                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :default {}}
+                                               ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
+                             :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
+                                                                         ":ui/line-chart"  :data
+                                                                         ":fn/make-config" :data}}
+                                               ":topic/config"   {:data {":ui/line-chart" :config-data
+                                                                         ":ui/bar-chart"  :config-data}}
+                                               ":fn/make-config" {:config-data {":topic/config" :data}}}
 
-                             :grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
-                                           {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]}]
+                             :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                                               {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]}]
                     [grid-widget/component
                      :data def
                      :component-id (h/path->keyword container-id "widget")]))

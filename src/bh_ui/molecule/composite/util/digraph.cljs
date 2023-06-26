@@ -8,18 +8,18 @@
 
 
 (defn expand-components [data registry]
-  (let [components (:components data)]
+  (let [components (:mol/components data)]
     (->> data
-      :components
+      :mol/components
       (map (fn [[id meta-data]]
              {id (assoc meta-data
                    :ports
-                   (condp = (:type meta-data)
-                     :ui/component (->> components id :name registry :ports)
+                   (condp = (:atm/role meta-data)
+                     :ui/component (->> components id :atm/kind registry :ports)
                      :source/remote {:port/pub-sub :data}
                      :source/local {:port/pub-sub :data}
                      :source/fn (:ports meta-data)))}))
-      (assoc data :components))))
+      (assoc data :mol/components))))
 
 
 (defn get-predecessor-name [links graph source target]

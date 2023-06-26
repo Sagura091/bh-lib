@@ -18,7 +18,7 @@
 
 
 (defn- config
-  "set up the local config keys, specifically we want the :layout key, so we can
+  "set up the local config keys, specifically we want the :mol/layout key, so we can
   track updates to the layout should the user drag/resize any of the internal
   components.
 
@@ -29,7 +29,7 @@
   {:blackboard {:defs {:source full-config
                        :dag    {:open-details ""}}}
    :container  ""
-   :layout     (:grid-layout full-config)})
+   :layout     (:mol/grid-layout full-config)})
 
 
 (defn- wrap-component [[id component label]]
@@ -139,8 +139,8 @@
         graph         (apply lg/digraph (ui/compute-edges configuration))
         comp-or-dag?  (r/atom :component)
         partial-config   (assoc configuration
-                           :denorm (dig/denorm-components graph (:links configuration) (lg/nodes graph))
-                           :nodes (get-in configuration [:components keys set])
+                           :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                           :nodes (get-in configuration [:mol/components keys set])
                            :edges (into [] (lg/edges graph)))
         full-config (assoc partial-config :graph graph)]
 

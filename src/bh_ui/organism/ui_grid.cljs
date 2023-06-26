@@ -82,8 +82,8 @@
         r-layout  (h/resolve-value layout)]
 
     ;(log/info "component (resolve)" container-id
-    ;  "//" @r-widgets
-    ;  "//" @r-layout)
+    ;  "//" widgets "/////" @r-widgets
+    ;  "//" layout "/////" @r-layout)
 
     (fn []
       [grid/grid
@@ -92,3 +92,4 @@
        :cols 20
        :layoutFn (partial on-layout-change layout)
        :layout @r-layout])))
+

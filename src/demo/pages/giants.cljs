@@ -178,7 +178,7 @@
   - image : (filepath) [optional] name of the file to show as an image (defaults to imgs/hammer-icon-16x16.png)
   "
   [name description & [image]]
-  (log/info "personality" image)
+  ;(log/info "personality" image)
   [flippable/card
    :style {:width 270 :height 400}
    :front [:div {:style flippable/default-style}

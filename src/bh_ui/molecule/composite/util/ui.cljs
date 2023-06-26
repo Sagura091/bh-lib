@@ -165,7 +165,7 @@
   the format needed by react-flow (https://reactflow.dev)
   "
   [configuration node-id]
-  (let [node-type (get-in configuration [:components node-id :type])]
+  (let [node-type (get-in configuration [:mol/components node-id :type])]
     ;(log/info "node" node-id node-type)
     {:id       (str node-id)
      :type     (str node-type)
@@ -212,7 +212,7 @@
   "
   [configuration]
   (->> configuration
-    :links
+    :mol/links
     (mapcat (fn [[entity links]]
               (mapcat (fn [[source-port targets]]
                         (map (fn [[target target-port]]

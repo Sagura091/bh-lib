@@ -136,12 +136,12 @@ In Our system, UI element are described like this:
 
 ```
 (def ui-definition
-  {:components   {:topic/measurements {:type :source/remote :name :source/measurements}
+  {:mol/components   {:topic/measurements {:type :source/remote :name :source/measurements}
                   :ui/bar-chart       {:type :ui/component :name :rechart/bar}}
 
-   :links        {:topic/measurements {:data {:ui/bar-chart :data}}}
+   :mol/links        {:topic/measurements {:data {:ui/bar-chart :data}}}
 
-   :grid-layout  [{:i :ui/bar-chart :x 0 :y 0 :w 20 :h 11 :static true}]})
+   :mol/grid-layout  [{:i :ui/bar-chart :x 0 :y 0 :w 20 :h 11 :static true}]})
 ```"]])
 
 
@@ -189,7 +189,7 @@ Now wou can start to _invent_ these components, since they only exist within the
 (defn- links []
   [layout/frame {:extra-classes :is-fluid}
    [:h3 "Links"]
-   [layout/markdown-block "`:links` describe how the different parts of the _widget_ connect to
+   [layout/markdown-block "`:mol/links` describe how the different parts of the _widget_ connect to
 and communicate with each other, turning a picture of
 'blocks' into a directed graph. In the case of the UI, each component can be designed with multiple input and multiple outputs.
 
@@ -197,7 +197,7 @@ This is further described by metadata stored in a run-time registry.
 
 #### Grid Layout
 
-`:grid-layout` describe how the various bh-uis, the tables, charts, diagrams,
+`:mol/grid-layout` describe how the various bh-uis, the tables, charts, diagrams,
 etc. are to be arranged visually on the display. We use a user-customizable graph component (built in ReactJS) for doing
 the actual presentation on the display."]])
 

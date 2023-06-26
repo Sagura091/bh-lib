@@ -46,12 +46,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (log/info "bh-ui.molecule.composite")
 
 
-(def component-needs {:ui/component  {:name :id}
-                      :source/remote {:name :id}
-                      :source/local  {:name :id :default {:choices #{"" 0 [] {} #{}}}}
-                      :source/fn     {:name  :id
-                                      :ports {:name :id
-                                              :type #{:port/source :port/sink :port/source-sink}}}})
+;(def component-needs {:ui/component  {:name :id}
+;                      :source/remote {:name :id}
+;                      :source/local  {:name :id :default {:choices #{"" 0 [] {} #{}}}}
+;                      :source/fn     {:name  :id
+;                                      :ports {:name :id
+;                                              :type #{:port/source :port/sink :port/source-sink}}}})
 
 
 (def source-code '[composite
@@ -71,9 +71,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   "
   [& {:keys [configuration]}]
 
-  (let [components (:components configuration)
-        links      (:links configuration)
-        layout     (:grid-layout configuration)]
+  (let [components (:mol/components configuration)
+        links      (:mol/links configuration)
+        layout     (:mol/grid-layout configuration)]
 
     ;(log/info "definition-panel" components)
     ;(log/info "definition-panel" links)
@@ -153,7 +153,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   ; a Loom digraph only needs EDGES (:links)
   (def edges (->> composite-def
-               :links
+               :mol/links
                (mapcat (fn [[entity links]]
                          (map (fn [[target port]]
                                 [entity target])
@@ -179,11 +179,11 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 ;; piece together the data needed to build all the UI components and supporting functions
 (comment
   (do
-    (def config @bh-ui.molecule.composite.coverage-plan/ui-definition)
+    (def config bh-ui.molecule.composite.simple-multi-chart/ui-definition)
     (def container-id "dummy")
-    (def links (:links config))
-    (def layout (:layout config))
-    (def components (:components config))
+    (def links (:mol/links config))
+    (def layout (:mol/layout config))
+    (def components (:mol/components config))
     (def graph (apply lg/digraph (ui/compute-edges config)))
     (def nodes (lg/nodes graph))
     (def edges (lg/edges graph))
@@ -191,7 +191,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     (def configuration (assoc @bh-ui.molecule.composite.coverage-plan/ui-definition
                          :graph graph
-                         :denorm (dig/denorm-components graph (:links config) (lg/nodes graph))
+                         :denorm (dig/denorm-components graph (:mol/links config) (lg/nodes graph))
                          :nodes (lg/nodes graph)
                          :edges (lg/edges graph))))
 
@@ -422,8 +422,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   (def node-id :ui/globe)
   (def target-id :topic/selected-coverages)
 
-  (or (get-in configuration [:links node-id target-id])
-    (get-in configuration [:links target-id node-id]))
+  (or (get-in configuration [:mol/links node-id target-id])
+    (get-in configuration [:mol/links target-id node-id]))
 
   ())
 
@@ -436,7 +436,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     (def configuration
       (assoc @bh-ui.molecule.composite.coverage-plan/ui-definition
         :graph graph
-        :denorm (dig/denorm-components graph (:links configuration) (lg/nodes graph))
+        :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
         :nodes (lg/nodes graph)
         :edges (lg/edges graph))))
 
@@ -444,7 +444,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (get-in configuration [:denorm :fn/coverage :inputs])
 
-  (def components (:components configuration))
+  (def components (:mol/components configuration))
 
 
   (map (fn [[node meta-data]]
@@ -464,10 +464,10 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     (def data @bh-ui.molecule.composite.coverage-plan/ui-definition)
     (def graph (apply lg/digraph (ui/compute-edges @bh-ui.molecule.composite.coverage-plan/ui-definition)))
     (def nodes (lg/nodes graph))
-    (def links (:links data))
-    (def components (:components data))
+    (def links (:mol/links data))
+    (def components (:mol/components data))
     (def configuration (assoc @bh-ui.molecule.composite.coverage-plan/ui-definition
-                         :components (dig/expand-components data @(rf/subscribe [:meta-data-registry]))
+                         :mol/components (dig/expand-components data @(rf/subscribe [:meta-data-registry]))
                          :graph graph
                          :nodes (lg/nodes graph)
                          :edges (lg/edges graph)))
@@ -476,20 +476,20 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
   (->> data
-    :components
+    :mol/components
     (map (fn [[id meta-data]]
            {id (assoc meta-data
                  :ports
                  (condp = (:type meta-data)
-                   :ui/component (->> components id :name @(rf/subscribe [:meta-data-registry]) :ports)
+                   :ui/component (->> components id :atm/kind @(rf/subscribe [:meta-data-registry]) :ports)
                    :source/remote {:port/pub-sub :data}
                    :source/local {:port/pub-sub :data}
                    :source/fn (:ports meta-data)))}))
-    (assoc data :components))
+    (assoc data :mol/components))
 
   (dig/expand-components data @(rf/subscribe [:meta-data-registry]))
 
-  (map #(assoc % :ports "x") (:components data))
+  (map #(assoc % :ports "x") (:mol/components data))
 
 
   (def target-meta (map (fn [[target _]] (target @(rf/subscribe [:meta-data-registry]))) node-meta))
@@ -505,9 +505,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   (do
     (def config @bh-ui.molecule.composite.coverage-plan/ui-definition)
     (def container-id "dummy")
-    (def links (:links config))
-    (def layout (:layout config))
-    (def components (:components config))
+    (def links (:mol/links config))
+    (def layout (:mol/layout config))
+    (def components (:mol/components config))
     (def graph (apply lg/digraph (ui/compute-edges config)))
     (def nodes (lg/nodes graph))
     (def edges (lg/edges graph))
@@ -515,7 +515,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     (def configuration (assoc @bh-ui.molecule.composite.coverage-plan/ui-definition
                          :graph graph
-                         :denorm (dig/denorm-components graph (:links config) (lg/nodes graph))
+                         :denorm (dig/denorm-components graph (:mol/links config) (lg/nodes graph))
                          :nodes (lg/nodes graph)
                          :edges (lg/edges graph)
                          :ui-lookup (into {}
@@ -586,9 +586,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   (do
     (def config @bh-ui.molecule.composite.coverage-plan/ui-definition)
     (def container-id :coverage-plan-demo.component)
-    (def links (:links config))
-    (def layout (:layout config))
-    (def components (:components config))
+    (def links (:mol/links config))
+    (def layout (:mol/layout config))
+    (def components (:mol/components config))
     (def graph (apply lg/digraph (dig/compute-edges config)))
     (def nodes (lg/nodes graph))
     (def edges (lg/edges graph))
@@ -596,7 +596,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     (def configuration (assoc @bh-ui.molecule.composite.coverage-plan/ui-definition
                          :graph graph
-                         :denorm (dig/denorm-components graph (:links config) (lg/nodes graph))
+                         :denorm (dig/denorm-components graph (:mol/links config) (lg/nodes graph))
                          :nodes (lg/nodes graph)
                          :edges (lg/edges graph)
                          :ui-lookup (into {}
@@ -609,7 +609,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                               @(rf/subscribe [:meta-data-registry]) :coverage-plan)))
     (def node :fn/range)
 
-    (def actual-fn (->> configuration :components node :name))
+    (def actual-fn (->> configuration :mol/components node :atm/kind))
     (def denorm (->> configuration :denorm node)))
 
   ())
@@ -637,7 +637,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   (def components [[[:div "1"] [empty] [:div "2"]]
                    [[:div "3"] [:div "4"]]])
 
-  (update-in c [:containers id :components] (partial apply conj) components)
+  (update-in c [:containers id :mol/components] (partial apply conj) components)
 
   ())
 
