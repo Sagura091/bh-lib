@@ -2,8 +2,6 @@
 (ns demo.catalog.molecule.general
   "demo.catalog and demonstrations of general components."
   (:require [taoensso.timbre :as log]
-            [demo.catalog.molecule.example.header-bar :as header-bar]
-            [demo.catalog.molecule.example.login :as login]
             [demo.catalog.molecule.example.two-d-three-d-globe :as two-d-three-d-globe]
             [demo.catalog.molecule.example.composite.coverage-plan :as coverage-plan]
             [demo.catalog.molecule.example.composite.chart-remote-data :as chart-remote-data]
@@ -30,7 +28,5 @@
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
    [multi-chart-widget/example]
-   [with-fn/example]
-   [header-bar/example]
-   [login/example]])
+   [with-fn/example]])
 
