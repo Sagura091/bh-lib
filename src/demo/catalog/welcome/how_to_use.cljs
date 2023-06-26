@@ -42,7 +42,7 @@ meaningful conversations with your Users, Designers, and Developers.
 #### End Users
 
 End Users can use this catalog in much the same way as the Product Owners; as a way to see what is possible. Many times, users
-find it difficult to express their needs to technical people. Having a demo.catalog that everyone shares can help make it easier to
+find it difficult to express their needs to technical people. Having a catalog that everyone shares can help make it easier to
 express your needs and desires in a concrete way, with the immediate feedback provided by everyone looking at the same visual
 representation."])
 

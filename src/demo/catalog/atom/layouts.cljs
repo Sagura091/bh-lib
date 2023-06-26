@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.layouts
-  "demo.catalog and acu/demonstrations of available layout components."
+  "Catalog and acu/demonstrations of available layout components."
   (:require [demo.catalog.atom.example.layout.page :as page]
             [demo.catalog.atom.example.layout.page-header :as page-header]
             [demo.catalog.atom.example.layout.page-title :as page-title]

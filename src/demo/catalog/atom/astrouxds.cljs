@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.astrouxds
-      "demo.catalog and demonstrations of available AstroUXDS components."
+      "Catalog and demonstrations of available AstroUXDS components."
       (:require [demo.catalog.atom.example.astrouxds.button :as button]
                 [demo.catalog.atom.example.astrouxds.classification-marking :as cm]
                 [demo.catalog.atom.example.astrouxds.classification-list :as cl]

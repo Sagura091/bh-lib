@@ -15,7 +15,7 @@ As stated by Bruce Hauman in [the Devcards readme](https://github.com/bhuiauman/
 > execution environment is constrained by the shape and demands of the application we are working on.
 > This is extremely limiting.\"
 
-We agree. Therefore, we developed this demo.catalog both as a means to show off the breadth of UI Components available to
+We agree. Therefore, we developed this catalog both as a means to show off the breadth of UI Components available to
 us as Professional Software Developers, but also to allow us to work more quickly and more easily by isolating the development
 of the components from the development of the User-facing solutions that will be built _from_ those components.
 

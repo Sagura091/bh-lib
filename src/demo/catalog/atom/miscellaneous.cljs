@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.miscellaneous
-  "demo.catalog and demonstrations of miscellaneous components that don't fit anywhere else."
+  "Catalog and demonstrations of miscellaneous components that don't fit anywhere else."
   (:require [demo.catalog.atom.example.misc.resium.globe :as r-globe]
             [demo.catalog.atom.example.misc.hex-color-picker :as hex-picker]
             [demo.catalog.atom.example.misc.rgba-color-picker :as rgba-picker]
@@ -15,15 +15,15 @@
   []
 
   [:div
-   [ww-globe/example]])
+   [ww-globe/example]
    ;[r-globe/example]
    ;[two-d-globe/example]
    ;
-   ;[data-table/example]
-   ;[bh-table/example]
-   ;[meta-bh-table/example]
-   ;[meta-coc-bh-table/example]
+   [data-table/example]
+   [bh-table/example]
+   [meta-bh-table/example]
+   [meta-coc-bh-table/example]
    ;
-   ;[hex-picker/example]
-   ;[rgba-picker/example]])
+   [hex-picker/example]
+   [rgba-picker/example]])
 
