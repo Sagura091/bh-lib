@@ -11,5 +11,5 @@
       [layout/centered
        [:div {:style {:width "100%" :height "500px"}}
         [leaflet/globe
-         :layers leaflet/sample-data]]]
+         :shapes leaflet/sample-data]]]
       '[])))
