@@ -5,7 +5,7 @@ Black-Hammer library (bh-lib) is a fully standalone cljs, GUI, widget provider. 
 # For Developers
 
 clone the repo. 
-git clone --recursive https://github.com/Sagura091/bh-lib.git
+`git clone --recursive https://github.com/Sagura091/bh-lib.git`
 
 once you load a project in your supported Clojure IDE of your choice, there will be 2 directories presented to you. 
 
