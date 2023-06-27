@@ -7,7 +7,7 @@
    "How to Use this Catalog"
 
    "This Catalog of UI Components serves many different purposes, for many different kinds of people, who
-   are trying to solve many different kinds of problems. Specifically, we designed this demo.catalog to support the needs of:
+   are trying to solve many different kinds of problems. Specifically, we designed this catalog to support the needs of:
 
 - Developers
 - Designers

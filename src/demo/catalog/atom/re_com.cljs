@@ -16,7 +16,9 @@
             [demo.catalog.atom.example.re-com.splitter :as splitter]
             [demo.catalog.atom.example.re-com.table :as table]
             [demo.catalog.atom.example.re-com.text-input-re-com :as input-text]
-            [demo.catalog.atom.example.re-com.throbber :as throbber]))
+            [demo.catalog.atom.example.re-com.throbber :as throbber]
+            [demo.catalog.atom.example.re-com.header-bar :as header-bar]
+            [demo.catalog.atom.example.re-com.login :as login]))
 
 
 (defn examples
@@ -43,4 +45,6 @@
    [popover/chart-example]
    [splitter/horizontal-example]
    [splitter/example]
-   [splitter/vertical-example]])
+   [splitter/vertical-example]
+   [header-bar/example]
+   [login/example]])

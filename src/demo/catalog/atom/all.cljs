@@ -36,14 +36,16 @@
             [demo.catalog.atom.example.forms.checkbox :as checkbox]
             [demo.catalog.atom.example.forms.disabled-checkbox :as disabled-checkbox]
 
-            ;[demo.catalog.atom.example.chart.bar-chart :as bar-chart]
-            ;[demo.catalog.atom.example.chart.line-chart :as line-chart]
-            ;[demo.catalog.atom.example.chart.pie-chart :as pie-chart]
-            ;[demo.catalog.atom.example.chart.colored-pie-chart :as colored-piechart]
+            [demo.catalog.atom.example.chart.bar-chart :as bar-chart]
+            [demo.catalog.atom.example.chart.line-chart :as line-chart]
+            [demo.catalog.atom.example.chart.pie-chart :as pie-chart]
+            [demo.catalog.atom.example.chart.colored-pie-chart :as colored-piechart]
 
             [demo.catalog.atom.example.re-com.table :as table]
             [demo.catalog.atom.example.re-com.alert-box :as alert-box]
-            [demo.catalog.atom.example.re-com.line :as line]))
+            [demo.catalog.atom.example.re-com.line :as line]
+            [demo.catalog.atom.example.re-com.header-bar :as header-bar]
+            [demo.catalog.atom.example.re-com.login :as login]))
 
 
 (defn examples
@@ -62,10 +64,10 @@
 
    [rc/line :size "5px" :color "orange"]
 
-   ;[bar-chart/example]
-   ;[line-chart/simple-example]
-   ;[pie-chart/example]
-   ;[colored-piechart/example]
+   [bar-chart/examples]
+   [line-chart/examples]
+   [pie-chart/examples]
+   [colored-piechart/examples]
 
    [rc/line :size "5px" :color "orange"]
 
@@ -95,4 +97,6 @@
    [medium-icon/example]
    [large-icon/example]
    [brand-icon/example]
-   [clickable-icon/example]])
+   [clickable-icon/example]
+   [header-bar/example]
+   [login/example]])

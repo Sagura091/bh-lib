@@ -1,4 +1,4 @@
-(ns demo.catalog.molecule.example.header-bar
+(ns demo.catalog.atom.example.re-com.header-bar
   (:require [bh-ui.atom.re-com.button :as button]
             [bh-ui.atom.re-com.header-bar :as header-bar]
             [demo.events :as events]
