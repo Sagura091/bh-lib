@@ -25,7 +25,7 @@
    [:div.card-image
     [rc/v-box
      :children [[rc/gap :size "10px"]
-                [:figure.image (if image-style {:style image-style} default-image-style)
+                [:figure.image (or image-style default-image-style)
                  [:img {:src (or image default-image) :alt (or alt-text title)}]]]]]
    [:div.card-content.center-text
     [:p.title.is-4 title]

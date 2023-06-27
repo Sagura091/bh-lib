@@ -12,9 +12,7 @@
 (defn meta-tabular-config-column-ratom-tools [config-data default-config-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Config:"]
               [rc/button :on-click #(reset! config-data default-config-data) :label "Default"]
               [rc/button :on-click #(swap! config-data update-in [:brush] not) :label "!Brush"]
@@ -47,9 +45,7 @@
     (fn []
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :class "tools-panel"
        :children [[:label.h5 "Config:"]
                   [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
                   [rc/button :on-click #(h/handle-change-path config-data [:brush] (not @brush?))
@@ -76,9 +72,7 @@
 (defn meta-tabular-config-row-ratom-tools [config-data default-config-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Config:"]
               [rc/button :on-click #(reset! config-data default-config-data) :label "Default"]
               [rc/button :on-click #(swap! config-data update-in [:Page-A :include] not) :label "! Page A"]
@@ -97,9 +91,7 @@
     (fn []
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :class "tools-panel"
        :children [[:label.h5 "Config:"]
                   [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
                   [rc/button :on-click #(h/handle-change-path config-data [:Page-A :include] (not @page-a)) :label "! Page A"]
@@ -113,9 +105,7 @@
 (defn meta-tabular-config-pie-row-ratom-tools [config-data default-config-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Config:"]
               [rc/button :on-click #(reset! config-data default-config-data) :label "Default"]
               [rc/button :on-click #(swap! config-data update-in [:Page-A :include] not) :label "! Page A"]
@@ -134,9 +124,7 @@
     (fn []
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :class "tools-panel"
        :children [[:label.h5 "Config:"]
                   [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
                   [rc/button :on-click #(h/handle-change-path config-data [:Page-A :include] (not @page-a)) :label "! Page A"]
@@ -150,9 +138,7 @@
 (defn dag-data-config-ratom-tools [config-data default-config-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Config:"]
               [rc/button :on-click #(reset! config-data default-config-data) :label "Default"]
               [chart-utils/color-config config-data "Visit Fill" [:Visit :fill] :above-center]
@@ -165,9 +151,7 @@
 (defn dag-data-config-sub-tools [config-data default-config-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Config:"]
               [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
               [chart-utils/color-config config-data "Visit Fill" [:Visit :fill] :above-center]

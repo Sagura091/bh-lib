@@ -15,10 +15,6 @@
 
   [rc/h-box :src (rc/at)
    :width "90%"
-   :style {:background-color :lightgray
-           :border           "solid"
-           :border-width     "5px"
-           :border-color     :blue
-           :padding          "10px"}
+   :class "header-bar"
    :justify :between
    :children children])

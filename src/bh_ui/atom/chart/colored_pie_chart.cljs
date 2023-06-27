@@ -93,9 +93,7 @@
   [rc/v-box :src (rc/at)
    :gap "10px"
    :width "400px"
-   :style {:padding          "15px"
-           :border-top       "1px solid #DDD"
-           :background-color "#f7f7f7"}
+   :class "chart-config-panel"
    :children [[utils/non-gridded-chart-config @data component-id]
               [rc/line :src (rc/at) :size "2px"]
               [utils/option component-id ":name" [:name]]
@@ -143,10 +141,8 @@
 
     (r/as-element
       [rc/v-box
-       :style {:background "rgba(255, 255, 255, 0.8)"
-               :border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :style {:background "rgba(255, 255, 255, 0.8)"}
+       :class "tools-panel"
        :gap "2px"
        :children [[:p.has-text-centered.has-text-weight-bold (str name)]
                   [rc/line :size "1px"]

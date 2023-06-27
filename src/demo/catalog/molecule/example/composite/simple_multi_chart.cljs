@@ -23,9 +23,7 @@
     (fn []
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
                   [rc/button :on-click #(h/handle-change-path data [] []) :label "Empty"]

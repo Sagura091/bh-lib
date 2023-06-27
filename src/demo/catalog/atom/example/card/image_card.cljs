@@ -16,10 +16,11 @@
                                 :margin          :auto}})
 
 
-(def image-style {:width        "200px" :height "200px"
-                  :display      :block
-                  :margin-left  :auto
-                  :margin-right :auto})
+(def image-style {:style {:width "200px"
+                          :height "200px"
+                          :display      :block
+                          :margin-left  :auto
+                          :margin-right :auto}})
 
 
 (defn example []

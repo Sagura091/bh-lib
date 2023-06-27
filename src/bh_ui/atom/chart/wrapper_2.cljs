@@ -47,7 +47,7 @@
         (if (empty? @d)
           [rc/alert-box :src (rc/at)
            :alert-type :info
-           :style {:width "100%" :height "100%"}
+           :class "h-w-100pc"
            :heading "Waiting for data"]
 
           (reduce into [component*] (seq input-params)))))))
@@ -92,7 +92,7 @@
                      :width "100%"
                      :height "90%"
                      :children (if @open?
-                                 [[:div.chart-config-panel
+                                 [[:div.chart-panel
                                    [ui-utils/chart-config
                                     chart-events
                                     [data-panel d]

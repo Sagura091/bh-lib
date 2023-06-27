@@ -31,7 +31,7 @@
     "
     [layout/centered {:extra-classes :width-50}
      [card/card
-      :style (assoc node-style-square :width "300px" :height "500px" :margin :auto)
+      :style node-style-square
       :front [rc/v-box
               :gap "10px"
               :children [[rc/gap :size "20px"]

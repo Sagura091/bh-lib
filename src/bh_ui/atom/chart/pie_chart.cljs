@@ -83,9 +83,7 @@
 (defn config-panel [data component-id]
   [rc/v-box :src (rc/at)
    :gap "10px"
-   :style {:padding          "15px"
-           :border-top       "1px solid #DDD"
-           :background-color "#f7f7f7"}
+   :class "chart-config-panel"
    :children [[utils/non-gridded-chart-config @data component-id]
               [rc/line :src (rc/at) :size "2px"]
               [utils/option component-id ":name" [:name]]

@@ -14,7 +14,7 @@
 (def random-data ex/random-tabular-data)
 (def random-data-meta ex/random-meta-tabular-data)
 
-; TODO: width and height props should be passed in map
+; TODO: style props should be passed in map
 (defn- table* [& {:keys [data max-rows width height cell-style-fn
                          on-click-row-fn row-line-color]}]
 

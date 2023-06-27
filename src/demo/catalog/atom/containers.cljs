@@ -1,12 +1,12 @@
 (ns demo.catalog.atom.containers
-  "demo.catalog and demonstrations of available container components."
+  "Catalog and demonstrations of available container components."
   (:require [demo.catalog.atom.example.container.v-scroll-panel :as v-scroll-panel]
             [demo.catalog.atom.example.container.shy-block :as shy-block]
             [demo.catalog.atom.example.container.flex-panel :as flex-panel]
             [demo.catalog.atom.example.container.navbar :as navbar]))
 
 
-; TODO: do we need this in an RCCST namespace, or can we just grab it from woolybear/demo.catalog?
+; TODO: do we need this in an RCCST namespace, or can we just grab it from woolybear/catalog?
 
 (defn examples
   []

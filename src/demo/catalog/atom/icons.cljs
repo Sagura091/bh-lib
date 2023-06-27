@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.icons
-  "demo.catalog and demonstrations of available icon components."
+  "Catalog and demonstrations of available icon components."
   (:require [demo.catalog.atom.example.icons.simple-image :as simple-image]
             [demo.catalog.atom.example.icons.standard-icon :as standard-icon]
             [demo.catalog.atom.example.icons.colored-icon :as colored-icon]

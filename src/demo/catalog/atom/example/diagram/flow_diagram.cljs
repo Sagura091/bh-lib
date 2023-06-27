@@ -35,11 +35,11 @@
                     :target "300" :targetHandle "config-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
 ; TODO: how to manage :source/*
-(def initialNodes [{:id "100", :type ":source/local" :position {:x 100, :y 100}, :data {:label "lightning" :kind ":source/local"}}
-                   {:id "10", :type ":source/local" :position {:x 100, :y 150}, :data {:label "config" :kind ":source/local"}}
-                   {:id "20", :type ":source/fn" :position {:x 150, :y 150}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
-                   {:id "200", :type ":ui/component" :position {:x 200, :y 120}, :data {:label "line-chart" :kind ":rechart/line"}}
-                   {:id "300", :type ":ui/component" :position {:x 300, :y 200}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
+(def initialNodes [{:id "100", :type ":source/local" :position {:x 150, :y 100}, :data {:label "lightning" :kind ":source/local"}}
+                   {:id "10", :type ":source/local" :position {:x 10, :y 200}, :data {:label "config" :kind ":source/local"}}
+                   {:id "20", :type ":source/fn" :position {:x 150, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
+                   {:id "200", :type ":ui/component" :position {:x 300, :y 100}, :data {:label "line-chart" :kind ":rechart/line"}}
+                   {:id "300", :type ":ui/component" :position {:x 300, :y 150}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
 
 
 (def remote-sources [":source/lightning" ":source/targets" ":source/platforms"])

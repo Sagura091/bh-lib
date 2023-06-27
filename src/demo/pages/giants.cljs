@@ -180,8 +180,8 @@
   [name description & [image]]
   ;(log/info "personality" image)
   [flippable/card
-   :style {:width 270 :height 400}
-   :front [:div {:style flippable/default-style}
+   :style {:style {:width 270 :height 400}}
+   :front [:div flippable/default-style
            [rc/v-box :src (rc/at)
             :gap "10px"
             :align :center
@@ -195,7 +195,7 @@
                                         "imgs/hammer-icon-16x16.png")}]]
                        [rc/gap :size "15px"]
                        [:p.title.is-1.has-text-centered name]]]]
-   :back [:div {:style flippable/default-style}
+   :back [:div flippable/default-style
           [layout/section
            [layout/markdown-block description]]]])
 

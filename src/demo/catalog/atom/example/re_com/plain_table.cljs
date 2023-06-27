@@ -58,10 +58,8 @@
 (defn- show [data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :background "#808080"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :style {:background "#808080"}
+   :class "tools-panel"
    :children [[:p {:style {:color "white"}}
                (str @data)]]])
 
@@ -69,9 +67,7 @@
 (defn- data-tools []
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
               [rc/button :on-click #(reset! data (assoc sample-data :data [])) :label "Empty"]
               [rc/button :on-click #(reset! data sample-data) :label "Default"]

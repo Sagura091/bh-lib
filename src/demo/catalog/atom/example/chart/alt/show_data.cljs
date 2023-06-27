@@ -15,10 +15,8 @@
 
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :background "#808080"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :style {:background "#808080"}
+       :class "tools-panel"
        :children [[:p {:style {:color "white" :overflow :auto
                                :max-height "100px" :min-height "100px"}}
                    (str @d)]]])))
@@ -32,9 +30,7 @@
 
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :background "#808080"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :style {:background "#808080"}
+       :class "tools-panel"
        :children [[:p {:style {:color "white"}}
                    (str @d)]]])))

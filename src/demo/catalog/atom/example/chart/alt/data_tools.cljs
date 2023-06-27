@@ -12,9 +12,7 @@
 (defn meta-tabular-data-ratom-tools [data default-data random-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
               [rc/button :label "Empty" :on-click #(reset! data []) :label "Empty"]
               [rc/button :label "Default" :on-click #(reset! data default-data)]
@@ -47,9 +45,7 @@
     (fn []
       [rc/h-box :src (rc/at)
        :gap "10px"
-       :style {:border     "1px solid" :border-radius "3px"
-               :box-shadow "5px 5px 5px 2px"
-               :margin     "5px" :padding "5px"}
+       :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
                   [rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]
@@ -136,9 +132,7 @@
 (defn dag-data-ratom-tools [data default-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
 
               [rc/button :label "Empty" :on-click #(reset! data [])]
@@ -161,9 +155,7 @@
 (defn dag-data-sub-tools [data default-data]
   [rc/h-box :src (rc/at)
    :gap "10px"
-   :style {:border     "1px solid" :border-radius "3px"
-           :box-shadow "5px 5px 5px 2px"
-           :margin     "5px" :padding "5px"}
+   :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
 
               [rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]

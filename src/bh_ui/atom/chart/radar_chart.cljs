@@ -165,9 +165,7 @@
    :gap "10px"
    :width "100%"
    :height "100%"
-   :style {:padding          "15px"
-           :border-top       "1px solid #DDD"
-           :background-color "#f7f7f7"}
+   :class "chart-config-panel"
    :children [;[utils/non-gridded-chart-config component-id]
               ;[rc/line :src (rc/at) :size "2px"]
               [rc/h-box :src (rc/at)

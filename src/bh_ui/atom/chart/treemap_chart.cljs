@@ -80,9 +80,7 @@
    :gap "10px"
    :width "400px"
    :height "500px"
-   :style {:padding          "15px"
-           :border-top       "1px solid #DDD"
-           :background-color "#f7f7f7"}
+   :class "chart-config-panel"
    :children [[utils/isAnimationActive component-id]
               [rc/line :src (rc/at) :size "2px"]
               [rc/v-box :src (rc/at)

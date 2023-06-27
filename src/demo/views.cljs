@@ -33,7 +33,7 @@
                     :width "90%"
                     :height        "95vh"}
     :title ""
-    :short-name "demo.catalog"
+    :short-name "catalog"
     :description ""
     :children navbar
     :start-panel :app-bar/welcome]

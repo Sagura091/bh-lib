@@ -42,19 +42,19 @@
   callback fn provided by the parent to report its height back to the parent container.
   "
   [type-class & args]
-  (let [[{:keys [extra-classes subscribe-to-classes
+  (let [dom-node (atom nil)
+        [{:keys [extra-classes subscribe-to-classes
                  on-size-change]} _] (adu/extract-args args)
         classes-sub (adu/subscribe-to subscribe-to-classes)
         size-change-handler (fn [comp]
-                              (on-size-change (-> comp
-                                                  (rdom/dom-node)
-                                                  .-offsetHeight)))
+                              (on-size-change (.-offsetHeight @dom-node)))
         render-fn (fn [& args]
                     (let [[_ children] (adu/extract-args args)
                           dynamic-classes @classes-sub]
                       (into [:div {:class (adu/css->str type-class
                                                         extra-classes
-                                                        dynamic-classes)}]
+                                                        dynamic-classes)
+                                   :ref (fn [el] (reset! dom-node el))}]
                             children)))]
     (reagent/create-class
       {:display-name         "flex-top"
@@ -147,7 +147,8 @@
   than one of each.
   "
   [& args]
-  (let [[{:keys [height extra-classes subscribe-to-classes]} _] (adu/extract-args args)
+  (let [dom-node (atom nil)
+        [{:keys [height extra-classes subscribe-to-classes]} _] (adu/extract-args args)
         classes-sub (adu/subscribe-to subscribe-to-classes)
         page-height (adu/subscribe-to [:db/page-height])
         flex-height-adjustment (ratom/atom 0)
@@ -157,9 +158,7 @@
                          (re-frame/dispatch [:db/recalculate-page-height]))
         did-mount-handler (fn [comp]
                             (let [page-height (get-js-page-height)
-                                  comp-height (-> comp
-                                                  (rdom/dom-node)
-                                                  .-offsetHeight)]
+                                  comp-height (.-offsetHeight @dom-node)]
                               (reset! flex-height-adjustment (- page-height comp-height)))
                             (.addEventListener js/window "resize" resize-handler)
                             (re-frame/dispatch [:db/recalculate-page-height]))
@@ -177,7 +176,8 @@
                       [:div {:style {:height height}
                              :class (adu/css->str :wb-flex-panel
                                                   extra-classes
-                                                  dynamic-classes)}
+                                                  dynamic-classes)
+                             :ref (fn [el] (reset! dom-node el))}
                        the-flex-top
                        ^{:key (str "flex-content-" content-height)}
                        (into [flex-content {:height              content-height
