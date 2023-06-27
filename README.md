@@ -1,65 +1,120 @@
 # bh-lib
 
-Black-Hammer library (bh-lib) is a fully standalone cljs, GUI, widget provider. This bh-lib is easy to connect to outside projects to give you a vast verity of all different kinds of cljs widgets and GUIs. In the lib there is a directory called Demo. this is used as a standalone demonstration of all the widgets and GUI's the bh-lib has to offer. So if a developer wants to add a new widget, feature, GUI, they do not have to make an outside project to test it you can run the Demo to show your new lib feature.
+The Black Hammer Library (bh-lib) is a fully standalone UI component library, written 
+in Clojurescript. It makes it easy to use in your own projects, giving you variety 
+of all different kinds of components. 
 
-# for Developers
+Additionally, the repo provides a standalone Demonstration of all the UI components 
+available. This provides 2 benefits:
 
-clone the repo. 
-git clone --recursive https://github.com/Sagura091/bh-lib.git
+1. If you want to use Bh-Lib in your own projects, you can use the Demo to see all the components avaialble
+2. You can use the Demo as a hosting application for developing completely _new_ components.
 
-once you load a project in your supported Clojure IDE of your choice, there will be 2 directories presented to you. 
+## Atomic Design
 
-# bh-ui
-bh-ui is the lib itself and all the GUI's, Widgets all ready written and ready for use. if you are developing, a new widget, or GUI make sure you make a directory in the specific area you are making. this will prevent name space issues later on when you are trying to test. 
+*Introduce Atomic Design and point to the page in the Demo/Catalog for further 
+information*
 
-#demo
+## For Developers
 
-demo is a standalone host/sever the displays all the intractable features, GUI, and widgets that are currently in the bh-lib. 
+### Downloading the Code
+
+To view the existing components or to develop new ones, simply clone the repo
+
+    git clone --recursive https://github.com/Sagura091/bh-lib.git
+
+and load the project in the Clojure IDE of your choice. 
+
+### Using the Demo
+
+The Demo uses [shadow-cljs](https://shadow-cljs.github.io/docs/UsersGuide.html) as 
+it's build and execution tool. Using a Terminal window, run:
+
+    ./run-with-webpack.sh
+
+This will download all the dependencies, compile the demo code, and start the
+demo running. Next, open your browser and navigate to:
+
+    http://localhost:8888
+
+In a few seconds, you should see the Welcome Page.
+
+![welcome-screen.png](docs%2Fimages%2Fwelcome-screen.png)
+
+Have fun exploring the various pages and examples!
 
 
-#How to Launch Demo
+#### Developing bh-lib
 
-In a command prompt or terminal, type "./run-with-webpack.sh" this will npm install all the dependencies, that bh-lib uses to run and render all its GUI's. it will as well compile all of demo, then its compiled results will be outputted to localhost:8888. if you have already have ran the "run-with-webpack script, you can just type "sudo shadow-cljs watch app". this means you now have whats called a hot loader. where you can make changes in the Demo and then it will refresh the page with out you having compile and build again. 
+If you want to add new components to the library, follow the steps for getting the
+repo as shown above, start the Demo, and open your IDE.
 
-
-# Commit and push Tag
-
-Once you  are done with what you want to do with the bh-lib there are specific things you need to do to push into the bh-lib git repo. 
-
-these are the steps:
-# using a command prompt/terminal, 
-
-1) in the top directory of bh-lib type "git status" you should see all your changes. 
-2) generally you don't want to do add everything but in this case you can since most of the files are already in the .gitignore. so next type, " git add ." this will add everything into a commit-able state. press enter
-3) now time to commit. type "commit -m "place your description of what you did here." then press enter
-4) if its time to tag type "git tag vX.x.x". press enter.
-5) type "git pull" this will grab anything that was push recently so you are not behind master.
-6) for Tag push type " git push origin --tag vX.x.x" then press enter. Non-tag type "git push origin"
-7) type "git push" to make sure master is with origin.
+Bh-lib uses the typical Clojurescript/Shadow-cljs workflow, with [hot-reloading](https://shadow-cljs.github.io/docs/UsersGuide.html#devtools)
+and [repl-driven development]()
 
 
-# For devs linking the lib to there project
+## Using *bh-lib* in your own projects
 
-To link the bh-lib to your project you need to get it's sha and past it into your deps.edn or project.clj files. In a terminal, type "git git rev-parse HEAD" this will get the most recent commit sha number. you need to copy that number. in your deps.edn file in :deps add this 
- 
-Bhlib/Bh-Lib                                  {:Git/Url "Https://Github.Com/Sagura091/Bh-Lib"
-                                               :Sha     "Add The Sha You Just Copied"} 
+It is easy to include bh-lib in your project, either with the Clojure CLI using 
+`deps.edn` or Leiningen using `project.clj`. The `deps.edn` approach can work with 
+both numbered releases or git-sha commits, but `project.clj` is limited to using
+only number releases.
+
+### Updating your deps.edn
+
+Visit `https://github.com/Sagura091/bh-lib` and checkout the latest tags. If one 
+of these meets your needs, then add the following to your `deps.edn` file:
+
+```
+{:deps [bh-lib/bh-lib {:git     "https://github.com/Sagura091/bh-lib"
+                       :git/tag [the-tag-from-guthub-as-a-string]
+```
+
+If you prefer to use the most recent commit (or any other commit, really), add:
+
+```
+{:deps [bh-lib/bh-lib {:git     "https://github.com/Sagura091/bh-lib"
+                       :git/sha [the-sha-from-guthub-as-a-string]
+```
+
+> NOTE: you can find the most recent commit at the terminal using 
+> `git rev-parse HEAD` 
                                                
-after that you just need to reload your preferred IDE and the deps.edn file will configure itself and find the lib for you to start developing. 
+Refresh you IDE if needed to enable the change, and restart any external builds
+you use when developing to be sure your executable environment is including the new
+dependency.
+
+### Updating your project.clj
+
+> *Is this really possible?*
 
 
+Visit `https://github.com/Sagura091/bh-lib` and checkout the latest tags. If one
+of these meets your needs, then add the following to your `project.clj` file:
+
+```
+```
 
 
+### Example using a bh-lib UI component
 
+_Put some small example of the code needed to add a button form the library._
 
-# Clojure Linter
+## Additional Tooling
 
-How to run Splint
+### Splint
 
-From root directory:  clojure -M:splint [path]
+We're trying [splint](https://github.com/NoahTheDuke/splint) as a post-processing 
+linter for possible use in a [CI/CD](https://resources.github.com/ci-cd/) chain.
 
-Ex:  clojure -M:splint src/bh_ui
+From the project's root directory run: 
 
+    clojure -M:splint [path]
 
+For example, to lint just the UI component library, run:
 
+    clojure -M:splint src/bh_ui
 
+To lint everything, library and demo:
+
+    clojure -M:splint .

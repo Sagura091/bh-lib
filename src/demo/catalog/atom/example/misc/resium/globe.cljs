@@ -5,4 +5,4 @@
 (defn example []
   (acu/demo "Resium Globe"
     "A 3D globe based on [resium](https://github.com/reearth/resium)."
-    [globe/globe :layers globe/sample-data]))
+    [globe/globe :shapes globe/sample-data]))
