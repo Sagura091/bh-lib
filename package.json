@@ -41,7 +41,7 @@
 		"react-split-pane": "0.1.92",
 		"react-table": "^7.8.0",
 		"reactflow": "11.7.3",
-		"recharts": "2.7.1",
+		"recharts": "2.7.2",
 		"renovate": "^35.135.0",
 		"resium": "1.16.1",
 		"vega": "5.25.0",
