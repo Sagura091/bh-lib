@@ -127,7 +127,7 @@
                     (make-params configuration node :inputs container-id)
                     (make-params configuration node :outputs container-id))]
 
-    (log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
+    ;(log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
 
     (actual-fn params)))
 

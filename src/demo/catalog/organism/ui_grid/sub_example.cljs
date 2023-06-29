@@ -105,7 +105,7 @@
 
 
 (defn- ui-grid-container [& {:keys [widgets layout container-id] :as params}]
-  (log/info "ui-grid-container" params)
+  ;(log/info "ui-grid-container" params)
 
   (let [id (r/atom nil)]
 

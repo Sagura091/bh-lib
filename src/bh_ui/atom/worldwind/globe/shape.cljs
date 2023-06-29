@@ -47,7 +47,7 @@
                                              fill-color outline-color
                                              width radius z]}]
 
-  (log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
+  ;(log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
 
   (let [attributes (attributes/shape-attributes
                      {:fill-color    fill-color

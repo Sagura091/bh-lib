@@ -56,7 +56,7 @@
 
 
 (defn- meta-tabular-config-row-ratom-tools [config-data default-config-data data component-id]
-  (log/info "meta-tabular" component-id)
+  ;(log/info "meta-tabular" component-id)
   [rc/h-box :src (rc/at)
    :gap "10px"
    :style {:border     "1px solid" :border-radius "3px"

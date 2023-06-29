@@ -8,7 +8,7 @@
 (rf/reg-event-db
   ::fully-opened-socket-start
   (fn-traced [db [_ id]]
-             (log/info "::sub-handler/fully-opened-websocket-start" id)
+             ;(log/info "::sub-handler/fully-opened-websocket-start" id)
              (assoc db :pub-sub-started? true)))
 
 (defmulti event-msg-handler :id)

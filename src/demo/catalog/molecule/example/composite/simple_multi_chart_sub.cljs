@@ -19,7 +19,7 @@
   (let [old-data (ui-utils/subscribe-local data [:data])
         old-meta (ui-utils/subscribe-local data [])]
 
-    (log/info "data-tools" data "//" @old-data "//" @old-meta)
+    ;(log/info "data-tools" data "//" @old-data "//" @old-meta)
 
     (fn []
       [rc/h-box :src (rc/at)

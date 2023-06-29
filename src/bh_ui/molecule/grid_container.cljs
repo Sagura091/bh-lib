@@ -96,15 +96,15 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout              (locals/subscribe-local component-id [:layout])
-        component-lookup    (into {}
-                              (sig/process-components
-                                configuration :ui/component
-                                @(re-frame/subscribe [:meta-data-registry]) component-id))
+  (let [layout           (locals/subscribe-local component-id [:layout])
+        component-lookup (into {}
+                           (sig/process-components
+                             configuration :ui/component
+                             @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; 1. build UI components (with subscription/event signals against the blackboard or remotes)
-        composed-ui         (map wrap-component component-lookup)
-        open?               (r/atom false)]
+        composed-ui      (map wrap-component component-lookup)
+        open?            (r/atom false)]
 
     (fn []
       ;(log/info "component-panel INNER" component-id
@@ -128,21 +128,24 @@
                     :layoutFn #(on-layout-change component-id %1 %2)
                     :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
 
+(def last-data (atom nil))
 
 (defn component [& {:keys [data component-id container-id resizable tools] :as params}]
+
+  (reset! last-data @data)
 
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
-  (let [id            (r/atom nil)
-        configuration @data
-        graph         (apply lg/digraph (ui/compute-edges configuration))
-        comp-or-dag?  (r/atom :component)
-        partial-config   (assoc configuration
-                           :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                           :nodes (get-in configuration [:mol/components keys set])
-                           :edges (into [] (lg/edges graph)))
-        full-config (assoc partial-config :graph graph)]
+  (let [id             (r/atom nil)
+        configuration  @data
+        graph          (apply lg/digraph (ui/compute-edges configuration))
+        comp-or-dag?   (r/atom :component)
+        partial-config (assoc configuration
+                         :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                         :nodes (-> configuration :mol/components keys set)
+                         :edges (into [] (lg/edges graph)))
+        full-config    (assoc partial-config :graph graph)]
 
     (fn []
       (when (nil? @id)
@@ -153,7 +156,7 @@
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
-                     {:id :definition :tooltip "Text view"  :label [:i {:class "zmdi zmdi-format-subject"}]}]]
+                     {:id :definition :tooltip "Text view" :label [:i {:class "zmdi zmdi-format-subject"}]}]]
 
         [:div.box.widget-content-container
          [rc/v-box :src (rc/at)
@@ -183,6 +186,25 @@
                                  :alert-type :warning
                                  :body "There is a problem with this component."])]]]))))
 
+
+; make sure the new DSL produces nodes and edges
+(comment
+  (do
+    (def id (r/atom nil))
+    (def configuration @last-data)
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def partial-config (assoc configuration
+                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                          :nodes (get-in configuration [:mol/components keys set])
+                          :edges (into [] (lg/edges graph))))
+    (def full-config (assoc partial-config :graph graph)))
+
+  (get-in configuration [:mol/components keys set])
+  (-> configuration :mol/components keys set)
+
+
+  ())
 
 
 

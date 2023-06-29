@@ -41,7 +41,7 @@
 
 
 (defn- handle [id t style position isConnectable]
-  (log/info "handle" id t style)
+  ;(log/info "handle" id t style)
   [:> Handle {:id            id
               :type          t
               :position      position
@@ -61,7 +61,7 @@
 
 
 (defn node-data [node-type node-id node-kind position]
-  (log/info "node-data" node-type node-id node-kind)
+  ;(log/info "node-data" node-type node-id node-kind)
 
   (let [handles (-> @(rf/subscribe [:meta-data-registry]) node-kind :handles)]
     {:id       node-id
@@ -90,8 +90,8 @@
         handles             (look-up-ui-component @kind-of-element)
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    (log/info "custom-node" text node-type @kind-of-element (type node-type)
-      "///" handles)
+    ;(log/info "custom-node" text node-type @kind-of-element (type node-type)
+    ;  "///" handles)
       ;"///" data
       ;"///" inputs
       ;"///" outputs
