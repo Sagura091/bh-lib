@@ -60,23 +60,73 @@
                           type))
 
 
+(def last-params (atom nil))
+(def last-hiccup (atom nil))
+
 ; :ui/component
-(defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id]}]
+(defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id] :as params}]
 
-  (let [ui-type (get-in configuration [:mol/components node :atm/kind])
-        bh-ui   (if (keyword? ui-type)
-                  (->> registry ui-type :component)
-                  ui-type)]
+  (reset! last-params params)
 
-    ;(log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui)
+  (let [ui-type   (get-in configuration [:mol/components node :atm/kind])
+        bh-ui     (if (keyword? ui-type)
+                    (->> registry ui-type :component)
+                    ui-type)
+        children? (->> registry ui-type :children)
+        children  (-> configuration :mol/components (get node) :children)
 
-    {node
-     ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
-     (reduce into [(or bh-ui error-ui) :component-id component-id :container-id container-id]
-       (seq
-         (merge
-           (make-params configuration node :inputs container-id)
-           (make-params configuration node :outputs container-id))))}))
+        ;(log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui)
+
+        ret       {node
+                   ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
+                   (if (= children? :enumerated)
+                     ; TODO: the children are inserted into the hiccup separate form the params
+                     (into [containers/v-scroll-pane {:style {:height "500px"
+                                                              :width "100%"}}]
+                       (map (fn [c] [rc/box
+                                     :height "300px"
+                                     :width "300px"
+                                     :child c]) children))
+
+                     ; TODO: the children are part of the params
+                     (reduce into [(or bh-ui error-ui) :component-id component-id :container-id container-id]
+                       (seq
+                         (merge
+                           (make-params configuration node :inputs container-id)
+                           (make-params configuration node :outputs container-id)))))}]
+
+    (reset! last-hiccup ret)
+    ret))
+
+
+
+(comment
+  @last-params
+  @last-hiccup
+
+  (do
+    (def node (:node @last-params))
+    (def registry (:registry @last-params))
+    (def configuration (:configuration @last-params))
+    (def component-id (:component-id @last-params))
+    (def container-id (:container-id @last-params))
+
+    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
+    (def children? (->> registry ui-type :children))
+    (def children (-> configuration :mol/components (get node) :children))
+    (def bh-ui (if (keyword? ui-type)
+                 (->> registry ui-type :component)
+                 ui-type)))
+
+  (-> configuration :mol/components (get node) :children)
+
+
+  ; from grid-component
+
+
+  ())
+
+
 
 
 ; :source/local

@@ -22,7 +22,7 @@
   [children subcription]
   ;(log/info "nav-bar")
   (->> children
-    (map (fn [[id label]]
+    (map (fn [[id label _]]
            [buttons/tab-button {:panel-id id} label]))
     (into [tab-panel/tab-bar {:extra-classes               :is-fluid
                               :subscribe-to-component-data subcription}])))

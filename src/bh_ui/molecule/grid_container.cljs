@@ -66,9 +66,9 @@
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
 
-    ;(log/info "on-layout-change" new-layout*
-    ;  "//" all-layouts*
-    ;  "//" (keys all-layouts*))
+    (log/info "on-layout-change" new-layout*
+      "//" all-layouts*
+      "//" (keys all-layouts*))
 
     (when (and
             (not (empty? new-layout*))
@@ -76,7 +76,7 @@
             (not= (:i fst) "null"))
       (let [cooked (map #(zipmap '(:i :x :y :w :h :static) %)
                      (map (juxt :i :x :y :w :h :static) new-layout*))]
-        ;(log/info "on-layout-change (cooked)" cooked)
+        (log/info "on-layout-change (cooked)" cooked)
         (locals/dispatch-local component-id [:layout] cooked)))))
 
 
@@ -84,7 +84,11 @@
   (map #(assoc % :static (-> % :static not)) orig-value))
 
 
+(def last-params (atom nil))
+
 (defn- component-panel [& {:keys [configuration component-id resizable] :as params}]
+
+  (reset! last-params params)
   ;(log/info "component-panel (params)" params)
 
   ;(log/info "component-panel" component-id
@@ -103,12 +107,15 @@
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; 1. build UI components (with subscription/event signals against the blackboard or remotes)
-        composed-ui      (map wrap-component component-lookup)
+        visual-layout    (->> configuration
+                           :mol/grid-layout
+                           (map (fn [{:keys [i]}] i)))
+        composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
         open?            (r/atom false)]
 
     (fn []
-      ;(log/info "component-panel INNER" component-id
-      ;  "//" @layout
+      (log/info "component-panel INNER" component-id
+        "//" @layout)
       ;  "//" composed-ui)
 
       ; 5. return the composed component layout!
@@ -128,6 +135,47 @@
                     :layoutFn #(on-layout-change component-id %1 %2)
                     :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
 
+
+(comment
+  @last-params
+
+  (do
+    (def component-id (:component-id @last-params))
+    (def container-id (:container-id @last-params))
+    (def id (r/atom component-id))
+    (def configuration (:configuration @last-params))
+    (def layout (bh-ui.utils.locals/subscribe-local component-id [:layout]))
+    (def component-lookup (into {}
+                            (sig/process-components
+                              configuration :ui/component
+                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
+    (def composed-ui (map wrap-component component-lookup))
+
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def partial-config (assoc configuration
+                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                          :nodes (-> configuration :mol/components keys set)
+                          :edges (into [] (lg/edges graph))))
+    (def full-config (assoc partial-config
+                       :graph graph
+                       :container container-id))
+
+
+    (def visual-layout
+      (->> configuration
+        :mol/grid-layout
+        (map (fn [{:keys [i]}] i)))))
+
+  (select-keys component-lookup visual-layout)
+
+
+
+
+  ())
+
+
+
 (def last-data (atom nil))
 
 (defn component [& {:keys [data component-id container-id resizable tools] :as params}]
@@ -145,7 +193,9 @@
                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
                          :nodes (-> configuration :mol/components keys set)
                          :edges (into [] (lg/edges graph)))
-        full-config    (assoc partial-config :graph graph)]
+        full-config    (assoc partial-config
+                         :graph graph
+                         :container container-id)]
 
     (fn []
       (when (nil? @id)

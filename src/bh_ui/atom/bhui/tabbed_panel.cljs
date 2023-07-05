@@ -11,6 +11,7 @@
 
 (def last-short-name (atom nil))
 (def last-start-panel (atom nil))
+(def last-children (atom nil))
 
 (defn tabbed-panel
   "makes a large panel containing tabs for each item. Selecting a tab will make tha corresponding
@@ -21,6 +22,7 @@
 
   (reset! last-short-name short-name)
   (reset! last-start-panel start-panel)
+  (reset! last-children children)
 
   (tab-utils/init-tabbed-panel short-name start-panel)
 
@@ -39,8 +41,8 @@
                             :subscribe-to-selected-tab [(keyword short-name "value")]}]
 
       (doall
-        (map (fn [[tag _ page]]
-               [tab-panel/sub-panel {:panel-id tag} page])
+        (map (fn [[id _ page]]
+               [tab-panel/sub-panel {:panel-id id} page])
           children)))]])
 
 
@@ -52,6 +54,15 @@
 
 
   (keyword "" "value")
+
+  (def ch @last-children)
+
+  (map (fn [[id _ page]]
+         [tab-panel/sub-panel {:panel-id id} page])
+    ch)
+
+  (let [[id label page] (first ch)]
+    {:id id :label label :page page})
 
   ())
 

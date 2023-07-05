@@ -134,6 +134,28 @@
          (into [containers/v-scroll-pane {:height "100%"}]
            children)]))))
 
+
+
+
+(comment
+  (into [containers/v-scroll-pane {:height "100%"}]
+    [[:p "one"] [:p "two"]])
+
+  [:div {:height "100%"}
+   [:p "one"] [:p "two"]]
+
+
+
+  {:mol/components {"area-chart" {:atm/role :ui/component :atm/kind :rechart/area}
+                    "bar-chart" {:atm/role :ui/component :atm/kind :rechart/bar}
+                    "aoi-table" {:atm/role :ui/component :atm/kind :bh/table}
+                    "carousel" {:atm/role :ui/component :atm/kind :bh/carousel :children ["area-chart" "bar-chart" "aoi-table"]}}}
+
+
+
+
+  ())
+
 (s/fdef sub-panel
   :args (s/cat :opts (s/? :tab-sub-panel/options)
           :children (s/+ any?))

@@ -202,3 +202,10 @@
   :args (s/cat :opts (s/? :spoiler/options)
                :children (s/+ any?))
   :ret vector?)
+
+
+(def meta-data {:bhui/v-scroll-pane {:component v-scroll-pane
+                                     :children :enumerated}})
+(re-frame.core/dispatch-sync [:register-meta meta-data])
+
+
