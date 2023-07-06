@@ -1,7 +1,7 @@
 (ns bh-ui.atom.diagram.diagram.composite-dag-support
   (:require [bh-ui.molecule.composite.util.ui :as ui]
             [taoensso.timbre :as log]
-            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dn]
             ["reactflow" :refer (MarkerType)]))
 
 
@@ -34,7 +34,7 @@
                            ":source/remote" "#FFA500"
                            ":source/local"  "#0000ff"
                            ":source/fn"     "#FFC0CB"})
-(def custom-node-types {":ui/component" (partial cn/custom-node :ui/component)})
+(def custom-node-types {":ui/component" (partial dn/custom-node :ui/component)})
 
 
 (def default-node-types {":ui/component"  (partial bh-ui.molecule.composite.util.ui/custom-node :ui/component)})

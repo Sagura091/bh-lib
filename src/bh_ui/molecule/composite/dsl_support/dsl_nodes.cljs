@@ -1,4 +1,4 @@
-(ns demo.catalog.atom.example.diagram.node-types.custom-node
+(ns bh-ui.molecule.composite.dsl-support.dsl-nodes
   (:require [reagent.core :as r]
             [re-frame.core :as rf]
             ["reactflow" :refer (Handle Position NodeToolbar NodeResizer)]
@@ -7,15 +7,16 @@
             [re-com.core :as rc]
             [bh-ui.atom.re-com.label :as label]))
 
-
 (log/info "demo.catalog.atom.example.diagram.node-types.custom-node")
 
 
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
+
 (def node-style {:ui/component  {:background :green :color :white}
                  :source/remote {:background :orange :color :black}
                  :source/local  {:background :blue :color :white}
                  :source/fn     {:background :pink :color :black}})
+
 (def default-node-style {:minHeight    "20px"
                          :minWidth     "100px"
                          :width        "100%"
@@ -33,9 +34,9 @@
   (if (clojure.string/index-of (subs s 1) "/")
     (keyword
       (subs (subs s 1)
-        0 (clojure.string/index-of (subs s 1) "/"))
+            0 (clojure.string/index-of (subs s 1) "/"))
       (subs (subs s 1)
-        (inc (clojure.string/index-of (subs s 1) "/"))))
+            (inc (clojure.string/index-of (subs s 1) "/"))))
     (keyword
       (subs s 1))))
 
@@ -56,8 +57,8 @@
 
 (defn look-up-ui-component [node-type]
   (-> @(rf/subscribe [:meta-data-registry])
-    (get (string->keyword node-type))
-    :handles))
+      (get (string->keyword node-type))
+      :handles))
 
 
 (defn node-data [node-type node-id node-kind position]
@@ -92,10 +93,10 @@
 
     ;(log/info "custom-node" text node-type @kind-of-element (type node-type)
     ;  "///" handles)
-      ;"///" data
-      ;"///" inputs
-      ;"///" outputs
-      ;"//" extras?)
+    ;"///" data
+    ;"///" inputs
+    ;"///" outputs
+    ;"//" extras?)
 
     (r/as-element
 
@@ -113,3 +114,13 @@
                     :value @kind-of-element]]]
 
        (map #(make-handle "source" %) (:outputs handles))])))
+
+
+(def meta-data {:source/remote {:ports   {:data :port/source}
+                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
+                :source/local  {:ports   {:data :port/source}
+                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
+                :source/fn     {:ports   {:data :port/source-sink}
+                                :handles {:inputs  [{:label "data-in" :style {:background "#999"} :position (.-Left Position)}]
+                                          :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
+(rf/dispatch-sync [:register-meta meta-data])

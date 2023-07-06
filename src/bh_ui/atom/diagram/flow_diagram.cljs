@@ -13,7 +13,7 @@
                                   useEdgesState
                                   useCallBack Handle Position)]
     ; TODO: migrate handle-style into a better namespace
-            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dn]
             [bh-ui.utils.helpers :as h]))
 
 
@@ -99,7 +99,7 @@
                       (let [[source-port target-port] ports]
                         ;(log/info "input-handle" label target-port)
                         [:> Handle {:id    target-port :type "target" :position position
-                                    :style (merge cn/handle-style {:left (+ 20 (* 10 idx))})}])))
+                                    :style (merge dn/handle-style {:left (+ 20 (* 10 idx))})}])))
        (into [:<>])))])
 
 
@@ -115,7 +115,7 @@
                       (let [[source-port target-port] ports]
                         ;(log/info "output-handle" label source-port)
                         [:> Handle {:id    source-port :type "source" :position position
-                                    :style (merge cn/handle-style {:right (+ 20 (* 10 idx))})}])))
+                                    :style (merge dn/handle-style {:right (+ 20 (* 10 idx))})}])))
        (into [:<>])))])
 
 
