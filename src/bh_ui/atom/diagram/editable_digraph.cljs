@@ -1,7 +1,7 @@
 (ns bh-ui.atom.diagram.editable-digraph
   (:require [taoensso.timbre :as log]
             [clojure.set :as set]
-            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dn]
             [bh-ui.atom.diagram.diagram.composite-dag-support :as s]
             ["reactflow$default" :as ReactFlow]
             ["reactflow" :refer (ReactFlowProvider MiniMap Controls
@@ -200,8 +200,8 @@
 
   ^{:key label}
   [:div.draggable.draggable-node
-   {:style       {:background      (-> cn/node-style color :background)
-                  :color           (-> cn/node-style color :color)}
+   {:style       {:background      (-> dn/node-style color :background)
+                  :color           (-> dn/node-style color :color)}
 
     :onDragStart #(on-drag-start node-type %)
     :draggable   true} label])

@@ -1,7 +1,7 @@
 (ns demo.catalog.atom.example.diagram.flow-diagram
   (:require [bh-ui.atom.diagram.flow-diagram :as flow]
             ["reactflow" :refer (Position)]
-            [demo.catalog.atom.example.diagram.node-types.custom-node :as cn]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dn]
             [demo.catalog.atom.utils :as example]
             [bh-ui.utils :as utils]
             [reagent.core :as r]
@@ -9,14 +9,14 @@
             [taoensso.timbre :as log]))
 
 
-(def node-types {":ui/component"  (partial cn/custom-node :ui/component)
-                 ":source/remote" (partial cn/custom-node :source/remote)
-                 ":source/local"  (partial cn/custom-node :source/local)
-                 ":source/fn"     (partial cn/custom-node :source/fn)})
-(def bootstrap-node-data {":ui/component"  (partial cn/node-data :ui/component)
-                          ":source/remote" (partial cn/node-data :source/remote)
-                          ":source/local"  (partial cn/node-data :source/local)
-                          ":source/fn"     (partial cn/node-data :source/fn)})
+(def node-types {":ui/component"  (partial dn/custom-node :ui/component)
+                 ":source/remote" (partial dn/custom-node :source/remote)
+                 ":source/local"  (partial dn/custom-node :source/local)
+                 ":source/fn"     (partial dn/custom-node :source/fn)})
+(def bootstrap-node-data {":ui/component"  (partial dn/node-data :ui/component)
+                          ":source/remote" (partial dn/node-data :source/remote)
+                          ":source/local"  (partial dn/node-data :source/local)
+                          ":source/fn"     (partial dn/node-data :source/fn)})
 
 (def initialEdges [{:id     "lightning->line-chart",
                     :source "100", :sourceHandle "data-out"
@@ -55,17 +55,6 @@
   (condp = node-type
     ":ui/component" ":ui/table"
     node-type))
-
-; TODO: migrate to the correct namespace within bh-ui...
-(def meta-data {:source/remote {:ports   {:data :port/source}
-                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                :source/local  {:ports   {:data :port/source}
-                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                :source/fn     {:ports   {:data :port/source-sink}
-                                :handles {:inputs  [{:label "data-in" :style {:background "#999"} :position (.-Left Position)}]
-                                          :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
-(rf/dispatch-sync [:register-meta meta-data])
-
 
 
 (defn- dsl->react-flow []
