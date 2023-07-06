@@ -8,6 +8,8 @@
             [woolybear.ad.layout :as layout]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
+            [loom.graph :as lg]
+            [loom.alg :as lalg]
             [taoensso.timbre :as log]
             ["dagre" :as dagre]
             ["graphlib" :as graphlib]
@@ -64,7 +66,7 @@
 (def last-hiccup (atom nil))
 
 ; :ui/component
-(defmethod component->ui :ui/component [{:keys [node registry configuration component-id container-id] :as params}]
+(defmethod component->ui :ui/component [{:keys [node atm-set registry configuration component-id container-id] :as params}]
 
   (reset! last-params params)
 
@@ -72,24 +74,22 @@
         bh-ui     (if (keyword? ui-type)
                     (->> registry ui-type :component)
                     ui-type)
+        styl      (get-in configuration [:mol/components node :atm/style])
         children? (->> registry ui-type :children)
-        children  (-> configuration :mol/components (get node) :children)
+        children  (-> configuration :mol/components (get node) :atm/children)
 
-        ;(log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui)
+        _         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//" children? "//" children "//" @atm-set)
 
         ret       {node
                    ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
                    (if (= children? :enumerated)
-                     ; TODO: the children are inserted into the hiccup separate form the params
-                     (into [containers/v-scroll-pane {:style {:height "500px"
-                                                              :width "100%"}}]
-                       (map (fn [c] [rc/box
-                                     :height "300px"
-                                     :width "300px"
-                                     :child c]) children))
+                     ; TODO: the children are inserted into the hiccup separate from the params
+                     (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
+                       (map (fn [c] (get @atm-set c)) children))
 
                      ; TODO: the children are part of the params
-                     (reduce into [(or bh-ui error-ui) :component-id component-id :container-id container-id]
+                     (reduce into [(or bh-ui error-ui)
+                                   :component-id component-id :container-id container-id]
                        (seq
                          (merge
                            (make-params configuration node :inputs container-id)
@@ -97,36 +97,6 @@
 
     (reset! last-hiccup ret)
     ret))
-
-
-
-(comment
-  @last-params
-  @last-hiccup
-
-  (do
-    (def node (:node @last-params))
-    (def registry (:registry @last-params))
-    (def configuration (:configuration @last-params))
-    (def component-id (:component-id @last-params))
-    (def container-id (:container-id @last-params))
-
-    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
-    (def children? (->> registry ui-type :children))
-    (def children (-> configuration :mol/components (get node) :children))
-    (def bh-ui (if (keyword? ui-type)
-                 (->> registry ui-type :component)
-                 ui-type)))
-
-  (-> configuration :mol/components (get node) :children)
-
-
-  ; from grid-component
-
-
-  ())
-
-
 
 
 ; :source/local
@@ -198,3 +168,59 @@
                              :component-id  (ui-utils/path->keyword container-id node)
                              :container-id  container-id}))))))
 
+(defn process-components-stateful [configuration node-type registry container-id]
+  (let [atm-set       (atom {})
+        cfg           (->> configuration
+                        :mol/components
+                        (filter (fn [[_ meta-data]]
+                                  (= node-type (:atm/role meta-data))))
+                        (into {}))
+        edges         (mapcat (fn [[name {:keys [atm/children]}]]
+                                (when children
+                                  (map (fn [c] [name c]) children)))
+                        cfg)
+        g             (-> (lg/digraph)
+                        (#(apply lg/add-nodes % (keys cfg)))
+                        (#(apply lg/add-edges % edges))
+                        (lalg/topsort)
+                        reverse)
+        sorted-config (map (fn [id]
+                             (-> configuration
+                               :mol/components
+                               (get id)
+                               ((fn [x] [id x]))))
+                        g)]
+    (doall
+      (map (fn [[node meta-data]]
+             (let [atm
+                   (bh-ui.molecule.composite.util.signals/component->ui
+                     {:node          node
+                      :atm-set       atm-set
+                      :type          (:atm/role meta-data)
+                      :meta-data     meta-data
+                      :configuration configuration
+                      :registry      registry
+                      :component-id  (ui-utils/path->keyword container-id node)
+                      :container-id  container-id})]
+               ; (log/info "process-components-stateful" atm "//" @atm-set)
+               (swap! atm-set merge atm)
+               atm))
+        sorted-config))))
+
+
+(comment
+  (merge {} {:one "one"})
+  (merge {:one "one"} {:two "two"})
+
+
+  {"v-scroll" ["#object[woolybear$ad$containers$v_scroll_pane]"
+               {:style {:height "500px", :width "700px"}}
+               ["#object[bh_ui$atom$chart$bar_chart$component]"
+                :component-id :v-scroll-with-children.molecule.bar-chart
+                :container-id :v-scroll-with-children.molecule
+                :data [:v-scroll-with-children.molecule.blackboard.data]]
+               ["#object[bh_ui$atom$chart$line_chart$component]"
+                :component-id :v-scroll-with-children.molecule.line-chart
+                :container-id :v-scroll-with-children.molecule
+                :data [:v-scroll-with-children.molecule.blackboard.data]]]}
+  ())

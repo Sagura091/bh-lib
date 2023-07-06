@@ -8,6 +8,7 @@
             [bh-ui.utils.locals :as locals]
             [bh-ui.atom.re-com.configure-toggle :as ct]
             [loom.graph :as lg]
+            [loom.alg :as lalg]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -101,8 +102,13 @@
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
   (let [layout           (locals/subscribe-local component-id [:layout])
+        ; TODO: we need to do 2 passes on the data:
+        ;   1) build all the "children" atoms,
+        ;   2) attach the children to the "parent" atoms
+        ;  OR, we should organize the atoms into their own tree, where children at the leaves and
+        ;   the parents are the roots or branches
         component-lookup (into {}
-                           (sig/process-components
+                           (sig/process-components-stateful
                              configuration :ui/component
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
@@ -136,44 +142,272 @@
                     :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
 
 
+; figure out how to use Loom to organize the atoms, so we can build and wire together the nodes
 (comment
-  @last-params
+  ; either do 2 passes on the data:
+  ;   1) build all the "children" atoms,
+  ;   2) attach the children to the "parent" atoms
 
+  ;  OR
+  ;   organize the atoms into their own tree, where children at the leaves and
+  ;   the parents are the roots or branches
+
+  ; stuartsierra.component uses a topology sort to find a good ordering, but assumes STATEFUL
+  ; component initialization; the current process does NOT
+
+  ; the atoms are "nodes", any :mol/children vectors are edges
+
+  (-> (lg/digraph)
+    (lg/add-nodes "line" "bar" "v-scroll")
+    (lg/add-edges ["v-scroll" "line"] ["v-scroll" "bar"])
+    (lalg/topsort)                                          ; roots to leaves
+    reverse)                                                ; leaves to roots
+
+
+  ; what if we have 2 "roots"
+  (-> (lg/digraph)
+    (lg/add-nodes "line" "bar" "v-scroll-1" "v-scroll-2" "table-1" "table-2")
+    (lg/add-edges
+      ["v-scroll-1" "line"] ["v-scroll-1" "bar"]
+      ["v-scroll-2" "table-1"] ["v-scroll-2" "table-2"])
+    (lalg/topsort)
+    reverse)
+
+  ; what if we have a "parent" inside a "parent"
+  (-> (lg/digraph)
+    (lg/add-nodes "line" "bar" "v-scroll-1" "v-scroll-2")
+    (lg/add-edges
+      ["v-scroll-1" "line"] ["v-scroll-1" "bar"]
+      ["v-scroll-2" "v-scroll-1"])
+    (lalg/topsort)
+    reverse)
+
+  ; what if we have no edges?
+  (-> (lg/digraph)
+    (lg/add-nodes "line" "bar" "area" "globe" "table-1" "table-2")
+    (lalg/topsort)
+    reverse)
+
+
+  ; 2) build the graph from "real" MolDSL
   (do
-    (def component-id (:component-id @last-params))
-    (def container-id (:container-id @last-params))
-    (def id (r/atom component-id))
-    (def configuration (:configuration @last-params))
-    (def layout (bh-ui.utils.locals/subscribe-local component-id [:layout]))
-    (def component-lookup (into {}
-                            (sig/process-components
-                              configuration :ui/component
-                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
-    (def composed-ui (map wrap-component component-lookup))
+    (def atms {"v-scroll" {:atm/children ["line" "bar"]}
+               "bar"      {}
+               "line"     {}})
+    (def nodes (keys atms))
+    (def edges (mapcat (fn [[name {:keys [atm/children]}]]
+                         (when children
+                           (map (fn [c]
+                                  [name c])
+                             children)))
+                 atms)))
 
-    (def graph (apply lg/digraph (ui/compute-edges configuration)))
-    (def comp-or-dag? (r/atom :component))
-    (def partial-config (assoc configuration
-                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                          :nodes (-> configuration :mol/components keys set)
-                          :edges (into [] (lg/edges graph))))
-    (def full-config (assoc partial-config
-                       :graph graph
-                       :container container-id))
+  (-> (lg/digraph)
+    (#(apply lg/add-nodes % nodes))
+    (#(apply lg/add-edges % edges))
+    (lalg/topsort)
+    reverse)
 
 
-    (def visual-layout
-      (->> configuration
-        :mol/grid-layout
-        (map (fn [{:keys [i]}] i)))))
+  ; okay, so we could just process these atoms in this new ordering and the independent
+  ; atoms will be initialized before the dependent atoms, but the question remains:
+  ;
+  ; where do the parents find the initialized children?
+  ;
+  ; we currently map (sig/component->ui ...) over all the :ui/component(s), and map is
+  ; NOT stateful, i.e., later elements don't have access to the results of earlier elements
 
-  (select-keys component-lookup visual-layout)
 
+  ; two options:
+  ;   1) make the initialization function (sig/component->ui) stateful
+  ;
+  ;   2) back to doing 2 passes; first for the children, then for the parents
 
 
 
   ())
 
+
+; 1) make the initialization function (sig/component->ui) stateful
+(comment
+  (do
+    (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
+                                                     :atm/children ["line" "bar"]}
+                                         "data"     {:atm/role :source/local :atm/kind :source/local}
+                                         "line"     {:atm/role :ui/component :atm/kind :rechart/line}
+                                         "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}})
+    (def node-type :ui/component)
+    (def registry @(re-frame/subscribe [:meta-data-registry]))
+    (def container-id "test-mol-dsl")
+    (def atm-set (atom {})))
+
+  (->> configuration
+    :mol/components
+    (filter (fn [[_ meta-data]]
+              (= node-type (:atm/role meta-data)))))
+
+
+  ; from sig/process-components
+  (->> configuration
+    :mol/components
+    (filter (fn [[_ meta-data]]
+              (= node-type (:atm/role meta-data))))
+    (map (fn [[node meta-data]]
+           (bh-ui.molecule.composite.util.signals/component->ui
+             {:node          node
+              :type          (:atm/role meta-data)
+              :meta-data     meta-data
+              :configuration configuration
+              :registry      registry
+              :component-id  (ui-utils/path->keyword container-id node)
+              :container-id  container-id}))))
+
+
+
+  ; this puts each "ui atom" into a "registry atom" (stateful) so we can pass the
+  ; registry into the component->ui call
+  (let []
+    (->> configuration
+      :mol/components
+      (filter (fn [[_ meta-data]]
+                (= node-type (:atm/role meta-data))))
+      (map (fn [[node meta-data]]
+             (let [atm (bh-ui.molecule.composite.util.signals/component->ui
+                         {:node          node
+                          :atm-set       atm-set
+                          :type          (:atm/role meta-data)
+                          :meta-data     meta-data
+                          :configuration configuration
+                          :registry      registry
+                          :component-id  (ui-utils/path->keyword container-id node)
+                          :container-id  container-id})]
+               (swap! atm-set conj atm)
+               atm)))))
+
+
+  ; now, to get the "ui atoms" into the topology order to feed into the map
+  (do
+    (def node-type :ui/component)
+    (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
+                                                     :atm/children ["line" "bar"]}
+                                         "data"     {:atm/role :source/local :atm/kind :source/local}
+                                         "line"     {:atm/role :ui/component :atm/kind :rechart/line}
+                                         "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}})
+    (def cfg (->> configuration
+               :mol/components
+               (filter (fn [[_ meta-data]]
+                         (= node-type (:atm/role meta-data))))
+               (into {})))
+    (def nodes (keys cfg))
+    (def edges (mapcat (fn [[name {:keys [atm/children]}]]
+                         (when children
+                           (map (fn [c]
+                                  [name c])
+                             children)))
+                 cfg))
+    (def g (-> (lg/digraph)
+             (#(apply lg/add-nodes % (keys cfg)))
+             (#(apply lg/add-edges % edges))
+             (lalg/topsort)
+             reverse))
+
+    (def sorted-config (map (fn [id]
+                              (-> configuration
+                                :mol/components
+                                (get id)
+                                ((fn [x] [id x]))))
+                         g)))
+
+
+  (map (fn [[node meta-data]] {:n node :md meta-data}) sorted-config)
+
+  ; and now we can feed this into component->ui
+  (map (fn [[node meta-data]]
+         (let [atm (bh-ui.molecule.composite.util.signals/component->ui
+                     {:node          node
+                      :atm-set       atm-set
+                      :type          (:atm/role meta-data)
+                      :meta-data     meta-data
+                      :configuration configuration
+                      :registry      registry
+                      :component-id  (ui-utils/path->keyword container-id node)
+                      :container-id  container-id})]
+           (swap! atm-set conj atm)))
+    sorted-config)
+
+
+
+  ; chasing the wrong assumption: error on {"data" :source/local}
+  (do
+    (def node "v-scroll")
+    (def node-type :ui/component)
+    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
+    (def bh-ui (if (keyword? ui-type)
+                 (->> registry ui-type :component)
+                 ui-type))
+    (def children? (->> registry ui-type :children))
+    (def children (-> configuration :mol/components (get node) :atm/children)))
+
+  {node
+   ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
+   (if (= children? :enumerated)
+     ; TODO: the children are inserted into the hiccup separate form the params
+     (into [(or bh-ui :dummy) {:style {:height "500px" :width "100%"}}]
+       (map (fn [c] [rc/box
+                     :height "300px"
+                     :width "300px"
+                     :child c]) children))
+
+     ; TODO: the children are part of the params
+     [(or bh-ui :dummy)])}
+
+
+  ; we need to filter to only :ui/components prior to building the graph of aui-atoms
+  (let [id "v-scroll"]
+    (as-> configuration a
+      (:mol/components a)
+      (filter (fn [[_ meta-data]]
+                (= node-type (:atm/role meta-data))) a)
+      (into {} a)
+      (get a id)
+      ((fn [x] [id x]) a)))
+
+
+  (do
+    (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
+                                                     :atm/children ["line" "bar"]}
+                                         "data"     {:atm/role :source/local :atm/kind :source/local}
+                                         "line"     {:atm/role :ui/component :atm/kind :rechart/line}
+                                         "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}})
+    (def node-type :ui/component)
+    (def nodes (->> configuration
+                 :mol/components
+                 (filter (fn [[_ meta-data]]
+                           (= node-type (:atm/role meta-data))))
+                 keys)))
+
+
+
+  ())
+
+
+; play with process-components-stateful
+(comment
+  (do
+    (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
+                                                     :atm/style {:style {:height "500px", :width "700px"}}
+                                                     :atm/children ["line" "bar"]}
+                                         "data"     {:atm/role :source/local :atm/kind :source/local}
+                                         "line"     {:atm/role :ui/component :atm/kind :rechart/line}
+                                         "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}}))
+
+  (into {}
+    (sig/process-components-stateful
+      configuration :ui/component
+      @(re-frame/subscribe [:meta-data-registry]) "test-mol-dsl"))
+
+
+  ())
 
 
 (def last-data (atom nil))
@@ -257,7 +491,47 @@
   ())
 
 
+; we should only call wrap-components on the atoms in the :mol/grid-layout
+(comment
+  @last-params
 
+  (do
+    (def component-id (:component-id @last-params))
+    (def container-id (:container-id @last-params))
+    (def id (r/atom component-id))
+    (def configuration (:configuration @last-params))
+    (def layout (bh-ui.utils.locals/subscribe-local component-id [:layout]))
+    (def component-lookup (into {}
+                            (sig/process-components
+                              configuration :ui/component
+                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
+    (def composed-ui (map wrap-component component-lookup))
+
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def partial-config (assoc configuration
+                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                          :nodes (-> configuration :mol/components keys set)
+                          :edges (into [] (lg/edges graph))))
+    (def full-config (assoc partial-config
+                       :graph graph
+                       :container container-id))
+
+
+    (def visual-layout
+      (->> configuration
+        :mol/grid-layout
+        (map (fn [{:keys [i]}] i)))))
+
+  (select-keys component-lookup visual-layout)
+
+
+
+
+  ())
+
+
+; work out the toggle for editing
 (comment
   (def component-id :widget-grid-demo.grid-widget)
 
@@ -273,6 +547,7 @@
   ())
 
 
+; built the edit controls (buttons)
 (comment
   (def component-id :widget-grid-demo.grid-widget)
   (def layout (r/atom [{:id 1 :static true}]))

@@ -26,6 +26,12 @@
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
 
+   ;[woolybear.ad.containers/v-scroll-pane {:height "40rem"}
+   ; [bh-ui.atom.chart.bar-chart/component
+   ;  :component-id :v-scroll-with-children.molecule.bar-chart
+   ;  :container-id :v-scroll-with-children.molecule
+   ;  :data [:v-scroll-with-children.molecule.blackboard.data]]]
+
    [v-scroll/example]
 
    [simple-multi-chart/example]

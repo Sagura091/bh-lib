@@ -17,7 +17,11 @@
 (def source-code "")
 (def ui-definition {:mol/components  {"bar-chart"  {:atm/role :ui/component :atm/kind :rechart/bar :config-data []}
                                       "line-chart" {:atm/role :ui/component :atm/kind :rechart/line :config-data []}
-                                      "v-scroll"   {:atm/role :ui/component :atm/kind :bhui/v-scroll-pane :children ["bar-chart" "line-chart"]}
+                                      "v-scroll"   {:atm/role :ui/component :atm/kind :bhui/v-scroll-pane
+                                                    :atm/children ["bar-chart" "line-chart"]
+                                                    ; TODO: work out how the :style flows down into the parent so the charts
+                                                    ;  can see correct size to responsively fill
+                                                    :atm/style {:height "500px"}}
                                       "data"       {:atm/role :source/local :atm/kind :topic/data :default chart/sample-data}}
                     :mol/links       {"data" {:data {"bar-chart"  :data
                                                      "line-chart" :data}}}
