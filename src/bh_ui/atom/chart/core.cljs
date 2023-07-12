@@ -59,7 +59,7 @@
 
 (def line-chart-local-config line-chart/local-config)
 (def line-chart-config-panel line-chart/config-panel)
-(def line-chart-config line-chart/config)
+;(def line-chart-config line-chart/config)
 (def line-chart-component line-chart/component)
 
 
@@ -107,9 +107,9 @@
 
 ;; Tree-map-chart lib functions to call
 
-(def tree-map-chart-local-config tree-map-chart/local-config)
+;(def tree-map-chart-local-config tree-map-chart/local-config)
 (def tree-map-chart-config tree-map-chart/config)
-(def tree-map-chart-config-panel tree-map-chart/config-panel)
+;(def tree-map-chart-config-panel tree-map-chart/config-panel)
 (def tree-map-chart-component tree-map-chart/component)
 (def tree-map-chart-configurable-component tree-map-chart/configurable-component)
 

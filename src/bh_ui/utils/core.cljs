@@ -58,7 +58,7 @@
 
 (def utils-process-locals locals/process-locals)
 
-(def utils-compute-container-path locacls/compute-container-path)
+(def utils-compute-container-path locals/compute-container-path)
 
 (def utils-compute-container-deps locals/compute-container-deps)
 
@@ -84,7 +84,7 @@
 
 (def utils-dispatch-local locals/dispatch-local)
 
-(def utils-apply-local loacls/apply-local)
+(def utils-apply-local locals/apply-local)
 
 (def utils-build-subs locals/build-subs)
 

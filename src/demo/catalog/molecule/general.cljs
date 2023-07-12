@@ -32,7 +32,8 @@
    ;  :container-id :v-scroll-with-children.molecule
    ;  :data [:v-scroll-with-children.molecule.blackboard.data]]]
 
-   [v-scroll/example]
+   ; TODO: fix mol-DSL :atm/children & :atm/child properties
+   ;[v-scroll/example]])
 
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]

@@ -1,6 +1,7 @@
 (ns demo.core
   (:require [bh-ui.subscriptions]
             [bh-ui.atom.component-registry]
+            [bh-ui.core]
             [demo.config :as config]
             [demo.events :as events]
             [demo.views :as views]

@@ -8,18 +8,20 @@
             [demo.catalog.atom.example.layout.markdown-block :as markdown-block]
             [demo.catalog.atom.example.layout.frame :as frame]
             [demo.catalog.atom.example.layout.section :as section]
-            [demo.catalog.atom.example.layout.layout-grid :as layout-grid]))
+            [demo.catalog.atom.example.layout.layout-grid :as layout-grid]
+            [demo.catalog.atom.example.layout.responsive-grid :as responsive-grid]))
 
 
 (defn examples
   []
   [:div
-   [page/example]
-   [page-header/example]
-   [page-title/example]
-   [section/example]
-   [text-block/example]
-   [centered-block/example]
-   [markdown-block/example]
-   [frame/example]
-   [layout-grid/example]])
+   ;[page/example]
+   ;[page-header/example]
+   ;[page-title/example]
+   ;[section/example]
+   ;[text-block/example]
+   ;[centered-block/example]
+   ;[markdown-block/example]
+   ;[frame/example]
+   [layout-grid/example]
+   [responsive-grid/example]])
