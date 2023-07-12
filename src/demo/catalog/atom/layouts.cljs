@@ -15,13 +15,13 @@
 (defn examples
   []
   [:div
-   ;[page/example]
-   ;[page-header/example]
-   ;[page-title/example]
-   ;[section/example]
-   ;[text-block/example]
-   ;[centered-block/example]
-   ;[markdown-block/example]
-   ;[frame/example]
+   [page/example]
+   [page-header/example]
+   [page-title/example]
+   [section/example]
+   [text-block/example]
+   [centered-block/example]
+   [markdown-block/example]
+   [frame/example]
    [layout-grid/example]
    [responsive-grid/example]])
