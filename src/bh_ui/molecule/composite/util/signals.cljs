@@ -70,58 +70,67 @@
 
   (reset! last-params params)
 
-  (let [ui-type   (get-in configuration [:mol/components node :atm/kind])
-        bh-ui     (if (keyword? ui-type)
-                    (->> registry ui-type :component)
-                    ui-type)
-        styl      (get-in configuration [:mol/components node :atm/style])
-        children? (->> registry ui-type :children)
-        children  (-> configuration :mol/components (get node) :atm/children)
-        child?    (->> registry ui-type :child)
-        child     (-> configuration :mol/components (get node) :atm/child)
+  (let [ui-type    (get-in configuration [:mol/components node :atm/kind])
+        bh-ui      (if (keyword? ui-type)
+                     (->> registry ui-type :component)
+                     ui-type)
+        styl       (get-in configuration [:mol/components node :atm/style])
+        children?  (->> registry ui-type :children)
+        children   (-> configuration :mol/components (get node) :atm/children)
+        child?     (->> registry ui-type :child)
+        child      (-> configuration :mol/components (get node) :atm/child)
+        def-config (-> configuration :mol/components (get node) :atm/default-config)
+        label      (-> configuration :mol/components (get node) :atm/label)
 
-        _         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
-                    children? "//" children "//"
-                    child? "//" child "//"
-                    @atm-set)
+        ;_         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
+        ;            children? "//" children "//"
+        ;            child? "//" child "//"
+        ;            @atm-set)
 
-        ret       {node
+        ret        {node
 
-                   (condp = [child? children?]
+                    {:component (condp = [child? children?]
 
-                     [:enumerated nil]
-                     (do
-                       (log/info "enumerated child" node "//" child)
-                       (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
-                         ((fn [c] (get @atm-set c)) child)))
+                                  [:enumerated nil]
+                                  (do
+                                    ;(log/info "enumerated child" node "//" child)
+                                    (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
+                                      (:component ((fn [c] (get @atm-set c)) child))))
 
-                     [:keyword nil]
-                     (do
-                       (log/info "keyword child" node "//" child)
-                       [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})
-                        :child ((fn [c] (get @atm-set c)) child)])
+                                  [:keyword nil]
+                                  (do
+                                    ;(log/info "keyword child" node "//" child)
+                                    [(or bh-ui error-ui)
+                                     :style (or styl {:height "100%" :width "100%"})
+                                     :config def-config
+                                     :child (:component ((fn [c] (get @atm-set c)) child))])
 
-                     [nil :enumerated]
-                     (do
-                       (log/info "enumerated children" node "//" children)
-                       (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
-                         (map (fn [c] (get @atm-set c)) children)))
+                                  [nil :enumerated]
+                                  (do
+                                    ;(log/info "enumerated children" node "//" children)
+                                    (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
+                                      (map (fn [c] (:component (get @atm-set c))) children)))
 
-                     [nil :keyword]
-                     (do
-                       (log/info "keyword children" node "//" children)
-                       [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})
-                        :children (into [] (map (fn [c] (get @atm-set c)) children))])
+                                  [nil :keyword]
+                                  (do
+                                    ;(log/info "keyword children" node "//" children)
+                                    [(or bh-ui error-ui)
+                                     :style (or styl {:height "100%" :width "100%"})
+                                     :config def-config
+                                     :children (into [] (map (fn [c] (:component (get @atm-set c))) children))])
 
-                     [nil nil]
-                     (do
-                       (log/info "NO Children!" node)
-                       (reduce into [(or bh-ui error-ui)
-                                     :component-id component-id :container-id container-id]
-                         (seq
-                           (merge
-                             (make-params configuration node :inputs container-id)
-                             (make-params configuration node :outputs container-id))))))}]
+                                  [nil nil]
+                                  (do
+                                    ;(log/info "NO Children!" node)
+                                    (reduce into [(or bh-ui error-ui)
+                                                  :component-id component-id :container-id container-id
+                                                  :style (or styl {:height "100%" :width "100%"})
+                                                  :config def-config]
+                                      (seq
+                                        (merge
+                                          (make-params configuration node :inputs container-id)
+                                          (make-params configuration node :outputs container-id))))))
+                     :label label}}]
 
     (reset! last-hiccup ret)
     ret))
@@ -131,19 +140,19 @@
 (comment
   (do
     (def configuration (:configuration @last-params))
-    (def node "bar") ;(:node @last-params))
+    (def node "v-scroll")                                        ;(:node @last-params))
     (def atm-set (:atm-set @last-params))
     (def registry (:registry @last-params))
 
-    (def ui-type   (get-in configuration [:mol/components node :atm/kind]))
-    (def bh-ui     (if (keyword? ui-type)
-                       (->> registry ui-type :component)
-                       ui-type))
-    (def styl      (get-in configuration [:mol/components node :atm/style]))
+    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
+    (def bh-ui (if (keyword? ui-type)
+                 (->> registry ui-type :component
+                   ui-type)))
+    (def styl (get-in configuration [:mol/components node :atm/style]))
     (def children? (->> registry ui-type :children))
-    (def children  (-> configuration :mol/components (get node) :atm/children))
-    (def child?    (->> registry ui-type :child))
-    (def child     (-> configuration :mol/components (get node) :atm/child)))
+    (def children (-> configuration :mol/components (get node) :atm/children))
+    (def child? (->> registry ui-type :child))
+    (def child (-> configuration :mol/components (get node) :atm/child)))
 
 
   [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})
@@ -151,7 +160,9 @@
 
 
 
+  (:component ((fn [c] (get @atm-set c)) child))
 
+  (into [] (map (fn [c] (:component (get @atm-set c))) children))
 
 
   ())

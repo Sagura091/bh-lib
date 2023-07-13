@@ -33,14 +33,14 @@
    :layout     (:mol/grid-layout full-config)})
 
 
-(defn- wrap-component [[id component label]]
+(defn- wrap-component [[id {:keys [component label]}]]
 
-  ;(log/info "wrap-component" id "//" label "//" component)
+  (log/info "wrap-component" id "//" label "//" component)
 
   [:div.widget-parent {:key id}
    [:div.grid-toolbar.title-wrapper.move-cursor
     {:style {:height "1.5em"}}
-    (or label (name id))]
+    (or label "")]
    [:div.widget.widget-content
     {:on-mouse-down #(.stopPropagation %)}
     component]])
@@ -86,6 +86,7 @@
 
 
 (def last-params (atom nil))
+(def last-component-lookup (atom nil))
 
 (defn- component-panel [& {:keys [configuration component-id resizable] :as params}]
 
@@ -119,9 +120,14 @@
         composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
         open?            (r/atom false)]
 
+    (reset! last-component-lookup {:lookup component-lookup
+                                   :viz visual-layout
+                                   :keys (select-keys component-lookup visual-layout)
+                                   :wrappers composed-ui})
+
     (fn []
-      (log/info "component-panel INNER" component-id
-        "//" @layout)
+      ;(log/info "component-panel INNER" component-id
+      ;  "//" @layout)
       ;  "//" composed-ui)
 
       ; 5. return the composed component layout!
