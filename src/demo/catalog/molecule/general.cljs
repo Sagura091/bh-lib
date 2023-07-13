@@ -26,10 +26,10 @@
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
 
-   [v-scroll/example]])
+   [v-scroll/example]
 
-   ;[simple-multi-chart/example]
-   ;[simple-multi-chart-2/example]
-   ;[multi-chart-widget/example]
-   ;[with-fn/example]])
+   [simple-multi-chart/example]
+   [simple-multi-chart-2/example]
+   [multi-chart-widget/example]
+   [with-fn/example]])
 

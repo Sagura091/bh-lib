@@ -39,7 +39,7 @@
 (defmethod shape/make-shape :shape/volume [{:keys [id positions faces outline
                                                    interior-color outline-color]}]
 
-  (log/info ":shape/volume")
+  ;(log/info ":shape/volume")
   (let [volume (triangular-mesh positions faces outline interior-color outline-color)]
     (set! (.-displayName volume) id)
     volume))

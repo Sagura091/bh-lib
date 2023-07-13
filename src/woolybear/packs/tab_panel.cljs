@@ -27,7 +27,7 @@
   and a new value, update the component data with the new value."
   [db [_ data-path new-value]]
 
-  (log/info ":tab-panel/on-click" data-path new-value)
+  ;(log/info ":tab-panel/on-click" data-path new-value)
 
   (assoc-in db (conj data-path :value) new-value))
 

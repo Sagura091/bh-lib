@@ -5,12 +5,12 @@
 
 
 (defn renderable-layer [layer-name z children]
-  (log/info "renderable-layer" layer-name z children)
+  ;(log/info "renderable-layer" layer-name z children)
   (let [layer (WorldWind/RenderableLayer.)]
     (set! (.-displayName layer) layer-name)
     (doall
       (map (fn [child]
-             (log/info "renderable-layer adding" layer-name child)
+             ;(log/info "renderable-layer adding" layer-name child)
              (.addRenderable layer child))
         children))
     {:id layer-name :layer layer :z (or z 1)}))
@@ -46,11 +46,11 @@
 
 
 (defn make-layer [{:keys [layer-id shapes z] :as layer}]
-  (log/info "makeLayer" layer-id "//" shapes)
+  ;(log/info "makeLayer" layer-id "//" shapes)
 
   (let [ret (renderable-layer layer-id z
               (map shape/make-shape shapes))]
-    (log/info "makeLayer" layer-id "//" layer)
+    ;(log/info "makeLayer" layer-id "//" layer)
     ret))
 
 

@@ -35,7 +35,7 @@
 
 (defn- wrap-component [[id {:keys [component label]}]]
 
-  (log/info "wrap-component" id "//" label "//" component)
+  ;(log/info "wrap-component" id "//" label "//" component)
 
   [:div.widget-parent {:key id}
    [:div.grid-toolbar.title-wrapper.move-cursor
@@ -67,9 +67,9 @@
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
 
-    (log/info "on-layout-change" new-layout*
-      "//" all-layouts*
-      "//" (keys all-layouts*))
+    ;(log/info "on-layout-change" new-layout*
+    ;  "//" all-layouts*
+    ;  "//" (keys all-layouts*))
 
     (when (and
             (not (empty? new-layout*))
@@ -77,7 +77,7 @@
             (not= (:i fst) "null"))
       (let [cooked (map #(zipmap '(:i :x :y :w :h :static) %)
                      (map (juxt :i :x :y :w :h :static) new-layout*))]
-        (log/info "on-layout-change (cooked)" cooked)
+        ;(log/info "on-layout-change (cooked)" cooked)
         (locals/dispatch-local component-id [:layout] cooked)))))
 
 

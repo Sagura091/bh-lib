@@ -19,12 +19,14 @@
             [demo.catalog.atom.example.re-com.throbber :as throbber]
             [demo.catalog.atom.example.re-com.header-bar :as header-bar]
             [demo.catalog.atom.example.re-com.login :as login]
-            [demo.catalog.atom.example.re-com.v-scroller :as v-scroller]))
+            [demo.catalog.atom.example.re-com.v-scroller :as v-scroller]
+            [demo.catalog.atom.example.re-com.tabs :as tabs]))
 
 
 (defn examples
   []
   [:div
+   [tabs/example]
    [v-scroller/example]
    [v-scroller/chart-example]
    [v-scroller/woolybear-scroll-example]

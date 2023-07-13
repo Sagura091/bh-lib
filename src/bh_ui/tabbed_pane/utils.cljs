@@ -7,7 +7,7 @@
 
 
 (defn init-tabbed-panel [base-id initial-value]
-  (log/info "init-tabbed-panel" base-id)
+  ;(log/info "init-tabbed-panel" base-id)
 
   (let [formal-id (keyword base-id)
         data-path [formal-id :tab-panel]
