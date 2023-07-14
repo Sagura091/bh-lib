@@ -14,7 +14,14 @@
 
 (defn example []
   (acu/demo "Tabs"
-    "Wrap any 'pages' of UI elements in a set of tabs, which can be change by clicking."
+    "Wrap any 'pages' of UI elements in a set of tabs, which can be change by clicking.
+
+    - :children - sequence of hiccup components, one for each 'tab'
+    - :config - hash-map of configuration information, specifically
+           - :labels - vector of strings, one per 'tab' and in the same order, the string will be used as the
+                       text/label on the tab ui element itself
+
+    Clicking on a tab will swap the content to the associated hiccup 'child'"
 
     [layout/centered {:extra-classes :width-50}
      [rc/v-box :src (rc/at)

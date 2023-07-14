@@ -7,7 +7,7 @@
 (def sample-children [[:p "child one"]
                       [:p "child two"]
                       [:p "child three"]])
-(def sample-config ["One" "Two" "Three"])
+(def sample-config {:labels ["One" "Two" "Three"]})
 
 
 (defn- item-for-id
@@ -17,14 +17,25 @@
   (first (filter #(= (id-fn %) id) v)))
 
 
--(defn make-tab [[id content]]
-   {:id id :label id :child content})
+(defn- make-tab [[id content]]
+  {:id id :label id :child content})
 
 
-(defn- h-tab* [tab-kind children style config]
+(defn- h-tab*
+  "Generates appropriate hiccup for one of the horizontal tab types in [Re-com](https://re-com.day8.com.au/#/tabs)
+
+    - tab-kind - re-com tab function for the specific visual representation
+    - children - sequence of hiccup components, one for each 'tab'
+    - config - hash-map of configuration information, specifically
+           - :labels - vector of strings, one per 'tab' and in the same order, the string will be used as the
+                       text/label on the tab ui element itself
+
+    Clicking on a tab will swap the content to the associated hiccup 'child'"
+
+  [tab-kind children style config]
   ; TODO: where does :style apply?
 
-  (r/with-let [contents     (map make-tab (zipmap config children))
+  (r/with-let [contents     (map make-tab (zipmap (:labels config) children))
                selected-tab (r/atom (-> contents first :id))]
 
     [rc/v-box
@@ -38,7 +49,18 @@
                  :child (:child (item-for-id @selected-tab contents))]]]))
 
 
-(defn- v-tab* [tab-kind children style config]
+(defn- v-tab*
+  "Generates appropriate hiccup for one of the vertical tab types in [Re-com](https://re-com.day8.com.au/#/tabs)
+
+    - tab-kind - re-com tab function for the specific visual representation
+    - children - sequence of hiccup components, one for each 'tab'
+    - config - hash-map of configuration information, specifically
+           - :labels - vector of strings, one per 'tab' and in the same order, the string will be used as the
+                       text/label on the tab ui element itself
+
+    Clicking on a tab will swap the content to the associated hiccup 'child'"
+
+  [tab-kind children style config]
   ; TODO: where does :style apply?
 
   (r/with-let [contents     (map make-tab (zipmap config children))
