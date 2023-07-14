@@ -4,9 +4,11 @@
             [taoensso.timbre :as log]))
 
 
-(def sample-children [[:p "child one"]
-                      [:p "child two"]
-                      [:p "child three"]])
+(def default-style {:style {:height "150px" :width "100%"
+                            :border "1px solid" :border-radius "10px"}})
+(def sample-children [[:div default-style "child one"]
+                      [:div default-style "child two"]
+                      [:div default-style "child three"]])
 (def sample-config {:labels ["One" "Two" "Three"]})
 
 
@@ -63,7 +65,7 @@
   [tab-kind children style config]
   ; TODO: where does :style apply?
 
-  (r/with-let [contents     (map make-tab (zipmap config children))
+  (r/with-let [contents     (map make-tab (zipmap (:labels config) children))
                selected-tab (r/atom (-> contents first :id))]
 
     [rc/h-box
