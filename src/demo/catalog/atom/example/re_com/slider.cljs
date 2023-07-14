@@ -12,7 +12,7 @@
         disabled? (r/atom false)]
     (fn []
       (acu/demo "Slider"
-        [rc/h-box
+        [rc/v-box
          :src (rc/at)
          :justify :between
          :children [[slider/slider :value slider-val :range (r/atom [@slider-min @slider-max])]
