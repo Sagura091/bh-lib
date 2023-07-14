@@ -155,7 +155,7 @@
   "configures data into format react-table want it"
   [data config]
   (let [table-type   (:table-type @config)
-        d            (:data @data)
+        d            @data
         group-by-key (:group-by @config)]
 
     ;(js/console.log "configure data")
@@ -172,6 +172,7 @@
         (into []))
       d)))
 
+(def last-params (atom nil))
 
 (defn table-component [& {:keys [data config style]}]
   (let [cfg           (h/resolve-value config)
@@ -181,6 +182,8 @@
         column-config (clj->js (if (= :expandable (:table-type @cfg))
                                  (configure-expandable-columns d react-data cfg s)
                                  (configure-standard-columns d react-data cfg)))]
+
+    (reset! last-params {:data d :config cfg :style s})
 
     (fn []
       [:f> table
@@ -197,5 +200,22 @@
 
 (re-frame/dispatch-sync [:register-meta meta-data])
 
+
+(comment
+  (do
+    (def config (:config @last-params))
+    (def data (:data @last-params))
+    (def style (:style (@last-params)))
+
+    (def cfg           (h/resolve-value config))
+    (def d             (h/resolve-value data))
+    (def s             (h/resolve-value style))
+    (def react-data    (r/atom (configure-data d cfg)))
+    (def column-config (clj->js (if (= :expandable (:table-type @cfg))
+                                  (configure-expandable-columns d react-data cfg s)
+                                  (configure-standard-columns d react-data cfg)))))
+
+
+  ())
 
 

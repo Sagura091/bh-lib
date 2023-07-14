@@ -9,7 +9,8 @@
             [demo.catalog.molecule.example.composite.simple-multi-chart-2 :as simple-multi-chart-2]
             [demo.catalog.molecule.example.composite.with-fn-example :as with-fn]
             [demo.catalog.molecule.example.composite.multi-chart-widget :as multi-chart-widget]
-            [demo.catalog.molecule.example.composite.v-scroll-pane-children :as v-scroll]))
+            [demo.catalog.molecule.example.composite.v-scroll-pane-children :as v-scroll]
+            [demo.catalog.molecule.example.composite.colored-selection-table :as cs-table]))
 
 
 (log/info "demo.catalog.molecule.general")
@@ -26,6 +27,7 @@
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
 
+   [cs-table/example]
    [v-scroll/example]
 
    [simple-multi-chart/example]
