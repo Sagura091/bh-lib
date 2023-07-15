@@ -172,6 +172,7 @@
         (into []))
       d)))
 
+
 (def last-params (atom nil))
 
 (defn table-component [& {:keys [data config style]}]

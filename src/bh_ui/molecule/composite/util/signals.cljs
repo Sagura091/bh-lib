@@ -37,25 +37,28 @@
                      [rc/line :size "2px"]
                      [:p "Please contact Tech Support."]]]])
 
-
 (defn- make-params [configuration node direction container-id]
-  (->> configuration
-    :denorm
-    ((fn [n] (get n node)))
-    direction
-    (map (fn [[target ports]]
-           (let [[source-port target-port] ports
-                 target-type (get-in configuration [:mol/components target :atm/role])
-                 remote      (get-in configuration [:mol/components target :atm/kind])]
-             ;(log/info "make-params" target target-type remote)
-             (if (= direction :outputs)
-               {source-port (if (= :source/local target-type)
-                              [(ui-utils/path->keyword container-id :blackboard target)]
-                              [::subs/source remote])}
-               {target-port (if (= :source/local target-type)
-                              [(ui-utils/path->keyword container-id :blackboard target)]
-                              [::subs/source remote])}))))
-    (into {})))
+  (let [ret (->> configuration
+              :denorm
+              ((fn [n] (get n node)))
+              direction
+              (map (fn [[target ports]]
+                     (let [[source-port target-port] ports
+                           target-type (get-in configuration [:mol/components target :atm/role])
+                           remote      (get-in configuration [:mol/components target :atm/kind])]
+                       ;(log/info "make-params (a)" target "//" target-type "//" remote)
+                       (if (= direction :outputs)
+                         {source-port (if (= :source/local target-type)
+                                        [(ui-utils/path->keyword container-id :blackboard target)]
+                                        [::subs/source remote])}
+                         {target-port (condp = target-type
+                                        :source/local [(ui-utils/path->keyword container-id :blackboard target)]
+                                        :source/fn  (let [sub-name (get-in configuration [:mol/components target :atm/kind])]
+                                                      [(ui-utils/path->keyword container-id :blackboard sub-name)])
+                                        :else [::subs/source remote])}))))
+              (into {}))]
+    ;(log/info "make-params (b)" node "//" container-id "//" ret)
+    ret))
 
 
 (defmulti component->ui (fn [{:keys [type]}]
@@ -202,21 +205,19 @@
     ; 2. return the signal vector to the new data-source key
     [::subs/source remote]))
 
-(def last-inputs (atom {}))
 
 ; :source/fn
 (defmethod component->ui :source/fn [{:keys [node configuration container-id] :as inputs}]
-  (reset! last-inputs inputs)
   (let [fn-name   (get-in configuration [:mol/components node :atm/kind])
         actual-fn (if (keyword fn-name)
                     (-> @(re-frame/subscribe [:meta-data-registry]) fn-name :function)
                     fn-name)
         params    (merge
-                    {:container-id container-id}
-                    (make-params configuration node :inputs container-id)
-                    (make-params configuration node :outputs container-id))]
-
-    ;(log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
+                    {:container-id container-id
+                     :sub-name [(ui-utils/path->keyword container-id :blackboard fn-name)]}
+                    (make-params configuration node :inputs container-id))]
+    ;
+    (log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
 
     (actual-fn params)))
 

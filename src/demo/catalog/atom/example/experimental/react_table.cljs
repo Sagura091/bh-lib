@@ -138,7 +138,9 @@
     "React-Table Standard Table"
     [layout/centered {:extra-classes :width-50}
      [react-table/table-component
-      :data data
+      ; TODO: should this be the norm, or should we pass the complex data in
+      ;       and fix up how :source/locals passes data to downstream components
+      :data (:data data)
       :config data-config
       :style table-style]]))
 
@@ -148,6 +150,6 @@
     "React-Table Expandable Table"
     [layout/centered {:extra-classes :width-50}
      [react-table/table-component
-      :data group-data
+      :data (:data group-data)
       :config group-data-config
       :style table-style]]))

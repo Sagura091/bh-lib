@@ -9,23 +9,23 @@
             [woolybear.ad.layout :as layout]))
 
 
-(def ui-definition {:mol/components  {"table"      {:atm/role :ui/component :atm/kind :react-table/table
+(def ui-definition {:mol/components  {"table"      {:atm/role           :ui/component :atm/kind :react-table/table
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
                                       "input-data" {:atm/role :source/local :atm/kind :topic/input-data
-                                                    :default  demo.catalog.atom.example.experimental.react-table/data}
-                                      "colored-data" {:atm/role :source/local :atm/kind :topic/colored-data}}
+                                                    :default  demo.catalog.atom.example.experimental.react-table/data}}
+                    ;"colored-data" {:atm/role :source/local :atm/kind :topic/colored-data}}
                     :mol/links       {"input-data" {:data {"colorize" :data}}
-                                      "colorize"   {:colored {"colored-data" :data}}
-                                      "colored-data" {:data {"table" :data}}}
+                                      "colorize"   {:data {"table" :data}}}
+                    ;"colored-data" {:data {"table" :data}}}
                     :mol/grid-layout [{:i "table" :x 0 :y 0 :w 10 :h 10}]})
 
 
 (defn- color-entities [d p next-color topic k]
-  (let [cnt           (count cp/color-pallet)
-        last-data     ((keyword topic) p)
-        assigned      (map (juxt k :color) last-data)
-        assigned-set  (->> assigned (map first) set)]
+  (let [cnt          (count cp/color-pallet)
+        last-data    ((keyword topic) p)
+        assigned     (map (juxt k :color) last-data)
+        assigned-set (->> assigned (map first) set)]
 
     (doall
       (map (fn [e]
@@ -39,18 +39,21 @@
         (:data d)))))
 
 
-(defn- colorize [{:keys [data colored]}]
+(defn- colorize [{:keys [data colored sub-name]}]
+  (log/info "colorize (a)" sub-name "//" data "//" colored)
+
   (let [next-target-color (atom -1)
-        [component topic] (-> colored
+        [component topic] (-> sub-name
                             first
                             name
                             (clojure.string/split #".blackboard."))
         path              [(keyword (str component ".blackboard"))]]
 
-    (log/info "colorize" data "//" colored "//" path)
+    (log/info "colorize (b)" sub-name "//" data "//" colored
+      "//" path "//" component "//" topic)
 
     (re-frame/reg-sub
-      (first colored)
+      (first sub-name)
       :<- data
       :<- path
       (fn [[d p] _]
@@ -64,10 +67,10 @@
 
           ret)))))
 
+
 (re-frame/dispatch-sync
   [:register-meta {:bh-fn/colorize {:function colorize
-                                    :ports    {:data    :port/sink
-                                               :colored :port/source}}}])
+                                    :ports    {:data :port/sink}}}])
 
 
 (def source-code '[])
