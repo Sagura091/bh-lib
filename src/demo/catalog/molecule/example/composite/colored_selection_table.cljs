@@ -14,10 +14,10 @@
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
                                       "input-data" {:atm/role :source/local :atm/kind :topic/input-data
                                                     :default  demo.catalog.atom.example.experimental.react-table/data}}
-                    ;"colored-data" {:atm/role :source/local :atm/kind :topic/colored-data}}
+
                     :mol/links       {"input-data" {:data {"colorize" :data}}
                                       "colorize"   {:data {"table" :data}}}
-                    ;"colored-data" {:data {"table" :data}}}
+
                     :mol/grid-layout [{:i "table" :x 0 :y 0 :w 10 :h 10}]})
 
 
@@ -40,7 +40,7 @@
 
 
 (defn- colorize [{:keys [data colored sub-name]}]
-  (log/info "colorize (a)" sub-name "//" data "//" colored)
+  ;(log/info "colorize (a)" sub-name "//" data "//" colored)
 
   (let [next-target-color (atom -1)
         [component topic] (-> sub-name
@@ -49,8 +49,8 @@
                             (clojure.string/split #".blackboard."))
         path              [(keyword (str component ".blackboard"))]]
 
-    (log/info "colorize (b)" sub-name "//" data "//" colored
-      "//" path "//" component "//" topic)
+    ;(log/info "colorize (b)" sub-name "//" data "//" colored
+    ;  "//" path "//" component "//" topic)
 
     (re-frame/reg-sub
       (first sub-name)

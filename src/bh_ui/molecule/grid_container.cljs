@@ -103,17 +103,12 @@
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
   (let [layout           (locals/subscribe-local component-id [:layout])
-        ; TODO: we need to do 2 passes on the data:
-        ;   1) build all the "children" atoms,
-        ;   2) attach the children to the "parent" atoms
-        ;  OR, we should organize the atoms into their own tree, where children at the leaves and
-        ;   the parents are the roots or branches
         component-lookup (into {}
                            (sig/process-components-stateful
                              configuration :ui/component
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
-        ; 1. build UI components (with subscription/event signals against the blackboard or remotes)
+        ; build UI components (with subscription/event signals against the blackboard or remotes)
         visual-layout    (->> configuration
                            :mol/grid-layout
                            (map (fn [{:keys [i]}] i)))

@@ -103,7 +103,7 @@
 
   ; TODO: can this be converted to (apply concat...)? (see https://clojuredesign.club/episode/080-apply-as-needed/)
   (let [data-path      (reduce conj [(h/path->keyword component-id)] target-path)
-        container-path    (reduce conj [:containers (h/path->keyword component-id)] target-path)
+        container-path (reduce conj [:containers (h/path->keyword component-id)] target-path)
         old            (get-in @re-frame.db/app-db container-path)
         old-vals       (->> old
                          (process-locals [] nil)
@@ -261,6 +261,7 @@
 
   - `container-id` : (string) id for the container, using a string means we can use generated values, like a guid, for the id
   - `value-path` : (vector of keywords) the path into the container's values to locate the specific one for this subscription
+  - `layer-2` : (keyword) _if_ this :source/local is fed by another component, such as a :source/fn, then the subscription should depend upon _that_ input rather than the container
 
   `value-path` functions exactly like any other re-frame subscription, but relative to the
   `[:containers <container-id as a keyword>]` in the overall `app-db`
@@ -282,21 +283,34 @@
 > Note: so developer don't need to understand or even remember this encoding scheme, use the [[subscribe-local]] helper function
 > in place of standard re-frame subscription calls. It provides the same result, and does all the encoding for you.
   "
-  [container-id [a & more :as value-path] default]
+  [container-id [a & more :as value-path] default & layer-2]
   (let [p    (h/path->keyword container-id a more)
         dep  (compute-container-deps container-id a more)
-        item (h/path->keyword (if more (last more) a))]
+        item (h/path->keyword (if more (last more) a))
+        l    (first layer-2)]
 
-    ;(log/info "create-container-local-sub" p
-    ;  ":<-" dep
-    ;  "item" item)
+    ;(when layer-2
+    ;  (log/info "create-container-local-sub" p
+    ;    "//" dep
+    ;    "//" container-id
+    ;    "//" item
+    ;    "//" (first layer-2)
+    ;    "//" (h/path->keyword dep (first layer-2))))
 
-    (re-frame/reg-sub
-      p
-      :<- [dep]
-      (fn [container _]
-        ;(log/info "sub" p dep container (last more))
-        (or (get container item) default)))))
+    (if l
+      (re-frame/reg-sub
+        p
+        :<- [(h/path->keyword dep l)]
+        (fn [l2 _]
+          ;(log/info "sub (layer-2)" p "//" l)
+          (or l2 default)))
+
+      (re-frame/reg-sub
+        p
+        :<- [dep]
+        (fn [container _]
+          ;(log/info "sub (non-input)" p "//" dep)
+          (or (get container item) default))))))
 
 
 (defn create-local-path-sub [[a & more :as value-path] default]

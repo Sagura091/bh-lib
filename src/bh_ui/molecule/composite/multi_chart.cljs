@@ -45,6 +45,7 @@
     (fn [d _]
       (doall
         ; TODO: need a way to have :topic.config passed in somehow...
+        ;       - does the new :source/fn approach eliminate this issue?
         (l/update-local-path-values container-id [:blackboard :topic.config] (compute-data-config d))))))
 
 

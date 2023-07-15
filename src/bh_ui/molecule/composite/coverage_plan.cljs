@@ -509,47 +509,47 @@
                     :component-id :coverage-plan
                     :components   {; ui components
                                    ; TODO: add a :label element for use in the UI
-                                   :ui/targets                {:type        :ui/component :name :coverage-plan/target-table
-                                                               :label       "Targets"
+                                   :ui/targets                {:atm/role        :ui/component :atm/kind :coverage-plan/target-table
+                                                               :atm/label       "Targets"
                                                                :config-data {:columns    [{:column/key :include :column/label "Include?" :column/type :cell/boolean}
                                                                                           {:column/key :symbol :column/label "Symbol" :column/type :cell/colored-icon :column/icon :i.fas.fa-circle}
                                                                                           {:column/key :aoi :column/label "AoI" :column/type :cell/text}
                                                                                           {:column/key :edit :column/label "" :column/type :cell/edit-toggle}
                                                                                           {:column/key :delete :column/label "" :column/type :cell/delete-toggle}]
                                                                              :unique-key :name}}
-                                   :ui/satellites             {:type :ui/component :name :coverage-plan/satellite-table :label "Platforms"}
-                                   :ui/globe                  {:type :ui/component :name :ww/globe}
-                                   :ui/time-slider            {:type :ui/component :name :rc/slider}
-                                   :ui/current-time           {:type :ui/component :name :rc/label-md}
-                                   :ui/target-filter          {:type :ui/component :name :coverage-plan/target-filter-input :label "Filter:"}
+                                   :ui/satellites             {:atm/role :ui/component :atm/kind :coverage-plan/satellite-table :atm/label "Platforms"}
+                                   :ui/globe                  {:atm/role :ui/component :atm/kind :ww/globe}
+                                   :ui/time-slider            {:atm/role :ui/component :atm/kind :rc/slider}
+                                   :ui/current-time           {:atm/role :ui/component :atm/kind :rc/label-md}
+                                   :ui/target-filter          {:atm/role :ui/component :atm/kind :coverage-plan/target-filter-input :atm/label "Filter:"}
 
                                    ; remote data sources
-                                   :topic/target-data         {:type :source/remote :name :source/targets}
-                                   :topic/satellite-data      {:type :source/remote :name :source/satellites}
-                                   :topic/coverage-data       {:type :source/remote :name :source/coverages}
+                                   :topic/target-data         {:atm/role :source/remote :atm/kind :source/targets}
+                                   :topic/satellite-data      {:atm/role :source/remote :atm/kind :source/satellites}
+                                   :topic/coverage-data       {:atm/role :source/remote :atm/kind :source/coverages}
 
                                    ; composite-local data sources
-                                   :topic/selected-targets    {:type :source/local :name :selected-targets :default dummy-targets}
-                                   :topic/colored-targets     {:type   :source/local :name :colored-targets
+                                   :topic/selected-targets    {:atm/role :source/local :atm/kind :selected-targets :default dummy-targets}
+                                   :topic/colored-targets     {:atm/role   :source/local :atm/kind :colored-targets
                                                                :fields [:target/include :target/symbol :target/name]}
 
-                                   :topic/selected-satellites {:type :source/local :name :selected-satellites :default dummy-satellites}
-                                   :topic/colored-satellites  {:type :source/local :name :colored-satellites}
+                                   :topic/selected-satellites {:atm/role :source/local :atm/kind :selected-satellites :default dummy-satellites}
+                                   :topic/colored-satellites  {:atm/role :source/local :atm/kind :colored-satellites}
 
-                                   :topic/current-time        {:type :source/local :name :current-time :default 0}
-                                   :topic/shapes              {:type :source/local :name :shapes}
-                                   :topic/time-range          {:type :source/local :name :time-range}
-                                   :topic/current-slider      {:type :source/local :name :current-slider :default 0}
-                                   :topic/target-filter       {:type :source/local :name :target-filter :default ""}
-                                   :topic/filtered-targets    {:type :source/local :name :filtered-targets}
+                                   :topic/current-time        {:atm/role :source/local :atm/kind :current-time :default 0}
+                                   :topic/shapes              {:atm/role :source/local :atm/kind :shapes}
+                                   :topic/time-range          {:atm/role :source/local :atm/kind :time-range}
+                                   :topic/current-slider      {:atm/role :source/local :atm/kind :current-slider :default 0}
+                                   :topic/target-filter       {:atm/role :source/local :atm/kind :target-filter :default ""}
+                                   :topic/filtered-targets    {:atm/role :source/local :atm/kind :filtered-targets}
 
                                    ; transformation functions
-                                   :fn/coverage               {:type :source/fn :name :coverage-plan/fn-coverage}
-                                   :fn/range                  {:type :source/fn :name :coverage-plan/fn-range}
-                                   :fn/current-time           {:type :source/fn :name :coverage-plan/fn-current-time}
-                                   :fn/color-targets          {:type :source/fn :name :coverage-plan/fn-color-targets}
-                                   :fn/color-satellites       {:type :source/fn :name :coverage-plan/fn-color-satellites}
-                                   :fn/filtered-targets       {:type :source/fn :name :coverage-plan/fn-filtered-targets}}
+                                   :fn/coverage               {:atm/role :source/fn :atm/kind :coverage-plan/fn-coverage}
+                                   :fn/range                  {:atm/role :source/fn :atm/kind :coverage-plan/fn-range}
+                                   :fn/current-time           {:atm/role :source/fn :atm/kind :coverage-plan/fn-current-time}
+                                   :fn/color-targets          {:atm/role :source/fn :atm/kind :coverage-plan/fn-color-targets}
+                                   :fn/color-satellites       {:atm/role :source/fn :atm/kind :coverage-plan/fn-color-satellites}
+                                   :fn/filtered-targets       {:atm/role :source/fn :atm/kind :coverage-plan/fn-filtered-targets}}
 
                     :links        {:ui/targets                {;:data      {:topic/target-data :data}
                                                                :selection {:topic/selected-targets :data}

@@ -68,6 +68,7 @@
 (def last-params (atom nil))
 (def last-hiccup (atom nil))
 
+
 ; :ui/component
 (defmethod component->ui :ui/component [{:keys [node atm-set registry configuration component-id container-id] :as params}]
 
@@ -139,57 +140,51 @@
     ret))
 
 
+; :source/local
+(defmethod component->ui :source/local [{:keys [node meta-data configuration container-id] :as params}]
+  ;(log/info "component->ui :source/local" node meta-data)
 
+  (let [denorm (:denorm configuration)
+        components (:mol/components configuration)]
+
+    ; 1. add the key to the blackboard, uses the :default property of the meta-data
+    ;
+    ;  only IF one exists, otherwise we assume it will be serviced by a :source/fn somewhere
+    ;
+    (when (:default meta-data)
+      (ul/dispatch-local container-id [:blackboard node] (:default meta-data)))
+
+    ; 2. create the subscription against the new :blackboard key
+    (ul/create-container-local-sub container-id
+      [:blackboard node]
+      (:default meta-data)
+      (if-let [inputs (:inputs (get denorm node))]
+        (->> (get components (first (keys inputs)))
+          :atm/kind)))
+
+    ; 3. create the event against the new :blackboard key
+    (ul/create-container-local-event container-id [:blackboard node])
+
+    ; 4. return the signal vector for the new subscription
+    [(ui-utils/path->keyword container-id [:blackboard node])]))
+
+
+; what if :source/local is fed from another component, say a :source/fn?
+;       1) how do we communicate this situation?
 (comment
   (do
-    (def configuration (:configuration @last-params))
-    (def node "v-scroll")                                        ;(:node @last-params))
-    (def atm-set (:atm-set @last-params))
-    (def registry (:registry @last-params))
+    (def configuration (:configuration @last-locals))
+    (def node (:node @last-locals))
+    (def denorm (:denorm configuration))
+    (def components (:mol/components configuration)))
 
-    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
-    (def bh-ui (if (keyword? ui-type)
-                 (->> registry ui-type :component
-                   ui-type)))
-    (def styl (get-in configuration [:mol/components node :atm/style]))
-    (def children? (->> registry ui-type :children))
-    (def children (-> configuration :mol/components (get node) :atm/children))
-    (def child? (->> registry ui-type :child))
-    (def child (-> configuration :mol/components (get node) :atm/child)))
+  (if-let [inputs (:inputs (get denorm node))]
+    (->> (get components (first (keys inputs)))
+      :atm/kind))
 
-
-  [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})
-   :child ((fn [c] (get @atm-set c)) child)]
-
-
-
-  (:component ((fn [c] (get @atm-set c)) child))
-
-  (into [] (map (fn [c] (:component (get @atm-set c))) children))
 
 
   ())
-
-
-; :source/local
-(defmethod component->ui :source/local [{:keys [node meta-data container-id]}]
-  ;(log/info "component->ui :source/local" node meta-data)
-
-  ; 1. add the key to the blackboard, uses the :default property of the meta-data
-  ;
-  ;  only IF one exists, otherwise we assume it will be serviced by a :source/fn somewhere
-  ;
-  (when (:default meta-data)
-    (ul/dispatch-local container-id [:blackboard node] (:default meta-data)))
-
-  ; 2. create the subscription against the new :blackboard key
-  (ul/create-container-local-sub container-id [:blackboard node] (:default meta-data))
-
-  ; 3. create the event against the new :blackboard key
-  (ul/create-container-local-event container-id [:blackboard node])
-
-  ; 4. return the signal vector for the new subscription
-  [(ui-utils/path->keyword container-id [:blackboard node])])
 
 
 ;source/remote
@@ -216,8 +211,8 @@
                     {:container-id container-id
                      :sub-name [(ui-utils/path->keyword container-id :blackboard fn-name)]}
                     (make-params configuration node :inputs container-id))]
-    ;
-    (log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
+
+    ;(log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
 
     (actual-fn params)))
 
@@ -295,3 +290,35 @@
                 :container-id :v-scroll-with-children.molecule
                 :data [:v-scroll-with-children.molecule.blackboard.data]]]}
   ())
+
+
+(comment
+  (do
+    (def configuration (:configuration @last-params))
+    (def node "v-scroll")                                        ;(:node @last-params))
+    (def atm-set (:atm-set @last-params))
+    (def registry (:registry @last-params))
+
+    (def ui-type (get-in configuration [:mol/components node :atm/kind]))
+    (def bh-ui (if (keyword? ui-type)
+                 (->> registry ui-type :component
+                   ui-type)))
+    (def styl (get-in configuration [:mol/components node :atm/style]))
+    (def children? (->> registry ui-type :children))
+    (def children (-> configuration :mol/components (get node) :atm/children))
+    (def child? (->> registry ui-type :child))
+    (def child (-> configuration :mol/components (get node) :atm/child)))
+
+
+  [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})
+   :child ((fn [c] (get @atm-set c)) child)]
+
+
+
+  (:component ((fn [c] (get @atm-set c)) child))
+
+  (into [] (map (fn [c] (:component (get @atm-set c))) children))
+
+
+  ())
+
