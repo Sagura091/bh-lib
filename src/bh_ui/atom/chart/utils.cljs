@@ -190,7 +190,7 @@
 
 
 (defn- multi-button [data component-id path item]
-  (log/info "multi-button" item)
+  ;(log/info "multi-button" item)
   [:div (str item)])
 
 
@@ -205,7 +205,7 @@
             btns   (rcu/deref-or-value btns)
             _      (assert (or (not validate?) (not-empty (filter #(= chosen (id-fn %)) tabs))) "model not found in tabs vector")]
 
-        (log/info "multi-bar-tabs" model "//" chosen "//" btns)
+        ;(log/info "multi-bar-tabs" model "//" chosen "//" btns)
 
         (into [:div
                (merge
@@ -514,7 +514,8 @@
                  :close-button? false
                  :no-clip? false
                  :body [:> HexColorPicker {:color     (get-in @d path)
-                                           :on-change #(h/handle-change-path config-data path %)}]]])))
+                                           :on-change #(h/handle-change-path config-data []
+                                                         (assoc-in @d path %))}]]])))
 
 
 (defn color-config-text [component-id label path & [position]]

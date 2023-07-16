@@ -232,7 +232,7 @@
                          on-change-nodes on-change-edges
                          onDrop onConnect
                          wrapper flowInstance]}]
-  (log/info "diagram(star)")
+  ;(log/info "diagram(star)")
 
   [:> ReactFlow {:nodes            nodes
                  :edges            edges
@@ -261,7 +261,7 @@
         nodeTypes (clj->js node-types)
         wrapper   (clojure.core/atom nil)]
 
-    (log/info "diagram")
+    ;(log/info "diagram")
     ;@data "//" (:nodes @data) "//" (js->clj node-state))
 
     [:> ReactFlowProvider

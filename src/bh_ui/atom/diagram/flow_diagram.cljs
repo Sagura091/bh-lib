@@ -322,7 +322,7 @@
                            component-id container-id
                            force-layout?]}]
 
-  (log/info "editable-diagram")
+  ;(log/info "editable-diagram")
   ;  ;data @data
   ;  node-types)
 

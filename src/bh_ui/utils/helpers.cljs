@@ -96,7 +96,6 @@
     ret))
 
 
-
 (defn handle-change [value new-value]
   ;(log/info "handle-change" value "//" new-value)
   (cond

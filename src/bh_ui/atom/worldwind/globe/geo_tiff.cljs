@@ -19,7 +19,7 @@
 
     (.retrieveFromUrl (.-GeoTiffReader WorldWind) url
       (fn [geoTiffReader xhrStatus]
-        (log/info "make-shape call-back" (.isGeoTiff geoTiffReader))
+        ;(log/info "make-shape call-back" (.isGeoTiff geoTiffReader))
         (reset! last-geoTiffReader geoTiffReader)
         (let [surfaceTiff
               (new
@@ -27,7 +27,7 @@
                 (.. geoTiffReader -metadata -bbox)
                 ;(sector/sector [22.074653 33.344622 -95.433292 -82.723547]) ;
                 (new (.-ImageSource WorldWind) (.getImage geoTiffReader)))]
-          (log/info "make-shape surfaceTiff" surfaceTiff)
+          ;(log/info "make-shape surfaceTiff" surfaceTiff)
           (.addRenderable layer surfaceTiff)
           (set! (.-showSpinner layer) false))))
 

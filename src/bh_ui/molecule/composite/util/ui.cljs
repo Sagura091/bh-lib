@@ -234,6 +234,8 @@
 
 
 (defn prep-environment [configuration component-id registry]
+  ;(log/info "prep-environment" component-id)
+
   ; 1. remote subscriptions (including the remote call)
   ;
   ; [SIDE EFFECT]

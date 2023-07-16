@@ -601,7 +601,7 @@
 
   (->> (process-locals [] nil local-config)
     (map (fn [path]
-           (log/info "build-container-subs" container-id path)
+           ;(log/info "build-container-subs" container-id path)
            {path (subscribe-to-container container-id path)}))
     (into {}))
 
