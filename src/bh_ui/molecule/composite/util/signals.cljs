@@ -53,8 +53,8 @@
                                         [::subs/source remote])}
                          {target-port (condp = target-type
                                         :source/local [(ui-utils/path->keyword container-id :blackboard target)]
-                                        :source/fn  (let [sub-name (get-in configuration [:mol/components target :atm/kind])]
-                                                      [(ui-utils/path->keyword container-id :blackboard sub-name)])
+                                        :source/fn (let [sub-name (get-in configuration [:mol/components target :atm/kind])]
+                                                     [(ui-utils/path->keyword container-id :blackboard sub-name)])
                                         :else [::subs/source remote])}))))
               (into {}))]
     ;(log/info "make-params (b)" node "//" container-id "//" ret)
@@ -134,7 +134,7 @@
                                         (merge
                                           (make-params configuration node :inputs container-id)
                                           (make-params configuration node :outputs container-id))))))
-                     :label label}}]
+                     :label     label}}]
 
     (reset! last-hiccup ret)
     ret))
@@ -144,7 +144,7 @@
 (defmethod component->ui :source/local [{:keys [node meta-data configuration container-id] :as params}]
   ;(log/info "component->ui :source/local" node meta-data)
 
-  (let [denorm (:denorm configuration)
+  (let [denorm     (:denorm configuration)
         components (:mol/components configuration)]
 
     ; 1. add the key to the blackboard, uses the :default property of the meta-data
@@ -158,33 +158,19 @@
     (ul/create-container-local-sub container-id
       [:blackboard node]
       (:default meta-data)
-      (if-let [inputs (:inputs (get denorm node))]
+      (if-let [inputs (:inputs (get denorm node))]          ; if this :source/local falls after another component, depend upon IT!
         (->> (get components (first (keys inputs)))
           :atm/kind)))
+
+    ; TODO: approach #2 ==> create subs to each element of the defaults, when provided
+    ;(when default
+    ;  (let [paths (process-locals [] nil default)]))))
 
     ; 3. create the event against the new :blackboard key
     (ul/create-container-local-event container-id [:blackboard node])
 
     ; 4. return the signal vector for the new subscription
     [(ui-utils/path->keyword container-id [:blackboard node])]))
-
-
-; what if :source/local is fed from another component, say a :source/fn?
-;       1) how do we communicate this situation?
-(comment
-  (do
-    (def configuration (:configuration @last-locals))
-    (def node (:node @last-locals))
-    (def denorm (:denorm configuration))
-    (def components (:mol/components configuration)))
-
-  (if-let [inputs (:inputs (get denorm node))]
-    (->> (get components (first (keys inputs)))
-      :atm/kind))
-
-
-
-  ())
 
 
 ;source/remote
@@ -209,7 +195,7 @@
                     fn-name)
         params    (merge
                     {:container-id container-id
-                     :sub-name [(ui-utils/path->keyword container-id :blackboard fn-name)]}
+                     :sub-name     [(ui-utils/path->keyword container-id :blackboard fn-name)]}
                     (make-params configuration node :inputs container-id))]
 
     ;(log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
@@ -274,6 +260,26 @@
         sorted-config))))
 
 
+
+; what if :source/local is fed from another component, say a :source/fn?
+;       1) how do we communicate this situation?
+(comment
+  (do
+    (def configuration (:configuration @last-locals))
+    (def node (:node @last-locals))
+    (def denorm (:denorm configuration))
+    (def components (:mol/components configuration)))
+
+  (if-let [inputs (:inputs (get denorm node))]
+    (->> (get components (first (keys inputs)))
+      :atm/kind))
+
+
+
+  ())
+
+
+
 (comment
   (merge {} {:one "one"})
   (merge {:one "one"} {:two "two"})
@@ -295,7 +301,7 @@
 (comment
   (do
     (def configuration (:configuration @last-params))
-    (def node "v-scroll")                                        ;(:node @last-params))
+    (def node "v-scroll")                                   ;(:node @last-params))
     (def atm-set (:atm-set @last-params))
     (def registry (:registry @last-params))
 

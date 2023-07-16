@@ -253,6 +253,8 @@
         (get containers id)))))
 
 
+(def last-defaults (atom nil))
+
 (defn create-container-local-sub
   "create and registers a re-frame [subscription handler](https://day8.github.io/re-frame/subscriptions/)
   for the value at the path inside the [`:containers` `container-id as a keyword`] key in the `app-db`.
@@ -284,10 +286,16 @@
 > in place of standard re-frame subscription calls. It provides the same result, and does all the encoding for you.
   "
   [container-id [a & more :as value-path] default & layer-2]
+
+  (reset! last-defaults default)
+
   (let [p    (h/path->keyword container-id a more)
         dep  (compute-container-deps container-id a more)
         item (h/path->keyword (if more (last more) a))
         l    (first layer-2)]
+
+    ;(log/info "create-container-local-sub" ;container-id "//"
+    ;  p)
 
     ;(when layer-2
     ;  (log/info "create-container-local-sub" p
@@ -444,7 +452,7 @@
   (let [paths (process-locals [] nil locals-and-defaults)]
 
     ;(log/info "init-container-locals" container-id
-    ;  "//" paths
+    ;  "//" paths)
     ;  "//" locals-and-defaults)
 
     ; load the app-db with the default values
@@ -521,7 +529,7 @@
         get-in-ok (let [x (re-frame/subscribe [(h/path->keyword container-id)])]
                     (if x (get-in @x value-path)))]
 
-    (log/info "resolve-subscribe-local (ret)" container-id "," value-path "//" sub-ok "//" get-ok "//" get-in-ok)
+    ;(log/info "resolve-subscribe-local (ret)" container-id "," value-path "//" sub-ok "//" get-ok "//" get-in-ok)
 
     (if sub-ok
       sub-ok
