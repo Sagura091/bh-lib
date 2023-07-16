@@ -27,8 +27,8 @@
   dispatch updates (via on-layout-update) using (locals/dispatch-local ...)
   "
   [full-config]
-  {:blackboard {:defs {:source full-config
-                       :dag    {:open-details ""}}}
+  {:blackboard {};:defs {:source full-config
+                ;       :dag    {:open-details ""}}
    :container  ""
    :layout     (:mol/grid-layout full-config)})
 
