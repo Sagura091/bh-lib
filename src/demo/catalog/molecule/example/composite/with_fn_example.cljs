@@ -82,6 +82,9 @@
 
 Here, we show the original data in the line chart while the pie chart shows the result of `(:uv * :pv) / 1000`
 
+  > Note: this example shows hooking a :source/fn to a :source/local, like a cache. This is _not_ required; a :source/fn can connect
+  > directly to a :ui/component is that is better for your design.
+
 "
         [layout/frame
          ;;

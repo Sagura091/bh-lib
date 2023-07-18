@@ -37,14 +37,14 @@
 
                   [rc/button :on-click #(h/handle-change-path data []
                                           (assoc @old-data :data
-                                            (conj (:data @old-data)
-                                              {:name "Page Q" :uv 1100
-                                               :pv   1100 :tv 1100 :amt 1100})))
+                                                           (conj (:data @old-data)
+                                                             {:name "Page Q" :uv 1100
+                                                              :pv   1100 :tv 1100 :amt 1100})))
                    :label "Add 'Q'"]
 
                   [rc/button :on-click #(h/handle-change-path data []
                                           (assoc @old-data :data
-                                            (into [] (drop-last 2 (:data @old-data)))))
+                                                           (into [] (drop-last 2 (:data @old-data)))))
                    :label "Drop Last 2"]
 
                   [rc/button :on-click #(h/handle-change-path data []
@@ -56,41 +56,64 @@
                                                              (:data @old-data))))))
                    :label "Add :new-item"]]])))
 
-
+(def last-thing (atom nil))
 (defn- config-tools [config-data]
-  (let [brush? (ui-utils/subscribe-local config-data [:brush])
-        uv?    (ui-utils/subscribe-local config-data [:uv :include])
-        tv?    (ui-utils/subscribe-local config-data [:tv :include])]
+  ;(log/info "config-tools (a)" config-data)
 
-    ;(log/info "config-tools" config-data "//" @brush? "//" @uv?)
+  (reset! last-thing config-data)
 
+  (let [cfg (ui-utils/subscribe-local config-data [])]
     (fn []
-      [rc/h-box :src (rc/at)
-       :gap "10px"
-       :class "tools-panel"
-       :children [[:label.h5 "Config:"]
-                  [rc/button :on-click #(h/handle-change-path config-data [] widget/default-config-data) :label "Default"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:brush] (not @brush?))
-                   :label "!Brush"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:uv :include] (not @uv?))
-                   :label "! uv data"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:tv :include] (not @tv?))
-                   :label "! tv data"]
+      (let [brush? (get-in @cfg [:brush])
+            uv?    (get-in @cfg [:uv :include])
+            tv?    (get-in @cfg [:tv :include])]
 
-                  [chart-utils/color-config config-data ":amt :fill" [:amt :fill] :above-center]
+        ;(log/info "config-tools (b)" config-data "//" cfg "//" brush? "//" uv?)
 
-                  [rc/button :on-click #((h/handle-change-path config-data [:uv :stackId] "b")
-                                         (h/handle-change-path config-data [:pv :stackId] "b"))
-                   :label "stack uv/pv"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:uv :stackId] "")
-                                         (h/handle-change-path config-data [:pv :stackId] ""))
-                   :label "!stack uv/pv"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:tv :stackId] "a")
-                                         (h/handle-change-path config-data [:amt :stackId] "a"))
-                   :label "stack tv/amt"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:tv :stackId] "")
-                                         (h/handle-change-path config-data [:amt :stackId] ""))
-                   :label "!stack tv/amt"]]])))
+        [rc/h-box :src (rc/at)
+         :gap "10px"
+         :class "tools-panel"
+         :children [[:label.h5 "Config:"]
+                    [rc/button :on-click #(h/handle-change-path config-data [] widget/default-config-data) :label "Default"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (assoc-in @cfg [:brush] (not brush?)))
+                     :label "!Brush"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (assoc-in @cfg [:uv :include] (not uv?)))
+                     :label "! uv data"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (assoc-in @cfg [:tv :include] (not tv?)))
+                     :label "! tv data"]
+
+                    [chart-utils/color-config config-data ":amt :fill" [:amt :fill] :above-center]
+
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (-> @cfg
+                                              (assoc-in [:uv :stackId] "b")
+                                              (assoc-in [:pv :stackId] "b")))
+                     :label "stack uv/pv"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (-> @cfg
+                                              (assoc-in [:uv :stackId] "")
+                                              (assoc-in [:pv :stackId] "")))
+                     :label "!stack uv/pv"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                             (-> @cfg
+                                               (assoc-in [:tv :stackId] "a")
+                                               (assoc-in [:amt :stackId] "a")))
+                     :label "stack tv/amt"]
+                    [rc/button :on-click #(h/handle-change-path config-data []
+                                            (-> @cfg
+                                              (assoc-in [:tv :stackId] "")
+                                              (assoc-in [:amt :stackId] "")))
+                     :label "!stack tv/amt"]]]))))
+
+
+(comment
+  (def config-data @last-thing)
+  (def cfg (ui-utils/subscribe-local config-data []))
+
+  ())
 
 
 (defn- data-config-update-example [& {:keys [widget component-id] :as params}]

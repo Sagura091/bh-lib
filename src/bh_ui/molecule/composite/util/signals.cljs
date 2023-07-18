@@ -67,6 +67,7 @@
 
 (def last-params (atom nil))
 (def last-hiccup (atom nil))
+(def last-locals (atom nil))
 
 
 ; :ui/component
@@ -142,7 +143,9 @@
 
 ; :source/local
 (defmethod component->ui :source/local [{:keys [node meta-data configuration container-id] :as params}]
-  ;(log/info "component->ui :source/local" node meta-data)
+  (log/info "component->ui :source/local" node meta-data)
+
+  (reset! last-locals params)
 
   (let [denorm     (:denorm configuration)
         components (:mol/components configuration)]
@@ -158,13 +161,10 @@
     (ul/create-container-local-sub container-id
       [:blackboard node]
       (:default meta-data)
-      (if-let [inputs (:inputs (get denorm node))]          ; if this :source/local falls after another component, depend upon IT!
-        (->> (get components (first (keys inputs)))
-          :atm/kind)))
-
-    ; TODO: approach #2 ==> create subs to each element of the defaults, when provided
-    ;(when default
-    ;  (let [paths (process-locals [] nil default)]))))
+      (let [inputs (:inputs (get denorm node)) ; if this :source/local falls after a :source/fn, depend upon IT!
+            comps  (get components (first (keys inputs)))]
+        (when (= :source/fn (:atm/role comps))
+          (:atm/kind comps))))
 
     ; 3. create the event against the new :blackboard key
     (ul/create-container-local-event container-id [:blackboard node])
@@ -268,11 +268,15 @@
     (def configuration (:configuration @last-locals))
     (def node (:node @last-locals))
     (def denorm (:denorm configuration))
-    (def components (:mol/components configuration)))
+    (def components (:mol/components configuration))
+    (def inputs (:inputs (get denorm node)))
+    (def comps (get components (first (keys inputs)))))
 
-  (if-let [inputs (:inputs (get denorm node))]
-    (->> (get components (first (keys inputs)))
-      :atm/kind))
+  (let [inputs (:inputs (get denorm node))
+        comps  (get components (first (keys inputs)))]
+    (when (= :source/fn (:atm/role comps))
+      (:atm/kind comps)))
+
 
 
 

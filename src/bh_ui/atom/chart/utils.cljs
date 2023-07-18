@@ -245,21 +245,19 @@
 
 
 
-(defn column-multi-picker [data component-id label path]
-  (let [model (u/subscribe-local component-id path)]
+(defn column-multi-picker [data config label path]
+  (let [cfg (u/subscribe-local config [])]
     (fn []
-      (if model
-        (let [headings (apply set (map keys (get @data :data)))
-              btns     (mapv (fn [h] {:id h :label h}) headings)
-              as-set   (set @model)]
-          ;(log/info "column-multi-picker" headings "//" as-set)
-          [rc/h-box :src (rc/at)
-            :gap "5px"
-            :children [[rc/box :src (rc/at) :align :start :child [:code label]]
-                       [multi-bar-tabs
-                        :model (r/atom as-set)
-                        :btns btns]]])
-        (subscription-error label path)))))
+      (let [model (r/atom (get-in @cfg path))
+            headings (apply set (map keys (get @data :data)))
+            btns     (mapv (fn [h] {:id h :label h}) headings)]
+        ;(log/info "column-multi-picker" headings "//" as-set)
+        [rc/h-box :src (rc/at)
+          :gap "5px"
+          :children [[rc/box :src (rc/at) :align :start :child [:code label]]
+                     [multi-bar-tabs
+                      :model (r/atom (set @model))
+                      :btns btns]]]))))
 
 
 (defn boolean-config
@@ -273,51 +271,56 @@
   "
   [config label path]
 
-  (let [checked? (u/subscribe-local config path)]
+  (log/info "boolean-config (a)" config "//" label "//" path)
+
+  (let [cfg (u/subscribe-local config [])]
+    (log/info "boolean-config (b)" config "//" @cfg)
+
     (fn []
-      (if checked?
+      (let [checked? (r/atom (get-in @cfg path))]
+        (log/info "boolean-config (c)" config "//" checked?)
         [rc/checkbox :src (rc/at)
          :label (cond
                   (and (string? label) (empty? label)) ""
                   :else [rc/box :src (rc/at) :align :start :child [:code label]])
          :model @checked?
-         :on-change #(u/dispatch-local config path %)]
-        (subscription-error label path)))))
+         :on-change #(h/handle-change-path config []
+                       (assoc-in @cfg path %))]))))
 
 
 (defn slider-config
-  ([component-id min max step path]
+  ([config min max step path]
 
    ;(log/info "slider-config" component-id min max step path)
 
-   (let [model (u/subscribe-local component-id path)]
+   (let [cfg (u/subscribe-local config [])]
      (fn []
        ;(log/info "slider-config (model)" model "//" (when model @model))
 
-       (if (and model @model)                               ; needed to cover possible race condition where the subscription initially returns nil
+       (let [model (r/atom (get-in @cfg path))]
          [rc/slider :src (rc/at)
           :model @model
           :width "100px"
           :min min :max max :step step
-          :on-change #(u/dispatch-local component-id path %)]
-         (subscription-error "slider" path)))))
+          :on-change #(h/handle-change-path config []
+                        (assoc-in @cfg path %))]))))
 
-  ([component-id min max path]
-   [slider-config component-id min max 1 path]))
+  ([config min max path]
+   [slider-config config min max 1 path]))
 
 
-(defn text-config [component-id label path]
-  (let [model (u/subscribe-local component-id path)]
+(defn text-config [config label path]
+  (let [cfg (u/subscribe-local config [])]
     (fn []
-      (if model
+      (let [model (r/atom (get-in @cfg path))]
         [rc/h-box :src (rc/at)
          :gap "5px"
          :children [[rc/label :src (rc/at) :label label]
                     [rc/input-text :src (rc/at)
                      :model (str @model)
                      :width "50px"
-                     :on-change #(u/dispatch-local component-id path %)]]]
-        (subscription-error label path)))))
+                     :on-change #(h/handle-change-path config []
+                                   (assoc-in @cfg path %))]]]))))
 
 
 (defn strokeDasharray
@@ -769,5 +772,25 @@
 
   (override @tooltip? ui :tooltip)
   (override @grid? ui :grid)
+
+  ())
+
+
+; new logic for handling :config via :source/local (no recursive subs/handlers)
+(comment
+
+  (def config [:multi-chart-widget.widget.blackboard.topic.config])
+  (def container-id config)
+
+  (u/subscribe-local config [])
+
+
+  (def s (let [[a & more :as value-path] []]
+           (h/path->keyword container-id a more)))
+
+  @(re-frame/subscribe s)
+  (re-frame/subscribe [:multi-chart-widget.widget.blackboard.topic.data])
+  (re-frame/subscribe [:multi-chart-widget.widget.blackboard.topic.config])
+
 
   ())

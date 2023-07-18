@@ -12,7 +12,7 @@
 (def ui-definition {:mol/components  {"table"      {:atm/role           :ui/component :atm/kind :react-table/table
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
-                                      "input-data" {:atm/role :source/local :atm/kind :topic/input-data
+                                      "input-data" {:atm/role :source/local ;:atm/kind :topic/input-data
                                                     :default  demo.catalog.atom.example.experimental.react-table/data}}
 
                     :mol/links       {"input-data" {:data {"colorize" :data}}
@@ -39,7 +39,7 @@
         (:data d)))))
 
 
-(defn- colorize [{:keys [data colored sub-name]}]
+(defn- colorize [{:keys [data sub-name]}]
   ;(log/info "colorize (a)" sub-name "//" data "//" colored)
 
   (let [next-target-color (atom -1)
