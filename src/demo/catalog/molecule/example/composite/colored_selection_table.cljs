@@ -12,7 +12,7 @@
 (def ui-definition {:mol/components  {"table"      {:atm/role           :ui/component :atm/kind :react-table/table
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
-                                      "input-data" {:atm/role :source/local ;:atm/kind :topic/input-data
+                                      "input-data" {:atm/role :source/local :atm/kind :topic/input-data
                                                     :default  demo.catalog.atom.example.experimental.react-table/data}}
 
                     :mol/links       {"input-data" {:data {"colorize" :data}}
@@ -27,20 +27,20 @@
         assigned     (map (juxt k :color) last-data)
         assigned-set (->> assigned (map first) set)]
 
-    (doall
-      (map (fn [e]
-             (if (contains? assigned-set (k e))
-               (assoc e :color (->> last-data
-                                 (filter #(= (k e) (k %)))
-                                 first
-                                 :color))
-               (assoc e :color (nth cp/color-pallet
-                                 (mod (swap! next-color inc) cnt)))))
-        (:data d)))))
+    (assoc d :data (doall
+                     (map (fn [e]
+                            (if (contains? assigned-set (k e))
+                              (assoc e :color (->> last-data
+                                                (filter #(= (k e) (k %)))
+                                                first
+                                                :color))
+                              (assoc e :color (nth cp/color-pallet
+                                                (mod (swap! next-color inc) cnt)))))
+                       (:data d))))))
 
 
 (defn- colorize [{:keys [data sub-name]}]
-  ;(log/info "colorize (a)" sub-name "//" data "//" colored)
+  (log/info "colorize (a)" sub-name "//" data)
 
   (let [next-target-color (atom -1)
         [component topic] (-> sub-name
@@ -57,9 +57,11 @@
       :<- data
       :<- path
       (fn [[d p] _]
+        (log/info "colorize (c)" d)
+
         (let [ret (color-entities d p next-target-color topic :name)]
 
-          ;(log/info "fn-color-targets (ret)" ret)
+          (log/info "colorize (d)" ret)
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color

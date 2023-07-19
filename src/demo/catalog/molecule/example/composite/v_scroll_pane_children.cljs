@@ -29,7 +29,6 @@
                     :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})
 
 
-
 (defn example []
   (let [container-id "v-scroll-with-children"
         component-id (h/path->keyword container-id "molecule")]
@@ -43,6 +42,78 @@ that are visually contained _within_ the outer atom. In this example, we use the
          [:div.molecule-content
           [grid/component
            :data (r/atom ui-definition)
+           :component-id component-id
+           :resizable true
+           :tools true]]]
+
+        source-code))))
+
+
+(def data-one {:title    "Targets"
+               :c-o-c    [{:step      :generated
+                           :by        "demo.catalog.atom.example.experimental.react-table"
+                           :version   "generated"
+                           :at        "dummy-date"
+                           :signature "dummy-uuid"}]
+               :metadata {:title  "Targets"
+                          :type   :tabular
+                          :id     :AoI
+                          :fields {:AoI :string :Symbol :string :include :boolean}}
+
+               :data     [{:Symbol "#FFFF00" :include false :AoI "Fire-prst-001"}
+                          {:Symbol "#00FFFF" :include false :AoI "Ft-202210-0010"}
+                          {:Symbol "#0000FF" :include false :AoI "Ft-202210-0011"}
+                          {:Symbol "#FFA500" :include false :AoI "Ft-202210-0012"}
+                          {:Symbol "#808080" :include false :AoI "Ft-202210-0013"}
+                          {:Symbol "#6495ED" :include false :AoI "Ft-202210-0014"}
+                          {:Symbol "#008B8B" :include false :AoI "Ft-202210-0015"}
+                          {:Symbol "#DAA520" :include false :AoI "Ft-202210-0001"}
+                          {:Symbol "#00BFFF" :include false :AoI "Ft-202210-0002"}
+                          {:Symbol "#8FBC8F" :include false :AoI "Ft-202210-0003"}
+                          {:Symbol "#9400D3" :include false :AoI "Ft-202210-0004"}]})
+(def data-two {:title    "Targets"
+               :c-o-c    [{:step      :generated
+                           :by        "demo.catalog.atom.example.experimental.react-table"
+                           :version   "generated"
+                           :at        "dummy-date"
+                           :signature "dummy-uuid"}]
+               :metadata {:title  "Targets"
+                          :type   :tabular
+                          :id     :AoI
+                          :fields {:AoI :string :Symbol :string :include :boolean}}
+
+               :data     [{:Symbol "#FFFF00" :include false :AoI "Alpha"}
+                          {:Symbol "#00FFFF" :include false :AoI "Bravo"}
+                          {:Symbol "#0000FF" :include false :AoI "Charlie"}]})
+
+(def def-2 {:mol/components  {"table-one"  {:atm/role :ui/component :atm/kind :react-table/table
+                                            :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                              "table-two" {:atm/role :ui/component :atm/kind :react-table/table
+                                           :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                              "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
+                                            :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
+                              "data/one" {:atm/role :source/local :atm/kind :data/one
+                                          :default data-one}
+                              "data/two" {:atm/role :source/local :atm/kind :data/one
+                                          :default data-two}}
+            :mol/links       {"data/one" {:data {"table-one"  :data}}
+                              "data/two" {:data {"table-two"  :data}}}
+            :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})
+
+
+(defn example-2 []
+  (let [container-id "v-scroll-with-table-children"
+        component-id (h/path->keyword container-id "molecule")]
+    (fn []
+      (acu/demo "Vertical Scroll with Child Tables"
+        "This example is ***IN PROGRESS***, and may not be working yet.
+
+The goal is to support atoms which can have 'children', i.e., other atoms
+that are visually contained _within_ the outer atom. In this example, we use the v-scroller (re-com) atom."
+        [layout/frame
+         [:div.molecule-content
+          [grid/component
+           :data (r/atom def-2)
            :component-id component-id
            :resizable true
            :tools true]]]

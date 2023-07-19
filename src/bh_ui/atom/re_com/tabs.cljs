@@ -3,7 +3,7 @@
             [reagent.core :as r]
             [taoensso.timbre :as log]))
 
-
+(def last-params (atom nil))
 (def default-style {:style {:height "150px" :width "100%"
                             :border "1px solid" :border-radius "10px"}})
 (def sample-children [[:div default-style "child one"]
@@ -20,7 +20,20 @@
 
 
 (defn- make-tab [[id content]]
-  {:id id :label id :child content})
+  {:id id :label id :child ^{:key id} content})
+
+
+(def last-contents (atom nil))
+(def last-child (atom nil))
+
+
+(defn- contents [child]
+  (log/info "contents" child)
+
+  [rc/box :src (rc/at)
+   :gap "2px"
+   :width "250px" :height "300px"
+   :child child])
 
 
 (defn- h-tab*
@@ -37,18 +50,68 @@
   [tab-kind children style config]
   ; TODO: where does :style apply?
 
-  (r/with-let [contents     (map make-tab (zipmap (:labels config) children))
-               selected-tab (r/atom (-> contents first :id))]
+  (log/info "h-tab (a)" config "//" children)
 
-    [rc/v-box
-     :gap "5px"
-     :children [[tab-kind :src (rc/at)
-                 :style {:border "1px solid"}
-                 :model selected-tab
-                 :tabs contents
-                 :on-change #(reset! selected-tab %)]
-                [rc/box :src (rc/at)
-                 :child (:child (item-for-id @selected-tab contents))]]]))
+  (let [pages        (map make-tab (zipmap (:labels config) children))
+        selected-tab (r/atom (-> pages first :id))
+        lookup       (fn [s] (->> pages
+                               (filter #(= (:id %) @s))
+                               (map :child)
+                               first))
+        child        (r/atom (lookup selected-tab))]
+
+
+    (log/info "h-tab (b)" @selected-tab
+      "//" pages)
+
+    (fn [params]
+      (reset! last-contents {:p pages :s @selected-tab})
+
+      (log/info "h-tab (c)" @selected-tab "//" pages "//" child)
+
+      [rc/v-box
+       :gap "5px"
+       :children [[tab-kind :src (rc/at)
+                   :style {:border "1px solid"}
+                   :model selected-tab
+                   :tabs pages
+                   :on-change #(do
+                                 (reset! selected-tab %)
+                                 (reset! child (lookup selected-tab)))]
+                  @child]])))
+
+
+(comment
+  (do
+    (def pages (:p @last-contents))
+    (def selected-tab (atom (:s @last-contents))))
+
+  (item-for-id selected-tab v)
+  (first (filter #(= (:id %) "Two") v))
+
+  @last-child
+  ((seq @last-child))
+
+  (->> pages
+    (filter #(= (:id %)
+               @selected-tab)))
+
+  (->> pages
+    (filter #(= (:id %)
+               @selected-tab))
+    (map :child))
+
+  ((first @last-child)
+   :data [:tabbed-molecule-2.molecule.blackboard.data.two])
+  (type (first @last-child))
+
+  (((first @last-child)
+    :data [:tabbed-molecule-2.molecule.blackboard.data.one]))
+  (((first @last-child)
+    :data [:tabbed-molecule-2.molecule.blackboard.data.two]))
+
+
+  ())
 
 
 (defn- v-tab*
@@ -65,18 +128,19 @@
   [tab-kind children style config]
   ; TODO: where does :style apply?
 
-  (r/with-let [contents     (map make-tab (zipmap (:labels config) children))
-               selected-tab (r/atom (-> contents first :id))]
+  (let [contents     (map make-tab (zipmap (:labels config) children))
+        selected-tab (r/atom (-> contents first :id))]
 
-    [rc/h-box
-     :gap "5px"
-     :children [[tab-kind :src (rc/at)
-                 :style {:border "1px solid"}
-                 :model selected-tab
-                 :tabs contents
-                 :on-change #(reset! selected-tab %)]
-                [rc/box :src (rc/at)
-                 :child (:child (item-for-id @selected-tab contents))]]]))
+    (fn []
+      [rc/h-box
+       :gap "5px"
+       :children [[tab-kind :src (rc/at)
+                   :style {:border "1px solid"}
+                   :model selected-tab
+                   :tabs contents
+                   :on-change #(reset! selected-tab %)]
+                  [rc/box :src (rc/at)
+                   :child (:child (item-for-id @selected-tab contents))]]])))
 
 
 (defn h-tabs [& {:keys [children style config]}]
@@ -87,7 +151,8 @@
   (h-tab* rc/horizontal-bar-tabs children style config))
 
 
-(defn h-pill-tabs [& {:keys [children style config]}]
+(defn h-pill-tabs [& {:keys [children style config] :as params}]
+  (reset! last-params params)
   (h-tab* rc/horizontal-pill-tabs children style config))
 
 
@@ -108,3 +173,9 @@
 (re-frame.core/dispatch-sync [:register-meta element-defs])
 
 
+
+(comment
+  @last-params
+
+
+  ())

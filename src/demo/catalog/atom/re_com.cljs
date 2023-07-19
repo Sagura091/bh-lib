@@ -27,6 +27,10 @@
   []
   [:div
    [tabs/example]
+   [tabs/example-2]
+   [tabs/example-3]
+   [tabs/example-4]
+   [tabs/example-5]
    [v-scroller/example]
    [v-scroller/chart-example]
    [v-scroller/woolybear-scroll-example]

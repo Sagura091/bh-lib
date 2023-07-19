@@ -143,7 +143,7 @@
 
 ; :source/local
 (defmethod component->ui :source/local [{:keys [node meta-data configuration container-id] :as params}]
-  (log/info "component->ui :source/local" node meta-data)
+  ;(log/info "component->ui :source/local" node meta-data)
 
   (reset! last-locals params)
 

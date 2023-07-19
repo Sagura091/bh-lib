@@ -4,10 +4,13 @@
     [reagent.dom :as rdom]
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
-    [bh-ui.utils.helpers :as h]))
+    [bh-ui.utils.helpers :as h]
+    [taoensso.timbre :as log]))
 
 
 (defn- table [columns data table-type config]
+  (log/info "table (render)" (js->clj data))
+
   (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useExpanded)]
     [:div {:style {:max-height  (or (:height @config) "300px")
                    :overflow    "auto"
@@ -155,7 +158,7 @@
   "configures data into format react-table want it"
   [data config]
   (let [table-type   (:table-type @config)
-        d            @data
+        d            (:data @data)
         group-by-key (:group-by @config)]
 
     ;(js/console.log "configure data")
@@ -176,6 +179,8 @@
 (def last-params (atom nil))
 
 (defn table-component [& {:keys [data config style]}]
+  (log/info "table-component (a)" data)
+
   (let [cfg           (h/resolve-value config)
         d             (h/resolve-value data)
         s             (h/resolve-value style)
@@ -187,6 +192,7 @@
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
+      (log/info "table-component (render)" data)
       [:f> table
        column-config
        (clj->js @react-data)
@@ -206,7 +212,7 @@
   (do
     (def config (:config @last-params))
     (def data (:data @last-params))
-    (def style (:style (@last-params)))
+    (def style (:style @last-params))
 
     (def cfg           (h/resolve-value config))
     (def d             (h/resolve-value data))

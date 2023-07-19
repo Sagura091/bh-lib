@@ -126,6 +126,8 @@
 (defn- component* [& {:keys [data component-id container-id
                              subscriptions isAnimationActive?]
                       :as   params}]
+  (log/info "component(star)" component-id)
+
   (let [d (if (empty? data) [] (get data :data))]
 
     [:> ResponsiveContainer
@@ -138,9 +140,9 @@
       (make-area-display data subscriptions isAnimationActive?)]]))
 
 
-(defn component [& {:keys [component-id ] :as params}]
+(defn component [& {:keys [component-id] :as params}]
 
-  ;(log/info "component-2" params)
+  (log/info "component" component-id "//" params)
 
   (let [input-params (assoc params :component* component*
                                    :component-panel wrapper/component-panel
