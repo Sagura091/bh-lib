@@ -17,8 +17,12 @@
 (re-frame/reg-event-db
   ::get-version
   (fn-traced [db _]
-     (assoc db :version "unknown")
+     (assoc db :version "unknown" :i18n ":en")
    ))
+(re-frame/reg-event-db
+  :set-i18n
+  (fn-traced [db [_ i18n]]
+             (assoc-in db [:i18n] i18n)))
 
 
 
