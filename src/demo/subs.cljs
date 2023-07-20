@@ -7,6 +7,11 @@
   (fn [db]
     (:version db)))
 
+(re-frame/reg-sub
+  ::i18n
+  (fn [db]
+    (:i18n db)))
+
 
 (re-frame/reg-sub
   ::uuid

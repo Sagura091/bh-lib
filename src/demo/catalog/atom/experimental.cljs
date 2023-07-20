@@ -4,7 +4,11 @@
             [demo.catalog.atom.example.experimental.ui-element :as ui-element]
             [demo.catalog.atom.example.experimental.react-table :as react-table]
             [demo.catalog.atom.example.re-com.plain-table :as plain-table]
-            [demo.catalog.atom.example.experimental.tab-set :as tab-set]))
+            [demo.catalog.atom.example.experimental.tab-set :as tab-set]
+            [demo.catalog.atom.example.re-com.plain-table :as plain-table]
+            [demo.catalog.atom.example.experimental.internatonilization :as inter]
+            [re-frame.core :as re-frame]
+            [demo.subs :as sub]))
 
 
 
@@ -19,7 +23,10 @@
 
    [plain-table/example]
    [react-table/standard-table]
-   [react-table/expandable-table]])
+   [react-table/expandable-table]
+
+   [react-table/expandable-table]
+   [inter/internatonilization (re-frame/subscribe[::sub/i18n])]])
 
    ;[ui-element/selectable-table]])
    ;[ui-element/three-d-globe]

@@ -28,15 +28,15 @@
         assigned-set (->> assigned (map first) set)]
 
     (assoc d :data (doall
-                     (map (fn [e]
-                            (if (contains? assigned-set (k e))
-                              (assoc e :color (->> last-data
-                                                (filter #(= (k e) (k %)))
-                                                first
-                                                :color))
-                              (assoc e :color (nth cp/color-pallet
-                                                (mod (swap! next-color inc) cnt)))))
-                       (:data d))))))
+                     (into [] (map (fn [e]
+                                     (if (contains? assigned-set (k e))
+                                       (assoc e :color (->> last-data
+                                                         (filter #(= (k e) (k %)))
+                                                         first
+                                                         :color))
+                                       (assoc e :color (nth cp/color-pallet
+                                                         (mod (swap! next-color inc) cnt)))))
+                                (:data d)))))))
 
 
 (defn- colorize [{:keys [data sub-name]}]

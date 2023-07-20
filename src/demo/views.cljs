@@ -13,6 +13,10 @@
             [woolybear.ad.layout :as layout]))
 
 
+
+
+
+
 (def navbar [[:app-bar/welcome "Welcome!" [welcome/page]]
              [:app-bar/tech "Technologies" [tech/page]]
              [:app-bar/atoms "'Atoms'" [atoms/page]]
