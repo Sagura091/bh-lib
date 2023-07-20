@@ -158,7 +158,7 @@
   "configures data into format react-table want it"
   [data config]
   (let [table-type   (:table-type @config)
-        d            (:data @data)
+        d            (or (:data @data) @data)
         group-by-key (:group-by @config)]
 
     ;(js/console.log "configure data")
