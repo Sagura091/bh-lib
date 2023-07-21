@@ -19,16 +19,16 @@
 
 
 (defn- content [{:keys [label child]} selected-tab]
-  (let [vis (if (= @selected-tab label) "visible" "hidden")]
-    (log/info "contents" label "//" vis "//" @selected-tab)
-    ^{:key label} [:div {:style {:visibility vis :position "absolute"}}
-                   child]))
+  (let [vis (= @selected-tab label)]
+    ;(log/info "contents" label "//" vis "//" @selected-tab)
+    (when vis
+      ^{:key label} [:div child])))
 
 
 (defn tab-set [& {:keys [children config style
                          component-id container-id] :as params}]
 
-  (log/info "tab-set2 (a)" children "//" config)
+  ;(log/info "tab-set2 (a)" children "//" config)
   (reset! last-params {:ch children :cfg config})
 
   (let [pages        (map make-tab (zipmap (:labels config) children))
@@ -46,9 +46,9 @@
                                     (make-button label selected-tab))
                                pages)]
                   [rc/h-box :src (rc/at)
-                   :style {:min-height "400px" :min-width "400px"
-                           :border "1px dotted"}
-                   :children (map #(content % selected-tab) pages)]]])))
+                   :children (->> pages
+                               (map #(content % selected-tab))
+                               (filter some?))]]])))
 
 
 (comment
@@ -66,6 +66,20 @@
                           (make-button label selected-tab))
                      pages))))
 
+
+  (map #(content % selected-tab) pages)
+  (->> pages
+    (map #(content2 % selected-tab))
+    (filter some?))
+
+  (filter some? [:one :two nil nil])
+
+  (let [label "Two"
+        child [:child-two]
+        vis (if (= @selected-tab label) "visible" "hidden")]
+    (log/info "contents" label "//" vis "//" @selected-tab)
+    (when vis
+      ^{:key label} [:div child]))
 
   (map (fn [{:keys [label child]}]
          {:l label :c child})

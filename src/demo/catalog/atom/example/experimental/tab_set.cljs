@@ -26,7 +26,9 @@
 
 (defn- content-page [& {:keys [data]}]
   (let [d (re-frame/subscribe data)]
-    [:p @d]))
+    [:p {:style {:height "200px" :width "350px"
+                 :border "1px dotted"}}
+     @d]))
 
 
 (def sample-config-1 {:labels ["One" "Two" "Three"]})
