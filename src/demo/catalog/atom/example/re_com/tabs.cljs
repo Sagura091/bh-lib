@@ -68,15 +68,8 @@
 (def hiccup-4-children [[text-block-4 :data "text block one"]
                         [text-block-4 :data "text block two"]
                         [text-block-4 :data "text block three"]])
-(def hiccup-5-children [[rc/box :width "250px" :height "300px"
-                         :child [area/component :data area/sample-data :config area/sample-config-data
-                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
-                        [rc/box :width "250px" :height "300px"
-                         :child [bar/component :data area/sample-data :config area/sample-config-data
-                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
-                        [rc/box :width "250px" :height "300px"
-                         :child [line/component :data area/sample-data :config area/sample-config-data
-                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]])
+
+
 
 (defn example []
   (acu/demo "Tabs [:div]"
@@ -183,6 +176,16 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
     '[layout/centered {:extra-classes :width-50}
       []]))
 
+(def hiccup-5-children [[rc/box :width "250px" :height "300px"
+                         :child [area/component :data area/sample-data :config area/sample-config-data
+                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
+                        [rc/box :width "250px" :height "300px"
+                         :child [bar/component :data area/sample-data :config area/sample-config-data
+                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
+                        [rc/box :width "250px" :height "300px"
+                         :child [line/component :data area/sample-data :config area/sample-config-data
+                                 :component-id :tabbed-example.ui.area :container-id :tabbed-example]]])
+
 
 (defn example-5 []
   (acu/demo "Tabs #5 [recharts/charts]"
@@ -207,3 +210,93 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
 
     '[layout/centered {:extra-classes :width-50}
       []]))
+
+
+
+(def data-one {:title    "Targets One"
+               :c-o-c    [{:step      :generated
+                           :by        "demo.catalog.atom.example.experimental.react-table"
+                           :version   "generated"
+                           :at        "dummy-date"
+                           :signature "dummy-uuid"}]
+               :metadata {:title  "Targets Two"
+                          :type   :tabular
+                          :id     :AoI
+                          :fields {:AoI :string :Symbol :string :include :boolean}}
+
+               :data     [{:Symbol "#FFFF00" :include false :AoI "Fire-prst-001"}
+                          {:Symbol "#00FFFF" :include false :AoI "Ft-202210-0010"}
+                          {:Symbol "#0000FF" :include false :AoI "Ft-202210-0011"}
+                          {:Symbol "#FFA500" :include false :AoI "Ft-202210-0012"}
+                          {:Symbol "#808080" :include false :AoI "Ft-202210-0013"}
+                          {:Symbol "#6495ED" :include false :AoI "Ft-202210-0014"}
+                          {:Symbol "#008B8B" :include false :AoI "Ft-202210-0015"}
+                          {:Symbol "#DAA520" :include false :AoI "Ft-202210-0001"}
+                          {:Symbol "#00BFFF" :include false :AoI "Ft-202210-0002"}
+                          {:Symbol "#8FBC8F" :include false :AoI "Ft-202210-0003"}
+                          {:Symbol "#9400D3" :include false :AoI "Ft-202210-0004"}]})
+(def data-two {:title    "Targets Two"
+               :c-o-c    [{:step      :generated
+                           :by        "demo.catalog.atom.example.experimental.react-table"
+                           :version   "generated"
+                           :at        "dummy-date"
+                           :signature "dummy-uuid"}]
+               :metadata {:title  "Targets Two"
+                          :type   :tabular
+                          :id     :AoI
+                          :fields {:AoI :string :Symbol :string :include :boolean}}
+
+               :data     [{:Symbol "#FFFF00" :include false :AoI "Alpha"}
+                          {:Symbol "#00FFFF" :include false :AoI "Bravo"}
+                          {:Symbol "#0000FF" :include false :AoI "Charlie"}]})
+(def data-three {:title    "Targets Three"
+                 :c-o-c    [{:step      :generated
+                             :by        "demo.catalog.atom.example.experimental.react-table"
+                             :version   "generated"
+                             :at        "dummy-date"
+                             :signature "dummy-uuid"}]
+                 :metadata {:title  "Targets Three"
+                            :type   :tabular
+                            :id     :AoI
+                            :fields {:AoI :string :Symbol :string :include :boolean}}
+
+                 :data     [{:Symbol "#FFFF00" :include false :AoI "Omega"}
+                            {:Symbol "#a0a0FF" :include false :AoI "Theta"}
+                            {:Symbol "#4040FF" :include false :AoI "Phi"}
+                            {:Symbol "#0aa0aF" :include false :AoI "Gamma"}]})
+(def hiccup-6-children [[bh-ui.atom.experimental.react-table/table-component
+                         :data demo.catalog.atom.example.experimental.react-table/group-data
+                         :config demo.catalog.atom.example.experimental.react-table/group-data-config
+                         :component-id :tabbed-example.ui.table-1 :container-id :tabbed-example]
+                        [bh-ui.atom.experimental.react-table/table-component
+                         :data data-two :config demo.catalog.atom.example.experimental.react-table/data-config
+                         :component-id :tabbed-example.ui.table-2 :container-id :tabbed-example]
+                        [bh-ui.atom.experimental.react-table/table-component
+                         :data data-three :config demo.catalog.atom.example.experimental.react-table/data-config
+                         :component-id :tabbed-example.ui.table-3 :container-id :tabbed-example]])
+
+
+(defn example-6 []
+  (acu/demo "Tabs #6 [react-table/table]"
+    "Wrap any 'pages' of UI elements in a set of tabs, which can be change by clicking. Now trying it with more complex
+Hiccup components
+
+- :children - sequence of hiccup components, one for each 'tab'
+- :config - hash-map of configuration information, specifically
+       - :labels - vector of strings, one per 'tab' and in the same order, the string will be used as the
+                   text/label on the tab ui element corresponding to the child
+
+Clicking on a tab will swap the content to the associated hiccup 'child'"
+
+    [layout/centered {:extra-classes :width-50}
+     [rc/v-box :src (rc/at)
+      :width "200px"
+      :gap "5px"
+      :children [[rc/h-box :src (rc/at)
+                  :width "100%"
+                  :gap "25px"
+                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-6-children])]]]]]
+
+    '[layout/centered {:extra-classes :width-50}
+      []]))
+

@@ -27,13 +27,11 @@
 (def last-child (atom nil))
 
 
-(defn- contents [child]
-  (log/info "contents" child)
-
-  [rc/box :src (rc/at)
-   :gap "2px"
-   :width "250px" :height "300px"
-   :child child])
+(defn- contents [{:keys [label child]} selected-tab]
+  (let [vis (= @selected-tab label)]
+    ;(log/info "contents" label "//" vis "//" @selected-tab)
+    (when vis
+      ^{:key label} [:div child])))
 
 
 (defn- h-tab*
@@ -53,21 +51,14 @@
   (log/info "h-tab (a)" config "//" children)
 
   (let [pages        (map make-tab (zipmap (:labels config) children))
-        selected-tab (r/atom (-> pages first :id))
-        lookup       (fn [s] (->> pages
-                               (filter #(= (:id %) @s))
-                               (map :child)
-                               first))
-        child        (r/atom (lookup selected-tab))]
+        selected-tab (r/atom (-> pages first :id))]
 
-
-    (log/info "h-tab (b)" @selected-tab
-      "//" pages)
+    ;(log/info "h-tab (b)" @selected-tab "//" pages)
 
     (fn [params]
       (reset! last-contents {:p pages :s @selected-tab})
 
-      (log/info "h-tab (c)" @selected-tab "//" pages "//" child)
+      ;(log/info "h-tab (c)" @selected-tab "//" pages)
 
       [rc/v-box
        :gap "5px"
@@ -75,10 +66,11 @@
                    :style {:border "1px solid"}
                    :model selected-tab
                    :tabs pages
-                   :on-change #(do
-                                 (reset! selected-tab %)
-                                 (reset! child (lookup selected-tab)))]
-                  @child]])))
+                   :on-change #(reset! selected-tab %)]
+                  [rc/h-box :src (rc/at)
+                   :children (->> pages
+                               (map #(contents % selected-tab))
+                               (filter some?))]]])))
 
 
 (comment

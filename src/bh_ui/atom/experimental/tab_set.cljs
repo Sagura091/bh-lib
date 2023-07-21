@@ -32,11 +32,7 @@
   (reset! last-params {:ch children :cfg config})
 
   (let [pages        (map make-tab (zipmap (:labels config) children))
-        selected-tab (r/atom (-> pages first :id))
-        buttons (doall
-                  (map (fn [{:keys [label child]}]
-                         (make-button label selected-tab))
-                    pages))]
+        selected-tab (r/atom (-> pages first :id))]
 
     (fn []
       (log/info "tab-set2 (render)" @selected-tab)
@@ -69,7 +65,7 @@
 
   (map #(content % selected-tab) pages)
   (->> pages
-    (map #(content2 % selected-tab))
+    (map #(content % selected-tab))
     (filter some?))
 
   (filter some? [:one :two nil nil])

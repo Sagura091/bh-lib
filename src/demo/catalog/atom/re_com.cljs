@@ -31,6 +31,7 @@
    [tabs/example-3]
    [tabs/example-4]
    [tabs/example-5]
+   [tabs/example-6]
    [v-scroller/example]
    [v-scroller/chart-example]
    [v-scroller/woolybear-scroll-example]
