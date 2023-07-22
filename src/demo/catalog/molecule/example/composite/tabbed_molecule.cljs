@@ -62,8 +62,9 @@
 
 
 
-(def molecule2 {:mol/components  {"item-1"   {:atm/role :ui/component :atm/kind :stunt/textarea :atm/label "One"}
-                                  "item-2"   {:atm/role :ui/component :atm/kind :stunt/textarea :atm/label "Two"}
+
+(def molecule2 {:mol/components  {"item-1"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "One"}
+                                  "item-2"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "Two"}
                                   "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
                                               :atm/label    "Multiple Views"
                                               :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}

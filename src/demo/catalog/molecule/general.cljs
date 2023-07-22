@@ -32,9 +32,9 @@
    [cs-table/example]
    [v-scroll/example]
    [v-scroll/example-2]
-   ;[tabbed/example]
-   ;[tabbed/example-2]])
-   ;[signal/example]])
+   [tabbed/example]
+   [tabbed/example-2]
+   [signal/example]
 
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
