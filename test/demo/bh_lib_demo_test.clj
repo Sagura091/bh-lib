@@ -4,9 +4,11 @@
     [etaoin.api :as e]))
 
 (def site-url "http://localhost:8888/")
-(def browser (e/chrome))
+
+;Change to your browser: chrome, firefox, safari etc.
+(defn browser [] (e/firefox))
 (deftest bh-lib-welcome-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -19,7 +21,7 @@
   (e/quit driver))
 
 (deftest bh-lib-technologies-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -48,7 +50,7 @@
   (e/quit driver))
 
 (deftest bh-lib-atoms-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -116,7 +118,7 @@
   (e/quit driver))
 
 (deftest bh-lib-molecules-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -129,7 +131,7 @@
   (e/quit driver))
 
 (deftest bh-lib-organisms-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -147,7 +149,7 @@
   (e/quit driver))
 
 (deftest bh-lib-templates-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
@@ -158,7 +160,7 @@
   (e/quit driver))
 
 (deftest bh-lib-giants-page-test
-  (def driver (e/chrome))
+  (def driver (browser))
 
   (e/go driver site-url)
 
