@@ -47,15 +47,24 @@
 
 (defn- sync-data
   "sync data between react-table and external data"
-  [data react-data config]
-  (h/handle-change-path data [:data] (if (= :standard (:table-type @config))
-                                       @react-data
-                                       (into [] (mapcat #(get %1 :subRows) @react-data)))))
+  [orig-data data react-data config]
+  (let [reframe-path? (and (coll? orig-data)
+                           (not (empty? orig-data))
+                           (every? (or keyword? string?) orig-data))
+        data-key?     (some? (:data @data))
+        d             (if (= :standard (:table-type @config))
+                        @react-data
+                        (into [] (mapcat #(get %1 :subRows) @react-data)))]
+    (condp = [reframe-path? data-key?]
+      [true true]   (h/handle-change-path orig-data [] (assoc-in @data [:data] d))
+      [true false]  (h/handle-change-path orig-data [] d)
+      [false true]  (h/handle-change-path data [:data] d)
+      [false false] (reset! data d))))
 
 
 (defn- toggle
   "toggle all values to true or false in a column for all rows"
-  [value colId data react-data config]
+  [value colId orig-data data react-data config]
   (let [type (:table-type @config)]
     (cond
       (= type :standard) (reset! react-data (into [] (map #(assoc % colId value) @react-data)))
@@ -65,33 +74,33 @@
                                                     (assoc m :subRows (into [] (map #(assoc % colId value) (:subRows m)))))
                                                   @react-data)))))
 
-  (sync-data data react-data config))
+  (sync-data orig-data data react-data config))
 
 
 (defn- update-val
   "update value to a specific row and column"
-  [value [index subRowIndex colId data react-data config]]
+  [value [orig-data index subRowIndex colId data react-data config]]
   (let [path (if (nil? subRowIndex)
                [index (keyword colId)]
                [index :subRows subRowIndex (keyword colId)])]
 
     (swap! react-data assoc-in path value)
-    (sync-data data react-data config)))
+    (sync-data orig-data data react-data config)))
 
 
 (defn- configure-expandable-columns
   "configures expandable table properties based on meta-data info"
-  [data react-data config style]
+  [data orig-data react-data config style]
   (into [] (map
              (fn [m]
                {:Header      (cond
                                (= (:colProp m) :select-all) (r/as-element [:button
                                                                            {:onClick (fn [e]
-                                                                                       (toggle true (:colSelect m) data react-data config))}
+                                                                                       (toggle true (:colSelect m) orig-data data react-data config))}
                                                                            (str (:colHeader m))])
                                (= (:colProp m) :select-none) (r/as-element [:button
                                                                             {:onClick (fn [e]
-                                                                                        (toggle false (:colSelect m) data react-data config))}
+                                                                                        (toggle false (:colSelect m) orig-data data react-data config))}
                                                                             (str (:colHeader m))])
                                :else (:colHeader m))
                 :accessor    (:colId m)
@@ -103,7 +112,7 @@
                                        subRowIndex (.-index (.-row cellProps))
                                        colId       (keyword (.-id (.-column (.-cell cellProps))))]
                                    (if (contains? m :render)
-                                     ((:render m) value update-val index subRowIndex colId data react-data config)
+                                     (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
                                      (str value)))))
                 :mainRowCell (if (or (= (:colProp m) :expandable) (= (:group-by @config) (:colId m)))
                                (if (= (:colProp m) :expandable)
@@ -119,7 +128,7 @@
                                          subRowIndex nil
                                          colId       (.-id (.-column (.-cell cellProps)))]
                                      (if (contains? m :render)
-                                       ((:render m) value update-val index subRowIndex colId data react-data config)
+                                       (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
                                        (str value)))))
                                (fn []
                                  nil))})
@@ -128,18 +137,18 @@
 
 (defn- configure-standard-columns
   "configures standard table properties based on the table's config info"
-  [data react-data config]
+  [data orig-data react-data config]
   (into []
     (map
       (fn [m]
         {:Header      (cond
                         (= (:colProp m) :select-all) (r/as-element [:button
                                                                     {:onClick (fn [e]
-                                                                                (toggle true (:colSelect m) data react-data config))}
+                                                                                (toggle true (:colSelect m) orig-data data react-data config))}
                                                                     (str (:colHeader m))])
                         (= (:colProp m) :select-none) (r/as-element [:button
                                                                      {:onClick (fn [e]
-                                                                                 (toggle false (:colSelect m) data react-data config))}
+                                                                                 (toggle false (:colSelect m) orig-data data react-data config))}
                                                                      (str (:colHeader m))])
                         :else (:colHeader m))
          :accessor    (:colId m)
@@ -149,7 +158,7 @@
                               subRowIndex nil
                               colId       (.-id (.-column (.-cell cellProps)))]
                           (if (contains? m :render)
-                            ((:render m) value update-val index subRowIndex colId data react-data config)
+                            (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
                             (str value))))})
       (:columns @config))))
 
@@ -186,8 +195,8 @@
         s             (h/resolve-value style)
         react-data    (r/atom (configure-data d cfg))
         column-config (clj->js (if (= :expandable (:table-type @cfg))
-                                 (configure-expandable-columns d react-data cfg s)
-                                 (configure-standard-columns d react-data cfg)))]
+                                 (configure-expandable-columns d data react-data cfg s)
+                                 (configure-standard-columns d  data react-data cfg)))]
 
     (reset! last-params {:data d :config cfg :style s})
 
@@ -222,6 +231,8 @@
                                   (configure-expandable-columns d react-data cfg s)
                                   (configure-standard-columns d react-data cfg)))))
 
+  (get-in @re-frame.db/app-db [:containers :cs-table.molecule :blackboard :colorized-data])
+  (re-frame/subscribe [:cs-table.molecule.blackboard.colorized-data])
 
   ())
 

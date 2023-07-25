@@ -13,10 +13,12 @@
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
                                       "input-data" {:atm/role :source/local :atm/kind :topic/input-data
-                                                    :default  demo.catalog.atom.example.experimental.react-table/data}}
+                                                    :default  demo.catalog.atom.example.experimental.react-table/data}
+                                      "colorized-data" {:atm/role :source/local :atm/kind :topic/colorized-data}}
 
                     :mol/links       {"input-data" {:data {"colorize" :data}}
-                                      "colorize"   {:data {"table" :data}}}
+                                      "colorize"   {:sub-name {"colorized-data" :data}}
+                                      "colorized-data" {:data {"table" :data}}}
 
                     :mol/grid-layout [{:i "table" :x 0 :y 0 :w 10 :h 10}]})
 
