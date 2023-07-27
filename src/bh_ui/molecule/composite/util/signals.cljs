@@ -55,7 +55,7 @@
                                         :source/local [(ui-utils/path->keyword container-id :blackboard target)]
                                         :source/fn (let [sub-name (get-in configuration [:mol/components target :atm/kind])]
                                                      [(ui-utils/path->keyword container-id :blackboard sub-name)])
-                                        :else [::subs/source remote])}))))
+                                        [::subs/source remote])}))))
               (into {}))]
     ;(log/info "make-params (b)" node "//" container-id "//" ret)
     ret))
