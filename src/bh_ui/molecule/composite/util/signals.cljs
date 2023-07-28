@@ -161,7 +161,7 @@
     (ul/create-container-local-sub container-id
       [:blackboard node]
       (:default meta-data)
-      (let [inputs (:inputs (get denorm node)) ; if this :source/local falls after a :source/fn, depend upon IT!
+      (let [inputs (:inputs (get denorm node))              ; if this :source/local falls after a :source/fn, depend upon IT!
             comps  (get components (first (keys inputs)))]
         (when (= :source/fn (:atm/role comps))
           (:atm/kind comps))))
@@ -219,18 +219,26 @@
                              :component-id  (ui-utils/path->keyword container-id node)
                              :container-id  container-id}))))))
 
-
+(def last-cfg (atom nil))
 (defn process-components-stateful [configuration node-type registry container-id]
+
+  (reset! last-cfg {:cfg configuration :nt node-type :r registry :id container-id})
+
   (let [atm-set       (atom {})
         cfg           (->> configuration
                         :mol/components
                         (filter (fn [[_ meta-data]]
                                   (= node-type (:atm/role meta-data))))
                         (into {}))
-        edges         (mapcat (fn [[name {:keys [atm/children]}]]
-                                (when children
-                                  (map (fn [c] [name c]) children)))
-                        cfg)
+        edges         (reduce conj
+                        (mapcat (fn [[name {:keys [atm/children]}]]
+                                  (when children
+                                    (map (fn [c] [name c]) children)))
+                          cfg)
+                        (mapcat (fn [[name {:keys [atm/child]}]]
+                                  (when child
+                                    [[name child]]))
+                          cfg))
         g             (-> (lg/digraph)
                         (#(apply lg/add-nodes % (keys cfg)))
                         (#(apply lg/add-edges % edges))
@@ -242,6 +250,11 @@
                                (get id)
                                ((fn [x] [id x]))))
                         g)]
+
+    ;(log/info "process-components-stateful (a)" cfg "//" edges)
+
+    ;(log/info "process-components-stateful (b)" g "//" sorted-config)
+
     (doall
       (map (fn [[node meta-data]]
              (let [atm
@@ -254,10 +267,56 @@
                       :registry      registry
                       :component-id  (ui-utils/path->keyword container-id node)
                       :container-id  container-id})]
-               ; (log/info "process-components-stateful" atm "//" @atm-set)
+               ; (log/info "process-components-stateful (c)" atm "//" @atm-set)
                (swap! atm-set merge atm)
                atm))
         sorted-config))))
+
+
+; need to include both :children and :child wrappers in the dependency graph
+(comment
+  @last-cfg
+
+  (do
+    (def configuration (:cfg @last-cfg))
+    (def node-type (:nt @last-cfg))
+    (def registry (:r @last-cfg))
+    (def container-id (:id @last-cfg))
+
+    (def cfg (->> configuration
+               :mol/components
+               (filter (fn [[_ meta-data]]
+                         (= node-type (:atm/role meta-data))))
+               (into {}))))
+
+  (reduce conj
+    (mapcat (fn [[name {:keys [atm/children]}]]
+              (when children
+                (map (fn [c] [name c]) children)))
+      cfg)
+    (mapcat (fn [[name {:keys [atm/child]}]]
+              (when child
+                [[name child]]))
+      cfg))
+
+  (def edges (reduce conj
+               (mapcat (fn [[name {:keys [atm/children]}]]
+                         (when children
+                           (map (fn [c] [name c]) children)))
+                 cfg)
+               (mapcat (fn [[name {:keys [atm/child]}]]
+                         (when child
+                           [[name child]]))
+                 cfg)))
+
+
+  (def g (-> (lg/digraph)
+           (#(apply lg/add-nodes % (keys cfg)))
+           (#(apply lg/add-edges % edges))
+           (lalg/topsort)
+           reverse))
+
+  ())
 
 
 
