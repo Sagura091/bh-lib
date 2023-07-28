@@ -1,7 +1,8 @@
 (ns demo.bh_lib_demo_test
   (:require
     [clojure.test :refer :all]
-    [etaoin.api :as e]))
+    [etaoin.api :as e]
+    [etaoin.keys :as k]))
 
 (def site-url "http://localhost:8888/")
 
@@ -11,6 +12,9 @@
   (def driver (browser))
 
   (e/go driver site-url)
+
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
   (is (e/has-text? driver "How to Use this Catalog") true)
   (is (e/has-text? driver "Rationale") true)
@@ -22,6 +26,9 @@
   (def driver (browser))
 
   (e/go driver site-url)
+
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
   (e/click driver {:tag :button :fn/text "Technologies"})
   (e/wait driver 1)
@@ -56,6 +63,9 @@
   (def driver (browser))
 
   (e/go driver site-url)
+
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
   (e/click driver {:tag :button :fn/text "'Atoms'"})
   (e/wait driver 1)
@@ -141,6 +151,9 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Molecules'"})
   (e/wait driver 1)
   (is (e/has-text? driver "Colored Selection Table") true)
@@ -154,6 +167,9 @@
   (def driver (browser))
 
   (e/go driver site-url)
+
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
   (e/click driver {:tag :button :fn/text "'Organisms'"})
   (e/wait driver 1)
@@ -174,6 +190,9 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Templates'"})
   (e/wait driver 1)
   (is (e/has-text? driver "Templates") true)
@@ -185,6 +204,9 @@
   (def driver (browser))
 
   (e/go driver site-url)
+
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
   (e/click driver {:tag :button :fn/text "Giants"})
   (e/wait driver 1)
