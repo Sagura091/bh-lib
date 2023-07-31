@@ -1,22 +1,24 @@
 (ns demo.bh_lib_demo_test
   (:require
     [clojure.test :refer :all]
-    [etaoin.api :as e]))
+    [etaoin.api :as e]
+    [etaoin.keys :as k]))
 
 (def site-url "http://localhost:8888/")
 
 ;Change to your browser: chrome, firefox, safari etc.
-(defn browser [] (e/firefox))
+(defn browser [] (e/chrome))
 (deftest bh-lib-welcome-page-test
   (def driver (browser))
 
   (e/go driver site-url)
 
-  (e/has-text? driver "How to Use this Catalog")
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
 
-  (e/has-text? driver "Rationale")
-
-  (e/has-text? driver "Examples")
+  (is (e/has-text? driver "How to Use this Catalog") true)
+  (is (e/has-text? driver "Rationale") true)
+  (is (e/has-text? driver "Examples") true)
 
   (e/quit driver))
 
@@ -25,27 +27,35 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "Technologies"})
-  (e/has-text? driver "Data-flow Oriented Design")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Data-flow Oriented Design") true)
 
   (e/wait driver 1)
   (e/click driver {:tag :button :fn/text "System / Services"})
-  (e/has-text? driver "System / Services")
-  (e/has-text? driver "Event Modeling")
+  (e/wait driver 1)
+  (is (e/has-text? driver "System / Services") true)
+  (is (e/has-text? driver "Event Modeling") true)
 
   (e/click driver {:tag :button :fn/text "Server-side"})
-  (e/has-text? driver "Clojure")
-  (e/has-text? driver "Ring")
-  (e/has-text? driver "Compojure")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Clojure") true)
+  (is (e/has-text? driver "Ring") true)
+  (is (e/has-text? driver "Compojure") true)
 
   (e/click driver {:tag :button :fn/text "Client-side"})
-  (e/has-text? driver "Clojurescript")
-  (e/has-text? driver "Atomic Design")
-  (e/has-text? driver "Reagent")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Clojurescript") true)
+  (is (e/has-text? driver "Atomic Design") true)
+  (is (e/has-text? driver "Reagent")true)
 
   (e/click driver {:tag :button :fn/text "All"})
-  (e/has-text? driver "All")
-  (e/has-text? driver "Ring")
+  (e/wait driver 1)
+  (is (e/has-text? driver "All") true)
+  (is (e/has-text? driver "Ring") true)
 
   (e/quit driver))
 
@@ -54,66 +64,85 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Atoms'"})
-  (e/has-text? driver "Page")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Page") true)
   (e/wait driver 1)
 
   (e/click driver {:tag :button :fn/text "Containers"})
-  (e/has-text? driver "Vertical scroll pane")
-  (e/has-text? driver "Shy block")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Vertical scroll pane") true)
+  (is (e/has-text? driver "Shy block") true)
 
   (e/click driver {:tag :button :fn/text "Cards"})
-  (e/has-text? driver "Card")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Card") true)
   (e/click driver {:tag :button :fn/text "Show Code"})
 
   (e/click driver {:tag :button :fn/text "Charts"})
-  (e/has-text? driver "Area Chart")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Area Chart") true)
   (e/wait driver 1)
   (e/click driver {:tag :button :fn/text "data-sub"})
 
   (e/click driver {:tag :button :fn/text "Fast Charts"})
-  (e/has-text? driver "Fast Line Chart")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Fast Line Chart") true)
   (e/click driver {:tag :button :fn/text "Show Code"})
 
   (e/click driver {:tag :button :fn/text "Diagrams"})
-  (e/has-text? driver "Flow Diagram")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Flow Diagram") true)
 
   (e/click driver {:tag :button :fn/text "Icons / Images"})
-  (e/has-text? driver "Simple Image")
-  (e/has-text? driver "Standard Icons")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Simple Image") true)
+  (is (e/has-text? driver "Standard Icons") true)
 
   (e/click driver {:tag :button :fn/text "Buttons"})
-  (e/has-text? driver "Simple button")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Simple button") true)
+  (e/wait driver 1)
   (e/click driver {:tag :button :fn/text "Click me!"})
 
   (e/click driver {:tag :button :fn/text "Forms"})
-  (e/has-text? driver "Form field labels")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Form field labels") true)
   (e/fill driver {:tag :input :id "demo-1"} "Clojure programming language")
 
   (e/click driver {:tag :button :fn/text "Re-com"})
-  (e/has-text? driver "Table")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Table") true)
 
   (e/click driver {:tag :button :fn/text "AstroUXDS"})
-  (e/has-text? driver "Buttons")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Buttons") true)
 
   (e/click driver {:tag :button :fn/text "Misc."})
-  (e/has-text? driver "Worldwind Globe")
-  (e/has-text? driver "Resium Globe")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Worldwind Globe") true)
+  (is (e/has-text? driver "Resium Globe") true)
 
   (e/click driver {:tag :button :fn/text "Experimental"})
-  (e/has-text? driver "Raw Re-com Table")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Raw Re-com Table") true)
   (e/click driver {:tag :button :fn/text "Add 'Q'"})
-  (e/has-text? driver "React-Table")
+  (is (e/has-text? driver "React-Table") true)
   (e/click driver {:tag :input :type "checkbox"})
   (e/click driver {:tag :span :title "Toggle Row Expanded"})
 
   (e/click driver {:tag :span :fn/text "Choose a language"})
   (e/wait driver 1)
   (e/click driver {:fn/text "French"})
-  (e/has-text? driver "Cliquez sur moi !")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Cliquez sur moi !") true)
 
   (e/click driver {:tag :button :fn/text "All"})
-  (e/has-text? driver "Page")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Page") true)
 
   (e/quit driver))
 
@@ -122,8 +151,12 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Molecules'"})
-  (e/has-text? driver "Colored Selection Table")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Colored Selection Table") true)
   (e/wait driver 1)
   (e/click driver {:tag :button :fn/text "All"})
 
@@ -135,8 +168,12 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Organisms'"})
-  (e/has-text? driver "Widget Grid")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Widget Grid") true)
   (e/wait driver 1)
   (e/click driver {:fn/text "Empty"})
   (e/wait driver 1)
@@ -153,8 +190,12 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "'Templates'"})
-  (e/has-text? driver "templates")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Templates") true)
 
 
   (e/quit driver))
@@ -164,8 +205,12 @@
 
   (e/go driver site-url)
 
+  (e/wait driver 2)
+  (e/fill-active driver (k/with-ctrl "h"))
+
   (e/click driver {:tag :button :fn/text "Giants"})
-  (e/has-text? driver "Rick Hickey")
+  (e/wait driver 1)
+  (is (e/has-text? driver "Rich") true)
 
 
   (e/quit driver))

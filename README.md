@@ -118,3 +118,29 @@ For example, to lint just the UI component library, run:
 To lint everything, library and demo:
 
     clojure -M:splint .
+
+
+## Automation Tests
+
+### Setting up Chromedriver (WSL Users)
+1.	Download latest version of chromedriver from:  https://chromedriver.chromium.org/downloads
+2.	Copy this to linux WSL
+3.	Run these commands:
+      a.	unzip chromedriver_linux64.zip
+      b.	chmod +x chromedriver
+      c.	sudo mv -f chromedriver /usr/local/share/chromedriver
+      d.	sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+      e.	sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
+### Setting up Chrome (WSL Users)
+1.	sudo apt update && sudo apt -y upgrade && sudo apt -y autoremove
+2.	wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+3.	sudo apt -y install ./google-chrome-stable_current_amd64.deb
+4.	verify google-chrome is installed by running: google-chrome –version
+      Running Tests
+
+### Running Tests
+
+1.	Start the localhost website using the command: shadow-cljs watch test
+2.	Simply press the green arrow next to a deftest to run the test, click the green arrow next to namespace to run all tests in the namespace
+
