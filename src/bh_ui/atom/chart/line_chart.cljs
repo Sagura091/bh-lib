@@ -109,7 +109,7 @@
     (into [:<>])))
 
 
-(defn- component* [& {:keys [data component-id container-id
+(defn- component* [& {:keys [data config component-id container-id
                              subscriptions isAnimationActive?]
                       :as   params}]
 

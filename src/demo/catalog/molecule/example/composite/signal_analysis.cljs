@@ -104,15 +104,16 @@
 
 
 (def molecule-def
-  {:mol/components  {"signal-trace" {:atm/role :ui/component :atm/kind :rechart/line}
+  {:mol/components  {"signal-trace" {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:x-axis-title "MHz"
+                                                                                                     :y-axis-title "dBm"}}
                      "tabs"         {:atm/role           :ui/component :atm/kind :rc/h-tabs
                                      :atm/children       ["table-one" "table-two" "table-three"]
-                                     :atm/default-config tab-config}
+                                     :atm/default-config {:labels ["One" "Two" "Three"]}}
                      "table-one"    {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
                      "table-two"    {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
                      "table-three"  {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
 
-                     "signal-data"  {:atm/role :source/local :atm/kine :signal/one :default chart/sample-data}
+                     "signal-data"  {:atm/role :source/local :atm/kind :signal/one :default chart/sample-data}
                      "data-one"     {:atm/role :source/local :atm/kind :data/one :default data-one}
                      "data-two"     {:atm/role :source/local :atm/kind :data/two :default data-two}
                      "data-three"   {:atm/role :source/local :atm/kind :data/three :default data-three}}
@@ -122,28 +123,10 @@
                      "data-two"    {:data {"table-two" :data}}
                      "data-three"  {:data {"table-three" :data}}}
 
-   :mol/grid-layout [{:i "signal-trace" :x 0 :y 0 :w 10 :h 8}
-                     {:i "tabs" :x 0 :y 8 :w 10 :h 8}]})
+   :mol/grid-layout [{:i "signal-trace" :x 0 :y 0 :w 10 :h 8 :static true}
+                     {:i "tabs" :x 0 :y 8 :w 10 :h 8 :static true}]})
 
 
-;(def mol-2 {:mol/components  {"tabs"        {:atm/role     :ui/component :atm/kind :rc/h-pill-tabs :atm/default-config tab-config
-;                                             :atm/children ["table-one" "table-two" "table-three"]}
-;                              "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
-;                                            :atm/label "Multiple Tables" :atm/children ["table-one" "table-two" "table-three"]}
-;                              "table-one"   {:atm/role           :ui/component :atm/kind :react-table/table :atm/label "One"
-;                                             :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-;                              "table-two"   {:atm/role           :ui/component :atm/kind :react-table/table :atm/label "Two"
-;                                             :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-;                              "table-three" {:atm/role           :ui/component :atm/kind :react-table/table :atm/label "Three"
-;                                             :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-;                              "data-one"    {:atm/role :source/local :atm/kind :topic/data-one :default data-one}
-;                              "data-two"    {:atm/role :source/local :atm/kind :topic/data-one :default data-two}
-;                              "data-three"  {:atm/role :source/local :atm/kind :topic/data-one :default data-three}}
-;
-;            :mol/links       {"data-one"   {:data {"table-one" :data}}
-;                              "data-two"   {:data {"table-two" :data}}
-;                              "data-three" {:data {"table-three" :data}}}
-;            :mol/grid-layout [{:i "tabs" :x 0 :y 0 :w 10 :h 10}]})
 (def source-code '{})
 
 

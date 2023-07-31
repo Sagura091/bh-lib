@@ -12,7 +12,8 @@
             [demo.catalog.molecule.example.composite.v-scroll-pane-children :as v-scroll]
             [demo.catalog.molecule.example.composite.colored-selection-table :as cs-table]
             [demo.catalog.molecule.example.composite.tabbed-molecule :as tabbed]
-            [demo.catalog.molecule.example.composite.signal-analysis :as signal]))
+            [demo.catalog.molecule.example.composite.signal-analysis :as signal]
+            [demo.catalog.molecule.example.composite.single-chart :as single-chart]))
 
 
 (log/info "demo.catalog.molecule.general")
@@ -28,6 +29,8 @@
    ;[coverage-plan/r-example]
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
+
+   [single-chart/example]
 
    [cs-table/example]
    [v-scroll/example]
