@@ -129,8 +129,8 @@
                      "ui/bar"         {:atm/role :ui/component :atm/kind :rechart/bar}
                      "ui/area"        {:atm/role :ui/component :atm/kind :rechart/area}
                      "ui/config"      {:atm/role :ui/component :atm/kind :multi-chart/config-panel}
-                     "topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
-                     "topic/config"   {:atm/role :source/local :atm/kind :topic/config :default default-config-data}}
+                     "topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
+                     "topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data default-config-data}}
 
    :mol/links       {"ui/config"      {:data {"topic/config" :data}}
                      "topic/data"     {:data {"ui/line"        :data
@@ -151,8 +151,8 @@
                                                ":ui/bar"         {:atm/role :ui/component :atm/kind :rechart/bar}
                                                ":ui/area"        {:atm/role :ui/component :atm/kind :rechart/area}
                                                ":ui/config"      {:atm/role :ui/component :atm/kind :multi-chart/config-panel}
-                                               ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
-                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :default {}}
+                                               ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
+                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data {}}
                                                ":fn/make-config" {:atm/role :source/fn :atm/kind :multi-chart/fn-make-config}}
 
                              :mol/links       {":ui/config"      {:config-data {":topic/config" :data}}

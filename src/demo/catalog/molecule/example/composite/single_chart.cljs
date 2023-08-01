@@ -18,7 +18,7 @@
 
 (def source-code '{:mol/components  {"box"   {:atm/role  :ui/component :atm/kind :rc/box :atm/child "chart"
                                               :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "data"  {:atm/role :source/local :atm/kind :topic/data :default data-2}
+                                     "data"  {:atm/role :source/local :atm/kind :topic/data :atm/default-data data-2}
 
                                      ;"chart" {:atm/role :ui/component :atm/kind :rechart/line}
                                      ;"chart" {:atm/role :ui/component :atm/kind :rechart/bar}
@@ -38,7 +38,7 @@
 
 (def mol {:mol/components  {"box"   {:atm/role  :ui/component :atm/kind :rc/box :atm/child "chart"
                                      :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                            "data"  {:atm/role :source/local :atm/kind :topic/data :default data}
+                            "data"  {:atm/role :source/local :atm/kind :topic/data :atm/default-data data}
 
                             ;"chart" {:atm/role :ui/component :atm/kind :rechart/line}}
                             ;"chart" {:atm/role :ui/component :atm/kind :rechart/bar}}

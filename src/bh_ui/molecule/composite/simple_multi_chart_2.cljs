@@ -23,8 +23,8 @@
 (def ui-definition
   {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
                      ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
-                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
-                     ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :default default-config-data}}
+                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
+                     ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data default-config-data}}
                     ; ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
 
    :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
@@ -40,8 +40,8 @@
 
 (def source-code '(let [def {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
                                                ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
-                                               ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
-                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :default {}}
+                                               ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
+                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data {}}
                                                ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
                              :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
                                                                          ":ui/line-chart"  :data

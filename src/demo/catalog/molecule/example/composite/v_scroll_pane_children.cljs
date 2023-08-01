@@ -23,7 +23,8 @@
                                                     :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                       "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
                                                     :atm/label "Multiple Views" :atm/children ["bar" "line"]}
-                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :topic/data :default chart/sample-data}}
+                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :topic/data
+                                                    :atm/default-data chart/sample-data}}
                     :mol/links       {"topic/data" {:data {"bar-chart"  :data
                                                            "line-chart" :data}}}
                     :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})
@@ -93,9 +94,9 @@ that are visually contained _within_ the outer atom. In this example, we use the
                               "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
                                             :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
                               "data/one" {:atm/role :source/local :atm/kind :data/one
-                                          :default data-one}
+                                          :atm/default-data data-one}
                               "data/two" {:atm/role :source/local :atm/kind :data/one
-                                          :default data-two}}
+                                          :atm/default-data data-two}}
             :mol/links       {"data/one" {:data {"table-one"  :data}}
                               "data/two" {:data {"table-two"  :data}}}
             :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})

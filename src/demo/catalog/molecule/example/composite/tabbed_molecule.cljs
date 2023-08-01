@@ -52,9 +52,9 @@
                                                    :atm/children ["bar" "line" "area" "fast-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :default bar/sample-data}
-                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :default chart-data-two}
-                                     "data/three" {:atm/role :source/local :atm/kind :data/three :default chart-data-three}}
+                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}
+                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
+                                     "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
                                      "data/two"   {:data {"line-chart" :data
                                                           "area-chart" :data}}
@@ -76,9 +76,9 @@
                                                    :atm/children ["bar" "line" "area" "fast-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :default bar/sample-data}
-                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :default chart-data-two}
-                                     "data/three" {:atm/role :source/local :atm/kind :data/three :default chart-data-three}}
+                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}
+                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
+                                     "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
                                      "data/two"   {:data {"line-chart" :data
                                                           "area-chart" :data}}
@@ -111,8 +111,8 @@
                                   "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
                                               :atm/label    "Multiple Views"
                                               :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}
-                                  "data/one" {:atm/role :source/local :atm/kind :data/one :default chart-data-one}
-                                  "data/two" {:atm/role :source/local :atm/kind :data/two :default chart-data-two}}
+                                  "data/one" {:atm/role :source/local :atm/kind :data/one :atm/default-data chart-data-one}
+                                  "data/two" {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}}
                 :mol/links       {"data/one" {:data {"item-1" :data}}
                                   "data/two" {:data {"item-2" :data}}}
                 :mol/grid-layout [{:i "tabs" :x 0 :y 0 :w 10 :h 11 :static true}]})
@@ -121,8 +121,8 @@
                                        "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
                                                    :atm/label    "Multiple Views"
                                                    :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}
-                                       "data/one" {:atm/role :source/local :atm/kind :data/one :default chart-data-one}
-                                       "data/two" {:atm/role :source/local :atm/kind :data/two :default chart-data-two}}
+                                       "data/one" {:atm/role :source/local :atm/kind :data/one :atm/default-data chart-data-one}
+                                       "data/two" {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}}
                      :mol/links       {"data/one" {:data {"item-1" :data}}
                                        "data/two" {:data {"item-2" :data}}}
                      :mol/grid-layout [{:i "tabs" :x 0 :y 0 :w 10 :h 11 :static true}]})

@@ -529,18 +529,18 @@
                                    :topic/coverage-data       {:atm/role :source/remote :atm/kind :source/coverages}
 
                                    ; composite-local data sources
-                                   :topic/selected-targets    {:atm/role :source/local :atm/kind :selected-targets :default dummy-targets}
+                                   :topic/selected-targets    {:atm/role :source/local :atm/kind :selected-targets :atm/default-data dummy-targets}
                                    :topic/colored-targets     {:atm/role   :source/local :atm/kind :colored-targets
                                                                :fields [:target/include :target/symbol :target/name]}
 
-                                   :topic/selected-satellites {:atm/role :source/local :atm/kind :selected-satellites :default dummy-satellites}
+                                   :topic/selected-satellites {:atm/role :source/local :atm/kind :selected-satellites :atm/default-data dummy-satellites}
                                    :topic/colored-satellites  {:atm/role :source/local :atm/kind :colored-satellites}
 
-                                   :topic/current-time        {:atm/role :source/local :atm/kind :current-time :default 0}
+                                   :topic/current-time        {:atm/role :source/local :atm/kind :current-time :atm/default-data 0}
                                    :topic/shapes              {:atm/role :source/local :atm/kind :shapes}
                                    :topic/time-range          {:atm/role :source/local :atm/kind :time-range}
-                                   :topic/current-slider      {:atm/role :source/local :atm/kind :current-slider :default 0}
-                                   :topic/target-filter       {:atm/role :source/local :atm/kind :target-filter :default ""}
+                                   :topic/current-slider      {:atm/role :source/local :atm/kind :current-slider :atm/default-data 0}
+                                   :topic/target-filter       {:atm/role :source/local :atm/kind :target-filter :atm/default-data ""}
                                    :topic/filtered-targets    {:atm/role :source/local :atm/kind :filtered-targets}
 
                                    ; transformation functions

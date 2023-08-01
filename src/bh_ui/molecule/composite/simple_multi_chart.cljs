@@ -18,7 +18,7 @@
                                        :atm/label "Revenue by Org" :atm/default-config []}
                      ":ui/line-chart" {:atm/role    :ui/component :atm/kind :rechart/line
                                        :atm/default-config []}
-                     ":topic/data"    {:atm/role :source/local :atm/kind :topic/data :default sample-data}}
+                     ":topic/data"    {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}}
    :mol/links       {":topic/data" {:data {":ui/bar-chart"  :data
                                            ":ui/line-chart" :data}}}
    :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
@@ -29,7 +29,7 @@
                                                                  :atm/label "BAR CHART!!!" :atm/default-config []}
                                                ":ui/line-chart" {:atm/role    :ui/component :atm/kind :rechart/line
                                                                  :atm/default-config []}
-                                               ":topic/data"    {:atm/role :source/local :atm/kind :topic/data :default sample-data}}
+                                               ":topic/data"    {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}}
                              :mol/links       {":topic/data" {:data {":ui/bar-chart"  :data
                                                                      ":ui/line-chart" :data}}}
                              :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}

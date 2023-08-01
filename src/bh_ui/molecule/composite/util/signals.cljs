@@ -143,24 +143,24 @@
 
 ; :source/local
 (defmethod component->ui :source/local [{:keys [node meta-data configuration container-id] :as params}]
-  ;(log/info "component->ui :source/local" node meta-data)
+  (log/info "component->ui :source/local (a)" node meta-data)
 
   (reset! last-locals params)
 
   (let [denorm     (:denorm configuration)
         components (:mol/components configuration)]
 
-    ; 1. add the key to the blackboard, uses the :default property of the meta-data
+    ; 1. add the key to the blackboard, uses the :atm/default-data property of the meta-data
     ;
     ;  only IF one exists, otherwise we assume it will be serviced by a :source/fn somewhere
     ;
-    (when (:default meta-data)
-      (ul/dispatch-local container-id [:blackboard node] (:default meta-data)))
+    (when (:atm/default-data meta-data)
+      (ul/dispatch-local container-id [:blackboard node] (:atm/default-data meta-data)))
 
     ; 2. create the subscription against the new :blackboard key
     (ul/create-container-local-sub container-id
       [:blackboard node]
-      (:default meta-data)
+      (:atm/default-data meta-data)
       (let [inputs (:inputs (get denorm node))              ; if this :source/local falls after a :source/fn, depend upon IT!
             comps  (get components (first (keys inputs)))]
         (when (= :source/fn (:atm/role comps))

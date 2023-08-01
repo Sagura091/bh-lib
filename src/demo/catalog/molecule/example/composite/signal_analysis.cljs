@@ -113,10 +113,10 @@
                      "table-two"    {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
                      "table-three"  {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
 
-                     "signal-data"  {:atm/role :source/local :atm/kind :signal/one :default chart/sample-data}
-                     "data-one"     {:atm/role :source/local :atm/kind :data/one :default data-one}
-                     "data-two"     {:atm/role :source/local :atm/kind :data/two :default data-two}
-                     "data-three"   {:atm/role :source/local :atm/kind :data/three :default data-three}}
+                     "signal-data"  {:atm/role :source/local :atm/kind :signal/one :atm/default-data chart/sample-data}
+                     "data-one"     {:atm/role :source/local :atm/kind :data/one :atm/default-data data-one}
+                     "data-two"     {:atm/role :source/local :atm/kind :data/two :atm/default-data data-two}
+                     "data-three"   {:atm/role :source/local :atm/kind :data/three :atm/default-data data-three}}
 
    :mol/links       {"signal-data" {:data {"signal-trace" :data}}
                      "data-one"    {:data {"table-one" :data}}

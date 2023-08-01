@@ -13,7 +13,7 @@
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
                                       "input-data" {:atm/role :source/local :atm/kind :topic/input-data
-                                                    :default  demo.catalog.atom.example.experimental.react-table/data}
+                                                    :atm/default-data  demo.catalog.atom.example.experimental.react-table/data}
                                       "colorized-data" {:atm/role :source/local :atm/kind :topic/colorized-data}}
 
                     :mol/links       {"input-data" {:data {"colorize" :data}}

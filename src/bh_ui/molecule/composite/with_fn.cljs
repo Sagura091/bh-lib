@@ -46,7 +46,7 @@
                                         :config-data {}}
                      ":ui/line-chart"  {:atm/role    :ui/component :atm/kind :rechart/line
                                         :config-data {}}
-                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :default sample-data}
+                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
                      ":topic/computed" {:atm/role :source/local :atm/kind :topic/computed}
 
                      ":fn/data-fn"     {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
