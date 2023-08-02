@@ -5,14 +5,13 @@
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
     [bh-ui.utils.helpers :as h]
-    [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
 
 (defn- table [columns data table-type config]
   (log/info "table (render)" (js->clj data))
 
-  (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useExpanded)]
+  (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useSortBy rt/useExpanded)]
     [:div {:style {:max-height  (or (:height @config) "300px")
                    :overflow    "auto"
                    :white-space "no-wrap"
