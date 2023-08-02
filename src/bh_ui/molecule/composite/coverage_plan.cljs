@@ -6,6 +6,7 @@
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.color :as c]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [cljs-time.coerce :as coerce]
             [cljs-time.core :as t]
             [re-com.core :as rc]
@@ -165,7 +166,7 @@
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color
-          (h/handle-change-path path [topic] ret)
+          (h/handle-change-path path [[assoc-in [topic] ret]])
 
           ret)))))
 
@@ -204,7 +205,7 @@
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a satellite/sensor if it has already been assigned a color
-          (h/handle-change-path path [topic] ret)
+          (h/handle-change-path path [[assoc-in [topic] ret]])
 
           ret)))))
 
@@ -268,17 +269,17 @@
                                                     (c/match-colors-hex new-color))))]
 
     ;(log/info "update-color (path)" id "//" path "//" new-data)
-    (h/handle-change-path path [] new-data)))
+    (h/handle-change-path path [[l/set-val [] new-data]])))
 
 
 (defn- toggle-selection [resolved-selection selection-path id]
   (let [s-ids (or resolved-selection #{})]
     (if (contains? resolved-selection id)
       ; remove
-      (h/handle-change-path selection-path [] (disj s-ids id))
+      (h/handle-change-path selection-path [[l/disj-in [] id]])
 
       ; add
-      (h/handle-change-path selection-path [] (conj s-ids id)))))
+      (h/handle-change-path selection-path [[l/conj-in [] id]]))))
 
 
 (defn- display-checkbox [id name under-consideration toggle-fn]
@@ -481,12 +482,12 @@
                    :model @v
                    :placeholder "enter text to filter targets"
                    :change-on-blur? false
-                   :on-change #(h/handle-change-path value [] %)]
+                   :on-change #(h/handle-change-path value [[l/set-val [] %]])]
                   [rc/md-circle-icon-button :src (rc/at)
                    :md-icon-name "zmdi-close-circle-o"
                    :tooltip "Click to clear"
                    :size :smaller
-                   :on-click #(h/handle-change-path value [] "")]]])))
+                   :on-click #(h/handle-change-path value [[l/set-val [] ""]])]]])))
 
 
 ; register these as bh-uis

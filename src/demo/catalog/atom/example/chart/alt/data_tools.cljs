@@ -1,6 +1,7 @@
 (ns demo.catalog.atom.example.chart.alt.data-tools
   (:require [bh-ui.utils :as ui-utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
             [bh-ui.utils.example-data :as ex]))
@@ -18,7 +19,9 @@
               [rc/button :label "Default" :on-click #(reset! data default-data)]
               ; TODO: need to pass a "meaningful" random-data-set builder function into the tools
               [rc/button :label "Random" :on-click #(reset! data (random-data))]
-              [rc/button :label "A(uv) -> 10,000" :on-click #(swap! data assoc-in [:data 0 :uv] 10000)]
+              [rc/button :label "A(uv) -> 10,000" :on-click #(do
+                                                               (log/info "meta-tabular-data-ratom-tools (button)" data)
+                                                               (swap! data assoc-in [:data 0 :uv] 10000))]
               [rc/button :label "Add 'Q'"
                :on-click #(swap! data assoc :data
                             (conj (-> @data :data)
@@ -48,35 +51,30 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]
+                  [rc/button :label "Empty" :on-click #(h/handle-change-path data [[l/set-val [] []]])]
 
                   [rc/button :label "Default"
-                   :on-click #(h/handle-change-path data [] default-data)]
+                   :on-click #(h/handle-change-path data [[l/set-val [] default-data]])]
 
-                  [rc/button :label "Random" :on-click #(h/handle-change-path data [] (random-data))]
+                  [rc/button :label "Random" :on-click #(h/handle-change-path data [[l/set-val [] (random-data)]])]
 
                   [rc/button :label "A(uv) -> 10000"
-                   :on-click #(h/handle-change-path data [:data]
-                                (assoc-in @old-data [0 :uv] 10000))]
+                   :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])]
 
                   [rc/button :label "Add 'Q'"
-                   :on-click #(h/handle-change-path data [:data]
-                                (conj @old-data
-                                  {:name "Page Q" :uv (rand-int 5000)
-                                   :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}))]
+                   :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                                                           {:name "Page Q" :uv (rand-int 5000)
+                                                            :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])]
 
                   [rc/button :label "Drop Last 2"
-                   :on-click #(h/handle-change-path data [:data]
-                                (into [] (drop-last 2 @old-data)))]
+                   :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])]
 
                   [rc/button :label "Add :new-item"
-                   :on-click #(h/handle-change-path data []
-                                (-> @old-meta
-                                  (assoc-in [:metadata :fields :new-item] :number)
-                                  (assoc :data (into []
-                                                 (map (fn [x]
-                                                        (assoc x :new-item (rand-int 7000)))
-                                                   @old-data)))))]]])))
+                   :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                                                          [assoc :data (into []
+                                                                         (map (fn [x]
+                                                                                (assoc x :new-item (rand-int 7000)))
+                                                                           @old-data))]])]]])))
 
 
 (defn- add-node [data new-node]
@@ -156,24 +154,24 @@
   [rc/h-box :src (rc/at)
    :gap "10px"
    :class "tools-panel"
-   :children [[:label.h5 "Input Data:"]
+   :children [[:label.h5 "Input Data:"]]])
 
-              [rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]
-
-              [rc/button :label "Default" :on-click #(h/handle-change-path data [] default-data)]
-
-              [rc/button :label "+ Redirect (1)"
-               :on-click #(h/handle-change-path data [] (add-node data :Redirect))]
-
-              [rc/button :label "+ Visit->Redirect (2)"
-               :on-click #(h/handle-change-path data [] (add-link data :Visit :Redirect 24987))]
-
-              [rc/button :label "Redirect = 50000 (3)"
-               :on-click #(h/handle-change-path data [] (update-link data :Visit :Redirect 50000))]
-
-              [rc/button :label "+ Dummy->New-thing"
-               :on-click #(h/handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
-
+              ;[rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]
+              ;
+              ;[rc/button :label "Default" :on-click #(h/handle-change-path data [] default-data)]
+              ;
+              ;[rc/button :label "+ Redirect (1)"
+              ; :on-click #(h/handle-change-path data [] (add-node data :Redirect))]
+              ;
+              ;[rc/button :label "+ Visit->Redirect (2)"
+              ; :on-click #(h/handle-change-path data [] (add-link data :Visit :Redirect 24987))]
+              ;
+              ;[rc/button :label "Redirect = 50000 (3)"
+              ; :on-click #(h/handle-change-path data [] (update-link data :Visit :Redirect 50000))]
+              ;
+              ;[rc/button :label "+ Dummy->New-thing"
+              ; :on-click #(h/handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
+              ;
 
 
 

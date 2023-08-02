@@ -17,6 +17,44 @@
 (declare create-local-path-event)
 
 
+(defn conj-in [d path value]
+  (let [start (get-in d path)
+        c (if (vector? start)
+            (into [] (conj start value))
+            (conj start value))]
+    (assoc-in d path c)))
+
+
+(defn disj-in [d path value]
+  (let [start (get-in d path)
+        c (if (vector? start)
+            (into [] (disj start value))
+            (disj start value))]
+    (assoc-in d path c)))
+
+
+(defn drop-last-in [d path value]
+  (let [start (get-in d path)
+        c (if (vector? start)
+            (into [] (drop-last value start))
+            (drop-last value start))]
+    (assoc-in d path c)))
+
+
+(defn drop-in [d path value]
+  (let [start (get-in d path)
+        c (if (vector? start)
+            (into [] (drop value start))
+            (drop value start))]
+    (assoc-in d path c)))
+
+
+(defn set-val [d path value]
+  (log/info "set-val" d "//" path "//" value)
+
+  value)
+
+
 (re-frame/reg-event-db
   :events/init-container-locals
   (fn-traced [db [_ container values]]
@@ -361,6 +399,135 @@
         (assoc-in db [:containers id] new-val)))))
 
 
+(defn- source-local-> [db base-path f]
+  (log/info "source-local-> (a)" (keys db)
+    "//" base-path
+    "//" f
+    "//" (get-in db base-path))
+
+  (let [ret (loop [x (get-in db base-path), forms (first f)]
+              (if forms
+                (let [form     (first forms)
+                      threaded (if (or (seq? form) (vector? form))
+                                 (do
+                                   (log/info "source-local-> (b)" base-path "//"
+                                     (first form) x (next form) "____")
+                                   (apply (first form) x (next form)))
+                                 (do
+                                   (log/info "source-local-> (b) NEG " (list form x))
+                                   (list form x)))]
+                  (recur threaded (next forms)))
+                x))]
+    (log/info "source-local-> (c)" ret)
+
+    (assoc-in db base-path ret)))
+
+
+(comment
+  (get-in @re-frame.db/app-db [:containers
+                               :chart-with-fn.widget
+                               :blackboard
+                               :topic.data])
+
+  (def base-path (apply conj [:containers (h/path->keyword :chart-with-fn.widget)]
+                   (map h/path->keyword [:blackboard :topic/data])))
+
+  (get-in @re-frame.db/app-db base-path)
+
+
+  [:assoc-in (apply conj [:containers :chart-with-fn.widget :blackboard :topic.data]
+               [:data 0 :uv])]
+
+  @last-params
+
+  ; assoc-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc-in [:data 0 :uv] 999999]])
+
+  ; update-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[update-in [:data 0 :uv] + 123]])
+
+  ; assoc? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc :dummy 123]])
+
+  ; update? YES! (and we can even string a few together!)
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc :dummy 123]
+     [update :dummy * 2]])
+
+
+  (do
+    (def d {:one {:two [1 2 3]}
+            :data [1 2 3 4 5 6]
+            :container-id "dummy"})
+    (def path [:one :two])
+    (def value 4))
+
+  (get-in d path)
+  (assoc-in d path "hello")
+  (conj (get-in d path) 4)
+  (assoc-in d path (conj (get-in d path) value))
+  (conj-in d path value)
+
+  (def start (get-in d [:data]))
+
+  (let [start (get-in d [:data])
+        c (if (vector? start)
+            (into [] (drop value start))
+            (drop value start))]
+    (assoc-in d [:data] c))
+
+
+  (drop-in d [:data] 2)
+  (drop-last-in d [:data] 2)
+  (drop-last-in (get-in @re-frame.db/app-db
+                  [:containers :chart-with-fn.widget :blackboard :topic.data])
+    [:data] 2)
+
+  (assoc-in d [:container-id] (set-val d [] value))
+
+  ; conj-in?
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[conj-in [:dummy] 123]
+     [conj-in [:dummy] 456]])
+
+
+  ; drop-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[drop-in [:data] 2]])
+
+  ; drop-last-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[drop-last-in [:data] 2]])
+
+  ; set-val?
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :container-id]
+    [[set-val "container"]])
+
+
+
+  ())
+
+
+(def last-params (atom nil))
 (defn create-container-local-event
   "create and registers a re-frame [event handler](https://day8.github.io/re-frame/dominoes-30k/#domino-2-event-handling)
   for the value at the path inside the [`:containers` `container-id as a keyword`] key in the `app-db`.
@@ -389,24 +556,152 @@
 
 > Note: so developer don't need to understand or even remember this encoding scheme, use the [[subscribe-local]] helper function
 > in place of standard re-frame subscription calls. It provides the same result, and does all the encoding for you.
+
+When calling re-frame.core/dispatch on the function's identifier, the params are:
+
+- new-val : the new value to put into the data structure -> this MUST be of the correct structure to fit into the correct part
+            of the data structure
+- value-path : (optional) the path to the specific location *inside* the data structure to place the new value, since the implmentation
+               use (assoc-in)
+
+e.g., assume the function is identified via `:the-function` and the data structure is:
+
+``` clojure
+{:title \"this is the title\"
+ :values {:x 100 :y 200 :z 300}}
+```
+
+iIf the intent is to replace the [:values :z] with 500, you would use:
+
+`(re-frame.core/dispatch [:the-function 500 [:values :z]])`.
+
+Setting :title to \"a new title\" would use:
+
+`(re-frame.core/dispatch [:the-function \"a new title\" [:title]])`.
+
+And if the intent is to replace the entire structure, calling:
+
+`(re-frame.core/dispatch [:the-function {:title \"empty\"} \"a new title\"])`
+
+will set the data value to:
+
+`{:title \"empty\"}`
   "
   [container-id [a & more :as value-path]]
   (let [p (h/path->keyword container-id a more)]
 
-    ;(log/info "create-container-local-event" p
-    ;  "apply conj" (apply conj [:containers (h/path->keyword container-id)] (map h/path->keyword value-path)))
+    ;(log/info "create-container-local-event (a)" container-id "//" value-path "//" p)
 
     (re-frame/reg-event-db
       p
-      (fn [db [_ new-val]]
-        ;(log/info "event" p new-val)
+      (fn [db [_ new-val update-path :as params]]
+        (log/info "create-container-local-event (b)" p "//" new-val)
 
-        ; NOTE: this "default" processing could be overridden (using an optional keyword)
-        ; to perform more custom functions (like incremental updates to a collection)
-        ;
-        (assoc-in db
-          (apply conj [:containers (h/path->keyword container-id)] (map h/path->keyword value-path))
-          new-val)))))
+        (reset! last-params params)
+
+        (let [base-path     (apply conj [:containers (h/path->keyword container-id)]
+                              (map h/path->keyword value-path))
+              complete-path (apply conj base-path update-path)]
+
+          ; NOTE: this "default" processing could be overridden (using an optional keyword)
+          ; to perform more custom functions (like incremental updates to a collection)
+          ;
+          ;(log/info "create-container-local-event (b)" p
+          ;  "//" params
+          ;  "//" detailed-path
+          ;  "//" complete-path
+          ;  "//" new-val)
+
+          (log/info "create-container-local-event (c)" params
+            "//" base-path
+            "//" (get-in db base-path))
+
+          (source-local-> db base-path (next params)))))))
+
+          ; TODO: can we make this more flexible that always doing "assoc-in"?
+          ;(assoc-in db complete-path new-val))))))
+
+
+; work out how to pass a number of assoc, assoc-in, etc. as params to a :source/local
+(comment
+  (-> {}
+    (assoc :title "title")
+    (assoc :data [])
+    (update-in [:data] conj {:x 0 :y 0})
+    (update-in [:data] conj {:x 1 :y 1}))
+
+  ; now to make the steps come from a collection... (remember '->' is a MACRO)
+
+  (def steps [:some.widget.blackboard.topic
+              [assoc :title "title"]
+              [update-in [:data] conj {:x 10 :y 10}]
+              [update-in [:data] conj {:x 20 :y 20}]])
+  (def db {:title "old title" :data [{:x 0 :y 0}]})
+
+  ; this is what the -> macros does (more or less)
+  (loop [x db, forms (next steps)]
+    (if forms
+      (let [form     (first forms)
+            threaded (if (or (seq? form) (vector? form))
+                       (apply (first form) x (next form))
+                       (list form x))]
+        (recur threaded (next forms)))
+      x))
+
+
+  (apply assoc {} '(:title "title"))
+  (seq? (ffirst steps))
+  (apply (ffirst steps) {} (->> steps first next))
+
+
+  ())
+
+; work out revised pathing to assoc-in a new value to a :source/local
+(comment
+  (def db @re-frame.db/app-db)
+
+  (apply conj
+    (apply conj [:containers :chart-with-fn.widget]
+      (map h/path->keyword [:blackboard :topic/data]))
+    [:data 0 :uv 9999999])
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      [:data]))
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      []))
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      nil))
+
+  (assoc-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      [:data 0 :uv])
+    99999999)
+
+  (do
+    (def container-id :chart-with-fn.widget)
+    (def value-path [:blackboard :topic/data])
+    (def detailed-path nil))
+
+  (apply conj
+    (apply conj [container-id (h/path->keyword value-path)]
+      (map h/path->keyword value-path))
+    detailed-path)
+
+
+  ())
 
 
 (defn create-local-path-event [value-path]
@@ -573,12 +868,35 @@
   "
   [container-id [a & more :as value-path] new-val]
 
-  ;(log/info "dispatch-local" container-id value-path new-val)
+  ;(log/info "dispatch-local (a)" container-id value-path new-val)
 
   (let [p (h/path->keyword container-id a more)]
-    ;(log/info "dispatch-local" container-id "//" value-path "//" p "//" new-val)
-    (re-frame/dispatch [p new-val])))
 
+    (log/info "dispatch-local (b)" container-id "//" value-path "//" new-val
+      "^^^^^^^" p
+      "*******" [set-val [] new-val])
+
+    (re-frame/dispatch [p [[set-val [] new-val]]])))
+
+
+
+(comment
+  (assoc-in {:dummy {:one []}} [] "new-value")
+
+
+  (h/path->keyword [:blackboard ":topic/data"])
+  (h/path->keyword (last [:blackboard ":topic/data"]))
+  (h/path->keyword (last [:container-id]))
+  (h/path->keyword (last nil))
+
+  (when (last [:blackboard ":topic/data"])
+    true)
+  (when (last [:container-id])
+    true)
+  (when (last nil)
+    true)
+
+  ())
 
 (defn apply-local
   "applies the given function (fn-to-apply) to the value found in the app-db and then

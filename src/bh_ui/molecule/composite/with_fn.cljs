@@ -1,6 +1,7 @@
 (ns bh-ui.molecule.composite.with-fn
   (:require [bh-ui.utils.example-data :as example-data]
             [re-frame.core :as re-frame]
+            [day8.re-frame.tracing :refer-macros [fn-traced]]
             [taoensso.timbre :as log]))
 
 
@@ -32,7 +33,23 @@
                    (assoc :uv*pv (/ (* uv pv) 1000)
                           :tv*amt (/ (* tv amt) 1000))
                    (dissoc :uv :pv :tv :amt))))
-          (assoc {} :metadata metadata :data))))))
+          (assoc {} :metadata metadata :data)))))
+
+  ;(log/info "compute-new-data (reg-event-fx)" (first sub-name)
+  ;  "//" data)
+
+  ; TODO: move this reg-event-fx into a utility namespace, so :source/fn implementations don't need
+  ;       to know the details (which they then risk getting wrong)
+  ;
+  (re-frame/reg-event-fx
+    (first sub-name)
+    (fn-traced [_ updates]
+      ;(log/info "compute-new-data (b)" (first sub-name)
+      ;  "//" data
+      ;  "//" (drop 1 updates)
+      ;  "//" [data updates]
+      ;  "//" (apply conj data (drop 1 updates)))
+      {:dispatch (apply conj data (drop 1 updates))})))
 
 
 (re-frame/dispatch-sync
@@ -43,9 +60,9 @@
 
 (def ui-definition
   {:mol/components  {":ui/pie-chart"   {:atm/role    :ui/component :atm/kind :rechart/colored-pie
-                                        :config-data {}}
+                                        :atm/config-data {}}
                      ":ui/line-chart"  {:atm/role    :ui/component :atm/kind :rechart/line
-                                        :config-data {}}
+                                        :atm/config-data {}}
                      ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
                      ":topic/computed" {:atm/role :source/local :atm/kind :topic/computed}
 
@@ -58,4 +75,22 @@
 
    :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
                      {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
+
+
+
+; enhance updates to "data" (even is what you subscribe to is really a :source/fn
+(comment
+  (re-frame/dispatch [:chart-with-fn.widget.blackboard.with-fn.compute-new-data
+                      9999999 [:data 3 :amt]])
+
+  (re-frame/dispatch [:chart-with-fn.widget.blackboard.topic.data "new-data"])
+
+  (->> @re-frame.db/app-db
+    :containers
+    :chart-with-fn.widget
+    :blackboard)
+
+
+  ())
+
 

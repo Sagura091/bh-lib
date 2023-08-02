@@ -284,8 +284,7 @@
                   (and (string? label) (empty? label)) ""
                   :else [rc/box :src (rc/at) :align :start :child [:code label]])
          :model @checked?
-         :on-change #(h/handle-change-path config []
-                       (assoc-in @cfg path %))]))))
+         :on-change #(h/handle-change-path config [[assoc-in path %]])]))))
 
 
 (defn slider-config
@@ -302,8 +301,7 @@
           :model @model
           :width "100px"
           :min min :max max :step step
-          :on-change #(h/handle-change-path config []
-                        (assoc-in @cfg path %))]))))
+          :on-change #(h/handle-change-path config [[assoc-in path %]])]))))
 
   ([config min max path]
    [slider-config config min max 1 path]))
@@ -319,8 +317,7 @@
                     [rc/input-text :src (rc/at)
                      :model (str @model)
                      :width "50px"
-                     :on-change #(h/handle-change-path config []
-                                   (assoc-in @cfg path %))]]]))))
+                     :on-change #(h/handle-change-path config [[assoc-in path %]])]]]))))
 
 
 (defn strokeDasharray
@@ -517,8 +514,7 @@
                  :close-button? false
                  :no-clip? false
                  :body [:> HexColorPicker {:color     (get-in @d path)
-                                           :on-change #(h/handle-change-path config-data []
-                                                         (assoc-in @d path %))}]]])))
+                                           :on-change #(h/handle-change-path config-data [[assoc-in path %]])}]]])))
 
 
 (defn color-config-text [component-id label path & [position]]

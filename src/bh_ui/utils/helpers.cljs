@@ -55,6 +55,12 @@
     keyword))
 
 
+(defn path->keyword-vec [& path]
+  (when path
+    [(path->keyword path)]
+    []))
+
+
 (defn string->keyword [s]
   (-> s
     str
@@ -107,17 +113,21 @@
     :else ()))
 
 
-(defn handle-change-path [value path new-value]
-  ;(log/info "handle-change-path" value "//" path "//" new-value)
+; TODO: think handle-change-path needs to change to provide the "update-path" as a separate param, rather
+;       than forcing the caller to provide a complete data item (assoc-in done inside the handler...)
+;
+(defn handle-change-path [value new-value]
+  (log/info "handle-change-path" value "//" new-value)
 
   (cond
     (or (coll? value)
       (keyword? value)
-      (string? value)) (let [update-event (conj [(path->keyword value path)] new-value)]
-                         ;(log/info "handle-change-path (update event)" update-event)
+      (string? value)) (let [update-event [(path->keyword value) new-value]]
+                         (log/info "handle-change-path (update event)" update-event)
                          (re-frame/dispatch update-event))
-    (instance? reagent.ratom.RAtom value) (swap! value assoc-in path new-value)
-    (instance? Atom value) (swap! value assoc-in path new-value)
+    ; TODO: fix handling ATOMS!
+    ;(instance? reagent.ratom.RAtom value) (swap! value assoc-in path new-value)
+    ;(instance? Atom value) (swap! value assoc-in path new-value)
     :else ()))
 
 

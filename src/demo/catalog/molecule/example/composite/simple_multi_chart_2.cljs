@@ -4,6 +4,7 @@
             [bh-ui.molecule.grid-container :as grid]
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -26,34 +27,27 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path data [] []) :label "Empty"]
+                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] []]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path data [] widget/sample-data)
+                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] widget/sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc-in @old-data [:data 0 :uv] 10000))
+                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc @old-data :data
-                                                           (conj (:data @old-data)
-                                                             {:name "Page Q" :uv 1100
-                                                              :pv   1100 :tv 1100 :amt 1100})))
+                  [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                                                                     {:name "Page Q" :uv 1100
+                                                                      :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc @old-data :data
-                                                           (into [] (drop-last 2 (:data @old-data)))))
+                  [rc/button :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (-> @old-data
-                                            (assoc-in [:metadata :fields :new-item] :number)
-                                            (assoc :data (into []
-                                                           (map (fn [x]
-                                                                  (assoc x :new-item (rand-int 7000)))
-                                                             (:data @old-data))))))
+                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                                                                    [assoc :data (into []
+                                                                                   (map (fn [x]
+                                                                                          (assoc x :new-item (rand-int 7000)))
+                                                                                     (:data @old-data)))]])
                    :label "Add :new-item"]]])))
 
 (def last-thing (atom nil))
@@ -74,38 +68,27 @@
          :gap "10px"
          :class "tools-panel"
          :children [[:label.h5 "Config:"]
-                    [rc/button :on-click #(h/handle-change-path config-data [] widget/default-config-data) :label "Default"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (assoc-in @cfg [:brush] (not brush?)))
+                    [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] widget/default-config-data]]) :label "Default"]
+                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:brush] not]])
                      :label "!Brush"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (assoc-in @cfg [:uv :include] (not uv?)))
+                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:uv :include] not]])
                      :label "! uv data"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (assoc-in @cfg [:tv :include] (not tv?)))
+                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:tv :include] not]])
                      :label "! tv data"]
 
                     [chart-utils/color-config config-data ":amt :fill" [:amt :fill] :above-center]
 
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (-> @cfg
-                                              (assoc-in [:uv :stackId] "b")
-                                              (assoc-in [:pv :stackId] "b")))
+                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:uv :stackId] "b"]
+                                                                             [assoc-in [:pv :stackId] "b"]])
                      :label "stack uv/pv"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (-> @cfg
-                                              (assoc-in [:uv :stackId] "")
-                                              (assoc-in [:pv :stackId] "")))
+                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:uv :stackId] ""]
+                                                                             [assoc-in [:pv :stackId] ""]])
                      :label "!stack uv/pv"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                             (-> @cfg
-                                               (assoc-in [:tv :stackId] "a")
-                                               (assoc-in [:amt :stackId] "a")))
+                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:tv :stackId] "a"]
+                                                                             [assoc-in [:amt :stackId] "a"]])
                      :label "stack tv/amt"]
-                    [rc/button :on-click #(h/handle-change-path config-data []
-                                            (-> @cfg
-                                              (assoc-in [:tv :stackId] "")
-                                              (assoc-in [:amt :stackId] "")))
+                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:tv :stackId] ""]
+                                                                             [assoc-in [:amt :stackId] ""]])
                      :label "!stack tv/amt"]]]))))
 
 

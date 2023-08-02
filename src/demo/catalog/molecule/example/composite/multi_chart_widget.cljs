@@ -4,6 +4,7 @@
             [bh-ui.utils :as ui-utils]
             [bh-ui.molecule.grid-container :as grid]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -25,34 +26,27 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path data [] []) :label "Empty"]
+                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] []]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path data [] widget/sample-data)
+                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] widget/sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc-in @old-data [:data 0 :uv] 10000))
+                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc @old-data :data
-                                                           (conj (:data @old-data)
-                                                             {:name "Page Q" :uv 1100
-                                                              :pv   1100 :tv 1100 :amt 1100})))
+                  [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                                                                     {:name "Page Q" :uv 1100
+                                                                      :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (assoc @old-data :data
-                                                           (into [] (drop-last 2 (:data @old-data)))))
+                  [rc/button :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(h/handle-change-path data []
-                                          (-> @old-data
-                                            (assoc-in [:metadata :fields :new-item] :number)
-                                            (assoc :data (into []
-                                                           (map (fn [x]
-                                                                  (assoc x :new-item (rand-int 7000)))
-                                                             (:data @old-data))))))
+                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                                                                    [assoc :data (into []
+                                                                                   (map (fn [x]
+                                                                                          (assoc x :new-item (rand-int 7000)))
+                                                                                     (:data @old-data)))]])
                    :label "Add :new-item"]]])))
 
 

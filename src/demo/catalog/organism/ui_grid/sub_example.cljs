@@ -8,6 +8,7 @@
             [bh-ui.organism.ui-grid :as grid]
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -64,7 +65,7 @@
 
 
 (defn- grid-reset [container-id widget-val layout-val]
-  (h/handle-change-path container-id [] {:widgets widget-val :layout layout-val}))
+  (h/handle-change-path container-id [[l/set-val [] {:widgets widget-val :layout layout-val}]]))
 
 
 (defn- toggle-val [s val]
@@ -74,9 +75,8 @@
 
 
 (defn- grid-update [container-id widgets layout widget-val layout-val]
-  (h/handle-change-path container-id []
-    {:widgets (toggle-val @(h/resolve-value widgets) widget-val)
-     :layout  (toggle-val @(h/resolve-value layout) layout-val)}))
+  (h/handle-change-path container-id [[l/set-val [] {:widgets (toggle-val @(h/resolve-value widgets) widget-val)
+                                                     :layout  (toggle-val @(h/resolve-value layout) layout-val)}]]))
 
 
 (defn- widget-tools [container-id widgets layout default-widgets]

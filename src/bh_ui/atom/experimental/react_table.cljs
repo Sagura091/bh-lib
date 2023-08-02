@@ -5,6 +5,7 @@
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
     [bh-ui.utils.helpers :as h]
+    [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
 
@@ -56,9 +57,9 @@
                         @react-data
                         (into [] (mapcat #(get %1 :subRows) @react-data)))]
     (condp = [reframe-path? data-key?]
-      [true true]   (h/handle-change-path orig-data [] (assoc-in @data [:data] d))
-      [true false]  (h/handle-change-path orig-data [] d)
-      [false true]  (h/handle-change-path data [:data] d)
+      [true true]   (h/handle-change-path orig-data [[assoc-in [:data] d]])
+      [true false]  (h/handle-change-path orig-data [[l/set-val [] d]])
+      [false true]  (h/handle-change-path data [l/set-val [:data] d])
       [false false] (reset! data d))))
 
 

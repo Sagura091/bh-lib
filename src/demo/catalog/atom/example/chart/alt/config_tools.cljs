@@ -3,6 +3,7 @@
             [bh-ui.atom.chart.utils :as chart-utils]
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [taoensso.timbre :as log]))
 
 
@@ -47,25 +48,25 @@
        :gap "10px"
        :class "tools-panel"
        :children [[:label.h5 "Config:"]
-                  [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:brush] (not @brush?))
+                  [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] default-config-data]]) :label "Default"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:brush] not]])
                    :label "!Brush"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:uv :include] (not @uv?))
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:uv :include] not]])
                    :label "! uv data"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:tv :include] (not @tv?))
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:tv :include] not]])
                    :label "! tv data"]
                   [chart-utils/color-config config-data ":amt :fill" [:amt :fill] :above-center]
-                  [rc/button :on-click #((h/handle-change-path config-data [:uv :stackId] "b")
-                                         (h/handle-change-path config-data [:pv :stackId] "b"))
+                  [rc/button :on-click #((h/handle-change-path config-data [[assoc-in [:uv :stackId] "b"]])
+                                         (h/handle-change-path config-data [[assoc-in [:pv :stackId] "b"]]))
                    :label "stack uv/pv"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:uv :stackId] "")
-                                         (h/handle-change-path config-data [:pv :stackId] ""))
+                  [rc/button :on-click #((h/handle-change-path config-data [[assoc-in [:uv :stackId] ""]])
+                                         (h/handle-change-path config-data [[assoc-in [:pv :stackId] ""]]))
                    :label "!stack uv/pv"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:tv :stackId] "a")
-                                         (h/handle-change-path config-data [:amt :stackId] "a"))
+                  [rc/button :on-click #((h/handle-change-path config-data [[assoc-in [:tv :stackId] "a"]])
+                                         (h/handle-change-path config-data [[assoc-in [:amt :stackId] "a"]]))
                    :label "stack tv/amt"]
-                  [rc/button :on-click #((h/handle-change-path config-data [:tv :stackId] "")
-                                         (h/handle-change-path config-data [:amt :stackId] ""))
+                  [rc/button :on-click #((h/handle-change-path config-data [[assoc-in [:tv :stackId] ""]])
+                                         (h/handle-change-path config-data [[assoc-in [:amt :stackId] ""]]))
                    :label "!stack tv/amt"]]])))
 
 
@@ -78,9 +79,9 @@
               [rc/button :on-click #(swap! config-data update-in [:Page-A :include] not) :label "! Page A"]
               [rc/button :on-click #(swap! config-data update-in [:Page-C :include] not) :label "! Page C"]
               [chart-utils/color-config config-data ":Page-D :color" [:Page-D :color] :above-center]
-              [rc/button :on-click #(swap! config-data assoc-in [:value :chosen] :uv) :label ":uv"]
-              [rc/button :on-click #(swap! config-data assoc-in [:value :chosen] :tv) :label ":tv"]
-              [rc/button :on-click #(swap! config-data assoc-in [:value :chosen] :amt) :label ":amt"]]])
+              [rc/button :on-click #(swap! config-data assoc-in [[assoc-in [:value :chosen] :uv]]) :label ":uv"]
+              [rc/button :on-click #(swap! config-data assoc-in [[assoc-in [:value :chosen] :tv]]) :label ":tv"]
+              [rc/button :on-click #(swap! config-data assoc-in [[assoc-in [:value :chosen] :amt]]) :label ":amt"]]])
 
 
 (defn meta-tabular-config-row-sub-tools [config-data default-config-data]
@@ -93,13 +94,13 @@
        :gap "10px"
        :class "tools-panel"
        :children [[:label.h5 "Config:"]
-                  [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-A :include] (not @page-a)) :label "! Page A"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-C :include] (not @page-c)) :label "! Page C"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] default-config-data]]) :label "Default"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-A :include] not]]) :label "! Page A"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-C :include] not]]) :label "! Page C"]
                   [chart-utils/color-config config-data ":Page-D :color" [:Page-D :color] :above-center]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :uv) :label ":uv"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :tv) :label ":tv"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :amt) :label ":amt"]]])))
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :uv]]) :label ":uv"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :tv]]) :label ":tv"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :amt]]) :label ":amt"]]])))
 
 
 (defn meta-tabular-config-pie-row-ratom-tools [config-data default-config-data]
@@ -126,13 +127,13 @@
        :gap "10px"
        :class "tools-panel"
        :children [[:label.h5 "Config:"]
-                  [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-A :include] (not @page-a)) :label "! Page A"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-C :include] (not @page-c)) :label "! Page C"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] default-config-data]]) :label "Default"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-A :include] not]]) :label "! Page A"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-C :include] not]]) :label "! Page C"]
                   [chart-utils/color-config config-data "Pie Color" [:fill] :above-center]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :uv) :label ":uv"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :tv) :label ":tv"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:value :chosen] :amt) :label ":amt"]]])))
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :uv]]) :label ":uv"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :tv]]) :label ":tv"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:value :chosen] :amt]]) :label ":amt"]]])))
 
 
 (defn dag-data-config-ratom-tools [config-data default-config-data]
@@ -153,7 +154,7 @@
    :gap "10px"
    :class "tools-panel"
    :children [[:label.h5 "Config:"]
-              [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
+              [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] default-config-data]]) :label "Default"]
               [chart-utils/color-config config-data "Visit Fill" [:Visit :fill] :above-center]
               [chart-utils/color-config config-data "Visit Stroke" [:Visit :stroke] :above-center]
               [chart-utils/color-config config-data "Lost Fill" [:Lost :fill] :above-center]

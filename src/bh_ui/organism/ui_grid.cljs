@@ -1,6 +1,7 @@
 (ns bh-ui.organism.ui-grid
   (:require [bh-ui.atom.layout.responsive-grid :as grid]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [reagent.ratom]
             [taoensso.timbre :as log]))
 
@@ -26,7 +27,7 @@
 
 (defn- update-layout-sub [layout updated-layout]
   ;(log/info "update-layout-sub" layout "//" updated-layout)
-  (h/handle-change-path layout [] updated-layout))
+  (h/handle-change-path layout [[l/set-val [] updated-layout]]))
 
 
 (defn- update-layout-ratom [layout updated-layout]

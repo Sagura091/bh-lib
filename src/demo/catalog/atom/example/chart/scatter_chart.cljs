@@ -11,6 +11,7 @@
             [demo.catalog.atom.example.chart.alt.config-sub-example :as config-sub-example]
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as l]
             [bh-ui.utils :as u]
             [taoensso.timbre :as log]
             [re-com.core :as rc]
@@ -52,7 +53,7 @@
                      :model (get-in @cd path)
                      :tabs buttons
                      :style chart-utils/btns-style
-                     :on-change #(h/handle-change-path config-data path %)]]]))))
+                     :on-change #(h/handle-change-path config-data [[assoc-in path %]])]]]))))
 
 
 (defn- meta-tabular-config-row-ratom-tools [config-data default-config-data data component-id]
@@ -83,9 +84,9 @@
                :box-shadow "5px 5px 5px 2px"
                :margin     "5px" :padding "5px"}
        :children [[:label.h5 "Config:"]
-                  [rc/button :on-click #(h/handle-change-path config-data [] default-config-data) :label "Default"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-A :include] (not @page-a)) :label "! Page A"]
-                  [rc/button :on-click #(h/handle-change-path config-data [:Page-C :include] (not @page-c)) :label "! Page C"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] default-config-data]]) :label "Default"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-A :include] not]]) :label "! Page A"]
+                  [rc/button :on-click #(h/handle-change-path config-data [[update-in [:Page-C :include] not]]) :label "! Page C"]
                   [chart-utils/color-config config-data ":Page-D :color" [:Page-D :color] :above-center]
                   [column-picker-sub config-data ":x" [:values :x]]
                   [column-picker-sub config-data ":y" [:values :y]]

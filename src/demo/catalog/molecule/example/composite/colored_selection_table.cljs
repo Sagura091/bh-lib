@@ -67,7 +67,7 @@
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color
-          (h/handle-change-path path [topic] ret)
+          (h/handle-change-path path [[assoc-in [topic] ret]])
 
           ret)))))
 
