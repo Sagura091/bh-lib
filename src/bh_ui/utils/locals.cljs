@@ -27,9 +27,10 @@
 
 (defn disj-in [d path value]
   (let [start (get-in d path)
-        c (if (vector? start)
-            (into [] (disj start value))
-            (disj start value))]
+        c (cond
+            (set? start) (into #{} (disj start value))
+            (vector? start) (into [] (disj start value))
+            :else (disj start value))]
     (assoc-in d path c)))
 
 
@@ -399,134 +400,6 @@
         (assoc-in db [:containers id] new-val)))))
 
 
-(defn- source-local-> [db base-path f]
-  (log/info "source-local-> (a)" (keys db)
-    "//" base-path
-    "//" f
-    "//" (get-in db base-path))
-
-  (let [ret (loop [x (get-in db base-path), forms (first f)]
-              (if forms
-                (let [form     (first forms)
-                      threaded (if (or (seq? form) (vector? form))
-                                 (do
-                                   (log/info "source-local-> (b)" base-path "//"
-                                     (first form) x (next form) "____")
-                                   (apply (first form) x (next form)))
-                                 (do
-                                   (log/info "source-local-> (b) NEG " (list form x))
-                                   (list form x)))]
-                  (recur threaded (next forms)))
-                x))]
-    (log/info "source-local-> (c)" ret)
-
-    (assoc-in db base-path ret)))
-
-
-(comment
-  (get-in @re-frame.db/app-db [:containers
-                               :chart-with-fn.widget
-                               :blackboard
-                               :topic.data])
-
-  (def base-path (apply conj [:containers (h/path->keyword :chart-with-fn.widget)]
-                   (map h/path->keyword [:blackboard :topic/data])))
-
-  (get-in @re-frame.db/app-db base-path)
-
-
-  [:assoc-in (apply conj [:containers :chart-with-fn.widget :blackboard :topic.data]
-               [:data 0 :uv])]
-
-  @last-params
-
-  ; assoc-in? YES!
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[assoc-in [:data 0 :uv] 999999]])
-
-  ; update-in? YES!
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[update-in [:data 0 :uv] + 123]])
-
-  ; assoc? YES!
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[assoc :dummy 123]])
-
-  ; update? YES! (and we can even string a few together!)
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[assoc :dummy 123]
-     [update :dummy * 2]])
-
-
-  (do
-    (def d {:one {:two [1 2 3]}
-            :data [1 2 3 4 5 6]
-            :container-id "dummy"})
-    (def path [:one :two])
-    (def value 4))
-
-  (get-in d path)
-  (assoc-in d path "hello")
-  (conj (get-in d path) 4)
-  (assoc-in d path (conj (get-in d path) value))
-  (conj-in d path value)
-
-  (def start (get-in d [:data]))
-
-  (let [start (get-in d [:data])
-        c (if (vector? start)
-            (into [] (drop value start))
-            (drop value start))]
-    (assoc-in d [:data] c))
-
-
-  (drop-in d [:data] 2)
-  (drop-last-in d [:data] 2)
-  (drop-last-in (get-in @re-frame.db/app-db
-                  [:containers :chart-with-fn.widget :blackboard :topic.data])
-    [:data] 2)
-
-  (assoc-in d [:container-id] (set-val d [] value))
-
-  ; conj-in?
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[conj-in [:dummy] 123]
-     [conj-in [:dummy] 456]])
-
-
-  ; drop-in? YES!
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[drop-in [:data] 2]])
-
-  ; drop-last-in? YES!
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :topic.data]
-    [[drop-last-in [:data] 2]])
-
-  ; set-val?
-  (source-local->
-    @re-frame.db/app-db
-    [:containers :chart-with-fn.widget :blackboard :container-id]
-    [[set-val "container"]])
-
-
-
-  ())
-
-
 (def last-params (atom nil))
 (defn create-container-local-event
   "create and registers a re-frame [event handler](https://day8.github.io/re-frame/dominoes-30k/#domino-2-event-handling)
@@ -590,18 +463,17 @@ will set the data value to:
   [container-id [a & more :as value-path]]
   (let [p (h/path->keyword container-id a more)]
 
-    ;(log/info "create-container-local-event (a)" container-id "//" value-path "//" p)
+    (log/info "create-container-local-event (a)" container-id "//" value-path "//" p)
 
     (re-frame/reg-event-db
       p
-      (fn [db [_ new-val update-path :as params]]
+      (fn [db [_ new-val :as params]]
         (log/info "create-container-local-event (b)" p "//" new-val)
 
         (reset! last-params params)
 
         (let [base-path     (apply conj [:containers (h/path->keyword container-id)]
-                              (map h/path->keyword value-path))
-              complete-path (apply conj base-path update-path)]
+                              (map h/path->keyword value-path))]
 
           ; NOTE: this "default" processing could be overridden (using an optional keyword)
           ; to perform more custom functions (like incremental updates to a collection)
@@ -616,7 +488,7 @@ will set the data value to:
             "//" base-path
             "//" (get-in db base-path))
 
-          (source-local-> db base-path (next params)))))))
+          (h/source-local-> db base-path (next params)))))))
 
           ; TODO: can we make this more flexible that always doing "assoc-in"?
           ;(assoc-in db complete-path new-val))))))

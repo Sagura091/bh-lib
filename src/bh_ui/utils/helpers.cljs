@@ -113,23 +113,100 @@
     :else ()))
 
 
+(defn source-local-> [db base-path f]
+  (log/info "source-local-> (a)" (keys db)
+    "//" base-path
+    "//" f
+    "//" (get-in db base-path))
+
+  (let [ret (loop [x (get-in db base-path), forms (first f)]
+              (if forms
+                (let [form     (first forms)
+                      threaded (if (or (seq? form) (vector? form))
+                                 (do
+                                   (log/info "source-local-> (b)" base-path "//"
+                                     (first form) x (next form) "____")
+                                   (apply (first form) x (next form)))
+                                 (do
+                                   (log/info "source-local-> (b) NEG " (list form x))
+                                   (list form x)))]
+                  (recur threaded (next forms)))
+                x))]
+    (log/info "source-local-> (c)" ret)
+
+    (assoc-in db base-path ret)))
+
+
 ; TODO: think handle-change-path needs to change to provide the "update-path" as a separate param, rather
 ;       than forcing the caller to provide a complete data item (assoc-in done inside the handler...)
 ;
 (defn handle-change-path [value new-value]
-  (log/info "handle-change-path" value "//" new-value)
+  ;(log/info "handle-change-path (a)" value "//" new-value)
 
-  (cond
-    (or (coll? value)
-      (keyword? value)
-      (string? value)) (let [update-event [(path->keyword value) new-value]]
-                         (log/info "handle-change-path (update event)" update-event)
-                         (re-frame/dispatch update-event))
-    ; TODO: fix handling ATOMS!
-    ;(instance? reagent.ratom.RAtom value) (swap! value assoc-in path new-value)
-    ;(instance? Atom value) (swap! value assoc-in path new-value)
-    :else ()))
+  (let [update-event [(path->keyword value) new-value]]
+    (cond
+      (or (coll? value)
+        (keyword? value)
+        (string? value)) (do
+                           (log/info "handle-change-path (path)" update-event)
+                           (re-frame/dispatch update-event))
 
+      (or
+        (instance? reagent.ratom.RAtom value)
+        (instance? Atom value)) (do
+                                  (log/info "handle-change-path (atom)" update-event)
+                                  (reset! value
+                                    (source-local-> @value [] update-event)))
+      :else ())))
+
+
+(comment
+  (do
+    (def v (atom {:one 1 :two {:three "missing"}}))
+    (def db @v)
+    (def base-path [])
+    (def f [[assoc-in [:two :three] "dummy"]])
+    (def forms f)
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+  (let [ret (loop [x (get-in db base-path), forms f]
+              (if forms
+                (let [form     (first forms)
+                      threaded (if (or (seq? form) (vector? form))
+                                 (do (println "vec?" apply (first form) x (next form))
+                                     (apply (first form) x (next form)))
+                                 (do (println "NOT" list form x)
+                                     (list form x)))]
+                  (recur threaded (next forms)))
+                x))]
+    ;ret)
+
+    (if (> 0 (count base-path))
+      (assoc-in db base-path ret)
+      ret))
+
+  (apply assoc-in db '([:two :three] "dummy"))
+  (def ret (apply (first form) x (next form)))
+
+  (if (> 0 (count base-path))
+    (assoc-in db base-path ret)
+    ret)
+
+  (fn-> {:one 1 :two {:three "missing"}}
+    []
+    [[assoc-in [:two :three] "dummy"]])
+
+
+  (reset! v (fn->
+              @v []
+              [[assoc-in [:two :three] "dummy"]]))
+
+  (assoc-in db base-path {:one 1, :two {:three "dummy"}})
+
+
+
+  ())
 
 
 (comment
@@ -138,17 +215,17 @@
     (def component-id (path->keyword container-id "widget"))
     (def data [component-id :blackboard :topic.data])
     (def path [:data])
-    (def old-data (atom {:metadata {:type :tabular,
-                                    :id :name,
-                                    :title "Tabular Data with Metadata",
+    (def old-data (atom {:metadata {:type   :tabular,
+                                    :id     :name,
+                                    :title  "Tabular Data with Metadata",
                                     :fields {:name :string, :uv :number, :pv :number, :tv :number, :amt :number}},
-                         :data [{:name "Page A", :uv 4000, :pv 2400, :tv 1500, :amt 2400}
-                                {:name "Page B", :uv 3000, :pv 1398, :tv 1500, :amt 2210}
-                                {:name "Page C", :uv 2000, :pv 9800, :tv 1500, :amt 2290}
-                                {:name "Page D", :uv 2780, :pv 3908, :tv 1500, :amt 2000}
-                                {:name "Page E", :uv 1890, :pv 4800, :tv 1500, :amt 2181}
-                                {:name "Page F", :uv 2390, :pv 3800, :tv 1500, :amt 2500}
-                                {:name "Page G", :uv 3490, :pv 4300, :tv 1500, :amt 2100}]}))
+                         :data     [{:name "Page A", :uv 4000, :pv 2400, :tv 1500, :amt 2400}
+                                    {:name "Page B", :uv 3000, :pv 1398, :tv 1500, :amt 2210}
+                                    {:name "Page C", :uv 2000, :pv 9800, :tv 1500, :amt 2290}
+                                    {:name "Page D", :uv 2780, :pv 3908, :tv 1500, :amt 2000}
+                                    {:name "Page E", :uv 1890, :pv 4800, :tv 1500, :amt 2181}
+                                    {:name "Page F", :uv 2390, :pv 3800, :tv 1500, :amt 2500}
+                                    {:name "Page G", :uv 3490, :pv 4300, :tv 1500, :amt 2100}]}))
     (def value data)
     (def new-value (assoc-in (:data @old-data) [0 :uv] 10000)))
 
@@ -172,7 +249,6 @@
   ())
 
 
-
 (comment
   (def path [:uv :fill])
   (def value [:dummy])
@@ -186,7 +262,6 @@
     str)
 
   ())
-
 
 
 (comment
@@ -206,4 +281,104 @@
   ())
 
 
+; work out source-local->, our "function" version of the -> macro
+(comment
+  (get-in @re-frame.db/app-db [:containers
+                               :chart-with-fn.widget
+                               :blackboard
+                               :topic.data])
 
+  (def base-path (apply conj [:containers (h/path->keyword :chart-with-fn.widget)]
+                   (map h/path->keyword [:blackboard :topic/data])))
+
+  (get-in @re-frame.db/app-db base-path)
+
+
+  [:assoc-in (apply conj [:containers :chart-with-fn.widget :blackboard :topic.data]
+               [:data 0 :uv])]
+
+  ; assoc-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc-in [:data 0 :uv] 999999]])
+
+  ; update-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[update-in [:data 0 :uv] + 123]])
+
+  ; assoc? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc :dummy 123]])
+
+  ; update? YES! (and we can even string a few together!)
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[assoc :dummy 123]
+     [update :dummy * 2]])
+
+
+  (do
+    (def d {:one          {:two [1 2 3]}
+            :data         [1 2 3 4 5 6]
+            :container-id "dummy"})
+    (def path [:one :two])
+    (def value 4))
+
+  (get-in d path)
+  (assoc-in d path "hello")
+  (conj (get-in d path) 4)
+  (assoc-in d path (conj (get-in d path) value))
+  (l/conj-in d path value)
+
+  (def start (get-in d [:data]))
+
+  (let [start (get-in d [:data])
+        c     (if (vector? start)
+                (into [] (drop value start))
+                (drop value start))]
+    (assoc-in d [:data] c))
+
+
+  (l/drop-in d [:data] 2)
+  (l/drop-last-in d [:data] 2)
+  (l/drop-last-in (get-in @re-frame.db/app-db
+                    [:containers :chart-with-fn.widget :blackboard :topic.data])
+    [:data] 2)
+
+  (assoc-in d [:container-id] (l/set-val d [] value))
+
+  ; conj-in?
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[l/conj-in [:dummy] 123]
+     [l/conj-in [:dummy] 456]])
+
+
+  ; drop-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[l/drop-in [:data] 2]])
+
+  ; drop-last-in? YES!
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :topic.data]
+    [[l/drop-last-in [:data] 2]])
+
+  ; set-val?
+  (source-local->
+    @re-frame.db/app-db
+    [:containers :chart-with-fn.widget :blackboard :container-id]
+    [[l/set-val [] "container"]])
+
+
+
+  ())
