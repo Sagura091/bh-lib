@@ -59,9 +59,12 @@
                                       :ports     {:data :port/sink}}}])
 
 
-(def hiccup-children [[text-block :data "text block one"]
-                      [text-block :data "text block two"]
-                      [text-block :data "text block three"]])
+(def hiccup-children [[text-block :data "text block one"
+                       :component-id :example.tabs-2.text-1 :container-id :example.tabs-2]
+                      [text-block :data "text block two"
+                       :component-id :example.tabs-2.text-2 :container-id :example.tabs-2]
+                      [text-block :data "text block three"
+                       :component-id :example.tabs-2.text-3 :container-id :example.tabs-2]])
 (def hiccup-3-children [[text-block-3 :data "text block one"]
                         [text-block-3 :data "text block two"]
                         [text-block-3 :data "text block three"]])
