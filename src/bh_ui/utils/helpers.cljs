@@ -114,21 +114,21 @@
 
 
 (defn source-local-> [db base-path f]
-  (log/info "source-local-> (a)" (keys db)
-    "//" base-path
-    "//" f
-    "//" (get-in db base-path))
+  ;(log/info "source-local-> (a)" (keys db)
+  ;  "//" base-path
+  ;  "//" f
+  ;  "//" (get-in db base-path))
 
   (let [ret (loop [x (get-in db base-path), forms (first f)]
               (if forms
                 (let [form     (first forms)
                       threaded (if (or (seq? form) (vector? form))
                                  (do
-                                   (log/info "source-local-> (b)" base-path "//"
-                                     (first form) x (next form) "____")
+                                   ;(log/info "source-local-> (b)" base-path "//"
+                                   ;  (first form) x (next form) "____")
                                    (apply (first form) x (next form)))
                                  (do
-                                   (log/info "source-local-> (b) NEG " (list form x))
+                                   ;(log/info "source-local-> (b) NEG " (list form x))
                                    (list form x)))]
                   (recur threaded (next forms)))
                 x))]
@@ -148,15 +148,14 @@
       (or (coll? value)
         (keyword? value)
         (string? value)) (do
-                           (log/info "handle-change-path (path)" update-event)
+                           ;(log/info "handle-change-path (path)" update-event)
                            (re-frame/dispatch update-event))
 
       (or
         (instance? reagent.ratom.RAtom value)
         (instance? Atom value)) (do
-                                  (log/info "handle-change-path (atom)" update-event)
-                                  (reset! value
-                                    (source-local-> @value [] update-event)))
+                                  ;(log/info "handle-change-path (atom)" update-event)
+                                  (reset! value (source-local-> @value [] update-event)))
       :else ())))
 
 

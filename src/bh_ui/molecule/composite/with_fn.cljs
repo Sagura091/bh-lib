@@ -59,31 +59,31 @@
 
 
 (def ui-definition
-  {:mol/components  {":ui/pie-chart"   {:atm/role    :ui/component :atm/kind :rechart/colored-pie
-                                        :atm/config-data {}}
-                     ":ui/line-chart"  {:atm/role    :ui/component :atm/kind :rechart/line
-                                        :atm/config-data {}}
-                     ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
-                     ":topic/computed" {:atm/role :source/local :atm/kind :topic/computed}
+  {:mol/components  {"pie-chart"  {:atm/role        :ui/component :atm/kind :rechart/colored-pie
+                                   :atm/config-data {}}
+                     "line-chart" {:atm/role        :ui/component :atm/kind :rechart/line
+                                   :atm/config-data {}}
+                     "data"       {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
+                     "computed"   {:atm/role :source/local :atm/kind :topic/computed}
 
-                     ":fn/data-fn"     {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
+                     "data-fn"    {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
 
-   :mol/links       {":topic/data"     {:data {":ui/line-chart" :data
-                                               ":fn/data-fn"    :data}}
-                     ":fn/data-fn"     {:computed {":topic/computed" :data}}
-                     ":topic/computed" {:data {":ui/pie-chart" :data}}}
+   :mol/links       {"data"     {:data {"line-chart" :data
+                                        "data-fn"    :data}}
+                     "data-fn"  {:data {"computed" :data}}
+                     "computed" {:data {"pie-chart" :data}}}
 
-   :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
-                     {:i ":ui/pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
+   :mol/grid-layout [{:i "line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
+                     {:i "pie-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
 
 ; enhance updates to "data" (even is what you subscribe to is really a :source/fn
 (comment
-  (re-frame/dispatch [:chart-with-fn.widget.blackboard.with-fn.compute-new-data
+  (re-frame/dispatch [:chart-with-fn.widget.blackboard.data-fn
                       9999999 [:data 3 :amt]])
 
-  (re-frame/dispatch [:chart-with-fn.widget.blackboard.topic.data "new-data"])
+  (re-frame/dispatch [:chart-with-fn.widget.blackboard.data "new-data"])
 
   (->> @re-frame.db/app-db
     :containers

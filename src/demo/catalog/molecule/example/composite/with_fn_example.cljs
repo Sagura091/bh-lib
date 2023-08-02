@@ -32,9 +32,7 @@
                   [rc/button :on-click #(h/handle-change-path data [[l/set-val [] widget/sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(do
-                                          (log/info "data-tools" data "//" [[assoc-in [:data 0 :uv] 10000]])
-                                          (h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]]))
+                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
                   [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data] {:name "Page Q" :uv 1100
@@ -46,37 +44,12 @@
 
                   [rc/button :on-click #(h/handle-change-path data
                                           [[assoc-in [:metadata :fields :new-item] :number]
+                                           ; TODO: can we do this better?
                                            [assoc :data (into []
                                                           (map (fn [x]
                                                                  (assoc x :new-item (rand-int 7000)))
                                                             (:data @old-data)))]])
-
-                   ; TODO: how can we handle THIS situation?
-                   ;(-> @old-data
-                   ;  (assoc-in [:metadata :fields :new-item] :number)
-                   ;  (assoc :data (into []
-                   ;                 (map (fn [x]
-                   ;                        (assoc x :new-item (rand-int 7000)))
-                   ;                   (:data @old-data))))))
                    :label "Add :new-item"]]])))
-
-
-(comment
-  (def d {:metadata {:type   :data/tabular, :id :name, :title "Tabular Data with Metadata",
-                     :fields {:name :string, :uv :number, :pv :number, :tv :number, :amt :number}},
-          :data     '({:name "Page Q", :uv 1100, :pv 1100, :tv 1100, :amt 1100}
-                      {:name "Page A", :uv 4000, :pv 2400, :tv 1500, :amt 2400}
-                      {:name "Page B", :uv 3000, :pv 1398, :tv 1500, :amt 2210}
-                      {:name "Page C", :uv 2000, :pv 9800, :tv 1500, :amt 2290}
-                      {:name "Page D", :uv 2780, :pv 3908, :tv 1500, :amt 2000}
-                      {:name "Page E", :uv 1890, :pv 4800, :tv 1500, :amt 2181})})
-
-  (assoc-in d [:data 0 :uv] 99999)
-
-
-
-  ())
-
 
 
 (defn- data-config-update-example [& {:keys [widget component-id] :as params}]
@@ -91,7 +64,7 @@
 
               [rc/v-box :src (rc/at)
                :gap "8px"
-               :children [[data-tools [component-id :blackboard :topic.data]]]]]])
+               :children [[data-tools [component-id :blackboard "data"]]]]]])
 
 
 (defn example []

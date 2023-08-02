@@ -51,7 +51,7 @@
 
 
 (defn set-val [d path value]
-  (log/info "set-val" d "//" path "//" value)
+  ;(log/info "set-val" d "//" path "//" value)
 
   value)
 
@@ -463,7 +463,7 @@ will set the data value to:
   [container-id [a & more :as value-path]]
   (let [p (h/path->keyword container-id a more)]
 
-    (log/info "create-container-local-event (a)" container-id "//" value-path "//" p)
+    ;(log/info "create-container-local-event (a)" container-id "//" value-path "//" p)
 
     (re-frame/reg-event-db
       p
@@ -484,9 +484,9 @@ will set the data value to:
           ;  "//" complete-path
           ;  "//" new-val)
 
-          (log/info "create-container-local-event (c)" params
-            "//" base-path
-            "//" (get-in db base-path))
+          ;(log/info "create-container-local-event (c)" params
+          ;  "//" base-path
+          ;  "//" (get-in db base-path))
 
           (h/source-local-> db base-path (next params)))))))
 
@@ -744,9 +744,9 @@ will set the data value to:
 
   (let [p (h/path->keyword container-id a more)]
 
-    (log/info "dispatch-local (b)" container-id "//" value-path "//" new-val
-      "^^^^^^^" p
-      "*******" [set-val [] new-val])
+    ;(log/info "dispatch-local (b)" container-id "//" value-path "//" new-val
+    ;  "^^^^^^^" p
+    ;  "*******" [set-val [] new-val])
 
     (re-frame/dispatch [p [[set-val [] new-val]]])))
 

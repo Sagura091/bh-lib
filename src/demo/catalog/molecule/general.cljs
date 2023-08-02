@@ -13,7 +13,8 @@
             [demo.catalog.molecule.example.composite.colored-selection-table :as cs-table]
             [demo.catalog.molecule.example.composite.tabbed-molecule :as tabbed]
             [demo.catalog.molecule.example.composite.signal-analysis :as signal]
-            [demo.catalog.molecule.example.composite.single-chart :as single-chart]))
+            [demo.catalog.molecule.example.composite.single-chart :as single-chart]
+            [demo.catalog.molecule.example.composite.function-chain :as fc]))
 
 
 (log/info "demo.catalog.molecule.general")
@@ -42,5 +43,7 @@
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
    [multi-chart-widget/example]
-   [with-fn/example]])
+
+   [with-fn/example]
+   [fc/example]])
 

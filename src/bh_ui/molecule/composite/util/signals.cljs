@@ -48,13 +48,13 @@
                            remote      (get-in configuration [:mol/components target :atm/kind])]
                        ;(log/info "make-params (a)" target "//" target-type "//" remote)
                        (if (= direction :outputs)
-                         {source-port (if (= :source/local target-type)
-                                        [(ui-utils/path->keyword container-id :blackboard target)]
+                         {source-port (condp = target-type
+                                        :source/local [(ui-utils/path->keyword container-id :blackboard target)]
+                                        :source/fn [(ui-utils/path->keyword container-id :blackboard target)]
                                         [::subs/source remote])}
                          {target-port (condp = target-type
                                         :source/local [(ui-utils/path->keyword container-id :blackboard target)]
-                                        :source/fn (let [sub-name (get-in configuration [:mol/components target :atm/kind])]
-                                                     [(ui-utils/path->keyword container-id :blackboard sub-name)])
+                                        :source/fn [(ui-utils/path->keyword container-id :blackboard target)]
                                         [::subs/source remote])}))))
               (into {}))]
     ;(log/info "make-params (b)" node "//" container-id "//" ret)
@@ -164,7 +164,7 @@
       (let [inputs (:inputs (get denorm node))              ; if this :source/local falls after a :source/fn, depend upon IT!
             comps  (get components (first (keys inputs)))]
         (when (= :source/fn (:atm/role comps))
-          (:atm/kind comps))))
+            (first (keys inputs)))))
 
     ; 3. create the event against the new :blackboard key
     (ul/create-container-local-event container-id [:blackboard node])
@@ -189,16 +189,18 @@
 
 ; :source/fn
 (defmethod component->ui :source/fn [{:keys [node configuration container-id] :as inputs}]
+  ;(log/info "component->ui :source/fn (a)" node)
+
   (let [fn-name   (get-in configuration [:mol/components node :atm/kind])
         actual-fn (if (keyword fn-name)
                     (-> @(re-frame/subscribe [:meta-data-registry]) fn-name :function)
                     fn-name)
         params    (merge
                     {:container-id container-id
-                     :sub-name     [(ui-utils/path->keyword container-id :blackboard fn-name)]}
+                     :sub-name     [(ui-utils/path->keyword container-id :blackboard node)]}
                     (make-params configuration node :inputs container-id))]
 
-    ;(log/info "component->ui :source/fn" node "//" fn-name "//" params "//" actual-fn)
+    ;(log/info "component->ui :source/fn (b)" node "//" fn-name "//" params "//" actual-fn)
 
     (actual-fn params)))
 
