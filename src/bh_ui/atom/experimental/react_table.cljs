@@ -5,6 +5,7 @@
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
     [bh-ui.utils.helpers :as h]
+    [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
 
