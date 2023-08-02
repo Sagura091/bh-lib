@@ -5,14 +5,13 @@
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
     [bh-ui.utils.helpers :as h]
-    [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
 
 (defn- table [columns data table-type config]
   (log/info "table (render)" (js->clj data))
 
-  (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useExpanded)]
+  (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useSortBy rt/useExpanded)]
     [:div {:style {:max-height  (or (:height @config) "300px")
                    :overflow    "auto"
                    :white-space "no-wrap"
@@ -28,8 +27,17 @@
              [:r> "tr" (.getHeaderGroupProps hg)
               (doall
                 (for [col (.-headers hg)]
-                  [:r> "th" (.getHeaderProps col)
-                   (.render col "Header")]))])))]
+                  [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
+                   (.render col "Header")
+                   (if (.-canSort col)
+                     [:span
+                      (let [up-arrow "\u2B06"
+                            down-arrow "\u2B07"]
+                        (if (.-isSorted col)
+                          (if (.-isSortedDesc col)
+                            down-arrow
+                            up-arrow)
+                          ""))])]))])))]
       [:r> "tbody" (.getTableBodyProps table (clj->js {:style {:backgroundColor (or (:body-bg-color @config) "white")}}))
        (doall
          (for [row (.-rows table)]
@@ -105,6 +113,9 @@
                                                                             (str (:colHeader m))])
                                :else (:colHeader m))
                 :accessor    (:colId m)
+                :sortType (or (:sortType m) "alphanumeric")
+                :disableSortBy (if (= (:disableSortBy m) false)
+                                 false true)
                 :subRowCell  (if (or (= (:colProp m) :expandable) (= (:group-by @config) (:colId m)))
                                (fn [] nil)
                                (fn [cellProps]
@@ -153,6 +164,9 @@
                                                                      (str (:colHeader m))])
                         :else (:colHeader m))
          :accessor    (:colId m)
+         :sortType (or (:sortType m) "alphanumeric")
+         :disableSortBy (if (= (:disableSortBy m) false)
+                          false true)
          :mainRowCell (fn [cellProps]
                         (let [value       (.-value cellProps)
                               index       (js/parseInt (.-id (.-row cellProps)))

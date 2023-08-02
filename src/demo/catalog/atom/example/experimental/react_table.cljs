@@ -32,6 +32,7 @@
 (def data-config {:table-type :standard                     ;specify table type, :standard or :expandable
                   :columns    [{:colHeader "Include?"       ; specifies what is rendered for each column header.
                                 :colId     :include         ; unique column id
+                                :disableSortBy true
                                 ;include render function if you want to enhance table data
                                 ;Params:
                                 ;value      - value of cell passed from react-table component
@@ -45,6 +46,8 @@
 
                                {:colHeader "Symbol"
                                 :colId     :Symbol
+                                :disableSortBy true
+                                :sortType   "alphanumeric"
                                 :render    (fn [value]
                                              (r/as-element [:div {:style {:background-color (str value)
                                                                           :height           "20px"
@@ -52,12 +55,14 @@
                                                                           :border-radius    "50%"}}]))}
 
                                {:colHeader "AoI"
-                                :colId     :AoI}
+                                :colId     :AoI
+                                :disableSortBy false}
 
                                {:colHeader "All"
                                 :colProp   :select-all      ; renders button in column header that switches value in every row to 'true'
                                 :colSelect :include         ; specify which column to switch value
                                 :colId     :select-all
+                                :disableSortBy true
                                 :render    (fn []
                                              (r/as-element [icons/icon {:icon "save" :extra-classes :has-text-danger}]))}
 
@@ -65,6 +70,7 @@
                                 :colProp   :select-none     ; renders button in column header that switches value in every row to 'false'
                                 :colSelect :include         ; specify which column to switch value
                                 :colId     :none
+                                :disableSortBy true
                                 :render    (fn []
                                              (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
 
@@ -87,7 +93,8 @@
                                       :colId     :expander}
 
                                      {:colHeader "Time"
-                                      :colId     :time}
+                                      :colId     :time
+                                      :disableSortBy false}
 
                                      {:colHeader "Include?"
                                       :colId     :include
