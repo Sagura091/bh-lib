@@ -40,16 +40,19 @@
                                      "line-chart" {:atm/role :ui/component :atm/kind :rechart/line}
                                      "area-chart" {:atm/role :ui/component :atm/kind :rechart/area}
                                      "fast-line"  {:atm/role :ui/component :atm/kind :fc/line}
+
                                      "bar"        {:atm/role  :ui/component :atm/kind :rc/box :atm/child "bar-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                      "line"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "line-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                      "area"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "area-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
+                                     "f-line"     {:atm/role  :ui/component :atm/kind :rc/box :atm/child "fast-line"
+                                                   :atm/style {:border "1px solid" :width "600px" :height "250px"}}
 
-                                     "tabs"       {:atm/role     :ui/component :atm/kind :rc/h-tabs
-                                                   :atm/label    "Multiple Views"
-                                                   :atm/children ["bar" "line" "area" "fast-line"]
+                                     "tabs"       {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                                                   :atm/label          "Multiple Views"
+                                                   :atm/children       ["bar" "line" "area" "f-line"]
                                                    :atm/default-config tabs-config}
 
                                      "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}
@@ -71,9 +74,9 @@
                                      "area"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "area-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
 
-                                     "tabs"       {:atm/role     :ui/component :atm/kind :rc/h-tabs
-                                                   :atm/label    "Multiple Views"
-                                                   :atm/children ["bar" "line" "area" "fast-line"]
+                                     "tabs"       {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                                                   :atm/label          "Multiple Views"
+                                                   :atm/children       ["bar" "line" "area" "fast-line"]
                                                    :atm/default-config tabs-config}
 
                                      "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}

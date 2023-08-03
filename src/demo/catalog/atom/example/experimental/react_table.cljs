@@ -160,3 +160,53 @@
       :data group-data
       :config group-data-config
       :style table-style]]))
+
+
+
+(def raw-data [["CCS5" "Enter_CCS_superchannel_group_name" "NCR2A.48 EOXA.O" "ECXA.0 NCR2A 48" "NCRA" 30125.00 30127.604 48]
+               ["Japan_FO_leg_1o_US" "Japan_FO Jo_US/AUS/MOS" "NCR2A. 68-78_SBXIA.68-78" "SBXIA 68-78_NCR2A 68-78" "NCRA" 30177.083 30205.729 68]
+               ["Japan_FO_Leg_1_to_US__SBX4A_68_78_1" "Japan_FO Jo_US/AUS/MOS" "NCR2A. 68-78_SBXIA.68-78" "SBXIA 68-78_NCR2A 68-78" "NCRA" 30177.083 30205.729 68]
+               ["Japan_FO_Leg_1_Jo_US_-_SBX4A_68_78_1_-_SBX5A_116_126_1" "Japan_FO Jo_US/AUS/MOS" "NCR2A 68-78_SBX5A.116-126" "SEX5A 116-126_NCR2A.68-78" "NCRA" 30177.083 30205.729 68]])
+(def raw-fields {:subchannel-group                :string
+                 :super-subchannel-group          :string
+                 :uplink-subchannel-group-route   :string
+                 :downlink-subchannel-group-route :string
+                 :uplink-channel                  :string
+                 :uplink-start-freq               :number
+                 :uplink-stop-freq                :number
+                 :uplink-start-subchannel         :number})
+
+(def subchannel-groups-data {:title    "Subchannel Groups"
+                             :c-o-c    [{:step      :generated
+                                         :by        "demo.catalog.molecule.example.composite.signal-analysis"
+                                         :version   "generated"
+                                         :at        "dummy-date"
+                                         :signature "dummy-uuid"}]
+                             :metadata {:title  "Subchannel Groups"
+                                        :type   :tabular
+                                        :id     :subchannel-group
+                                        :fields raw-fields}
+
+                             :data     (into []
+                                         (map (fn [vs]
+                                                (zipmap (keys raw-fields) vs))
+                                           raw-data))})
+(def subchannel-groups-config {:table-type :standard
+                               :columns    [{:colHeader "Subchannel Group" :colId :subchannel-group}
+                                            {:colHeader "Super Subchannel Group" :colId :super-subchannel-group}
+                                            {:colHeader "Uplink Subchannel Group Route" :colId :uplink-subchannel-group-route}
+                                            {:colHeader "Downlink Subchannel Group" :colId :downlink-subchannel-group-route}
+                                            {:colHeader "Uplink Channel" :colId :uplink-channel}
+                                            {:colHeader "Uplink Start Frequency (MHz)" :colId :uplink-start-freq}
+                                            {:colHeader "Uplink Stop Frequency (MHz)" :colId :uplink-stop-freq}
+                                            {:colHeader "Uplink Start Subchannel" :colId :uplink-start-subchannel}]})
+
+
+(defn subchannel-table []
+  (acu/demo
+    "Subchannel Table"
+    [layout/centered {:extra-classes :width-50}
+     [react-table/table-component
+      :data subchannel-groups-data
+      :config subchannel-groups-config
+      :style table-style]]))

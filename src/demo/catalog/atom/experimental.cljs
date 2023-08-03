@@ -24,8 +24,8 @@
    [plain-table/example]
    [react-table/standard-table]
    [react-table/expandable-table]
+   [react-table/subchannel-table]
 
-   [react-table/expandable-table]
    [inter/internatonilization (re-frame/subscribe[::sub/i18n])]])
 
    ;[ui-element/selectable-table]])
