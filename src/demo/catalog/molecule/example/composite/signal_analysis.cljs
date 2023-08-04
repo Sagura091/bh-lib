@@ -1,7 +1,7 @@
 (ns demo.catalog.molecule.example.composite.signal-analysis
   (:require [bh-ui.molecule.grid-container :as grid]
             [bh-ui.utils.helpers :as h]
-            [bh-ui.atom.chart.area-chart :as chart]
+            [demo.catalog.molecule.example.composite.data.signals :as d]
             [woolybear.ad.icons :as icons]
             [reagent.core :as r]
             [taoensso.timbre :as log]
@@ -14,6 +14,12 @@
 
 (def subchannel-tabs {:labels ["Subchannel Groups" "Unauthorized Accesses" "Subnets"
                                "Carriers" "Channels" "Beacons"]})
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; region ; Table Data
 
 (def raw-data [["CCS5" "Enter_CCS_superchannel_group_name" "NCR2A.48 EOXA.O" "ECXA.0 NCR2A 48" "NCRA" 30125.00 30127.604 48]
                ["Japan_FO_leg_1o_US" "Japan_FO Jo_US/AUS/MOS" "NCR2A. 68-78_SBXIA.68-78" "SBXIA 68-78_NCR2A 68-78" "NCRA" 30177.083 30205.729 68]
@@ -106,8 +112,11 @@
                                  :render    (fn []
                                               (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
 
+; endregion
 
-(def mol-2 {:mol/components  {"signal-trace"     {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:x-axis-title "MHz"
+
+(def mol-2 {:mol/components  {"signal-trace"     {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:theme "dark1"
+                                                                                                                  :x-axis-title "MHz"
                                                                                                                   :y-axis-title "dBm"}}
                               "tabs"             {:atm/role           :ui/component :atm/kind :rc/h-tabs
                                                   :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
@@ -122,7 +131,7 @@
                                                   :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
                               "table-two"        {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
 
-                              "signal-data"      {:atm/role :source/local :atm/kind :signal/one :atm/default-data chart/sample-data}
+                              "signal-data"      {:atm/role :source/local :atm/kind :signal/one :atm/default-data d/signal-data}
                               "subchannel-data"  {:atm/role :source/local :atm/kind :data/one :atm/default-data subchannel-groups-data}
                               "data-two"         {:atm/role :source/local :atm/kind :data/two :atm/default-data data-two}}
 
