@@ -33,7 +33,19 @@
    :layout     (:mol/grid-layout full-config)})
 
 
-(defn- wrap-component [[id {:keys [component label]}]]
+(defn- wrap-component
+  "Takes details about what we want to display on the screen, and wrap it in a bit
+  of Hiccup so it 'works'.
+
+  Specifically we give the overall element:
+
+  - widget-parent, keyed by 'id' so it can be found, possibly for testing(?),
+  - grid-toolbar, which both displays a 'label' (if there is one) and provides a mouse target (via move-cursor)
+  - widget-content, which both hold the actual 'component' and keeps any mouse events from escaping to the outside
+         -> this means your component will get the mouse events.
+  "
+
+  [[id {:keys [component label]}]]
 
   ;(log/info "wrap-component" id "//" label "//" component)
 
@@ -47,7 +59,8 @@
 
 
 (defn- on-width-update
-  "
+  "Called when the conatinig element gets wider. (Currently does nothing. Not sure what it
+  *should* do...)
   ---
 
   - width : (number) new width of the container
@@ -62,7 +75,16 @@
   ())
 
 
-(defn- on-layout-change [component-id new-layout all-layouts]
+(defn- on-layout-change
+  "Called after the user moves parts of the UI component around (did I mention that the user
+  can rearrange the elements of the content?)
+
+  - component-id : the components 'name' within the system, so we can update the re-frame/app-db
+  - new-layout : the new arrangement of elements (a vector of hash-maps, one for each visible element)
+  - all-layouts : (I think this is now OBE in the JS library... we don't use it anyway)
+  "
+
+  [component-id new-layout all-layouts]
   (let [new-layout*  (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
@@ -81,16 +103,36 @@
         (locals/dispatch-local component-id [:layout] cooked)))))
 
 
-(defn- toggle-editable [orig-value]
-  (map #(assoc % :static (-> % :static not)) orig-value))
+(defn- toggle-editable
+  "Toggle the :static property on each element in the layout, so the user can rearrange things.
+
+  - layout : the layout as it is currently"
+
+  [layout]
+
+  (map #(assoc % :static (-> % :static not)) layout))
 
 
-(def last-params (atom nil))
-(def last-component-lookup (atom nil))
+; some atoms to assist in debugging at the repl...
+;(def last-params (atom nil))
+;(def last-component-lookup (atom nil))
+;(def last-data (atom nil))
 
-(defn- component-panel [& {:keys [configuration component-id resizable] :as params}]
 
-  (reset! last-params params)
+(defn- component-panel
+  "Takes a 'configuration' in Mol-DSL and interprets it into a visual representation encoded in
+  Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
+  get wrapped around to standardize the visual style and functionality).
+
+  - configuration : (hash-map) the description of the complete UI, encoded in (Mol-DSL)[docs/mol-dsl.md]
+  - component-id : (keyword/string) unique identifier of this UI 'widget' within the current run=time
+        used to isolate this widget's data from any other widgets within the re-frame/app-db
+  - resizable : (boolean) is this widget resizable (the user can change its size, or not?
+  "
+
+  [& {:keys [configuration component-id resizable] :as params}]
+
+  ;(reset! last-params params)
   ;(log/info "component-panel (params)" params)
 
   ;(log/info "component-panel" component-id
@@ -115,10 +157,10 @@
         composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
         open?            (r/atom false)]
 
-    (reset! last-component-lookup {:lookup component-lookup
-                                   :viz visual-layout
-                                   :keys (select-keys component-lookup visual-layout)
-                                   :wrappers composed-ui})
+    ;(reset! last-component-lookup {:lookup component-lookup
+    ;                               :viz visual-layout
+    ;                               :keys (select-keys component-lookup visual-layout)
+    ;                               :wrappers composed-ui})
 
     (fn []
       ;(log/info "component-panel INNER" component-id
@@ -142,6 +184,183 @@
                     :layoutFn #(on-layout-change component-id %1 %2)
                     :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
 
+
+(defn component
+  "This is built on (react-grid-layout)[https://github.com/react-grid-layout/react-grid-layout].
+
+  This function takes a hash-map containing the following properties:
+
+  - :data : (hash-map) the Mol_DSL description of the component (widget) to display
+  - :component-id : (keyword/string) the unique identifier for this ui component/widget, used to isolate
+                      this component's data from all others
+  - :container-id : (keyword/string) the unique name for the parent, or containing, UI component, helps
+                      to isolate this component's data from all others
+  - resizable : (boolean) can the user resize or rearrange the elements of this component
+  - tools : (boolean) should the overall widget provide editing tools for the Mol-DSL itself.
+
+  "
+
+  [& {:keys [data component-id container-id resizable tools] :as params}]
+
+  ;(reset! last-data @data)
+
+  ;(log/info "component" data "//" component-id "//" container-id)
+  ;(log/info "component (params)" params)
+
+  (let [id             (r/atom nil)
+        configuration  @data
+        graph          (apply lg/digraph (ui/compute-edges configuration))
+        comp-or-dag?   (r/atom :component)
+        partial-config (assoc configuration
+                         :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                         :nodes (-> configuration :mol/components keys set)
+                         :edges (into [] (lg/edges graph)))
+        full-config    (assoc partial-config
+                         :graph graph
+                         :container container-id)]
+
+    (fn []
+      (when (nil? @id)
+        (reset! id component-id)
+        (ui-utils/init-container-locals @id (config partial-config))
+        (log/info "component (b)" @id "//" container-id)
+        (ui-utils/dispatch-local @id [:container] container-id)
+        (ui/prep-environment partial-config @id @(re-frame/subscribe [:meta-data-registry])))
+
+      (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
+                     {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
+                     {:id :definition :tooltip "Text view" :label [:i {:class "zmdi zmdi-format-subject"}]}]]
+
+        [:div.box.widget-content-container
+         [rc/v-box :src (rc/at)
+          ;:justify :start
+          :width "100%"
+          :height "100%"
+          :gap "5px"
+          :children [(when tools [rc/h-box :src (rc/at)
+                                  :justify :end
+                                  :children [[rc/horizontal-bar-tabs
+                                              :model comp-or-dag?
+                                              :tabs buttons
+                                              :on-change #(reset! comp-or-dag? %)]]])
+                     (condp = @comp-or-dag?
+                       :dag [composite/dag-panel
+                             :configuration full-config
+                             :component-id @id
+                             :container-id container-id]
+                       :component [component-panel
+                                   :configuration full-config
+                                   :component-id @id
+                                   :container-id container-id
+                                   :resizable resizable]
+                       :definition [composite/definition-panel
+                                    :configuration configuration]
+                       :default [rc/alert-box :src (rc/at)
+                                 :alert-type :warning
+                                 :body "There is a problem with this component."])]]]))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; rich comments
+
+; make sure the new DSL produces nodes and edges
+(comment
+  (do
+    (def id (r/atom nil))
+    (def configuration @last-data)
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def partial-config (assoc configuration
+                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                          :nodes (get-in configuration [:mol/components keys set])
+                          :edges (into [] (lg/edges graph))))
+    (def full-config (assoc partial-config :graph graph)))
+
+  (get-in configuration [:mol/components keys set])
+  (-> configuration :mol/components keys set)
+
+
+  ())
+
+
+; we should only call wrap-components on the atoms in the :mol/grid-layout
+(comment
+  @last-params
+
+  (do
+    (def component-id (:component-id @last-params))
+    (def container-id (:container-id @last-params))
+    (def id (r/atom component-id))
+    (def configuration (:configuration @last-params))
+    (def layout (bh-ui.utils.locals/subscribe-local component-id [:layout]))
+    (def component-lookup (into {}
+                            (sig/process-components
+                              configuration :ui/component
+                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
+    (def composed-ui (map wrap-component component-lookup))
+
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def partial-config (assoc configuration
+                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                          :nodes (-> configuration :mol/components keys set)
+                          :edges (into [] (lg/edges graph))))
+    (def full-config (assoc partial-config
+                       :graph graph
+                       :container container-id))
+
+
+    (def visual-layout
+      (->> configuration
+        :mol/grid-layout
+        (map (fn [{:keys [i]}] i)))))
+
+  (select-keys component-lookup visual-layout)
+
+
+
+
+  ())
+
+
+; work out the toggle for editing
+(comment
+  (def component-id :widget-grid-demo.grid-widget)
+
+
+  (locals/subscribe-local component-id [:layout])
+  (locals/apply-local component-id [:layout] toggle-editable)
+
+
+  (def orig-value @(re-frame/subscribe [:widget-grid-demo.grid-widget.layout]))
+  (toggle-editable orig-value)
+
+
+  ())
+
+
+; built the edit controls (buttons)
+(comment
+  (def component-id :widget-grid-demo.grid-widget)
+  (def layout (r/atom [{:id 1 :static true}]))
+  (def make-editable-style {:md-icon-name "zmdi-wrench"
+                            :tooltip      "configure this chart"})
+  (def save-editable-style {:md-icon-name "zmdi-lock-outline"
+                            :tooltip      "Save the configuration"})
+
+  (reduce conj [rc/md-icon-button] (flatten (seq {:class "button"})))
+
+  (reduce conj [rc/md-icon-button]
+    (flatten
+      (seq
+        (merge {:class    "button"
+                :on-click #(locals/apply-local component-id [:layout] toggle-editable)}
+          (if (-> @layout first :static) make-editable-style save-editable-style)))))
+
+  ())
 
 ; figure out how to use Loom to organize the atoms, so we can build and wire together the nodes
 (comment
@@ -410,162 +629,4 @@
 
   ())
 
-
-(def last-data (atom nil))
-
-(defn component [& {:keys [data component-id container-id resizable tools] :as params}]
-
-  (reset! last-data @data)
-
-  ;(log/info "component" data "//" component-id "//" container-id)
-  ;(log/info "component (params)" params)
-
-  (let [id             (r/atom nil)
-        configuration  @data
-        graph          (apply lg/digraph (ui/compute-edges configuration))
-        comp-or-dag?   (r/atom :component)
-        partial-config (assoc configuration
-                         :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                         :nodes (-> configuration :mol/components keys set)
-                         :edges (into [] (lg/edges graph)))
-        full-config    (assoc partial-config
-                         :graph graph
-                         :container container-id)]
-
-    (fn []
-      (when (nil? @id)
-        (reset! id component-id)
-        (ui-utils/init-container-locals @id (config partial-config))
-        (log/info "component (b)" @id "//" container-id)
-        (ui-utils/dispatch-local @id [:container] container-id)
-        (ui/prep-environment partial-config @id @(re-frame/subscribe [:meta-data-registry])))
-
-      (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
-                     {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
-                     {:id :definition :tooltip "Text view" :label [:i {:class "zmdi zmdi-format-subject"}]}]]
-
-        [:div.box.widget-content-container
-         [rc/v-box :src (rc/at)
-          ;:justify :start
-          :width "100%"
-          :height "100%"
-          :gap "5px"
-          :children [(when tools [rc/h-box :src (rc/at)
-                                  :justify :end
-                                  :children [[rc/horizontal-bar-tabs
-                                              :model comp-or-dag?
-                                              :tabs buttons
-                                              :on-change #(reset! comp-or-dag? %)]]])
-                     (condp = @comp-or-dag?
-                       :dag [composite/dag-panel
-                             :configuration full-config
-                             :component-id @id
-                             :container-id container-id]
-                       :component [component-panel
-                                   :configuration full-config
-                                   :component-id @id
-                                   :container-id container-id
-                                   :resizable resizable]
-                       :definition [composite/definition-panel
-                                    :configuration configuration]
-                       :default [rc/alert-box :src (rc/at)
-                                 :alert-type :warning
-                                 :body "There is a problem with this component."])]]]))))
-
-
-; make sure the new DSL produces nodes and edges
-(comment
-  (do
-    (def id (r/atom nil))
-    (def configuration @last-data)
-    (def graph (apply lg/digraph (ui/compute-edges configuration)))
-    (def comp-or-dag? (r/atom :component))
-    (def partial-config (assoc configuration
-                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                          :nodes (get-in configuration [:mol/components keys set])
-                          :edges (into [] (lg/edges graph))))
-    (def full-config (assoc partial-config :graph graph)))
-
-  (get-in configuration [:mol/components keys set])
-  (-> configuration :mol/components keys set)
-
-
-  ())
-
-
-; we should only call wrap-components on the atoms in the :mol/grid-layout
-(comment
-  @last-params
-
-  (do
-    (def component-id (:component-id @last-params))
-    (def container-id (:container-id @last-params))
-    (def id (r/atom component-id))
-    (def configuration (:configuration @last-params))
-    (def layout (bh-ui.utils.locals/subscribe-local component-id [:layout]))
-    (def component-lookup (into {}
-                            (sig/process-components
-                              configuration :ui/component
-                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
-    (def composed-ui (map wrap-component component-lookup))
-
-    (def graph (apply lg/digraph (ui/compute-edges configuration)))
-    (def comp-or-dag? (r/atom :component))
-    (def partial-config (assoc configuration
-                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                          :nodes (-> configuration :mol/components keys set)
-                          :edges (into [] (lg/edges graph))))
-    (def full-config (assoc partial-config
-                       :graph graph
-                       :container container-id))
-
-
-    (def visual-layout
-      (->> configuration
-        :mol/grid-layout
-        (map (fn [{:keys [i]}] i)))))
-
-  (select-keys component-lookup visual-layout)
-
-
-
-
-  ())
-
-
-; work out the toggle for editing
-(comment
-  (def component-id :widget-grid-demo.grid-widget)
-
-
-  (locals/subscribe-local component-id [:layout])
-  (locals/apply-local component-id [:layout] toggle-editable)
-
-
-  (def orig-value @(re-frame/subscribe [:widget-grid-demo.grid-widget.layout]))
-  (toggle-editable orig-value)
-
-
-  ())
-
-
-; built the edit controls (buttons)
-(comment
-  (def component-id :widget-grid-demo.grid-widget)
-  (def layout (r/atom [{:id 1 :static true}]))
-  (def make-editable-style {:md-icon-name "zmdi-wrench"
-                            :tooltip      "configure this chart"})
-  (def save-editable-style {:md-icon-name "zmdi-lock-outline"
-                            :tooltip      "Save the configuration"})
-
-  (reduce conj [rc/md-icon-button] (flatten (seq {:class "button"})))
-
-  (reduce conj [rc/md-icon-button]
-    (flatten
-      (seq
-        (merge {:class    "button"
-                :on-click #(locals/apply-local component-id [:layout] toggle-editable)}
-          (if (-> @layout first :static) make-editable-style save-editable-style)))))
-
-  ())
-
+; endregion

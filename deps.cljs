@@ -1,4 +1,3 @@
-
 {npm-deps
  {"@astrouxds/react" "7.13.0"},
  {"canvasjs/react-charts" "^1.0.0"},
@@ -6,7 +5,7 @@
  {"fortawesome/fontawesome-svg-core" "6.4.0"},
  {"fortawesome/free-brands-svg-icons" "6.4.0"},
  {"fortawesome/free-regular-svg-icons" "6.4.0"},
-{"fortawesome/free-solid-svg-icons" "6.4.0"},
+ {"fortawesome/free-solid-svg-icons" "6.4.0"},
  {"fortawesome/react-fontawesome" "0.2.0"},
  {"astrouxds" "1.0.1"},
  {"bulma" "0.9.4"},

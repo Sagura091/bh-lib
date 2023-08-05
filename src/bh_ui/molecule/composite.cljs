@@ -1,5 +1,6 @@
 (ns bh-ui.molecule.composite
-  ; TODO: we can refactor all function into grid-widget
+  ; TODO: we can refactor all function into grid-container?
+
   "provides a 'container' to hold and organize other atoms and molecules
 components have 'ports' which define their inputs and outputs:
 
@@ -67,8 +68,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn definition-panel
-  "show the text definition of the composed UI
+  "show the text definition of the composed UI in (Mol-DSL)[docs/mol-dsl.md]
   "
+
   [& {:keys [configuration]}]
 
   (let [components (:mol/components configuration)
@@ -98,10 +100,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn dag-panel
-  "show the DAG, built form the configuration passed into the component, in a panel
-  (beside the actual UI)
+  "show the DAG, built from the configuration in (Mol-DSL)[docs/mol-dsl.md] passed into the component, in a panel
+  (alongside the actual UI)
   "
+
   [& {:keys [configuration component-id container-id ui]}]
+
   (let [flow           (r/atom (ui/make-flow configuration))
         node-types     {":ui/component"  (partial ui/custom-node :ui/component)
                         ":source/remote" (partial ui/custom-node :source/remote)
@@ -124,8 +128,11 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 
-; RICH COMMENTS
-;; region
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; region ; rich comments
 
 ;; basics of Loom (https://github.com/aysylu/loom)
 (comment
@@ -614,8 +621,6 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   ())
 
-;; endregion
-
 
 (comment
   (def components [[[:div "1"] [empty] [:div "2"]]
@@ -647,3 +652,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
   ())
+
+
+;; endregion
+
