@@ -124,7 +124,7 @@
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
   get wrapped around to standardize the visual style and functionality).
 
-  - configuration : (hash-map) the description of the complete UI, encoded in (Mol-DSL)[docs/mol-dsl.md]
+  - configuration : (hash-map) the description of the complete UI, encoded in [Mol-DSL](docs/mol-dsl.md)
   - component-id : (keyword/string) unique identifier of this UI 'widget' within the current run=time
         used to isolate this widget's data from any other widgets within the re-frame/app-db
   - resizable : (boolean) is this widget resizable (the user can change its size, or not?
@@ -186,7 +186,7 @@
 
 
 (defn component
-  "This is built on (react-grid-layout)[https://github.com/react-grid-layout/react-grid-layout].
+  "This is built on [react-grid-layout](https://github.com/react-grid-layout/react-grid-layout).
 
   This function takes a hash-map containing the following properties:
 

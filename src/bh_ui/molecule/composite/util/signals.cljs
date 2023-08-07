@@ -1,4 +1,7 @@
 (ns bh-ui.molecule.composite.util.signals
+  "does most of the _heavy lifting_ for the interpretation of the Molecule-DSL.
+
+  Leverages [Loom](https://github.com/aysylu/loom)"
   (:require [bh-ui.utils :as ui-utils]
             [bh-ui.events :as events]
             [bh-ui.subs :as subs]
@@ -10,16 +13,14 @@
             [re-frame.core :as re-frame]
             [loom.graph :as lg]
             [loom.alg :as lalg]
-            [taoensso.timbre :as log]
-            ["dagre" :as dagre]
-            ["graphlib" :as graphlib]
-            ["reactflow" :refer (ReactFlowProvider Controls Handle Background)]))
+            [taoensso.timbre :as log]))
 
 
 (defn- error-ui
-  "this UI element is used in those cases where a widget definition tries to use a component impleentation
-  that is NOT found in the registry. Since Reagent really does not like nil's as the component function, we
-  need ot provide something useful to the user and, ultimately, the developer."
+  "This UI element is used in those cases where a widget definition tries to use a component implementation
+  that is NOT found in the registry. Since Reagent really does not like nil's as the UI component function, we
+  need to provide something useful to the user and, ultimately, the developer."
+
   [& {:as m}]
 
   [rc/alert-box :src (rc/at)
@@ -37,7 +38,13 @@
                      [rc/line :size "2px"]
                      [:p "Please contact Tech Support."]]]])
 
-(defn- make-params [configuration node direction container-id]
+
+
+(defn- make-params
+  "
+  "
+  [configuration node direction container-id]
+
   (let [ret (->> configuration
               :denorm
               ((fn [n] (get n node)))
@@ -61,13 +68,49 @@
     ret))
 
 
-(defmulti component->ui (fn [{:keys [type]}]
-                          type))
+(defmulti component->ui
+  "We use a multimethod to interpret the specific Mol-DSL definition of a component into the correct
+implementation (a function, a set of re-frame subscriptions, and/or a set of re-frame event handlers, as needed)
 
+current ui component types (you can always write your own):
+
+- `:ui/component` - a visual component, will be show on the displayed UI
+- `:source/remote` - the name of a data source vended by the 'server', this allows for connection to the overall state of the system
+- `:source/local` - a local source of information, typically used as a local cache within the 'widget'
+- `:source/fn` - a function that takes in some data items and produces some filtered or enriched data based upon the input(s)
+
+> Note: It is the :mol/links between the various components that actually make the information flow at run-time
+
+- type - (keyword/string) the 'type' of component
+
+Since we can't put docstrings on the defmethods themselves, we'll document the basic set of functions here...
+
+#### :ui/component
+
+A :ui/component defines a visible UI element, i.e, something that should be show to the user at some point. We
+say _'at some point'_ because you can next :ui/components inside certain other :ui/components.
+
+#### :source/remote
+
+
+#### :source/local
+
+
+#### :source/fn
+
+  "
+  (fn [{:keys [type]}]
+    type))
+
+
+; region ; some atoms to help debugging at the repl
 
 (def last-params (atom nil))
 (def last-hiccup (atom nil))
 (def last-locals (atom nil))
+(def last-cfg (atom nil))
+
+; endregion
 
 
 ; :ui/component
@@ -221,7 +264,7 @@
                              :component-id  (ui-utils/path->keyword container-id node)
                              :container-id  container-id}))))))
 
-(def last-cfg (atom nil))
+
 (defn process-components-stateful [configuration node-type registry container-id]
 
   (reset! last-cfg {:cfg configuration :nt node-type :r registry :id container-id})
@@ -275,6 +318,11 @@
         sorted-config))))
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; rich comments
+
 ; need to include both :children and :child wrappers in the dependency graph
 (comment
   @last-cfg
@@ -321,7 +369,6 @@
   ())
 
 
-
 ; what if :source/local is fed from another component, say a :source/fn?
 ;       1) how do we communicate this situation?
 (comment
@@ -342,7 +389,6 @@
 
 
   ())
-
 
 
 (comment
@@ -393,3 +439,4 @@
 
   ())
 
+; endregion

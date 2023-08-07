@@ -22,25 +22,40 @@
              io.github.nextjournal/clerk         {:mvn/version "0.14.919"}
              io.github.noahtheduke/splint        {:mvn/version "1.9.0"}
              com.github.seancorfield/depstar     {:mvn/version "2.1.303"}
-             com.taoensso/tempura                {:mvn/version "1.5.3"}}
+             com.taoensso/tempura                {:mvn/version "1.5.3"}
+
+             ; required by wollybear...
+             clj-commons/secretary               {:mvn/version "1.2.4"}}
 
 
- :aliases {
-           :splint
-            {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.9.0"}}
-                    :main-opts ["-m" "noahtheduke.splint"]}
+ :aliases   {
+             :splint
+             {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.9.0"}}
+              :main-opts  ["-m" "noahtheduke.splint"]}
 
-           ;; build an uberjar (application) with AOT compilation by default:
-           :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
-                     :exec-fn hf.depstar/uberjar
-                     :exec-args {:aot true}}
-           ;; build a jar (library):
-           :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
-                 :exec-fn hf.depstar/jar
-                 :exec-args {}}}
+             ;; build an uberjar (application) with AOT compilation by default:
+             :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+                       :exec-fn      hf.depstar/uberjar
+                       :exec-args    {:aot true}}
+             ;; build a jar (library):
+             :jar     {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
+                       :exec-fn      hf.depstar/jar
+                       :exec-args    {}}
 
-
-
+             ; generate Documentation
+             ; https://github.com/weavejester/codox
+             ;
+             ; clojure -X:codox
+             ;
+             :codox   {:extra-deps {codox/codox                         {:mvn/version "0.10.8"}
+                                    codox-theme-rdash/codox-theme-rdash {:mvn/version "0.1.2"}
+                                    clojang/codox-theme                 {:mvn/version "0.2.0-SNAPSHOT"}}
+                       :exec-fn    codox.main/generate-docs
+                       :exec-args  {:source-paths ["src"]
+                                    :output-path  "demo/resources/public/docs/api"
+                                    :metadata     {:doc/format :markdown}
+                                    :themes       [:rdash]
+                                    :language     :clojurescript}}} ; :clojang
 
  :mvn/repos {"confluent" {:url "https://packages.confluent.io/maven/"}
              "clojars"   {:url "https://clojars.org/repo/"}

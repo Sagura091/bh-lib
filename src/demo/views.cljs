@@ -44,5 +44,6 @@
    [rc/h-box :src (rc/at)
     :justify :between
     :children [[:p "Black Hammer UI Component Catalog"]
+               [:a {:href "docs/api/index.html"} "API Documentation"]
                [:p (str "version " @(re-frame/subscribe [::subs/version]))]]]])
 

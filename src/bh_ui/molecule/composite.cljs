@@ -68,7 +68,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn definition-panel
-  "show the text definition of the composed UI in (Mol-DSL)[docs/mol-dsl.md]
+  "show the text definition of the composed UI in [Mol-DSL](docs/mol-dsl.md)
   "
 
   [& {:keys [configuration]}]
@@ -100,7 +100,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn dag-panel
-  "show the DAG, built from the configuration in (Mol-DSL)[docs/mol-dsl.md] passed into the component, in a panel
+  "show the DAG, built from the configuration in[ Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
   (alongside the actual UI)
   "
 

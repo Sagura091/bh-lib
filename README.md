@@ -53,6 +53,9 @@ Bh-lib uses the typical Clojurescript/Shadow-cljs workflow, with [hot-reloading]
 and [repl-driven development]()
 
 
+### [API Documentation](docs/api/index.html)
+
+
 ## Using *bh-lib* in your own projects
 
 It is easy to include bh-lib in your project, either with the Clojure CLI using 
