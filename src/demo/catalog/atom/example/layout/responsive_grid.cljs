@@ -17,7 +17,7 @@
 
 
 ; need to "fake" the data subscription, since we really aren't following the
-; entire Mol-DSL interpreter bootstrapping path, but just displaying the end result
+; entire Mol-DSL compiler bootstrapping path, but just displaying the end result
 ;
 (re-frame/reg-sub
   :v-scroll-with-children.molecule.blackboard.topic.data

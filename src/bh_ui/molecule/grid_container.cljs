@@ -120,7 +120,7 @@
 
 
 (defn- component-panel
-  "Takes a 'configuration' in Mol-DSL and interprets it into a visual representation encoded in
+  "Takes a 'configuration' in Mol-DSL and compiles it into a visual representation encoded in
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
   get wrapped around to standardize the visual style and functionality).
 

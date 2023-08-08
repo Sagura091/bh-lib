@@ -124,8 +124,10 @@
   (re-frame/reg-event-fx
     (first sub-name)
     (fn-traced [_ updates]
-               (log/info sub-name "handler" updates)
-               {:dispatch (apply conj data (drop 1 updates))})))
+      (log/info sub-name "handler" updates)
+      {:dispatch (apply conj data (drop 1 updates))})))
+
+
 (defn input-filter [& {:keys [data component-id container-id] :as params}]
   (let [d (h/resolve-value data)]
     (fn []
@@ -141,56 +143,61 @@
                    :tooltip "Click to clear"
                    :size :smaller
                    :on-click #(h/handle-change-path data [[l/set-val [] ""]])]]])))
-(defn filter-data [{:keys [data filter-value sub-name] :as params}]
+
+
+(defn filter-subchannels [{:keys [data filter-value sub-name] :as params}]
   (re-frame/reg-sub
     (first sub-name)
     :<- data
     :<- filter-value
     (fn [[d f] _]
       (->> (:data d)
-           (filter #(re-find (re-pattern (str "(?i)" f)) (:subchannel-group %))))))
+        (filter #(re-find (re-pattern (str "(?i)" f)) (:subchannel-group %))))))
 
   (make-handler data sub-name))
 
+
 (re-frame/dispatch-sync
-  [:register-meta {:input/filter     {:component input-filter
-                                      :ports    {:data :port/sink}}
-                   :fn/filter-data   {:function filter-data
-                                      :ports {:data         :port/sink
-                                              :filter-value :port/sink}}}])
-
-(def mol-2 {:mol/components  {"signal-trace"     {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:theme "dark1"
-                                                                                                                  :x-axis-title "MHz"
-                                                                                                                  :y-axis-title "dBm"}}
-                              "tabs"             {:atm/role           :ui/component :atm/kind :rc/h-tabs
-                                                  :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
-                                                  :atm/default-config subchannel-tabs}
-
-                              "input-filter"     {:atm/role :ui/component :atm/kind :input/filter}
-
-                              "input-data"       {:atm/role :source/local :atm/kind :input/data :atm/default-data ""}
-
-                              "filter-data"      {:atm/role :source/fn    :atm/kind :fn/filter-data}
+  [:register-meta {:input/filter          {:component input-filter
+                                           :ports     {:data :port/sink}}
+                   :fn/filter-subchannels {:function filter-subchannels
+                                           :ports    {:data         :port/sink
+                                                      :filter-value :port/sink}}}])
 
 
-                              "subchannel-box"   {:atm/role  :ui/component :atm/kind :rc/box :atm/child "subchannel-table"
-                                                  :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
-                              "subchannel-table" {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config subchannel-groups-config}
+(def mol-2 {:mol/components  {"signal-trace"       {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:theme        "dark1"
+                                                                                                                    :x-axis-title "MHz"
+                                                                                                                    :y-axis-title "dBm"}}
+                              "tabs"               {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                                                    :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
+                                                    :atm/default-config subchannel-tabs}
 
-                              "table-box"        {:atm/role  :ui/component :atm/kind :rc/box :atm/child "table-two"
-                                                  :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
-                              "table-two"        {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
+                              "subchannel-filter"  {:atm/role :ui/component :atm/kind :input/filter}
 
-                              "signal-data"      {:atm/role :source/local :atm/kind :signal/one :atm/default-data d/signal-data}
-                              "subchannel-data"  {:atm/role :source/local :atm/kind :data/one :atm/default-data subchannel-groups-data}
-                              "data-two"         {:atm/role :source/local :atm/kind :data/two :atm/default-data data-two}}
+                              "input-data"         {:atm/role :source/local :atm/kind :input/data :atm/default-data ""}
 
-            :mol/links       {"signal-data"     {:data {"signal-trace" :data}}
-                              "subchannel-data" {:data {"filter-data" :data}}
-                              "input-data"      {:data {"input-filter" :data
-                                                        "filter-data" :filter-value}}
-                              "data-two"        {:data {"table-two" :data}}
-                              "filter-data"     {:data {"subchannel-table" :data}}}
+                              "filter-subchannels" {:atm/role :source/fn :atm/kind :fn/filter-subchannels}
+
+
+                              "subchannel-box"     {:atm/role  :ui/component :atm/kind :rc/v-box :atm/children ["subchannel-filter"
+                                                                                                                "subchannel-table"]
+                                                    :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
+                              "subchannel-table"   {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config subchannel-groups-config}
+
+                              "table-box"          {:atm/role  :ui/component :atm/kind :rc/box :atm/child "table-two"
+                                                    :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
+                              "table-two"          {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
+
+                              "signal-data"        {:atm/role :source/local :atm/kind :signal/one :atm/default-data d/signal-data}
+                              "subchannel-data"    {:atm/role :source/local :atm/kind :data/one :atm/default-data subchannel-groups-data}
+                              "data-two"           {:atm/role :source/local :atm/kind :data/two :atm/default-data data-two}}
+
+            :mol/links       {"signal-data"        {:data {"signal-trace" :data}}
+                              "subchannel-data"    {:data {"filter-subchannels" :data}}
+                              "input-data"         {:data {"subchannel-filter"  :data
+                                                           "filter-subchannels" :filter-value}}
+                              "data-two"           {:data {"table-two" :data}}
+                              "filter-subchannels" {:data {"subchannel-table" :data}}}
 
             :mol/grid-layout [{:i "signal-trace" :x 0 :y 2 :w 20 :h 8 :static true}
                               {:i "tabs" :x 0 :y 13 :w 20 :h 8 :static true}

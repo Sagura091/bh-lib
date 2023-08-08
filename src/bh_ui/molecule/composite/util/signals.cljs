@@ -1,5 +1,5 @@
 (ns bh-ui.molecule.composite.util.signals
-  "does most of the _heavy lifting_ for the interpretation of the Molecule-DSL.
+  "does most of the _heavy lifting_ for the compilation of the Molecule-DSL.
 
   Leverages [Loom](https://github.com/aysylu/loom)"
   (:require [bh-ui.utils :as ui-utils]
@@ -39,10 +39,27 @@
                      [:p "Please contact Tech Support."]]]])
 
 
-
 (defn- make-params
+  "This function 'wires-in' the input and output _ports_. For the given node, we use the meta-data
+  associated with the component in the `registry` to identify the inpus and outputs.
+
+   We take advantage of Clojure's hash-map destructuring to simplify supplying the
+   input and output 'data' to the component.
+
+   `:inputs` are re-frame subscriptions, so we pass the correct keyword in a vector
+   so the component can pass it directly to `(re-frame/subscribe)` _Eventually_, one of the
+   `:source/remote`, `:source/local`, or `:source/fn`s will register the handler function for
+   this identifier.
+
+   `:outputs` as re-frame event-handler, called with `(re-frame/dispatch)`, so we pass the
+   vector containing the correct identifier(s). Again, one of the _sources_ will provide the handler
+   function fo this vector. The component then `conj`s in any additional parameters.
+
+> Note: The entire Mol-DSL approach heavily leverages [re-frame](https://github.com/day8/re-frame),
+specifically because re-frame decouples the identity of a subscription of event-handler (a keyword)
+from the implementation of the subscription or handler function, which is managed by re-frame.
   "
-  "
+
   [configuration node direction container-id]
 
   (let [ret (->> configuration
@@ -69,10 +86,11 @@
 
 
 (defmulti component->ui
-  "We use a multimethod to interpret the specific Mol-DSL definition of a component into the correct
+  "We use a multimethod to compile the specific Mol-DSL definition of a component into the correct
 implementation (a function, a set of re-frame subscriptions, and/or a set of re-frame event handlers, as needed)
 
 current ui component types (you can always write your own):
+
 
 - `:ui/component` - a visual component, will be show on the displayed UI
 - `:source/remote` - the name of a data source vended by the 'server', this allows for connection to the overall state of the system
@@ -85,32 +103,86 @@ current ui component types (you can always write your own):
 
 Since we can't put docstrings on the defmethods themselves, we'll document the basic set of functions here...
 
-#### :ui/component
+#### (defmethod component->ui :ui/component ...)
 
 A :ui/component defines a visible UI element, i.e, something that should be show to the user at some point. We
-say _'at some point'_ because you can next :ui/components inside certain other :ui/components.
+say _'at some point'_ because you can next :ui/components inside certain other :ui/components. These components are
+typically implemented in Reagent with Hiccup notation, using the stylized input parameters of `:data`, `:config`, and `:style`
 
-#### :source/remote
+They tend to be the most complex in terms of implementation.
+
+The function takes a hash-map with the following keys defined:
+
+  | keyword        | type           | description                                                           |
+  |:---------------|:--------------:|:----------------------------------------------------------------------|
+  | :node          | keyword/string | id of the node being processed                                        |
+  | :atm-set       | atom           | atom holding all the nodes processed to far                           |
+  | :registry      | hash-map       | deref'd subscription to the registry of all component implementations |
+  | :configuration | hash-map       | Mol-DSL definition of all components/links/etc. in the widget         |
+  | :component-id  | keyword/string | unique identifier of this widget                                      |
+  | :container-id  | keyword/string | unique identifier of the container of this widget                     |
 
 
-#### :source/local
+#### (defmethod component->ui :source/local ...)
+
+Local sources are typically used as cache or, especially in the Catalog, a source of example data. The function performs
+the following:
+
+1. adds the node's id as a key to the `:blackboard` associated with the :container-id, using the :atm/default-data property of the meta-data
+2. creates and registers the subscription against the new key in the :container-id's `:blackboard` key
+  a. if this node is the output target of a :source/fn ut should subscribe to _that_ node instead of using and data from :atm/default-data
+3. creates and registers the event-handler for the new key inside the :container-id's `:blackboard`
+4. format and return the subscription/dispatch vector
+
+The function takes a hash-map with the following keys defined:
+
+  | keyword        | type           | description                                       |
+  |:---------------|:--------------:|:--------------------------------------------------|
+  | :node          | keyword/string | id of the node being processed                    |
+  | :meta-data     | hash-map       | associated meta-data of the node being processes  |
+  | :component-id  | keyword/string | unique identifier of this widget                  |
+  | :container-id  | keyword/string | unique identifier of the container of this widget |
 
 
-#### :source/fn
+#### (defmethod component->ui :source/remote ...)
 
+A remote data source needs to tap inot the existing websocket-based communications infrastructure between the client
+software (written in CLJS) and the backend/gateway (typically written in Clojure). The implementation does:
+
+1. subscribe to the remote source, using re-frame via the `::events/subscribe-to` key
+2. format and return the subscription vector
+
+> Note: we still need to work out a mechanism for updating remote data
+
+The function takes a hash-map with the following keys defined:
+
+  | keyword        | type           | description                                       |
+  |:---------------|:--------------:|:--------------------------------------------------|
+  | :meta-data     | hash-map       | associated meta-data of the node being processes  |
+
+
+#### (defmethod component->ui :source/fn ...)
+
+Compiling a `:source/fn` requires looking up the `:atm/kind` property of the node in the meta-data-registry, which returns the
+implementation function. We then arrange the `:input` and `:output` _port_ data and then call the function, which performs the
+required subscription and event-handler registrations.
+
+The function takes a hash-map with the following keys defined:
+
+  | keyword        | type           | description                                       |
+  |:---------------|:--------------:|:--------------------------------------------------|
+  | :node          | keyword/string | id of the node being processed                    |
+  | :component-id  | keyword/string | unique identifier of this widget                  |
+  | :container-id  | keyword/string | unique identifier of the container of this widget |
   "
-  (fn [{:keys [type]}]
-    type))
+
+  (fn [{:keys [type]}] type))
 
 
-; region ; some atoms to help debugging at the repl
-
-(def last-params (atom nil))
-(def last-hiccup (atom nil))
-(def last-locals (atom nil))
-(def last-cfg (atom nil))
-
-; endregion
+(def last-params "atom to help debugging at the repl" (atom nil))
+(def last-hiccup "atom to help debugging at the repl" (atom nil))
+(def last-locals "atom to help debugging at the repl" (atom nil))
+(def last-cfg "atom to help debugging at the repl" (atom nil))
 
 
 ; :ui/component
@@ -217,7 +289,7 @@ say _'at some point'_ because you can next :ui/components inside certain other :
 
 
 ;source/remote
-(defmethod component->ui :source/remote [{:keys [node meta-data]}]
+(defmethod component->ui :source/remote [{:keys [meta-data]}]
   ; get the meta-data for the node and use the "actual name" as the thing to subscribe to
   (let [remote (:atm/kind meta-data)]
 
@@ -227,6 +299,7 @@ say _'at some point'_ because you can next :ui/components inside certain other :
     (re-frame/dispatch-sync [::events/subscribe-to #{remote}])
 
     ; 2. return the signal vector to the new data-source key
+    ; TODO: need a mechanism for updating a :source/remote
     [::subs/source remote]))
 
 
@@ -248,7 +321,24 @@ say _'at some point'_ because you can next :ui/components inside certain other :
     (actual-fn params)))
 
 
-(defn process-components [configuration node-type registry container-id]
+(defn process-components
+  "'Compiles' the Mol-DSL definitions of the components into their functional representation, using the
+  multimethod `component->ui`
+
+  Typically called once for each category (`:ui/component`, `:source/local`, etc.)
+
+> Note: `:ui/components` use `process-components-stateful` instead, since there may be `:child` or
+`:children` dependencies.
+
+- configuration : (hash-map) the Mol_DSL for the entire widget
+- node-type : (keyword) which kind of nodes are we processing? (defined by `:atm/kind`)
+- registry : the registry of all available UI components, data sources, transformation functions,
+etc. available for use
+- container-id : (keyword/string) unique identifier for the widget that contains all the components, used
+to isolate this widget from all other
+
+  "
+  [configuration node-type registry container-id]
   (doall
     (->> configuration
       :mol/components
@@ -265,7 +355,24 @@ say _'at some point'_ because you can next :ui/components inside certain other :
                              :container-id  container-id}))))))
 
 
-(defn process-components-stateful [configuration node-type registry container-id]
+(defn process-components-stateful
+  "Similar to `process-components`, but the function first arranges the `:mol/component`s in reverse
+  dependency order, i.e., the one with no dependencies first, and with the most dependencies last. This was
+  we can compile the components in order, knowing that any dependencies will have already been implemented.
+
+> Note: `:ui/components` use `process-components-stateful`, since there may be `:child` or
+`:children` dependencies.
+
+- configuration : (hash-map) the Mol_DSL for the entire widget
+- node-type : (keyword) which kind of nodes are we processing? (defined by `:atm/kind`)
+- registry : the registry of all available UI components, data sources, transformation functions,
+etc. available for use
+- container-id : (keyword/string) unique identifier for the widget that contains all the components, used
+to isolate this widget from all other
+
+> Note 2: this function uses [Loom](https://github.com/aysylu/loom) to organize the dependencies
+  "
+  [configuration node-type registry container-id]
 
   (reset! last-cfg {:cfg configuration :nt node-type :r registry :id container-id})
 
