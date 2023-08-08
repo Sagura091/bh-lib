@@ -129,15 +129,21 @@
                                                    (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
 
 
-(def table-style {:width            "600px"
-                  :height           "300px"
-                  :text-color       "black"
-                  :header-bg-color  "lightgray"
-                  :body-bg-color    "whitesmoke"
-                  :table-border     "2px solid black"
-                  :row-border-color "lightgray"
-                  :expand-row-icon  "\uD83D\uDC49"
-                  :fold-row-icon    "\uD83D\uDC47"})
+(def table-style {:width                  "600px"
+                  :height                 "300px"
+                  :text-color             "black"
+                  :header-bg-color        "lightgray"
+                  :body-bg-color          "whitesmoke"
+                  :table-border           "2px solid black"
+                  :row-border-color       "lightgray"
+                  :expand-row-icon        "\uD83D\uDC49"
+                  :fold-row-icon          "\uD83D\uDC47"
+                  :sort-up-arrow-icon     "\u2B06"
+                  :sort-down-arrow-icon   "\u2B07"
+                  :sort-not-selected-icon "\u25BC"
+                  :row-bg-color           "white"})
+
+
 
 
 (defn standard-table []

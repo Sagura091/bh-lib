@@ -28,24 +28,30 @@
              [:r> "tr" (.getHeaderGroupProps hg)
               (doall
                 (for [col (.-headers hg)]
+
                   [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
+
+
+
                    (.render col "Header")
+
                    (if (.-canSort col)
                      [:span
-                      (let [up-arrow "\u2B06"
-                            down-arrow "\u2B07"]
+                      (let [up-arrow (:sort-up-arrow-icon @config)
+                            down-arrow (:sort-down-arrow-icon @config)
+                            neutral-arrow (:sort-not-selected-icon @config)]
                         (if (.-isSorted col)
                           (if (.-isSortedDesc col)
-                            down-arrow
-                            up-arrow)
-                          ""))])]))])))]
+                            (str " " down-arrow)
+                            (str " "  up-arrow))
+                          (str " " neutral-arrow)))])]))])))]
       [:r> "tbody" (.getTableBodyProps table (clj->js {:style {:backgroundColor (or (:body-bg-color @config) "white")}}))
        (doall
          (for [row (.-rows table)]
            (let [prepareRow (fn [] (.prepareRow table row))]
              (prepareRow)
              (r/as-element [:<> {:key (.-key (.getRowProps row))}
-                            [:r> "tr" (.getRowProps row)
+                            [:r> "tr"  (.getRowProps row (clj->js {:style {:background-color (or (:row-bg-color @config) "white")}}))
                              (doall
                                (for [cell (.-cells row)]
                                  (let [cellType (if (and (not (.-canExpand row)) (= table-type :expandable))
@@ -146,8 +152,6 @@
                                (fn []
                                  nil))})
              (:columns @config))))
-
-
 (defn- configure-standard-columns
   "configures standard table properties based on the table's config info"
   [data orig-data react-data config]
