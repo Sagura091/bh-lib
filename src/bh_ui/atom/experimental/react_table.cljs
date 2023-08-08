@@ -68,7 +68,7 @@
     (condp = [reframe-path? data-key?]
       [true true]   (h/handle-change-path orig-data [[assoc-in [:data] d]])
       [true false]  (h/handle-change-path orig-data [[l/set-val [] d]])
-      [false true]  (h/handle-change-path data [l/set-val [:data] d])
+      [false true]  (swap! data assoc-in [:data] d)
       [false false] (reset! data d))))
 
 
@@ -208,21 +208,21 @@
 
   (let [cfg           (h/resolve-value config)
         d             (h/resolve-value data)
-        s             (h/resolve-value style)
-        react-data    (r/atom (configure-data d cfg))
-        column-config (clj->js (if (= :expandable (:table-type @cfg))
-                                 (configure-expandable-columns d data react-data cfg s)
-                                 (configure-standard-columns d  data react-data cfg)))]
+        s             (h/resolve-value style)]
 
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
       (log/info "table-component (render)" data)
-      [:f> table
-       column-config
-       (clj->js @react-data)
-       (:table-type @cfg)
-       s])))
+      (let [react-data    (r/atom (configure-data d cfg))
+            column-config (clj->js (if (= :expandable (:table-type @cfg))
+                                     (configure-expandable-columns d data react-data cfg s)
+                                     (configure-standard-columns d  data react-data cfg)))]
+        [:f> table
+         column-config
+         (clj->js @react-data)
+         (:table-type @cfg)
+         s]))))
 
 
 (def meta-data {:react-table/table {:component table-component
