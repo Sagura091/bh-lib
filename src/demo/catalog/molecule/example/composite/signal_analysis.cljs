@@ -128,23 +128,6 @@
       {:dispatch (apply conj data (drop 1 updates))})))
 
 
-(defn input-filter [& {:keys [data component-id container-id] :as params}]
-  (let [d (h/resolve-value data)]
-    (fn []
-      [rc/h-box :src (rc/at)
-       :align :center
-       :children [[rc/input-text :src (rc/at)
-                   :model @d
-                   :placeholder "enter text to filter targets"
-                   :change-on-blur? false
-                   :on-change #(h/handle-change-path data [[l/set-val [] %]])]
-                  [rc/md-circle-icon-button :src (rc/at)
-                   :md-icon-name "zmdi-close-circle-o"
-                   :tooltip "Click to clear"
-                   :size :smaller
-                   :on-click #(h/handle-change-path data [[l/set-val [] ""]])]]])))
-
-
 (defn filter-subchannels [{:keys [data filter-value sub-name] :as params}]
   (re-frame/reg-sub
     (first sub-name)
@@ -158,9 +141,7 @@
 
 
 (re-frame/dispatch-sync
-  [:register-meta {:input/filter          {:component input-filter
-                                           :ports     {:data :port/sink}}
-                   :fn/filter-subchannels {:function filter-subchannels
+  [:register-meta {:fn/filter-subchannels {:function filter-subchannels
                                            :ports    {:data         :port/sink
                                                       :filter-value :port/sink}}}])
 
@@ -172,7 +153,7 @@
                                                     :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
                                                     :atm/default-config subchannel-tabs}
 
-                              "subchannel-filter"  {:atm/role :ui/component :atm/kind :input/filter}
+                              "subchannel-filter"  {:atm/role :ui/component :atm/kind :rc/input-field}
 
                               "input-data"         {:atm/role :source/local :atm/kind :input/data :atm/default-data ""}
 
