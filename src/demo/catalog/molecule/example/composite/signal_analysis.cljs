@@ -10,7 +10,8 @@
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
-            [woolybear.ad.layout :as layout]))
+            [woolybear.ad.layout :as layout]
+            [bh-ui.atom.re-com.input-field :as input-field]))
 
 
 (def source-code '{})
@@ -118,34 +119,6 @@
 
 ; endregion
 
-(defn make-handler [data sub-name]
-  (log/info "make-handler" sub-name "//" data)
-
-  (re-frame/reg-event-fx
-    (first sub-name)
-    (fn-traced [_ updates]
-      (log/info sub-name "handler" updates)
-      {:dispatch (apply conj data (drop 1 updates))})))
-
-
-(defn filter-subchannels [{:keys [data filter-value sub-name] :as params}]
-  (re-frame/reg-sub
-    (first sub-name)
-    :<- data
-    :<- filter-value
-    (fn [[d f] _]
-      (->> (:data d)
-        (filter #(re-find (re-pattern (str "(?i)" f)) (:subchannel-group %))))))
-
-  (make-handler data sub-name))
-
-
-(re-frame/dispatch-sync
-  [:register-meta {:fn/filter-subchannels {:function filter-subchannels
-                                           :ports    {:data         :port/sink
-                                                      :filter-value :port/sink}}}])
-
-
 (def mol-2 {:mol/components  {"signal-trace"       {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:theme        "dark1"
                                                                                                                     :x-axis-title "MHz"
                                                                                                                     :y-axis-title "dBm"}}
@@ -157,7 +130,9 @@
 
                               "input-data"         {:atm/role :source/local :atm/kind :input/data :atm/default-data ""}
 
-                              "filter-subchannels" {:atm/role :source/fn :atm/kind :fn/filter-subchannels}
+                              "filter-key"         {:atm/role :source/local :atm/kind :input/data :atm/default-data :subchannel-group}
+
+                              "filter-subchannels" {:atm/role :source/fn :atm/kind :fn/filter-fn}
 
 
                               "subchannel-box"     {:atm/role  :ui/component :atm/kind :rc/v-box :atm/children ["subchannel-filter"
@@ -178,7 +153,8 @@
                               "input-data"         {:data {"subchannel-filter"  :data
                                                            "filter-subchannels" :filter-value}}
                               "data-two"           {:data {"table-two" :data}}
-                              "filter-subchannels" {:data {"subchannel-table" :data}}}
+                              "filter-subchannels" {:data {"subchannel-table" :data}}
+                              "filter-key"         {:data {"filter-subchannels" :data-key}}}
 
             :mol/grid-layout [{:i "signal-trace" :x 0 :y 2 :w 20 :h 8 :static true}
                               {:i "tabs" :x 0 :y 13 :w 20 :h 8 :static true}
