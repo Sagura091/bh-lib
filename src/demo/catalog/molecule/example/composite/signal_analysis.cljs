@@ -148,7 +148,9 @@
 
 (def mol-2 {:mol/components  {"signal-trace"       {:atm/role :ui/component :atm/kind :fc/line :atm/default-config {:theme        "dark1"
                                                                                                                     :x-axis-title "MHz"
-                                                                                                                    :y-axis-title "dBm"}}
+                                                                                                                    :y-axis-title "dBm"
+                                                                                                                    :width 1400
+                                                                                                                    :height 250}}
                               "tabs"               {:atm/role           :ui/component :atm/kind :rc/h-tabs
                                                     :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
                                                     :atm/default-config subchannel-tabs}
@@ -180,9 +182,8 @@
                               "data-two"           {:data {"table-two" :data}}
                               "filter-subchannels" {:data {"subchannel-table" :data}}}
 
-            :mol/grid-layout [{:i "signal-trace" :x 0 :y 2 :w 20 :h 8 :static true}
-                              {:i "tabs" :x 0 :y 13 :w 20 :h 8 :static true}
-                              {:i "input-filter" :x 10 :y 0 :w 5 :h 1 :static true}]})
+            :mol/grid-layout [{:i "signal-trace" :x 0 :y 0 :w 20 :h 8 :static true}
+                              {:i "tabs" :x 0 :y 8 :w 20 :h 12 :static true}]})
 
 
 (defn example []
