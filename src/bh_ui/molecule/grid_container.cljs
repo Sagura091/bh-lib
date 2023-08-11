@@ -223,7 +223,7 @@
       (when (nil? @id)
         (reset! id component-id)
         (ui-utils/init-container-locals @id (config partial-config))
-        (log/info "component (b)" @id "//" container-id)
+        ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
         (ui/prep-environment partial-config @id @(re-frame/subscribe [:meta-data-registry])))
 
