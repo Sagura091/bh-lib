@@ -90,10 +90,10 @@
                :ports    {:data :port/sink}}}])
 
 
-(defn- data-tools [data]
+(defn- data-tools [data source-data]
   (let [old-data (ui-utils/subscribe-local data [])]
 
-    ;(log/info "data-tools" data "//" @old-data)
+    (log/info "data-tools" data "//" source-data)
 
     (fn []
       [rc/h-box :src (rc/at)
@@ -101,9 +101,11 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] {}]]) :label "Empty"]
+                  [rc/button :on-click #(h/handle-change-path (drop-last source-data)
+                                          [[l/set-val (take-last 1 source-data) {}]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] example-data]])
+                  [rc/button :on-click #(h/handle-change-path (drop-last source-data)
+                                          [[l/set-val (take-last 1 source-data) example-data]])
                    :label "Default"]
 
                   [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :a] 444]])
@@ -125,7 +127,9 @@
 
               [rc/v-box :src (rc/at)
                :gap "8px"
-               :children [[data-tools [component-id :blackboard "add-c"]]]]]])
+               :children [[data-tools
+                           [component-id :blackboard "add-c"]
+                           [component-id :blackboard :input-data]]]]]])
 
 
 (defn example []

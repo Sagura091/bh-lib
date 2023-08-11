@@ -27,9 +27,9 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/set-val [] []]] ) :label "Empty"]
+                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]] ) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path data [] widget/sample-data)
+                  [rc/button :on-click #(h/handle-change-path (drop-last data) (take-last 1 data) widget/sample-data)
                    :label "Default"]
 
                   [rc/button :on-click #(h/handle-change-path data [:data]

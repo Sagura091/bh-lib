@@ -13,4 +13,6 @@
     "Input Field"
     [layout/centered {:extra-classes :width-50}
      [input/input-field
-      :data ""]]))
+      ; :data must be a r/atom here because static structures CANNOT be edited (by convention, currently)
+      ;      see atoms/charts page examples
+      :data (r/atom "")]]))

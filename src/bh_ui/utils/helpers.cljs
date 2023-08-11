@@ -114,7 +114,7 @@
 
 
 (defn source-local-> [db base-path f]
-  ;(log/info "source-local-> (a)" (keys db)
+  ;(log/info "source-local-> (a)" (if (map? db) (keys db) db)
   ;  "//" base-path
   ;  "//" f
   ;  "//" (get-in db base-path))
@@ -128,35 +128,239 @@
                                    ;  (first form) x (next form) "____")
                                    (apply (first form) x (next form)))
                                  (do
-                                   ;(log/info "source-local-> (b) NEG " (list form x))
-                                   (list form x)))]
+                                   ;(log/info "source-local-> (b) NEG " (form x))
+                                   (form x)))]
                   (recur threaded (next forms)))
                 x))]
-    (log/info "source-local-> (c)" ret)
+    ;(log/info "source-local-> (c)" db "//" base-path "//" ret)
 
-    (assoc-in db base-path ret)))
+    (if (and (associative? db) (not-empty base-path))
+      (assoc-in db base-path ret)
+      ret)))
+
+
+(comment
+  (def ret (assoc-in {} [:a] 5))
+
+  (assoc-in {} [] ret)
+
+  (if (and (associative? {}) (not-empty []))
+    (assoc-in {} [] ret)
+    ret)
+
+
+  (def ret (assoc-in {:a 0} [:a] 5))
+
+  (assoc-in {:a 0} [] ret)
+
+  (if (and (associative? {:a 0}) (not-empty []))
+    (assoc-in {} [] ret)
+    ret)
+
+
+  (do
+    (def db {:b {:a 0}})
+    (def base-path [:b])
+    (def ret (assoc-in {:a 0} [:a] 5)))
+
+  (if (and (associative? db) (not-empty base-path))
+    (assoc-in db base-path ret)
+    ret)
+
+  ())
 
 
 ; TODO: think handle-change-path needs to change to provide the "update-path" as a separate param, rather
 ;       than forcing the caller to provide a complete data item (assoc-in done inside the handler...)
 ;
 (defn handle-change-path [value new-value]
-  ;(log/info "handle-change-path (a)" value "//" new-value)
-
+  ;(log/info "handle-change-path (a)" value "//" (type value) "//" new-value)
   (let [update-event [(path->keyword value) new-value]]
     (cond
       (or (coll? value)
-        (keyword? value)
-        (string? value)) (do
-                           ;(log/info "handle-change-path (path)" update-event)
-                           (re-frame/dispatch update-event))
+        (string? value)                                     ; need this in case the Mol-DSL only has a string for this
+        (keyword? value)) (do
+                            (log/info "handle-change-path (path)" update-event)
+                            (re-frame/dispatch update-event))
+
+      ; TODO: do we really need to support string "path" to the data via subscription
 
       (or
         (instance? reagent.ratom.RAtom value)
         (instance? Atom value)) (do
-                                  ;(log/info "handle-change-path (atom)" update-event)
-                                  (reset! value (source-local-> @value [] update-event)))
-      :else ())))
+                                  ;(log/info "handle-change-path (atom)" new-value)
+                                  (reset! value (source-local-> @value [] [new-value])))
+
+      :else (log/info "handle-change-path (else)" value))))
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; rich comments
+
+; test handling atoms as the data-source, and structures
+(comment
+  (do
+    (def db-atom (atom {:dummy "value"}))
+    (re-frame/reg-sub
+      :dummy.value
+      (fn [_ _]
+        @db-atom))
+    (re-frame/reg-event-db
+      :dummy-value
+      (fn [_ [_ new-val]]
+        (reset! db-atom new-val)))
+
+    (def val-1 (resolve-value "val-1"))
+    (def val-2 (resolve-value (r/atom "val-2")))
+    (def val-3 (resolve-value (r/atom {:a "" :val 3})))
+    (def val-4 (resolve-value (r/atom {:a "" :b "" :val 4})))
+    (def val-5 (resolve-value [:dummy.value])))
+
+  (handle-change-path val-1 [[bh-ui.utils.locals/set-val [] "a"]])
+  (handle-change-path val-2 [[bh-ui.utils.locals/set-val [] "a"]])
+  (handle-change-path val-3 [[bh-ui.utils.locals/set-val [:a] "a"]])
+  (handle-change-path val-4 [[assoc-in [:a] "a"]])
+
+  (handle-change-path (resolve-value [1 2]) [[bh-ui.utils.locals/conj-in [] 10]])
+  (handle-change-path (resolve-value #{1 2}) [[bh-ui.utils.locals/disj-in [] 1]])
+  (handle-change-path (resolve-value {:a 1}) [[assoc-in [:a] 9]])
+
+  (get-in db [:a])
+  (apply bh-ui.utils.locals/set-val {:a ""} '([:a] "a"))
+
+  (apply bh-ui.utils.locals/set-val {:a ""} '([:a] "a"))
+
+  (apply bh-ui.utils.locals/set-val {:a "", :val 3} '([:a] "a"))
+
+  (apply assoc-in {:a "", :b "", :val 4} '([:a] "a"))
+
+  (apply bh-ui.utils.locals/conj-in [1 2] '([] 10))
+
+
+
+
+  (do
+    (def d [1 2])
+    (def path [])
+    (def value 10)
+    (def start (get-in d path))
+    (def c (if (vector? start)
+             (into [] (conj start value))
+             (conj start value)))
+    (def ret (if (map? d)
+               (assoc-in d path c)
+               c)))
+
+  ; set-val on a non-ahs-map on a key in a hash-map works fine!
+  (do
+    (def db "")
+    (def base-path [])
+    (def f [[[bh-ui.utils.locals/set-val [] "a"]]])
+    (def forms (first f))
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+  (do
+    (def db {:a ""})
+    (def base-path [:a])
+    (def f [[[bh-ui.utils.locals/set-val [:a] "a"]]])
+    (def forms (first f))
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+  (do
+    (def db {:a "" :b ""})
+    (def base-path [:a])
+    (def f [[[bh-ui.utils.locals/set-val [:a] "a"]]])
+    (def forms (first f))
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+
+  (let [ret (loop [x (get-in db base-path), forms (first f)]
+              (if forms
+                (let [form     (first forms)
+                      threaded (if (or (seq? form) (vector? form))
+                                 (do
+                                   (apply (first form) x (next form)))
+                                 (do
+                                   (form x)))]
+                  (recur threaded (next forms)))
+                x))]
+    (log/info "loop" db "//" base-path "//" ret)
+
+    (if (associative? db)
+      (assoc-in db base-path ret)
+      ret))
+
+
+  ())
+
+; now make sure it still works with [:subscription.vectors]
+(comment
+  (do
+    (def db-atom (atom {:dummy "value"}))
+    (re-frame/reg-sub
+      :dummy.value
+      (fn [_ _]
+        (log/info ":dummy.value (sub)" @db-atom)
+        @db-atom))
+    (re-frame/reg-event-fx
+      :dummy.value
+      (fn [_ [_ new-val]]
+        (log/info ":dummy.value (event)" new-val)
+        (reset! db-atom (source-local-> @db-atom [] [new-val]))))
+
+    (def val-5 (resolve-value [:dummy.value])))
+
+  (assoc-in {:dummy "value"} [:dummy] "a")
+
+  (handle-change-path [:dummy.value] [[bh-ui.utils.locals/set-val [:dummy] "a"]])
+  (handle-change-path [:dummy.value] [[bh-ui.utils.locals/set-val [] []]])
+
+  ; set-val of a key in a hash-map works fine...
+  (do
+    (def db {:dummy "value"})
+    (def base-path [:dummy])
+    (def f [[[bh-ui.utils.locals/set-val [:dummy] "a"]]])
+    (def forms (first f))
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+
+  ; getting set/val to work for completely replacing a hash-map...
+  (do
+    (def db {:dummy "value"})
+    (def base-path [])
+    (def f [[[bh-ui.utils.locals/set-val [] []]]])
+    (def forms (first f))
+    (def form (first forms))
+    (def x (get-in db base-path)))
+
+  (apply bh-ui.utils.locals/replace-val x (next form))
+
+  (assoc-in db base-path [])
+
+  (let [ret (loop [x (get-in db base-path), forms (first f)]
+              (if forms
+                (let [form     (first forms)
+                      threaded (if (or (seq? form) (vector? form))
+                                 (do
+                                   (apply (first form) x (next form)))
+                                 (do
+                                   (form x)))]
+                  (recur threaded (next forms)))
+                x))]
+    (log/info "loop" db "//" base-path "//" ret)
+
+    (if (map? db)
+      (assoc-in db base-path ret)
+      ret))
+
+  ())
 
 
 (comment
@@ -381,3 +585,5 @@
 
 
   ())
+
+; endregion
