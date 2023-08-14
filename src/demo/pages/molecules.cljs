@@ -1,9 +1,7 @@
 (ns demo.pages.molecules
-  (:require [bh-ui.tabbed-pane.utils :as tab-utils]
-            [bh-ui.atom.bhui.navbar :as navbar]
-            [demo.catalog.molecule.general :as general]
+  (:require [demo.catalog.molecule.general :as general]
             [demo.catalog.molecule.all :as all]
-            [bh-ui.atom.bhui.tabbed-panel :as tabbed-panel]
+            [bh-ui.core :as bh]
             [woolybear.ad.layout :as layout]))
 
 
@@ -21,7 +19,7 @@
    ;[layout/page-header {:extra-classes :is-fluid}
    ; [:h1.has-text-info "'Molecules'"]]
 
-   [tabbed-panel/tabbed-panel
+   [bh/bh-tabbed-panel
     :extra-classes {:extra-classes :is-fluid
                     :height "85vh"}
 

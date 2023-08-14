@@ -1,5 +1,5 @@
 (ns demo.pages.technologies
-  (:require [bh-ui.atom.bhui.tabbed-panel :as tabbed-panel]
+  (:require [bh-ui.core :as bh]
             [woolybear.ad.layout :as layout]
             [demo.catalog.technologies.overview.data-flow-digraph :as data-flow]
             [demo.catalog.technologies.clojure :as tech-clj]
@@ -21,7 +21,7 @@
   []
 
   [layout/page {:extra-classes :is-fluid}
-   [tabbed-panel/tabbed-panel
+   [bh/bh-tabbed-panel
     :extra-classes {:extra-classes :is-fluid
                     :height        "85vh"}
     :title ""

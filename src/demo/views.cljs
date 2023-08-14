@@ -1,5 +1,5 @@
 (ns demo.views
-  (:require [bh-ui.atom.bhui.tabbed-panel :as tabbed-panel]
+  (:require [bh-ui.core :as ui]
             [re-frame.core :as re-frame]
             [re-com.core :as rc]
             [demo.subs :as subs]
@@ -32,7 +32,7 @@
 
   [layout/page {:extra-classes :is-fluid}
 
-   [tabbed-panel/tabbed-panel
+   [ui/bh-tabbed-panel
     :extra-classes {:extra-classes :is-fluid
                     :width "90%"
                     :height        "95vh"}

@@ -57,8 +57,8 @@
             [bh-ui.atom.leaflet.globe :as leaf-globe]
             [bh-ui.atom.leaflet.shape :as leaf-shape]
 
-            [bh-ui.atom.oz.bar-chart :as bar-chart]
-            [bh-ui.atom.oz.line-chart :as line-chart]
+            [bh-ui.atom.oz.bar-chart :as oz-bar-chart]
+            [bh-ui.atom.oz.line-chart :as oz-line-chart]
 
             [bh-ui.atom.re-com.box :as box]
             [bh-ui.atom.re-com.button :as button]
@@ -78,7 +78,7 @@
 
             [bh-ui.atom.worldwind.globe :as ww-globe]
             [bh-ui.atom.worldwind.globe.cell :as cell]
-            [bh-ui.atom.worldwind.globe.color :as color]
+            [bh-ui.atom.worldwind.globe.color :as globe-color]
             [bh-ui.atom.worldwind.globe.globe-time :as globe-time]
             [bh-ui.atom.worldwind.globe.layer :as layer]
             [bh-ui.atom.worldwind.globe.location :as location]
@@ -174,6 +174,7 @@
 
 (def card                                   card/card)
 (def flippable-card                         flippable-card/card)
+(def flippable-card-style                   flippable-card/default-style)
 (def image-card                             image-card/card)
 
 ;;;;;;;;; CHARTS ;;;;;;;;;;;;;;;;;;
@@ -274,8 +275,8 @@
 
 ;;;;;;;;; OZ CHARTS ;;;;;;;;;;;;
 
-(def oz-bar-chart                           bar-chart/component)
-(def oz-line-chart                          line-chart/component)
+(def oz-bar-chart                           oz-bar-chart/component)
+(def oz-line-chart                          oz-line-chart/component)
 
 ;;;;;;;;; RE-COM ;;;;;;;;;;;;;;;;
 
@@ -312,14 +313,14 @@
 (def worldwind-globe                        ww-globe/globe)
 (def ww-boundary-locations                  cell/boundary-locations)
 
-(def ww-yellow                              color/yellow)
-(def ww-white                               color/white)
-(def ww-blue                                color/blue)
-(def ww-red                                 color/red)
-(def ww-green                               color/green)
-(def ww-black                               color/black)
-(def ww-color                               color/color)
-(def ww-color-pallet                        color/color-pallet)
+(def ww-yellow                              globe-color/yellow)
+(def ww-white                               globe-color/white)
+(def ww-blue                                globe-color/blue)
+(def ww-red                                 globe-color/red)
+(def ww-green                               globe-color/green)
+(def ww-black                               globe-color/black)
+(def ww-color                               globe-color/color)
+(def ww-color-pallet                        globe-color/color-pallet)
 
 (def ww-change-time                         globe-time/change-time)
 (def ww-renderable-layer                    layer/renderable-layer)
