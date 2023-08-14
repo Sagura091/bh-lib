@@ -34,6 +34,9 @@
         cooked-data   (cook-data @d)
         options       {:zoomEnabled      true
                        :animationEnabled true
+                       :height           (or (:height config) nil)
+                       :width            (or (:width config) nil)
+                       :exportEnabled    (or (:exportEnabled config) false)
                        :theme            (:theme config)
                        :title            {:text (:title config)}
                        :axisX            {:title (or (:x-axis-title config) "")}

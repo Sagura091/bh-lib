@@ -9,6 +9,7 @@
             [bh-ui.atom.re-com.login :as login]
             [bh-ui.atom.re-com.slider :as slider]
             [bh-ui.atom.re-com.table :as table]
+            [bh-ui.atom.re-com.tabs :as tabs]
             [bh-ui.atom.re-com.v-scroller :as v-scroll]))
 
 
@@ -29,6 +30,10 @@
 (def table-column-headers table/table-column-headers)
 (def meta-table table/meta-table)
 (def table table/table)
+(def h-bar-tabs tabs/h-bar-tabs)
+(def h-pill-tabs tabs/h-pill-tabs)
+(def v-bar-tabs tabs/v-bar-tabs)
+(def v-pill-tabs tabs/v-pill-tabs)
 (def v-scroll v-scroll/v-scroller)
 
 

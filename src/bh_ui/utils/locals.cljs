@@ -22,7 +22,9 @@
         c (if (vector? start)
             (into [] (conj start value))
             (conj start value))]
-    (assoc-in d path c)))
+    (if (map? d)
+      (assoc-in d path c)
+      c)))
 
 
 (defn disj-in [d path value]
@@ -31,7 +33,9 @@
             (set? start) (into #{} (disj start value))
             (vector? start) (into [] (disj start value))
             :else (disj start value))]
-    (assoc-in d path c)))
+    (if (map? d)
+      (assoc-in d path c)
+      c)))
 
 
 (defn drop-last-in [d path value]
@@ -39,7 +43,9 @@
         c (if (vector? start)
             (into [] (drop-last value start))
             (drop-last value start))]
-    (assoc-in d path c)))
+    (if (map? d)
+      (assoc-in d path c)
+      c)))
 
 
 (defn drop-in [d path value]
@@ -47,13 +53,17 @@
         c (if (vector? start)
             (into [] (drop value start))
             (drop value start))]
-    (assoc-in d path c)))
+    (if (map? d)
+      (assoc-in d path c)
+      c)))
 
 
 (defn set-val [d path value]
   ;(log/info "set-val" d "//" path "//" value)
 
-  value)
+  (if (map? d)
+    (assoc-in d path value)
+    value))
 
 
 (re-frame/reg-event-db
@@ -444,7 +454,7 @@ e.g., assume the function is identified via `:the-function` and the data structu
  :values {:x 100 :y 200 :z 300}}
 ```
 
-iIf the intent is to replace the [:values :z] with 500, you would use:
+If the intent is to replace the [:values :z] with 500, you would use:
 
 `(re-frame.core/dispatch [:the-function 500 [:values :z]])`.
 
@@ -468,7 +478,7 @@ will set the data value to:
     (re-frame/reg-event-db
       p
       (fn [db [_ new-val :as params]]
-        (log/info "create-container-local-event (b)" p "//" new-val)
+        ;(log/info "create-container-local-event (b)" p "//" new-val "//" (keys db))
 
         (reset! last-params params)
 
@@ -486,7 +496,8 @@ will set the data value to:
 
           ;(log/info "create-container-local-event (c)" params
           ;  "//" base-path
-          ;  "//" (get-in db base-path))
+          ;  "//" (get-in db base-path)
+          ;  "//" (next params))
 
           (h/source-local-> db base-path (next params)))))))
 
@@ -619,7 +630,7 @@ will set the data value to:
   (let [paths (process-locals [] nil locals-and-defaults)]
 
     ;(log/info "init-container-locals" container-id
-    ;  "//" paths)
+    ;  "//" paths
     ;  "//" locals-and-defaults)
 
     ; load the app-db with the default values

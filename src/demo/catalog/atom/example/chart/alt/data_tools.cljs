@@ -51,10 +51,10 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :label "Empty" :on-click #(h/handle-change-path data [[l/set-val [] []]])]
+                  [rc/button :label "Empty" :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]])]
 
                   [rc/button :label "Default"
-                   :on-click #(h/handle-change-path data [[l/set-val [] default-data]])]
+                   :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) default-data]])]
 
                   [rc/button :label "Random" :on-click #(h/handle-change-path data [[l/set-val [] (random-data)]])]
 

@@ -1,8 +1,8 @@
 (ns bh-ui.molecule.composite.util.digraph
   "Expand on the configuration, computing denormalized data, the [Loom](https://github.com/aysylu/loom)
-  digraph, etc. This enriched data is used in later stages of the Molecule-DSL 'interpreter'
+  digraph, etc. This enriched data is used in later stages of the Molecule-DSL 'compiler'
 
-  > Note: you won't find anything called the 'Interpreter', its just a term for the code that reads the
+  > Note: you won't find anything called the 'Compiler', its just a term for the code that reads the
   Mol-DSL and transforms it into the functions that actually provide the run-time effects described in
   component definition.
   "
@@ -15,7 +15,7 @@
 
 (defn expand-components
   "Expand the Mol-DSL describing the UI 'widget' to the specific functions that provide the run-time implementation (i.e.,
-  the 'interpreter'
+  the 'compiler'
 
   - data : (hash-map) the Mol-DSL definition of the 'widget'
   - registry : (hash-map) registry mapping the 'type' of component (defined by :atm/kind) to the function that provides the run-time implementation (also includes information about in/out ports and some other things).

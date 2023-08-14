@@ -4,13 +4,10 @@
             [bh-ui.atom.worldwind.globe.color :as color]
             [bh-ui.atom.worldwind.globe.globe-time :as globe-time]
             [bh-ui.atom.worldwind.globe.layer :as layer]
-            [bh-ui.atom.worldwind.globe.layer.core]
             [bh-ui.atom.worldwind.globe.location :as location]
             [bh-ui.atom.worldwind.globe.projection :as projection]
             [bh-ui.atom.worldwind.globe.react-support :as react-support]
-            [bh-ui.atom.worldwind.globe.shape :as shape]
-            [bh-ui.atom.worldwind.globe.volume :as volume]
-            [bh-ui.atom.worldwind.globe.shape.core]))
+            [bh-ui.atom.worldwind.globe.shape :as shape]))
 
 
 
@@ -26,6 +23,7 @@
 (def green color/green)
 (def black color/black)
 (def color color/color)
+(def color-pallet color/color-pallet)
 
 (def change-time globe-time/change-time)
 (def renderable-layer layer/renderable-layer)

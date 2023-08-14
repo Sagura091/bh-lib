@@ -1,6 +1,7 @@
 (ns bh-ui.atom.experimental.core
   (:require [bh-ui.atom.experimental.ui-element :as experimental-ui-element]
-            [bh-ui.atom.experimental.react-table :as react-table]))
+            [bh-ui.atom.experimental.react-table :as react-table]
+            [bh-ui.atom.experimental.tab-set :as tabset]))
 
 
 (def config-panel experimental-ui-element/config-panel)
@@ -9,3 +10,4 @@
 (def slider experimental-ui-element/slider)
 (def label experimental-ui-element/label)
 (def table react-table/table-component)
+(def tab-set tabset/tab-set)
