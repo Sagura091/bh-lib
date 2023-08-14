@@ -173,6 +173,12 @@
 ; TODO: think handle-change-path needs to change to provide the "update-path" as a separate param, rather
 ;       than forcing the caller to provide a complete data item (assoc-in done inside the handler...)
 ;
+; TODO: maybe the approach should be to have the equivalent of (reset!) and (swap!) where
+;       the reset!-like function just hammers the value (somehow), and the swap!-like function expects the
+;       thread-like params and calls source-local-> and then puts the value back (somehow, but likely with
+;       (assoc or assoc-in)
+;
+
 (defn handle-change-path [value new-value]
   ;(log/info "handle-change-path (a)" value "//" (type value) "//" new-value)
   (let [update-event [(path->keyword value) new-value]]
