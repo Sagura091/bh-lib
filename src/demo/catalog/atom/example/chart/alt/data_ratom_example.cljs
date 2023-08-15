@@ -1,6 +1,6 @@
 (ns demo.catalog.atom.example.chart.alt.data-ratom-example
   (:require [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
+            [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [re-com.core :as rc]
             [reagent.core :as r]
@@ -31,7 +31,7 @@
 
 
 (defn example [& {:keys [container-id sample-data random-data component] :as params}]
-  (let [component-id (utils/path->keyword container-id "chart")
+  (let [component-id (bh/utils-path->keyword container-id "chart")
         data         (r/atom sample-data)
         input-params (assoc params
                        :data data

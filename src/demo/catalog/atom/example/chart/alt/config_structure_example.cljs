@@ -1,6 +1,6 @@
 (ns demo.catalog.atom.example.chart.alt.config-structure-example
   (:require [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
+            [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [re-com.core :as rc]
             [taoensso.timbre :as log]))
@@ -29,7 +29,7 @@
                          component] :as params}]
   ;(log/info "example" params)
 
-  (let [component-id (utils/path->keyword container-id "chart")
+  (let [component-id (bh/utils-path->keyword container-id "chart")
         input-params (assoc params :component-id component-id
                                    :data sample-data
                                    :component (partial config-example component)

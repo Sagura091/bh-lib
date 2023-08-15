@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.card.card
-  (:require [bh-ui.atom.card.card :as card]
+  (:require [bh-ui.core :as bh]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]))
 
@@ -17,12 +17,12 @@
   (acu/demo "Card"
     "A simple Card, based upon [Bulma](https://bulma.io)"
     [layout/centered {:extra-classes :width-50}
-     [card/card
+     [bh/card
       :style node-style
       :title "Rich Hickey"
       :content [layout/markdown-block
                 "Rich created the [Clojure]() programming language, and the [Datomic]() database."]]]
-    card/source-code))
+    bh/card-src-code))
 
 
 

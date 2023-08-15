@@ -1,6 +1,5 @@
 (ns demo.catalog.atom.example.chart.radial-bar-chart
-  (:require [bh-ui.atom.chart.radial-bar-chart :as chart]
-            [bh-ui.atom.chart.utils :as chart-utils]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.data-ratom-example :as data-ratom-example]
             [demo.catalog.atom.example.chart.alt.data-structure-example :as data-structure-example]
             [demo.catalog.atom.example.chart.alt.data-sub-example :as data-sub-example]
@@ -23,13 +22,13 @@
   > In _this_ case, we are using a ratom for the data.
   >
   > You can use the buttons below to change some of the data and see how the chart responds."
-   :sample-data chart/sample-data
-   :random-data chart/random-data
+   :sample-data bh/radial-bar-chart-sample-data
+   :random-data bh/radial-bar-chart-random-data
    :data-tools data-tools/meta-tabular-data-ratom-tools
-   :source-code chart/source-code
-   :component chart/component
-   :data-panel chart-utils/meta-tabular-data-panel
-   :config-panel chart/config-panel])
+   :source-code bh/radial-bar-chart-source-code
+   :component bh/radial-bar-chart-component
+   :data-panel bh/chart-utils-meta-tabular-data-panel
+   :config-panel bh/radial-bar-chart-config-panel])
 
 
 (defn- data-structure []
@@ -41,12 +40,12 @@
 
   > In _this_ case, we are using a plain data structure for the data, so there is no way to update it (it lives
   > only inside the chart, with no way to get at it from outside)."
-   :sample-data chart/sample-data
-   :random-data chart/random-data
-   :source-code chart/source-code
-   :component chart/component
-   :data-panel chart-utils/meta-tabular-data-panel
-   :config-panel chart/config-panel])
+   :sample-data bh/radial-bar-chart-sample-data
+   :random-data bh/radial-bar-chart-random-data
+   :source-code bh/radial-bar-chart-source-code
+   :component bh/radial-bar-chart-component
+   :data-panel bh/chart-utils-meta-tabular-data-panel
+   :config-panel bh/radial-bar-chart-config-panel])
 
 
 (defn data-sub []
@@ -59,13 +58,13 @@
 > In _this_ case, we are using a subscription to handle the data for the chart.
 "
    :sample-data [:radial-bar-chart-data-sub-demo :blackboard :topic.sample-data]
-   :default-data chart/sample-data
-   :random-data chart/random-data
+   :default-data bh/radial-bar-chart-sample-data
+   :random-data bh/radial-bar-chart-random-data
    :data-tools data-tools/meta-tabular-data-sub-tools
-   :source-code chart/source-code
-   :component chart/component
-   :data-panel chart-utils/meta-tabular-data-panel
-   :config-panel chart/config-panel])
+   :source-code bh/radial-bar-chart-source-code
+   :component bh/radial-bar-chart-component
+   :data-panel bh/chart-utils-meta-tabular-data-panel
+   :config-panel bh/radial-bar-chart-config-panel])
 
 
 (defn- config-ratom []
@@ -79,11 +78,11 @@
 >
 > You can use the buttons in the bottom-most panel to change some of the chart configuration options and see
 > how that affects the data (shown in the gray panel) and how the chart responds."
-   :sample-data chart/sample-data
-   :source-code chart/source-code
+   :sample-data bh/radial-bar-chart-sample-data
+   :source-code bh/radial-bar-chart-source-code
    :config-tools config-tools/meta-tabular-config-row-ratom-tools
-   :component chart/component
-   :default-config-data chart/sample-config-data])
+   :component bh/radial-bar-chart-component
+   :default-config-data bh/radial-bar-chart-sample-config-data])
 
 
 (defn- config-structure []
@@ -96,10 +95,10 @@
 > In _this_ case, we are using a plain data structure to hold the configuration for the chart.
 >
 > You can see the configuration data in the gray panel and how it how that affects the chart."
-   :sample-data chart/sample-data
-   :source-code chart/source-code
-   :component chart/component
-   :default-config-data chart/sample-config-data])
+   :sample-data bh/radial-bar-chart-sample-data
+   :source-code bh/radial-bar-chart-source-code
+   :component bh/radial-bar-chart-component
+   :default-config-data bh/radial-bar-chart-sample-config-data])
 
 
 (defn- config-sub []
@@ -111,12 +110,12 @@
      charts can take [subscriptions](https://day8.github.io/re-frame/subscriptions/) as input and re-render as the configuration changes.
 
 > In _this_ case, we are using a subscription to handle the configuration for the chart."
-     :sample-data chart/sample-data
-     :source-code chart/source-code
+     :sample-data bh/radial-bar-chart-sample-data
+     :source-code bh/radial-bar-chart-source-code
      :config-tools config-tools/meta-tabular-config-row-sub-tools
-     :component chart/component
+     :component bh/radial-bar-chart-component
      :config-data [container-id :blackboard :config-data]
-     :default-config-data chart/sample-config-data]))
+     :default-config-data bh/radial-bar-chart-sample-config-data]))
 
 
 (defn examples []

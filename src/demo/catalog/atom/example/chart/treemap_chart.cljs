@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.chart.treemap-chart
-  (:require [bh-ui.atom.chart.treemap-chart :as chart]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.utils :as example]
             [bh-ui.utils :as utils]
             [taoensso.timbre :as log]))
@@ -11,10 +11,10 @@
      :title "Treemap Chart"
      :container-id container-id
      :description "A simple Treemap Chart built using [Recharts](https://recharts.org/en-US/api/Treemap)"
-     :data chart/sample-data
-     :component chart/configurable-component
-     :component-id (utils/path->keyword container-id "treemap-chart")
-     :source-code chart/source-code]))
+     :data bh/tree-map-chart-sample-data
+     :component bh/tree-map-chart-configurable-component
+     :component-id (bh/utils-path->keyword container-id "treemap-chart")
+     :source-code bh/tree-map-chart-source-code]))
 
 
 (defn examples []

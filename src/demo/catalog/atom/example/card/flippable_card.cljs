@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.card.flippable-card
-  (:require [bh-ui.atom.card.flippable-card :as card]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]))
@@ -30,7 +30,7 @@
     over the card.
     "
     [layout/centered {:extra-classes :width-50}
-     [card/card
+     [bh/flippable-card
       :style node-style-square
       :front [rc/v-box
               :gap "10px"
@@ -41,4 +41,4 @@
                          [:p.title.is-4 "Rich Hickey"]]]
       :back [layout/markdown-block
              "Rich created the [Clojure](https://clojure.org/) programming language, and the [Datomic](https://www.datomic.com/) database."]]]
-    card/source-code))
+    bh/flippable-card-src-code))

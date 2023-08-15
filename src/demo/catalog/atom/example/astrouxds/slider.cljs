@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.astrouxds.slider
-  (:require [bh-ui.atom.astrouxds.slider :as slider]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]))
 
@@ -8,4 +8,4 @@
     "Slider"
     [rc/h-box :src (rc/at)
      :gap "50px"
-     :children [[slider/slider :min 0 :max 200 :step 2 :val 100 :disabled false]]]))
+     :children [[bh/astro-slider :min 0 :max 200 :step 2 :val 100 :disabled false]]]))

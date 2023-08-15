@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.chart.alt.show-data
-  (:require [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [taoensso.timbre :as log]))
 
@@ -8,7 +8,7 @@
 
 
 (defn show-data [data]
-  (let [d (h/resolve-value data)]
+  (let [d (bh/utils-resolve-value data)]
     (fn []
 
       ;(log/info "show-data" data "//" d "//" @d)
@@ -23,7 +23,7 @@
 
 
 (defn show-config [config-data]
-  (let [d (h/resolve-value config-data)]
+  (let [d (bh/utils-resolve-value config-data)]
     (fn []
 
       ;(log/info "show-data" data "//" d "//" @d)
