@@ -17,6 +17,7 @@
             [bh-ui.atom.astrouxds.status :as astatus]
             [bh-ui.atom.astrouxds.table :as atable]
 
+            [bh-ui.atom.bhui.color-pallet :as bcolor-pallet]
             [bh-ui.atom.bhui.color-picker :as bcolor-picker]
             [bh-ui.atom.bhui.data-table :as bdata-table]
             [bh-ui.atom.bhui.markdown :as bmarkdown]
@@ -39,6 +40,9 @@
             [bh-ui.atom.chart.sankey-chart :as sankey-chart]
             [bh-ui.atom.chart.scatter-chart :as scatter-chart]
             [bh-ui.atom.chart.treemap-chart :as tree-map-chart]
+            [bh-ui.atom.chart.utils :as chart-utils]
+            [bh-ui.atom.chart.wrapper :as chart-wrapper]
+            [bh-ui.atom.chart.wrapper-2 :as chart-wrapper-2]
 
             [bh-ui.atom.diagram.diagram.composite-dag-support :as composite-dag-support]
             [bh-ui.atom.diagram.diagram.dagre-support :as dagre-support]
@@ -162,6 +166,7 @@
 
 ;;;;;;;; BH-UI ;;;;;;;;;;;;;;;;;;
 
+(def bh-color-pallet                        bcolor-pallet/color-pallet)
 (def bh-rgba-color-picker                   bcolor-picker/rgba-color-picker)
 (def bh-hex-color-picker                    bcolor-picker/hex-color-picker)
 (def bh-data-table                          bdata-table/table)
@@ -182,48 +187,57 @@
 (def area-chart-local-config                area-chart/local-config)
 (def area-chart-config                      area-chart/config)
 (def area-chart-config-panel                area-chart/config-panel)
-(def aread-chart-component                  area-chart/component)
+(def area-chart-component                   area-chart/component)
+(def area-chart-sample-data                 area-chart/sample-data)
 
 (def bar-chart-local-config                 bar-chart/local-config)
 (def bar-chart-config                       bar-chart/config)
 (def bar-chart-config-panel                 bar-chart/config-panel)
 (def bar-chart-component                    bar-chart/component)
+(def bar-chart-sample-data                  bar-chart/sample-data)
 
 (def colored-pie-chart-local-config         colored-pie-chart/local-config)
 (def colored-pie-chart-config               colored-pie-chart/config)
 (def colored-pie-chart-config-panel         colored-pie-chart/config-panel)
 (def colored-pie-chart-component            colored-pie-chart/component)
+(def colored-pie-sample-data                colored-pie-chart/sample-data)
 
 (def funnel-chart-local-config              funnel-chart/local-config)
 (def funnel-chart-make-cells                funnel-chart/make-cells)
 (def funnel-chart-config                    funnel-chart/config)
 (def funnel-chart-config-panel              funnel-chart/config-panel)
 (def funnel-chart-component                 funnel-chart/component)
+(def funnel-chart-sample-data               funnel-chart/sample-data)
 
 (def line-chart-local-config                line-chart/local-config)
 (def line-chart-config-panel                line-chart/config-panel)
 (def line-chart-config                      line-chart/config)
 (def line-chart-component                   line-chart/component)
+(def line-chart-sample-data                 line-chart/sample-data)
 
 (def pie-chart-config                       pie-chart/config)
 (def pie-chart-local-config                 pie-chart/local-config)
 (def pie-chart-config-panel                 pie-chart/config-panel)
 (def pie-chart-component                    pie-chart/component)
+(def pie-chart-sample-data                  pie-chart/sample-data)
 
 (def radar-chart-config                     radar-chart/config)
 (def radar-chart-config-panel               radar-chart/config-panel)
 (def radar-chart-local-config               radar-chart/local-config)
 (def radar-chart-component                  radar-chart/component)
+(def radar-chart-sample-data                radar-chart/sample-data)
 
 (def radial-bar-chart-local-config          radial-bar-chart/local-config)
 (def radial-bar-chart-config                radial-bar-chart/config)
 (def radial-bar-chart-config-panel          radial-bar-chart/config-panel)
 (def radial-bar-chart-component             radial-bar-chart/component)
+(def radial-bar-chart-sample-data           radial-bar-chart/sample-data)
 
 (def sankey-chart-local-config              sankey-chart/local-config)
 (def sankey-chart-config                    sankey-chart/config)
 (def sankey-chart-config-panel              sankey-chart/config-panel)
 (def sankey-chart-component                 sankey-chart/component)
+(def sankey-chart-sample-data               sankey-chart/sample-data)
 (def sankey-chart-color-source->target      sankey-chart/color-source->target)
 (def sankey-chart-color-source->white       sankey-chart/color-source->white)
 (def sankey-chart-color-white->target       sankey-chart/color-white->target)
@@ -232,10 +246,27 @@
 (def scatter-chart-config                   scatter-chart/config)
 (def scatter-chart-config-panel             scatter-chart/config-panel)
 (def scatter-chart-component                scatter-chart/component)
+(def scatter-chart-sample-data              scatter-chart/sample-data)
 
 (def tree-map-chart-config                  tree-map-chart/config)
 (def tree-map-chart-component               tree-map-chart/component)
 (def tree-map-chart-configurable-component  tree-map-chart/configurable-component)
+(def tree-map-sample-data                   tree-map-chart/sample-data)
+
+(def chart-utils-color-config               chart-utils/color-config)
+(def chart-utils-init-config-panel          chart-utils/init-config-panel)
+(def chart-utils-dummy-data-panel           chart-utils/dummy-data-panel)
+(def chart-utils-tabular-data-panel         chart-utils/tabular-data-panel)
+(def chart-utils-meta-tabular-data-panel    chart-utils/meta-tabular-data-panel)
+(def chart-utils-dag-data-panel             chart-utils/dag-data-panel)
+(def chart-utils-hierarchy-data-panel       chart-utils/hierarchy-data-panel)
+
+(def configurable-chart-wrapper             chart-wrapper/configurable-chart)
+(def chart-wrapper                          chart-wrapper/chart)
+(def base-chart-wrapper                     chart-wrapper/base-chart)
+(def component-panel-wrapper2               chart-wrapper-2/component-panel)
+(def configurable-component-panel-wrapper2  chart-wrapper-2/configurable-component-panel)
+(def base-chart-wrapper2                    chart-wrapper-2/base-chart)
 
 ;;;;;;;;; DIAGRAM ;;;;;;;;;;;;;;
 
@@ -356,6 +387,8 @@
 (def composite-config                       composite/config)
 (def grid-container                         grid-container/component)
 (def two-d-three-d-globe                    two-three-globe/component)
+(def two-d-three-d-globe-sample-data        two-three-globe/sample-data)
+(def two-d-three-d-globe-src-code           two-three-globe/source-code)
 
 ;;;;;;;; Composite ;;;;;;;;
 
@@ -366,10 +399,15 @@
 
 (def multi-chart-ui-def                     multi-chart/ui-definition)
 (def multi-chart-src-code                   multi-chart/source-code)
+(def multi-chart-sample-data                multi-chart/sample-data)
 (def simple-multi-chart1-ui-def             simple-multi1/ui-definition)
 (def simple-multi-chart1-src-code           simple-multi1/source-code)
+(def simple-multi-chart1-sample-data        simple-multi1/sample-data)
+(def simple-multi-chart1-default-config     simple-multi1/default-config-data)
 (def simple-multi-chart2-ui-def             simple-multi2/ui-definition)
 (def simple-multi-chart2-src-code           simple-multi2/source-code)
+(def simple-multi-chart2-sample-data        simple-multi2/sample-data)
+(def simple-multi-chart2-default-config     simple-multi2/default-config-data)
 
 (def with-fn-src-code                       with-fn/source-code)
 (def with-fn-sample-data                    with-fn/sample-data)
@@ -444,6 +482,16 @@
 (def utils-build-container-subs             container/build-container-subs)
 (def utils-override-subs                    container/override-subs)
 
+;; example data
+
+(def example-tabular-data                   example-data/tabular-data)
+(def example-grouped-tabular-data           example-data/grouped-tabular-data)
+(def example-tabular-column-config          example-data/tabular-column-config-data)
+(def example-tabular-row-config             example-data/tabular-row-config-data)
+(def example-tabular-data-org               example-data/tabular-data-org)
+(def example-default-coc                    example-data/default-coc)
+(def example-meta-tabular-data              example-data/meta-tabular-data)
+
 ;; helper utils
 
 (def utils-config-tab-panel                 helpers/config-tab-panel)
@@ -459,6 +507,9 @@
 ;; locals utils
 
 (def utils-init-local-values                locals/init-local-values)
+(def utils-set-local-values                 locals/set-val)
+(def utils-conj-in                          locals/conj-in)
+(def utils-drop-last-in                     locals/drop-last-in)
 (def utils-update-local-values              locals/update-local-values)
 (def utils-update-local-path-values         locals/update-local-path-values)
 (def utils-process-branch                   locals/process-branch)

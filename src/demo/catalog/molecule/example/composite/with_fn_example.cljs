@@ -1,10 +1,5 @@
 (ns demo.catalog.molecule.example.composite.with-fn-example
-  (:require [bh-ui.atom.chart.utils :as chart-utils]
-            [bh-ui.molecule.composite.with-fn :as widget]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils.locals :as l]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -17,7 +12,7 @@
 
 
 (defn- data-tools [data]
-  (let [old-data (ui-utils/subscribe-local data [])]
+  (let [old-data (bh/utils-subscribe-local data [])]
 
     ;(log/info "data-tools" data "//" @old-data)
 
@@ -27,22 +22,22 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]]) :label "Empty"]
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) widget/sample-data]])
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/with-fn-sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data] {:name "Page Q" :uv 1100
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data] {:name "Page Q" :uv 1100
                                                                                         :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(h/handle-change-path data
+                  [rc/button :on-click #(bh/utils-handle-change-path data
                                           [[assoc-in [:metadata :fields :new-item] :number]
                                            ; TODO: can we do this better?
                                            [assoc :data (into []
@@ -69,7 +64,7 @@
 
 (defn example []
   (let [container-id "chart-with-fn"
-        component-id (h/path->keyword container-id "widget")]
+        component-id (bh/utils-path->keyword container-id "widget")]
     (fn []
       (acu/demo "A Multiple Charts in a Widget (with 'computed' data)"
         "This example provides a 'widget' (collection of UI Components) organized into a digraph (Event Model) that
@@ -89,12 +84,12 @@ Here, we show the original data in the line chart while the pie chart shows the 
          ;;
          [:div.molecule-content
           [data-config-update-example
-           :widget [grid/component
-                    :data (r/atom widget/ui-definition)
+           :widget [bh/grid-container
+                    :data (r/atom bh/with-fn-ui-def)
                     :component-id component-id
                     :resizable true
                     :tools true]
            :component-id component-id]]]
 
-        widget/source-code))))
+        bh/with-fn-src-code))))
 
