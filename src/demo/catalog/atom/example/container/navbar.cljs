@@ -3,6 +3,7 @@
             [woolybear.ad.layout :as layout]
             [woolybear.packs.tab-panel :as tab-panel]
             [re-frame.core :as re-frame]
+            [bh-ui.events :as events]
             [bh-ui.core :as bh]))
 
 

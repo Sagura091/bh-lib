@@ -42,7 +42,7 @@ into the `grid`.
 > for details on the [Grid Item Props](https://github.com/react-grid-layout/react-grid-layout#grid-item-props)
  data structure."
       [layout/frame
-       [bh/grid-container :id "layout-grid-example"
+       [bh/layout-grid :id "layout-grid-example"
         :children (doall (map make-widget widgets))
         :cols cols
         :layout layout]]
@@ -55,7 +55,7 @@ into the `grid`.
                        {:i "two" :x 1 :y 0 :w 3 :h 2}
                        {:i "three" :x 4 :y 0 :w 4 :h 2}]
               cols    12]
-          [bh/grid-container :id "layout-grid-example"
+          [bh/layout-grid :id "layout-grid-example"
            :children (doall (map make-widget widgets))
            :cols cols
            :layout layout])])))
