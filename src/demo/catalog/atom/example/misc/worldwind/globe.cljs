@@ -1,6 +1,5 @@
 (ns demo.catalog.atom.example.misc.worldwind.globe
-  (:require [bh-ui.atom.worldwind.globe :as globe]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [woolybear.ad.layout :as layout]
             [woolybear.ad.catalog.utils :as acu]))
 
@@ -10,7 +9,7 @@
     (acu/demo "Worldwind Globe"
       "A 3D globe based on [Nasa WorldWind](https://github.com/WorldWindEarth/worldwindjs)."
       [layout/centered ;{:extra-classes :width-50}
-       [globe/globe
-        :layers globe/sample-data
-        :component-id (h/path->keyword container-id "ww-globe")
+       [bh/worldwind-globe
+        :layers bh/worldwind-globe-sample-data
+        :component-id (bh/utils-path->keyword container-id "ww-globe")
         :container-id container-id]])))

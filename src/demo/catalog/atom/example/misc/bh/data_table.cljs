@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.misc.bh.data-table
-  (:require [bh-ui.atom.bhui.data-table :as table]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [reagent.core :as r]
             [taoensso.timbre :as log]
@@ -9,7 +9,7 @@
 (log/info "demo.catalog.atom.example.misc.data-table")
 
 
-(defonce data (r/atom table/sample-data))
+(defonce data (r/atom bh/bh-data-table-sample-data))
 
 
 (defn- data-tools []
@@ -18,7 +18,7 @@
    :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
               [rc/button :on-click #(reset! data []) :label "Empty"]
-              [rc/button :on-click #(reset! data table/sample-data) :label "Default"]
+              [rc/button :on-click #(reset! data bh/bh-data-table-sample-data) :label "Default"]
               [rc/button :on-click #(swap! data assoc-in [0 :uv] 10000) :label "A -> 10,000"]
               [rc/button :on-click #(swap! data conj {:name "Page Q" :uv 1100
                                                       :pv   1100 :tv 1100 :amt 1100})
@@ -40,7 +40,7 @@
    :width "100%"
    :height "100%"
    :children [[:div.chart-part {:style {:width "100%" :height "90%"}}
-               [table/table :data data :config-data config-data]]
+               [bh/bh-data-table :data data :config-data config-data]]
               [:div.data-tools-part {:style {:width "100%"}}
                [data-tools]]]])
 
@@ -57,5 +57,5 @@
         :data data
         :config-data (r/atom {:config "data"})]]
 
-      '[table/table :data table/sample-data])))
+      '[bh/bh-data-table :data bh/bh-data-table-sample-data])))
 

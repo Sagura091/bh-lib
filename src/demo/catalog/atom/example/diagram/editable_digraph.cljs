@@ -1,8 +1,6 @@
 (ns demo.catalog.atom.example.diagram.editable-digraph
-  (:require [bh-ui.atom.diagram.diagram.composite-dag-support :as support]
-            [bh-ui.atom.diagram.editable-digraph :as digraph]
-            [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
+  (:require [demo.catalog.atom.utils :as example]
+            [bh-ui.core :as bh]
             [reagent.core :as r]))
 
 
@@ -13,22 +11,22 @@
      [example/component-example
       :title "Editable Digraph"
       :description "An Editable Digraph, built using [react-flow](https://reactflow.dev)"
-      :data (r/atom digraph/sample-data)
-      :node-types support/default-node-types
-      :tool-types support/default-tool-types
-      :component digraph/component
-      :component-id (utils/path->keyword container-id "editable-digraph")
-      :source-code digraph/source-code]]))
+      :data (r/atom bh/editable-digraph-sample-data)
+      :node-types bh/dag-default-node-types
+      :tool-types bh/dag-default-tool-types
+      :component bh/editable-digraph
+      :component-id (bh/utils-path->keyword container-id "editable-digraph")
+      :source-code bh/editable-digraph-source-code]]))
 
      ;[example/component-example
      ; :title "Editable Digraph"
      ; :description "An Editable Digraph, built using custom node"
-     ; :data (r/atom digraph/sample-data)
+     ; :data (r/atom bh/editable-digraph-sample-data)
      ; :node-types support/custom-node-types
      ; :tool-types support/custom-tool-types
-     ; :component digraph/component
-     ; :component-id (utils/path->keyword container-id "editable-digraph")
-     ; :source-code digraph/source-code]
+     ; :component bh/editable-digraph-component
+     ; :component-id (bh/utils-path->keyword container-id "editable-digraph")
+     ; :source-code bh/editable-digraph-source-code]
      ;
      ;
      ;[example/component-example
@@ -38,18 +36,18 @@
      ; :node-types support/default-node-types
      ; :tool-types support/default-tool-types
      ; :minimap-styles support/default-minimap-styles
-     ; :component digraph/component
-     ; :component-id (utils/path->keyword container-id "editable-digraph-2")
-     ; :source-code digraph/source-code]
+     ; :component bh/editable-digraph-component
+     ; :component-id (bh/utils-path->keyword container-id "editable-digraph-2")
+     ; :source-code bh/editable-digraph-source-code]
      ;
      ;[example/component-example
      ; :title "Editable Digraph (example data with initial auto-layout)"
      ; :description "An Editable Digraph, built using [react-flow](https://reactflow.dev)"
-     ; :data (r/atom digraph/sample-data-3)
+     ; :data (r/atom bh/editable-digraph-sample-data-3)
      ; :node-types support/default-node-types
      ; :tool-types support/default-tool-types
      ; :force-layout? true
-     ; :component digraph/component
-     ; :component-id (utils/path->keyword container-id "editable-digraph-3")
-     ; :source-code digraph/source-code]]))
+     ; :component bh/editable-digraph-component
+     ; :component-id (bh/utils-path->keyword container-id "editable-digraph-3")
+     ; :source-code bh/editable-digraph-source-code]]))
 

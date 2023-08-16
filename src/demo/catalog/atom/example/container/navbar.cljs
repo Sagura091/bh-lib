@@ -3,9 +3,7 @@
             [woolybear.ad.layout :as layout]
             [woolybear.packs.tab-panel :as tab-panel]
             [re-frame.core :as re-frame]
-
-            [bh-ui.events :as events]
-            [bh-ui.atom.bhui.navbar :as navbar]))
+            [bh-ui.core :as bh]))
 
 
 (def data-path [:navbar-example :tab-panel])
@@ -48,7 +46,7 @@
 > [Woolybear/tab-panel](https://github.com/cawasser/woolybear/blob/a7f820dfb2f51636122d56d1500baefe5733eb25/src/cljs/woolybear/packs/tab_panel.cljs#L133)
     "
     [layout/centered {:extra-classes :width-50}
-     [navbar/navbar [[:demo-navbar/one "One"]
+     [bh/bh-navbar [[:demo-navbar/one "One"]
                      [:demo-navbar/two "Two"]
                      [:demo-navbar/three "Three"]
                      [:demo-navbar/four "Four"]]
@@ -67,7 +65,7 @@
        [:div "Panel Four"]]]]
 
     '[layout/centered {:extra-classes :width-50}
-      [navbar/navbar [[:demo-navbar/one "One"]
+      [bh/bh-navbar [[:demo-navbar/one "One"]
                       [:demo-navbar/two "Two"]
                       [:demo-navbar/three "Three"]
                       [:demo-navbar/four "Four"]]

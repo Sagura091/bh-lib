@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.re-com.alert-box
-  (:require [bh-ui.atom.bhui.markdown :as markdown]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [reagent.core :as r]
             [woolybear.ad.catalog.utils :as acu]
@@ -15,7 +15,7 @@
         [layout/centered {:extra-classes :width-50}
          [rc/alert-box :alert-type :warning
           :heading "Warning!"
-          :body [markdown/markdown
+          :body [bh/bh-markdown
                  "We can embed anything in an Alert Box. See [here](https://re-com.day8.com.au/#/alert-box)"]]
 
          (if @info-alert?
@@ -35,7 +35,7 @@
            [layout/centered {:extra-classes :width-50}
             [rc/alert-box :alert-type :warning
              :heading "Warning!"
-             :body [markdown/markdown
+             :body [bh/bh-markdown
                     "We can embed anything in an Alert Box. See [here](https://re-com.day8.com.au/#/alert-box)"]]
 
             (if @info-alert?

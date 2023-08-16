@@ -1,7 +1,5 @@
 (ns demo.catalog.atom.example.chart.colored-pie-chart
-  (:require [bh-ui.atom.chart.colored-pie-chart :as chart]
-            [bh-ui.atom.chart.utils :as chart-utils]
-            [bh-ui.core :as bh]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.config-ratom-example :as config-ratom-example]
             [demo.catalog.atom.example.chart.alt.config-structure-example :as config-structure-example]
             [demo.catalog.atom.example.chart.alt.config-sub-example :as config-sub-example]

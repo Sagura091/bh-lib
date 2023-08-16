@@ -1,7 +1,7 @@
 (ns demo.catalog.atom.example.re-com.slider
   (:require [re-com.core :as rc]
             [reagent.core :as r]
-            [bh-ui.atom.re-com.slider :as slider]
+            [bh-ui.core :as bh]
             [woolybear.ad.catalog.utils :as acu]))
 
 
@@ -15,7 +15,7 @@
         [rc/v-box
          :src (rc/at)
          :justify :between
-         :children [[slider/slider :value slider-val :range (r/atom [@slider-min @slider-max])]
+         :children [[bh/recom-slider :value slider-val :range (r/atom [@slider-min @slider-max])]
                     [rc/gap :src (rc/at) :size "0px"]
                     [rc/v-box
                      :src (rc/at)

@@ -69,6 +69,7 @@
             [bh-ui.atom.re-com.configure-toggle :as configure-toggle]
             [bh-ui.atom.re-com.editable-table :as editable-table]
             [bh-ui.atom.re-com.header-bar :as header-bar]
+            [bh-ui.atom.re-com.input-field :as input-field]
             [bh-ui.atom.re-com.label :as label]
             [bh-ui.atom.re-com.labeled-field :as labeled-field]
             [bh-ui.atom.re-com.login :as login]
@@ -170,10 +171,16 @@
 (def bh-rgba-color-picker                   bcolor-picker/rgba-color-picker)
 (def bh-hex-color-picker                    bcolor-picker/hex-color-picker)
 (def bh-data-table                          bdata-table/table)
+(def bh-data-table-sample-data              bdata-table/sample-data)
 (def bh-markdown                            bmarkdown/markdown)
 (def bh-navbar                              bnavbar/navbar)
 (def bh-tabbed-panel                        btabbed-panel/tabbed-panel)
 (def bh-table                               btable/table)
+(def bh-table-random-data                   btable/random-data)
+(def bh-table-random-data-meta              btable/random-data-meta)
+(def bh-table-sample-data                   btable/sample-data)
+(def bh-table-sample-meta-data              btable/sample-meta-data)
+(def bh-table-sample-meta-coc-data          btable/sample-meta-coc-data)
 
 ;;;;;;;;;; CARD ;;;;;;;;;;;;;;;;;
 
@@ -306,9 +313,13 @@
 
 (def dag-custom-minimap-node-color          composite-dag-support/custom-minimap-node-color)
 (def dag-default-custom-node                composite-dag-support/default-custom-node)
+(def dag-default-node-types                 composite-dag-support/default-node-types)
+(def dag-default-tool-types                 composite-dag-support/default-tool-types)
 (def dagre-graph                            dagre-support/dagre-graph)
 (def dagre-build-layout                     dagre-support/build-layout)
 (def editable-digraph                       editable-digraph/component)
+(def editable-digraph-source-code           editable-digraph/source-code)
+(def editable-digraph-sample-data           editable-digraph/sample-data)
 (def flow-diagram                           flow-diagram/component)
 
 ;;;;;;;;;;; EXPERIMENTAL ;;;;;;;;;;;
@@ -336,12 +347,17 @@
 ;;;;;;;;; LEAFLET ;;;;;;;;;;;;;;
 
 (def leaflet-globe                          leaf-globe/globe)
+(def leaflet-sample-data                    leaf-globe/sample-data)
 (def leaflet-shape                          leaf-shape/make-shape)
 
 ;;;;;;;;; OZ CHARTS ;;;;;;;;;;;;
 
 (def oz-bar-chart                           oz-bar-chart/component)
+(def oz-bar-chart-sample-data               oz-bar-chart/sample-data)
+(def oz-bar-chart-source-code               oz-bar-chart/source-code)
 (def oz-line-chart                          oz-line-chart/component)
+(def oz-line-chart-sample-data              oz-line-chart/sample-data)
+(def oz-line-chart-source-code              oz-line-chart/source-code)
 
 ;;;;;;;;; RE-COM ;;;;;;;;;;;;;;;;
 
@@ -349,7 +365,11 @@
 (def recom-button                           button/button)
 (def recom-configure-toggle                 configure-toggle/configure-toggle)
 (def recom-edit-table                       editable-table/table)
+(def recom-edit-table-sample-data           editable-table/sample-data)
+(def recom-edit-table-meta-sample-data      editable-table/meta-sample-data)
+(def recom-edit-table-meta-coc-sample-data  editable-table/meta-coc-sample-data)
 (def recom-header-bar                       header-bar/header-bar)
+(def recom-input-field                      input-field/input-field)
 (def recom-label                            label/label)
 (def recom-label-sm                         label/label-sm)
 (def recom-label-md                         label/label-md)
@@ -362,6 +382,9 @@
 (def recom-table-column-headers             table/table-column-headers)
 (def recom-meta-table                       table/meta-table)
 (def recom-table                            table/table)
+(def recom-tabs-sample-config               tabs/sample-config)
+(def recom-tabs-sample-children             tabs/sample-children)
+(def recom-h-tabs                           tabs/h-tabs)
 (def recom-h-bar-tabs                       tabs/h-bar-tabs)
 (def recom-h-pill-tabs                      tabs/h-pill-tabs)
 (def recom-v-bar-tabs                       tabs/v-bar-tabs)
@@ -371,11 +394,13 @@
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 
 (def resium-globe                           res-globe/globe)
+(def resium-sample-data                     res-globe/sample-data)
 (def resium-shape                           res-shape/make-shape)
 
 ;;;;;;;;;;;;; WORLDWIND ;;;;;;;;
 
 (def worldwind-globe                        ww-globe/globe)
+(def worldwind-globe-sample-data            ww-globe/sample-data)
 (def ww-boundary-locations                  cell/boundary-locations)
 
 (def ww-yellow                              globe-color/yellow)

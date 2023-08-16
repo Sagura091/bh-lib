@@ -1,7 +1,6 @@
 (ns bh-ui.atom.re-com.input-field
-  (:require [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
-            [bh-ui.utils.locals :as l]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -9,7 +8,7 @@
 
 
 (defn input-field [& {:keys [data component-id container-id] :as params}]
-  (let [d (h/resolve-value data)]
+  (let [d (bh/utils-resolve-value data)]
     (fn []
       [rc/h-box :src (rc/at)
        :align :center
@@ -17,12 +16,12 @@
                    :model d
                    :placeholder "enter text"
                    :change-on-blur? false
-                   :on-change #(h/handle-change-path data [[l/set-val [] %]])]
+                   :on-change #(bh/utils-handle-change-path data [[bh/utils-set-local-values [] %]])]
                   [rc/md-circle-icon-button :src (rc/at)
                    :md-icon-name "zmdi-close-circle-o"
                    :tooltip "Click to clear"
                    :size :smaller
-                   :on-click #(h/handle-change-path data [[l/set-val [] ""]])]]])))
+                   :on-click #(bh/utils-handle-change-path data [[bh/utils-set-local-values [] ""]])]]])))
 
 
 (defn make-handler [data sub-name]

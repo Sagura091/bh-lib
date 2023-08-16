@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.chart.treemap-chart
   (:require [bh-ui.core :as bh]
             [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
             [taoensso.timbre :as log]))
 
 

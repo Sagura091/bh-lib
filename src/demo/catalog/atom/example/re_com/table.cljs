@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.re-com.table
-  (:require [bh-ui.atom.re-com.table :as table]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
@@ -46,7 +46,7 @@
 > This example does NOT include meta-data on the input."
 
     [layout/centered {:extra-classes :width-50}
-     [table/table
+     [bh/recom-table
       :data data
       :max-rows 5
       :width 600
@@ -54,7 +54,7 @@
       :cell-style-fn cell-styling-fn]]
 
     '[layout/centered {:extra-classes :width-50}
-      [table/table
+      [bh/recom-table
        :data data
        :max-rows 5
        :width 600

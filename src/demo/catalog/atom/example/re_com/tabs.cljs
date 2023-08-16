@@ -1,10 +1,5 @@
 (ns demo.catalog.atom.example.re-com.tabs
-  (:require [bh-ui.atom.re-com.tabs :as tabs]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.atom.chart.area-chart :as area]
-            [bh-ui.atom.chart.bar-chart :as bar]
-            [bh-ui.atom.chart.line-chart :as line]
-            [bh-ui.utils :as ui-utils]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]
@@ -23,13 +18,13 @@
   (log/info "text-block (a)" params)
 
   (let [id (r/atom nil)
-        d  (h/resolve-value data)]
+        d  (bh/utils-resolve-value data)]
     (fn []
       (when (nil? @id)
         (log/info "text-block (b)" component-id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id {:container container-id})
-        (ui-utils/dispatch-local @id [:container] container-id))
+        (bh/utils-init-container-locals @id {:container container-id})
+        (bh/utils-dispatch-local @id [:container] container-id))
 
       (log/info "text-block (c)" component-id "//" @d)
 
@@ -92,14 +87,14 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children tabs/sample-children])
-                             (labeled-example "Horizontal Bar Tabs" [tabs/h-bar-tabs :config tabs/sample-config :children tabs/sample-children])
-                             (labeled-example "Horizontal Pill Tabs" [tabs/h-pill-tabs :config tabs/sample-config :children tabs/sample-children])]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
+                             (labeled-example "Horizontal Bar Tabs" [bh/recom-h-bar-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
+                             (labeled-example "Horizontal Pill Tabs" [bh/recom-h-pill-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])]]
                  [rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Vertical Bar Tabs" [tabs/v-bar-tabs :config tabs/sample-config :children tabs/sample-children])
-                             (labeled-example "Vertical Pill Tabs" [tabs/v-pill-tabs :config tabs/sample-config :children tabs/sample-children])]]]]]
+                  :children [(labeled-example "Vertical Bar Tabs" [bh/recom-v-bar-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
+                             (labeled-example "Vertical Pill Tabs" [bh/recom-v-pill-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
@@ -124,7 +119,7 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-children])]]]]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children hiccup-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
@@ -149,7 +144,7 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-children])]]]]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children hiccup-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
@@ -174,19 +169,19 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-4-children])]]]]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children hiccup-4-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
 
 (def hiccup-5-children [[rc/box :width "250px" :height "300px"
-                         :child [area/component :data area/sample-data :config area/sample-config-data
+                         :child [bh/area-chart-component :data bh/area-chart-sample-data :config bh/area-chart-sample-config-data
                                  :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
                         [rc/box :width "250px" :height "300px"
-                         :child [bar/component :data area/sample-data :config area/sample-config-data
+                         :child [bh/bar-chart-component :data bh/area-chart-sample-data :config bh/area-chart-sample-config-data
                                  :component-id :tabbed-example.ui.area :container-id :tabbed-example]]
                         [rc/box :width "250px" :height "300px"
-                         :child [line/component :data area/sample-data :config area/sample-config-data
+                         :child [bh/line-chart-component :data bh/area-chart-sample-data :config bh/area-chart-sample-config-data
                                  :component-id :tabbed-example.ui.area :container-id :tabbed-example]]])
 
 
@@ -209,7 +204,7 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-5-children])]]]]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children hiccup-5-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
@@ -298,7 +293,7 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [(labeled-example "Horizontal Tabs" [tabs/h-tabs :config tabs/sample-config :children hiccup-6-children])]]]]]
+                  :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children hiccup-6-children])]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))

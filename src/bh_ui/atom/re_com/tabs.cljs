@@ -134,6 +134,8 @@
                   [rc/box :src (rc/at)
                    :child (:child (item-for-id @selected-tab contents))]]])))
 
+(defn h-tabs [& {:keys [children style config]}]
+  (h-tab* rc/horizontal-tabs children style config))
 
 (defn h-bar-tabs [& {:keys [children style config]}]
   (h-tab* rc/horizontal-bar-tabs children style config))

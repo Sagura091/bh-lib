@@ -1,6 +1,6 @@
 (ns demo.catalog.atom.example.experimental.ui-element
   (:require [bh-ui.atom.experimental.ui-element :as elements]
-            [bh-ui.utils :as utils]
+            [bh-ui.core :as bh]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]))
@@ -16,11 +16,11 @@
       "Demonstration of how we could build UI components that can be composed at run=time using
       a DSL"
       [layout/centered {:extra-classes :width-50}
-       [elements/selectable-table
+       [bh/selectable-table
         :data [:topic/target-data]
-        :selection [(utils/path->keyword container-id :blackboard :topic/selection)]
+        :selection [(bh/utils-path->keyword container-id :blackboard :topic/selection)]
         :container-id container-id
-        :component-id (utils/path->keyword container-id "selectable-table")]])))
+        :component-id (bh/utils-path->keyword container-id "selectable-table")]])))
 
 
 (defn three-d-globe []
@@ -30,11 +30,11 @@
       "Demonstration of how we could build UI components that can be composed at run=time using
       a DSL"
       [layout/centered {:extra-classes :width-50}
-       [elements/three-d-globe
-        :layers [(utils/path->keyword container-id :blackboard :topic/layers)]
-        :current-time [(utils/path->keyword container-id :blackboard :topic/current-time)]
+       [bh/three-d-globe
+        :layers [(bh/utils-path->keyword container-id :blackboard :topic/layers)]
+        :current-time [(bh/utils-path->keyword container-id :blackboard :topic/current-time)]
         :container-id container-id
-        :component-id (utils/path->keyword container-id "three-d-globe")]])))
+        :component-id (bh/utils-path->keyword container-id "three-d-globe")]])))
 
 
 (defn slider []
@@ -44,11 +44,11 @@
       "Demonstration of how we could build UI components that can be composed at run=time using
       a DSL"
       [layout/centered {:extra-classes :width-50}
-       [elements/slider
+       [bh/slider
         :value [:topic/coverage-data]
-        :range [(utils/path->keyword container-id :blackboard :topic/range)]
+        :range [(bh/utils-path->keyword container-id :blackboard :topic/range)]
         :container-id container-id
-        :component-id (utils/path->keyword container-id "slider")]])))
+        :component-id (bh/utils-path->keyword container-id "slider")]])))
 
 
 (defn label []
@@ -58,8 +58,8 @@
       "Demonstration of how we could build UI components that can be composed at run=time using
       a DSL"
       [layout/centered {:extra-classes :width-50}
-       [elements/slider
-        :value [(utils/path->keyword container-id :blackboard :topic/current-time)]
+       [bh/slider
+        :value [(bh/utils-path->keyword container-id :blackboard :topic/current-time)]
         :container-id container-id
-        :component-id (utils/path->keyword container-id "label")]])))
+        :component-id (bh/utils-path->keyword container-id "label")]])))
 

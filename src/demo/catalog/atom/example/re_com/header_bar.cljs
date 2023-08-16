@@ -1,6 +1,5 @@
 (ns demo.catalog.atom.example.re-com.header-bar
-  (:require [bh-ui.atom.re-com.button :as button]
-            [bh-ui.atom.re-com.header-bar :as header-bar]
+  (:require [bh-ui.core :as bh]
             [demo.events :as events]
             [demo.subs :as subs]
             [re-com.core :as rc]
@@ -18,13 +17,13 @@
       "A stylized header for an applications. Includes the version number provided by the server."
       [layout/centered
 
-       [header-bar/header-bar
+       [bh/recom-header-bar
         :children [[:h1 "Black Hammer UI Catalog"]
                    [rc/h-box :src (rc/at)
                     :gap "10px"
                     :align :center
                     :children [[:h5.is-small "version: " (or @version "unknown")]
-                               [button/button
+                               [bh/recom-button
                                 "Log Off"
                                 #() "Log Off"]]]]]]
       '[])))
