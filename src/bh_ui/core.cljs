@@ -89,6 +89,7 @@
             [bh-ui.atom.worldwind.globe.location :as location]
             [bh-ui.atom.worldwind.globe.projection :as projection]
             [bh-ui.atom.worldwind.globe.react-support :as react-support]
+            [bh-ui.atom.worldwind.globe.sector :as ww-globe-sector]
             [bh-ui.atom.worldwind.globe.shape :as shape]
 
             [bh-ui.molecule.composite :as composite]
@@ -102,6 +103,8 @@
             [bh-ui.molecule.composite.simple-multi-chart-2 :as simple-multi2]
             [bh-ui.molecule.composite.with-fn :as with-fn]
 
+            [bh-ui.molecule.composite.coverage-plan.support :as coverage-support]
+
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl-nodes]
 
             [bh-ui.molecule.composite.util.digraph :as digraph]
@@ -112,6 +115,7 @@
             [bh-ui.organism.ui-grid :as ui-grid]
             [bh-ui.tabbed-pane.utils :as tabbed-panel-utils]
 
+            [bh-ui.utils.bounding-box :as bounding-box]
             [bh-ui.utils.color :as color]
             [bh-ui.utils.container :as container]
             [bh-ui.utils.example-data :as example-data]
@@ -473,8 +477,12 @@
 (def with-fn-compute-new-data               with-fn/compute-new-data)
 (def with-fn-ui-def                         with-fn/ui-definition)
 
-;; composite/coverage_plan/suport.cljs is only used by coverage_plan
-;; skipping it since it doesnt seem to need public exposure
+(def cook-coverages                         coverage-support/cook-coverages)
+(def cook-targets                           coverage-support/cook-targets)
+(def cook-imagery                           coverage-support/cook-imagery)
+(def make-coverage-shape                    coverage-support/make-coverage-shape)
+(def make-target-shape                      coverage-support/make-target-shape)
+(def make-imagery-shape                     coverage-support/make-imagery-shape)
 
 ;;;;;;;;; DSL-NODES ;;;;;;;;;;
 (def dsl-nodes-custom-node                  dsl-nodes/custom-node)
@@ -520,6 +528,9 @@
 ;;;;;;;;;;;;;;;;;;;
 ;;region
 
+;; bounding box utils
+(def utils-make-bounding-box                bounding-box/make-bounding-box)
+
 ;; color utils
 (def utils-get-color                        color/get-color)
 (def utils-hex->rgba                        color/hex->rgba)
@@ -529,6 +540,8 @@
 (def utils-rgba-map->js-function            color/rgba-map->js-function)
 (def utils-rgba->hex                        color/rgba->hex)
 (def utils-hash->rgba                       color/hash->rgba)
+(def utils-match-colors-hex                 color/match-colors-hex)
+(def utils-match-colors-rgba                color/match-colors-rgba)
 (def utils-relative-luminance               color/relative-luminance)
 (def utils-best-text-color                  color/best-text-color)
 (def utils-best-text-color-alpha            color/best-text-color-alpha)
@@ -590,3 +603,5 @@
 (def utils-apply-local                      locals/apply-local)
 (def utils-build-subs                       locals/build-subs)
 (def utils-resolve-sub                      locals/resolve-sub)
+
+;; endregion
