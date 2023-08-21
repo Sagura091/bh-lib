@@ -1,7 +1,6 @@
 (ns demo.catalog.molecule.example.two-d-three-d-globe
   (:require [demo.catalog.atom.utils :as example]
-            [bh-ui.molecule.two-d-three-d-globe :as globe]
-            [bh-ui.utils :as utils]))
+            [bh-ui.core :as bh]))
 
 
 (defn example []
@@ -10,7 +9,7 @@
      :title "2D/3D Globe"
      :container-id container-id
      :description "A combination of the 2d and 3d globe components. Both show the same data."
-     :data globe/sample-data
-     :component globe/component
-     :component-id (utils/path->keyword container-id "globe")
-     :source-code globe/source-code]))
+     :data bh/two-d-three-d-globe-sample-data
+     :component bh/two-d-three-d-globe
+     :component-id (bh/utils-path->keyword container-id "globe")
+     :source-code bh/two-d-three-d-globe-src-code]))

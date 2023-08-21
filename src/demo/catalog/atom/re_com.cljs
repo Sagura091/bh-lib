@@ -56,7 +56,6 @@
    [popover/link-anchor-example]
    [popover/chart-example]
    [splitter/horizontal-example]
-   [splitter/example]
    [splitter/vertical-example]
    [header-bar/example]
    [login/example]

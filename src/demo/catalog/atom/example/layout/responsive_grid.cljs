@@ -1,10 +1,5 @@
 (ns demo.catalog.atom.example.layout.responsive-grid
-  (:require [bh-ui.atom.layout.responsive-grid :as r-grid]
-            [bh-ui.atom.layout.grid :as grid]
-            [bh-ui.atom.re-com.box :as box]
-            [bh-ui.atom.re-com.v-scroller :as v-scroll]
-            [bh-ui.atom.chart.bar-chart :as bar-chart]
-            [bh-ui.atom.chart.line-chart :as line-chart]
+  (:require [bh-ui.core :as bh]
             [re-frame.core :as re-frame]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -22,18 +17,18 @@
 (re-frame/reg-sub
   :v-scroll-with-children.molecule.blackboard.topic.data
   (fn [_ _]
-    bar-chart/sample-data))
+    bh/bar-chart-sample-data))
 
 
 (def boxed-bar-chart
   [rc/box :style {:border "1px solid", :width "275px", :height "250px"}
-   :child [bar-chart/component
+   :child [bh/bar-chart-component
            :component-id :v-scroll-with-children.molecule.bar-chart
            :container-id :v-scroll-with-children.molecule
            :data [:v-scroll-with-children.molecule.blackboard.topic.data]]])
 (def boxed-line-chart
   [rc/box :style {:border "1px solid", :width "275px", :height "250px"}
-   :child [line-chart/component
+   :child [bh/line-chart-component
            :component-id :v-scroll-with-children.molecule.line-chart
            :container-id :v-scroll-with-children.molecule
            :data [:v-scroll-with-children.molecule.blackboard.topic.data]]])
@@ -74,7 +69,7 @@
                          "three"]
                         [:div.widget.widget-content {:on-mouse-down #(.stopPropagation %)
                                                      :style         {:height "100%"}}
-                         [v-scroll/v-scroller
+                         [bh/recom-v-scroll
                           :style {:width "100%" :height "225px"}
                           :children [boxed-bar-chart
                                      boxed-line-chart]]]]])
@@ -85,7 +80,7 @@
                [:div.grid-toolbar.title-wrapper.move-cursor {:style {:height "1.5em"}} "v-scroll"]
                [:div.widget.widget-content {:on-mouse-down #(.stopPropagation %)
                                             :style         {:height "100%"}}
-                [v-scroll/v-scroller
+                [bh/recom-v-scroll
                  :style {:width "100%" :height "225px"}
                  :children [boxed-bar-chart
                             boxed-line-chart]]]]])
@@ -102,7 +97,7 @@
       visually via a [Directed Graph](https://en.wikipedia.org/wiki/Directed_graph)"
 
       [layout/frame
-       [r-grid/grid
+       [bh/responsive-grid
         :id "mol-dsl-example"
         :class "layout"
         :children widgets

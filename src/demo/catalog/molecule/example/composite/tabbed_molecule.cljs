@@ -1,8 +1,5 @@
 (ns demo.catalog.molecule.example.composite.tabbed-molecule
-  (:require [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.atom.chart.bar-chart :as bar]
+  (:require [bh-ui.core :as bh]
             [woolybear.ad.icons :as icons]
             [reagent.core :as r]
             [re-com.core :as rc]
@@ -21,16 +18,16 @@
               :y (rand-int (inc max-value))})))))
 
 
-(def chart-data-one (assoc-in bar/sample-data [:metadata :title] "ONE"))
-(def chart-data-two (-> bar/sample-data
+(def chart-data-one (assoc-in bh/bar-chart-sample-data [:metadata :title] "ONE"))
+(def chart-data-two (-> bh/bar-chart-sample-data
                       (assoc-in [:metadata :title] "TWO TWO TWO")
                       (assoc :data
                              (for [[i k] (map-indexed vector
                                            (map #(dissoc % :uv :tv :pv :amt)
-                                             (:data bar/sample-data)))
+                                             (:data bh/bar-chart-sample-data)))
                                    [j v] (map-indexed vector
                                            (shuffle (map #(dissoc % :name)
-                                                      (:data bar/sample-data))))
+                                                      (:data bh/bar-chart-sample-data))))
                                    :when (= i j)]
                                (merge k v)))))
 (def chart-data-three [(sort-by :x (generate-chart-data 100 100))])
@@ -55,7 +52,7 @@
                                                    :atm/children       ["bar" "line" "area" "f-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}
+                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bh/bar-chart-sample-data}
                                      "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
                                      "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
@@ -79,7 +76,7 @@
                                                    :atm/children       ["bar" "line" "area" "fast-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bar/sample-data}
+                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bh/bar-chart-sample-data}
                                      "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
                                      "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
@@ -91,14 +88,14 @@
 
 (defn example []
   (let [container-id "tabbed-molecule"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Tabbed Molecule"
         "This example provides a 'widget' (collection of UI Components) with multiple 'pages,'
     one in each 'tab'"
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom molecule-def)
            :component-id component-id
            :resizable true
@@ -132,14 +129,14 @@
 
 (defn example-2 []
   (let [container-id "tabbed-molecule-2"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Tabbed Molecule"
         "This example provides a 'widget' (collection of UI Components) with multiple 'pages,'
     one in each 'tab'"
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom molecule2)
            :component-id component-id
            :resizable true

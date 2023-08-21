@@ -1,10 +1,5 @@
 (ns demo.catalog.molecule.example.composite.simple-multi-chart-2
-  (:require [bh-ui.atom.chart.utils :as chart-utils]
-            [bh-ui.molecule.composite.simple-multi-chart-2 :as widget]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils.locals :as l]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -17,7 +12,7 @@
 
 
 (defn- data-tools [data]
-  (let [old-data (ui-utils/subscribe-local data [])]
+  (let [old-data (bh/subscribe-local data [])]
 
     ;(log/info "data-tools" data "//" @old-data)
 
@@ -27,23 +22,23 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]]) :label "Empty"]
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) widget/sample-data]])
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/simple-multi-chart2-sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
                                                                      {:name "Page Q" :uv 1100
                                                                       :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
                                                                     [assoc :data (into []
                                                                                    (map (fn [x]
                                                                                           (assoc x :new-item (rand-int 7000)))
@@ -56,7 +51,7 @@
 
   (reset! last-thing config-data)
 
-  (let [cfg (ui-utils/subscribe-local config-data [])]
+  (let [cfg (bh/subscribe-local config-data [])]
     (fn []
       (let [brush? (get-in @cfg [:brush])
             uv?    (get-in @cfg [:uv :include])
@@ -68,33 +63,33 @@
          :gap "10px"
          :class "tools-panel"
          :children [[:label.h5 "Config:"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[l/set-val [] widget/default-config-data]]) :label "Default"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:brush] not]])
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[bh/utils-set-local-values [] bh/simple-multi-chart2-default-config]]) :label "Default"]
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:brush] not]])
                      :label "!Brush"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:uv :include] not]])
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:uv :include] not]])
                      :label "! uv data"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[update-in [:tv :include] not]])
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:tv :include] not]])
                      :label "! tv data"]
 
-                    [chart-utils/color-config config-data ":amt :fill" [:amt :fill] :above-center]
+                    [bh/chart-utils-color-config config-data ":amt :fill" [:amt :fill] :above-center]
 
-                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:uv :stackId] "b"]
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] "b"]
                                                                              [assoc-in [:pv :stackId] "b"]])
                      :label "stack uv/pv"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:uv :stackId] ""]
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] ""]
                                                                              [assoc-in [:pv :stackId] ""]])
                      :label "!stack uv/pv"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:tv :stackId] "a"]
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] "a"]
                                                                              [assoc-in [:amt :stackId] "a"]])
                      :label "stack tv/amt"]
-                    [rc/button :on-click #(h/handle-change-path config-data [[assoc-in [:tv :stackId] ""]
+                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] ""]
                                                                              [assoc-in [:amt :stackId] ""]])
                      :label "!stack tv/amt"]]]))))
 
 
 (comment
   (def config-data @last-thing)
-  (def cfg (ui-utils/subscribe-local config-data []))
+  (def cfg (bh/subscribe-local config-data []))
 
   ())
 
@@ -117,7 +112,7 @@
 
 (defn example []
   (let [container-id "simple-multi-chart-2"
-        component-id (h/path->keyword container-id "widget")]
+        component-id (bh/utils-path->keyword container-id "widget")]
     (fn []
       (acu/demo "(A simple) Multiple Charts in a Widget (adding configuration)"
         "This example provides a 'widget' (collection of UI Components) organized into a digraph (Event Model) that
@@ -136,40 +131,40 @@
          ;;
          [:div.molecule-content
           [data-config-update-example
-           :widget [grid/component
-                    :data (r/atom widget/ui-definition)
+           :widget [bh/grid-container
+                    :data (r/atom bh/simple-multi-chart2-ui-def)
                     :component-id component-id
                     :resizable true
                     :tools true]
            :component-id component-id]]]
 
-        widget/source-code))))
+        bh/simple-multi-chart2-src-code))))
 
 
 (comment
   (do
     (def container-id "simple-multi-chart-2")
-    (def component-id (h/path->keyword container-id "widget"))
+    (def component-id (bh/utils-path->keyword container-id "widget"))
     (def data [component-id :blackboard :topic.data])
     (def path [:data])
-    (def old-data (ui-utils/resolve-subscribe-local data [:data]))
+    (def old-data (bh/resolve-subscribe-local data [:data]))
 
     (def value data)
     (def new-value (assoc-in @old-data [0 :uv] 10000)))
 
-  (re-frame/subscribe [(h/path->keyword data)])
+  (re-frame/subscribe [(bh/utils-path->keyword data)])
 
 
-  (ui-utils/subscribe-local data [])
-  (ui-utils/subscribe-local data [:data])
-  (ui-utils/subscribe-local data [:data 0])
-  (ui-utils/subscribe-local data [:data 0 :uv])
+  (bh/subscribe-local data [])
+  (bh/subscribe-local data [:data])
+  (bh/subscribe-local data [:data 0])
+  (bh/subscribe-local data [:data 0 :uv])
 
 
   (cond
     (or (coll? value)
       (keyword? value)
-      (string? value)) (let [update-event (conj [(h/path->keyword value path)] new-value)]
+      (string? value)) (let [update-event (conj [(bh/utils-path->keyword value path)] new-value)]
                          ;(log/info "handle-change-path (update event)" update-event)
                          (re-frame/dispatch update-event))
     (instance? reagent.ratom.RAtom value) (swap! value assoc-in path new-value)
@@ -177,7 +172,7 @@
     :else ())
 
 
-  (h/handle-change-path data [:data]
+  (bh/utils-handle-change-path data [:data]
     (assoc-in @old-data [0 :uv] 10000))
 
 

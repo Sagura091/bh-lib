@@ -1,9 +1,7 @@
 (ns demo.catalog.atom.example.fast-chart.fast-line-chart
   (:require [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]
-            [bh-ui.atom.fast-chart.canvas-js-chart :as fast-chart]
-            [bh-ui.atom.data-transformation :as xform]
-            [bh-ui.utils.example-data :as example-data]))
+            [bh-ui.core :as bh]))
 
 
 (def default-background "#9CA8B3")
@@ -43,11 +41,11 @@
     "A simple fast line chart, based on potential satellite data, this chart is designed to handle large data sets
     with fast re-rendering"
 
-    [fast-chart/line-chart
-     :data example-data/meta-tabular-data
+    [bh/fast-line-chart
+     :data bh/example-meta-tabular-data
      :config {:theme        "light1"
-              :title        (get-in example-data/meta-tabular-data [:metadata :title])
-              :x-axis-title (str (get-in example-data/meta-tabular-data [:metadata :id]))
+              :title        (get-in bh/example-meta-tabular-data [:metadata :title])
+              :x-axis-title (str (get-in bh/example-meta-tabular-data [:metadata :id]))
               :line-size    1}]
 
     source-code))

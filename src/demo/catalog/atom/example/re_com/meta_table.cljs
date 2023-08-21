@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.re-com.meta-table
-  (:require [bh-ui.atom.re-com.table :as table]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -53,7 +53,7 @@
      [rc/v-box :src (rc/at)
       :gap "5px"
       :children [[:h3 (:title @data)]
-                 [table/meta-table
+                 [bh/recom-meta-table
                   :data data
                   :max-rows 5
                   :width 600
@@ -61,7 +61,7 @@
                   :cell-style-fn cell-styling-fn]]]]
 
     '[layout/centered {:extra-classes :width-50}
-      [table/meta-table
+      [bh/recom-meta-table
        :data data
        :max-rows 5
        :width 600

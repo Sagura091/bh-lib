@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.astrouxds.progress-bar
-  (:require [bh-ui.atom.astrouxds.progress-bar :as pb]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]))
 
@@ -9,4 +9,4 @@
     "Progress Bar"
     [rc/h-box :src (rc/at)
      :gap "50px"
-     :children [[pb/progress-bar :value 60 :max 100 :hide-label false]]]))
+     :children [[bh/astro-progress-bar :value 60 :max 100 :hide-label false]]]))

@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.re-com.editable-table
-  (:require [bh-ui.atom.re-com.editable-table :as table]
+  (:require [bh-ui.core :as bh]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]))
@@ -8,7 +8,7 @@
 (log/info "demo.catalog.atom.example.re-com.editable-table")
 
 
-(defonce data table/sample-data)
+(defonce data bh/recom-edit-table-sample-data)
 
 
 (defn cell-styling-fn [{:keys [amt uv pv] :as row}
@@ -39,7 +39,7 @@
     "We're using the `v-table` from [Re-com](https://github.com/Day8/re-com)"
 
     [layout/centered                                        ;{:extra-classes :width-50}
-     [table/table
+     [bh/recom-edit-table
       :data data
       :max-rows 5
       :width 600
@@ -47,7 +47,7 @@
       :cell-style cell-styling-fn]]
 
     '[layout/centered {:extra-classes :width-50}
-      [table/table
+      [bh/recom-edit-table
        :data data
        :max-rows 5
        :width 600

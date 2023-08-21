@@ -1,7 +1,5 @@
 (ns demo.catalog.molecule.example.composite.colored-selection-table
-  (:require [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.atom.bhui.color-pallet :as cp]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-frame.core :as re-frame]
             [taoensso.timbre :as log]
@@ -24,7 +22,7 @@
 
 
 (defn- color-entities [d p next-color topic k]
-  (let [cnt          (count cp/color-pallet)
+  (let [cnt          (count bh/bh-color-pallet)
         last-data    ((keyword topic) p)
         assigned     (map (juxt k :color) last-data)
         assigned-set (->> assigned (map first) set)]
@@ -36,7 +34,7 @@
                                                          (filter #(= (k e) (k %)))
                                                          first
                                                          :color))
-                                       (assoc e :color (nth cp/color-pallet
+                                       (assoc e :color (nth bh/bh-color-pallet
                                                          (mod (swap! next-color inc) cnt)))))
                                 (:data d)))))))
 
@@ -67,7 +65,7 @@
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color
-          (h/handle-change-path path [[assoc-in [topic] ret]])
+          (bh/utils-handle-change-path path [[assoc-in [topic] ret]])
 
           ret)))))
 
@@ -82,7 +80,7 @@
 
 (defn example []
   (let [container-id "cs-table"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Colored Selection Table"
         "Working out how to build the correct :data and :config inputs for pistachio to use
@@ -90,7 +88,7 @@
 
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom ui-definition)
            :component-id component-id
            :resizable true

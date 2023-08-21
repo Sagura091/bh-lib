@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.oz.line-chart
-  (:require [bh-ui.atom.oz.line-chart :as chart]
-            [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
+  (:require [demo.catalog.atom.utils :as example]
+            [bh-ui.core :as bh]
             [taoensso.timbre :as log]))
 
 
@@ -11,7 +10,7 @@
      :title "Line Chart (oz)"
      :container-id container-id
      :description "A simple Line Chart built using [Oz](https://github.com/metasoarous/oz)"
-     :data chart/sample-data
-     :component chart/component
-     :component-id (utils/path->keyword container-id "line-chart")
-     :source-code chart/source-code]))
+     :data bh/oz-line-chart
+     :component bh/oz-line-chart
+     :component-id (bh/utils-path->keyword container-id "line-chart")
+     :source-code bh/oz-line-chart-source-code]))

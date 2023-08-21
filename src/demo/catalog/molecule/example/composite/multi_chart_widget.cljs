@@ -1,10 +1,5 @@
 (ns demo.catalog.molecule.example.composite.multi-chart-widget
-  (:require [bh-ui.molecule.composite.multi-chart :as widget]
-            [bh-ui.atom.chart.utils :as chart-utils]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils.locals :as l]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -16,7 +11,7 @@
 
 
 (defn- data-tools [data]
-  (let [old-data (ui-utils/subscribe-local data [])]
+  (let [old-data (bh/utils-subscribe-local data [])]
 
     ;(log/info "data-tools" data "//" @old-data)
 
@@ -26,23 +21,23 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]]) :label "Empty"]
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) widget/sample-data]])
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/multi-chart-sample-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
                                                                      {:name "Page Q" :uv 1100
                                                                       :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
                                                                     [assoc :data (into []
                                                                                    (map (fn [x]
                                                                                           (assoc x :new-item (rand-int 7000)))
@@ -67,7 +62,7 @@
 
 (defn example []
   (let [container-id "multi-chart-widget"
-        component-id (h/path->keyword container-id "widget")]
+        component-id (bh/utils-path->keyword container-id "widget")]
 
     (fn []
       (acu/demo "Multiple Charts in a Widget"
@@ -84,10 +79,10 @@
          ;;
          [:div.molecule-content
           [data-update-example
-           :widget [grid/component
-                    :data (r/atom widget/ui-definition)
+           :widget [bh/grid-container
+                    :data (r/atom bh/multi-chart-ui-def)
                     :component-id component-id
                     :resizable true
                     :tools true]
            :component-id component-id]]]
-        widget/source-code))))
+        bh/multi-chart-src-code))))

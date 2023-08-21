@@ -1,10 +1,7 @@
 (ns demo.catalog.atom.example.chart.alt.data-tools
-  (:require [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils.locals :as l]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
-            [taoensso.timbre :as log]
-            [bh-ui.utils.example-data :as ex]))
+            [taoensso.timbre :as log]))
 
 
 (log/info "demo.catalog.atom.example.chart.alt.data-tools")
@@ -42,8 +39,8 @@
 
 (defn meta-tabular-data-sub-tools [data default-data random-data]
 
-  (let [old-data (ui-utils/subscribe-local data [:data])
-        old-meta (ui-utils/subscribe-local data [])]
+  (let [old-data (bh/utils-subscribe-local data [:data])
+        old-meta (bh/utils-subscribe-local data [])]
 
     (fn []
       [rc/h-box :src (rc/at)
@@ -51,26 +48,26 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :label "Empty" :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) []]])]
+                  [rc/button :label "Empty" :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]])]
 
                   [rc/button :label "Default"
-                   :on-click #(h/handle-change-path (drop-last data) [[l/set-val (take-last 1 data) default-data]])]
+                   :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) default-data]])]
 
-                  [rc/button :label "Random" :on-click #(h/handle-change-path data [[l/set-val [] (random-data)]])]
+                  [rc/button :label "Random" :on-click #(bh/utils-handle-change-path data [[bh/utils-set-local-values [] (random-data)]])]
 
                   [rc/button :label "A(uv) -> 10000"
-                   :on-click #(h/handle-change-path data [[assoc-in [:data 0 :uv] 10000]])]
+                   :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])]
 
                   [rc/button :label "Add 'Q'"
-                   :on-click #(h/handle-change-path data [[l/conj-in [:data]
+                   :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
                                                            {:name "Page Q" :uv (rand-int 5000)
                                                             :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])]
 
                   [rc/button :label "Drop Last 2"
-                   :on-click #(h/handle-change-path data [[l/drop-last-in [:data] 2]])]
+                   :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])]
 
                   [rc/button :label "Add :new-item"
-                   :on-click #(h/handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                   :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
                                                           [assoc :data (into []
                                                                          (map (fn [x]
                                                                                 (assoc x :new-item (rand-int 7000)))
@@ -78,27 +75,27 @@
 
 
 (defn- add-node [data new-node]
-  (let [original   (h/resolve-value data)
+  (let [original   (bh/utils-resolve-value data)
         next-index (->> @original
                      :nodes
                      (map :index)
                      (apply max)
                      inc)]
     (-> data
-      h/resolve-value
+      bh/utils-resolve-value
       deref
       (assoc :nodes (conj (:nodes @original) {:name new-node :index next-index})))))
 
 
 (defn- add-nodes-and-link [data source target value]
-  (let [original   (h/resolve-value data)
+  (let [original   (bh/utils-resolve-value data)
         next-index (->> @original
                      :nodes
                      (map :index)
                      (apply max)
                      inc)]
     (-> data
-      h/resolve-value
+      bh/utils-resolve-value
       deref
       (assoc :nodes (conj (:nodes @original)
                       {:name source :index next-index}
@@ -109,19 +106,19 @@
 
 (defn- add-link [data source target value]
   (-> data
-    h/resolve-value
+    bh/utils-resolve-value
     deref
     (update :links conj {:source source :target target :value value})))
 
 
 (defn- update-link [data source target new-value]
-  (let [original-data (h/resolve-value data)
+  (let [original-data (bh/utils-resolve-value data)
         original-link (->> @original-data
                         :links
                         (filter #(and (= source (:source %)) (= target (:target %))))
                         first)]
     (-> data
-      h/resolve-value
+      bh/utils-resolve-value
       deref
       (update :links disj original-link)
       (update :links conj {:source source :target target :value new-value}))))
@@ -156,21 +153,21 @@
    :class "tools-panel"
    :children [[:label.h5 "Input Data:"]]])
 
-              ;[rc/button :label "Empty" :on-click #(h/handle-change-path data [] [])]
+              ;[rc/button :label "Empty" :on-click #(bh/utils-handle-change-path data [] [])]
               ;
-              ;[rc/button :label "Default" :on-click #(h/handle-change-path data [] default-data)]
+              ;[rc/button :label "Default" :on-click #(bh/utils-handle-change-path data [] default-data)]
               ;
               ;[rc/button :label "+ Redirect (1)"
-              ; :on-click #(h/handle-change-path data [] (add-node data :Redirect))]
+              ; :on-click #(bh/utils-handle-change-path data [] (add-node data :Redirect))]
               ;
               ;[rc/button :label "+ Visit->Redirect (2)"
-              ; :on-click #(h/handle-change-path data [] (add-link data :Visit :Redirect 24987))]
+              ; :on-click #(bh/utils-handle-change-path data [] (add-link data :Visit :Redirect 24987))]
               ;
               ;[rc/button :label "Redirect = 50000 (3)"
-              ; :on-click #(h/handle-change-path data [] (update-link data :Visit :Redirect 50000))]
+              ; :on-click #(bh/utils-handle-change-path data [] (update-link data :Visit :Redirect 50000))]
               ;
               ;[rc/button :label "+ Dummy->New-thing"
-              ; :on-click #(h/handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
+              ; :on-click #(bh/utils-handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
               ;
 
 
@@ -178,13 +175,13 @@
 
 (comment
   (def data [:area-chart-2-data-sub-demo :blackboard :topic.sample-data])
-  (def old-data (ui-utils/subscribe-local data [:data]))
+  (def old-data (bh/utils-subscribe-local data [:data]))
 
 
-  (h/handle-change-path data [:data]
-    (assoc-in @(ui-utils/subscribe-local data [:data]) [0 :uv] 10000))
-  (h/handle-change-path data [:data]
-    (assoc-in @(ui-utils/subscribe-local data [:data]) [0 :pv] 7000))
+  (bh/utils-handle-change-path data [:data]
+    (assoc-in @(bh/utils-subscribe-local data [:data]) [0 :uv] 10000))
+  (bh/utils-handle-change-path data [:data]
+    (assoc-in @(bh/utils-subscribe-local data [:data]) [0 :pv] 7000))
 
 
   ())
@@ -204,7 +201,7 @@
                         {:source :Page-Click :target :Detail-Favourite :value 62429}
                         {:source :Page-Click :target :Lost :value 291741}}})
 
-    (def original-data (h/resolve-value data)))
+    (def original-data (bh/utils-resolve-value data)))
 
   (def next-index (->> @original-data
                     :nodes

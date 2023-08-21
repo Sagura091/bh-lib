@@ -1,6 +1,6 @@
 (ns demo.catalog.atom.example.misc.two-d-globe
   (:require [woolybear.ad.catalog.utils :as acu]
-            [bh-ui.atom.leaflet.globe :as leaflet]
+            [bh-ui.core :as bh]
             [woolybear.ad.layout :as layout]))
 
 
@@ -10,6 +10,6 @@
       "A 2D globe, build using [react-leaflet](https://react-leaflet.js.org/) and [leaflet](https://leafletjs.com)."
       [layout/centered
        [:div {:style {:width "100%" :height "500px"}}
-        [leaflet/globe
-         :shapes leaflet/sample-data]]]
+        [bh/leaflet-globe
+         :shapes bh/leaflet-sample-data]]]
       '[])))

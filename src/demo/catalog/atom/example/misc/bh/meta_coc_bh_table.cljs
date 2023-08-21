@@ -1,7 +1,5 @@
 (ns demo.catalog.atom.example.misc.bh.meta-coc-bh-table
-  (:require [bh-ui.atom.bhui.table :as table]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -12,7 +10,7 @@
 (log/info "demo.catalog.atom.example.misc.meta-coc-bh-table")
 
 
-(defonce data (r/atom table/sample-meta-coc-data))
+(defonce data (r/atom bh/bh-table-sample-meta-coc-data))
 
 
 (defn- data-tools []
@@ -21,7 +19,7 @@
    :class "tools-panel"
    :children [[:label.h5 "Input Data:"]
               [rc/button :on-click #(reset! data []) :label "Empty"]
-              [rc/button :on-click #(reset! data table/sample-meta-coc-data) :label "Default"]
+              [rc/button :on-click #(reset! data bh/bh-table-sample-meta-coc-data) :label "Default"]
               [rc/button :on-click #(swap! data assoc-in [:data 0 :uv] 10000) :label "A -> 10,000"]
               [rc/button :on-click #(swap! data assoc :data (conj (:data @data)
                                                               {:name "Page Q" :uv 1100
@@ -39,7 +37,7 @@
 (defn- data-update-example [& {:keys [data container-id component-id] :as params}]
   ;(log/info "data-update-example (params)" params)
 
-  (let [d (h/resolve-value data)]
+  (let [d (bh/utils-resolve-value data)]
     (fn []
       [rc/v-box :src (rc/at)
        :class "data-update-example"
@@ -47,7 +45,7 @@
        :width "100%"
        :height "100%"
        :children [[:div.chart-part {:style {:width "100%" :height "90%"}}
-                   [table/table :data d]]
+                   [bh/bh-table :data d]]
                   [:div.data-tools-part {:style {:width "100%"}}
                    [data-tools]]]])))
 
@@ -64,5 +62,5 @@
       [layout/centered {:extra-classes :width-50}
        [data-update-example :data data]]
 
-      '[table/table :data table/sample-meta-coc-data])))
+      '[bh/bh-table :data bh/bh-table-sample-meta-coc-data])))
 

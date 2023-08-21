@@ -50,11 +50,11 @@
              ;:port     8282})   ; this is the port of the "real server"
 
 
-(defn state-watcher [_key _atom _old-state new-state]
+(defn- state-watcher [_key _atom _old-state new-state]
   (log/warn "New state" new-state))
 
 
-(defn create-client! [id]
+(defn- create-client! [id]
   ;(log/info "create-client" id ?csrf-token)
   (let [{:keys [ch-recv send-fn state]} (sente/make-channel-socket-client!
                                           "/chsk"
@@ -69,7 +69,7 @@
   (when-let [stop-f @router_] (stop-f)))
 
 
-(defn start-router! []
+(defn- start-router! []
   (stop-router!)
   (reset! router_ (sente/start-client-chsk-router!
                     @ch-chsk handlers/event-msg-handler)))

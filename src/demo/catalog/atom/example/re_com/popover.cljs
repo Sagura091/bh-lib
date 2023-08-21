@@ -1,7 +1,5 @@
 (ns demo.catalog.atom.example.re-com.popover
-  (:require [bh-ui.atom.chart.area-chart :as area-chart]
-            [bh-ui.atom.chart.line-chart :as line-chart]
-            [bh-ui.atom.chart.sankey-chart :as sankey-chart]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [reagent.core :as r]
             [taoensso.timbre :as log]
@@ -82,7 +80,7 @@
      :popover [rc/popover-content-wrapper :src (rc/at)
                :title "A Line Chart"
                :body [:div {:style {:width "400px" :height "400px"}}
-                      [line-chart/component
+                      [bh/line-chart-component
                        :data data
                        :component-id component-id
                        :container-id container-id]]]]))
@@ -99,7 +97,7 @@
      :popover [rc/popover-content-wrapper :src (rc/at)
                :title "An Area Chart"
                :body [:div {:style {:width "400px" :height "400px"}}
-                      [area-chart/component
+                      [bh/area-chart-component
                        :data data
                        :component-id component-id
                        :container-id container-id]]]]))
@@ -116,15 +114,15 @@
      :popover [rc/popover-content-wrapper :src (rc/at)
                :title "A Sankey Chart"
                :body [:div {:style {:width "400px" :height "400px"}}
-                      [sankey-chart/component
+                      [bh/sankey-chart-component
                        :data data
                        :component-id component-id
                        :container-id container-id]]]]))
 
 
 (defn chart-example []
-  (let [tabular-data line-chart/sample-data
-        dag-data sankey-chart/sample-data]
+  (let [tabular-data bh/line-chart-sample-data
+        dag-data bh/sankey-chart-sample-data]
     (acu/demo "Popover (with very complex content)"
       "A few simple `popovers` from [Re-com](https://github.com/Day8/re-com), using a `hyperlink`
     as the 'anchor', only now the content is an entire chart!"

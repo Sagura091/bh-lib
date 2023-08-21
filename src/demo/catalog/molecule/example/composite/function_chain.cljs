@@ -1,8 +1,5 @@
 (ns demo.catalog.molecule.example.composite.function-chain
-  (:require [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
-            [bh-ui.utils.locals :as l]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -91,7 +88,7 @@
 
 
 (defn- data-tools [data source-data]
-  (let [old-data (ui-utils/subscribe-local data [])]
+  (let [old-data (bh/utils-subscribe-local data [])]
 
     (log/info "data-tools" data "//" source-data)
 
@@ -101,17 +98,17 @@
        :class "tools-panel"
        :children [[:label.h5 "Input Data:"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last source-data)
-                                          [[l/set-val (take-last 1 source-data) {}]]) :label "Empty"]
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last source-data)
+                                          [[bh/utils-set-local-values (take-last 1 source-data) {}]]) :label "Empty"]
 
-                  [rc/button :on-click #(h/handle-change-path (drop-last source-data)
-                                          [[l/set-val (take-last 1 source-data) example-data]])
+                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last source-data)
+                                          [[bh/utils-set-local-values (take-last 1 source-data) example-data]])
                    :label "Default"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 0 :a] 444]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :a] 444]])
                    :label "One:a -> 444"]
 
-                  [rc/button :on-click #(h/handle-change-path data [[assoc-in [:data 1 :a] 24]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 1 :a] 24]])
                    :label "Two:a -> 24"]]])))
 
 
@@ -134,7 +131,7 @@
 
 (defn example []
   (let [container-id "function-chain"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Widget with multiple functions chained together"
         "The chart will draw data from the end of a chain of function"
@@ -146,7 +143,7 @@
          ;;
          [:div.molecule-content
           [data-config-update-example
-           :widget [grid/component
+           :widget [bh/grid-container
                     :data (r/atom mol-def)
                     :component-id component-id
                     :resizable true

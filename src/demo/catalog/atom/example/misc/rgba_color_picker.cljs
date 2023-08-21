@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.misc.rgba-color-picker
-  (:require [bh-ui.utils.color :as color]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.example.utils :as utils]
             [re-com.core :as rc]
             [reagent.core :as r]
@@ -31,15 +31,15 @@
                :gap "5px"
                :children [[rc/button :src (rc/at)
                            :label "Button"
-                           :style {:background-color (color/rgba->hex @config)
-                                   :color            (color/best-text-color @config)}]
+                           :style {:background-color (bh/utils-rgba->hex @config)
+                                   :color            (bh/utils-best-text-color @config)}]
                           [:div
                            {:style {:width            "100px"
                                     :text-align       :center
                                     :margin           :auto
                                     :padding          "5px"
-                                    :background-color (color/hash->rgba @config)
-                                    :color            (color/best-text-color-alpha @config)}}
+                                    :background-color (bh/utils-hash->rgba @config)
+                                    :color            (bh/utils-best-text-color-alpha @config)}}
                            "div w/alpha"]]]]])
 
 

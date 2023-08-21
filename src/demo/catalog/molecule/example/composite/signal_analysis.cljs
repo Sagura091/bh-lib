@@ -1,17 +1,12 @@
 (ns demo.catalog.molecule.example.composite.signal-analysis
-  (:require [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.molecule.example.composite.data.signals :as d]
             [woolybear.ad.icons :as icons]
             [reagent.core :as r]
-            [re-frame.core :as re-frame]
-            [re-com.core :as rc]
-            [bh-ui.utils.locals :as l]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
-            [woolybear.ad.layout :as layout]
-            [bh-ui.atom.re-com.input-field :as input-field]))
+            [woolybear.ad.layout :as layout]))
 
 
 (def source-code '{})
@@ -164,7 +159,7 @@
 
 (defn example []
   (let [container-id "signal-analysis"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Signal Analysis"
         "This example provides a 'widget' (collection of UI Components) to show signal analysis traces
@@ -173,7 +168,7 @@ alongside a table-panel of tables, allowing the user to switch traces and see re
 > Note: this example uses somewhat realistic data."
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom mol-2)
            :component-id component-id
            :resizable true

@@ -1,7 +1,7 @@
 (ns demo.pages.templates
   (:require [taoensso.timbre :as log]
             [woolybear.ad.layout :as layout]
-            [bh-ui.atom.bhui.tabbed-panel :as tabbed-panel]))
+            [bh-ui.core :as bh]))
 
 
 (log/info "demo.src.catalogs.templates")
@@ -15,7 +15,7 @@
   []
 
   [layout/page {:extra-classes :is-fluid}
-   [tabbed-panel/tabbed-panel
+   [bh/bh-tabbed-panel
     :extra-classes {:extra-classes :is-fluid
                     :height "85vh"}
     :title ""
