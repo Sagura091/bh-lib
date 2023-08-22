@@ -4,6 +4,7 @@
             [bh-ui.utils.helpers :as h]
             [bh-ui.atom.data-transformation :as xform]
             [cljs.spec.alpha :as spec]
+            [malli.core :as m]
             [taoensso.timbre :as log]))
 
 
@@ -31,19 +32,20 @@
   ; TODO: how do we make CanvasJSChart fit inside it's parent?
   (let [CanvasJSChart (.-CanvasJSChart CanvasJSReact)
         d             (h/resolve-value data)
+
         cooked-data   (cook-data @d)
         options       {:zoomEnabled      true
                        :animationEnabled true
                        :height           (or (:height config) nil)
                        :width            (or (:width config) nil)
                        :exportEnabled    (or (:exportEnabled config) false)
-                       :theme            (:theme config)
-                       :title            {:text (:title config)}
+                       :theme            (or (:theme config) "light1")
+                       :title            {:text (or (:title config) "")}
                        :axisX            {:title (or (:x-axis-title config) "")}
                        :axisY            {:title (or (:y-axis-title config) "")}
                        :data             (mapv (fn [data]
                                                  {:type       type
-                                                  :markerSize (:line-size config)
+                                                  :markerSize (or (:line-size config) 1)
                                                   :dataPoints data})
                                            cooked-data)}]
 
@@ -51,9 +53,18 @@
     ;  data
     ;  "//" cooked-data
     ;  "//" options)
-
+    (print "cooked data" cooked-data)
     [:> CanvasJSChart {:options options}]))
 
+(def fast-chart-schema
+  (m/schema [:map
+             [:data map?]
+             [:config
+              [:map
+               [:theme string?]
+               [:title string?]
+               [:x-axis-title string?]
+               [:line-size int?]]]]))
 
 (defn line-chart [& {:keys [data config style]}]
   ;(log/info "line-chart" data "//" config)

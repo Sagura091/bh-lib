@@ -167,7 +167,7 @@
 (def astro-slider                           aslider/slider)
 (def astro-status                           astatus/status)
 (def astro-table                            atable/table)
-(def astro-classification-marking           aclassification-marking/classification-marking )
+(def astro-classification-marking           aclassification-marking/classification-marking)
 
 ;;;;;;;; BH-UI ;;;;;;;;;;;;;;;;;;
 
@@ -341,6 +341,8 @@
 (def fast-canvas-js-chart                   fast-chart/canvas-js-chart)
 (def fast-line-chart                        fast-chart/line-chart)
 (def fast-spline-chart                      fast-chart/spline-chart)
+
+(def fast-chart-schema                      fast-chart/fast-chart-schema)
 
 ;;;;;;;;;;; LAYOUT ;;;;;;;;;;;;
 
