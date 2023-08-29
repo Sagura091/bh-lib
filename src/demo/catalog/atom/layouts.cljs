@@ -9,7 +9,8 @@
             [demo.catalog.atom.example.layout.frame :as frame]
             [demo.catalog.atom.example.layout.section :as section]
             [demo.catalog.atom.example.layout.layout-grid :as layout-grid]
-            [demo.catalog.atom.example.layout.responsive-grid :as responsive-grid]))
+            [demo.catalog.atom.example.layout.responsive-grid :as responsive-grid]
+            [demo.catalog.atom.example.layout.carousel :as carousel]))
 
 
 (defn examples
@@ -24,4 +25,9 @@
    [markdown-block/example]
    [frame/example]
    [layout-grid/example]
-   [responsive-grid/example]])
+   [responsive-grid/example]
+
+   [carousel/carousel-ex-1]
+   [carousel/carousel-ex-2]
+   [carousel/carousel-ex-3]
+   [carousel/carousel-ex-4]])

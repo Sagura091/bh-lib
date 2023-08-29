@@ -1,4 +1,4 @@
-(ns demo.catalog.atom.example.experimental.internatonilization
+(ns demo.catalog.atom.example.experimental.internationalization
   (:require
     [reagent.core :as r]
     [taoensso.timbre :as log]
@@ -16,7 +16,7 @@
                 {:id :po :label "Polish" :group "ES Speakers"}])
 (def local-atom (atom ":en"))
 
-(def Selected-Languges {:name "defualt"})
+(def Selected-Languges {:name "default"})
 (defn check-box [language]
   (log/info "Rendering the check-box - first time through")
   (r/with-let [clicked? (ratom/atom false)]
@@ -54,15 +54,18 @@
                                             (print @local-atom)
                                             (re-frame/dispatch [:set-i18n @local-atom]))]]]]])))
 
+
 (def trans)
-(defn internatonilization [language]
+
+
+(defn internationalization [language]
   (acu/demo
-    "internatonilization"
+    "Internationalization"
     [layout/text-block
      [single-dropdown]
      [layout/centered {:extra-classes :width-50}
-      [check-box language]]]
-    ))
+      [check-box language]]]))
+
 
 
 

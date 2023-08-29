@@ -6,7 +6,7 @@
             [demo.catalog.atom.example.re-com.plain-table :as plain-table]
             [demo.catalog.atom.example.experimental.tab-set :as tab-set]
             [demo.catalog.atom.example.re-com.plain-table :as plain-table]
-            [demo.catalog.atom.example.experimental.internatonilization :as inter]
+            [demo.catalog.atom.example.experimental.internationalization :as inter]
             [re-frame.core :as re-frame]
             [demo.subs :as sub]))
 
@@ -26,7 +26,7 @@
    [react-table/expandable-table]
    [react-table/subchannel-table]
 
-   [inter/internatonilization (re-frame/subscribe[::sub/i18n])]])
+   [inter/internationalization (re-frame/subscribe[::sub/i18n])]])
 
    ;[ui-element/selectable-table]])
    ;[ui-element/three-d-globe]

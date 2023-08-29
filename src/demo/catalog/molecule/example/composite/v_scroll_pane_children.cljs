@@ -23,22 +23,27 @@
                                                     :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                       "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
                                                     :atm/label "Multiple Views" :atm/children ["bar" "line"]}
-                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :topic/data
-                                                    :atm/default-data chart/sample-data}}
+                                      "topic/data" {:atm/label        "Combined Charts" :atm/role :source/local :atm/kind :topic/data
+                                                    :atm/default-data chart/sample-data}
+                                      "carousel"   {:atm/role           :ui/component :atm/kind :bhui/carousel
+                                                    :atm/label          "Carousel" :atm/children ["bar" "line"]
+                                                    :atm/default-config {:showIndicators true :showThumbs true
+                                                                         :auto-play      true :interval 2000
+                                                                         :infiniteLoop   true}}}
                     :mol/links       {"topic/data" {:data {"bar-chart"  :data
                                                            "line-chart" :data}}}
-                    :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})
+                    :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}
+                                      {:i "carousel" :x 10 :y 0 :w 10 :h 11 :static true}]})
 
 
 (defn example []
   (let [container-id "v-scroll-with-children"
         component-id (h/path->keyword container-id "molecule")]
     (fn []
-      (acu/demo "Vertical Scroll with Child Charts"
-        "This example is ***IN PROGRESS***, and may not be working yet.
-
-The goal is to support atoms which can have 'children', i.e., other atoms
-that are visually contained _within_ the outer atom. In this example, we use the v-scroller (re-com) atom."
+      (acu/demo "Containers (Vertical Scroll & Carousel) with Child Charts"
+        "The goal is to support atoms which can have 'children', i.e., other atoms
+that are visually contained _within_ the outer atom. In this example, we use the v-scroller (re-com) and
+the carousel (based upon react-responsive-carousel)."
         [layout/frame
          [:div.molecule-content
           [grid/component
@@ -87,18 +92,18 @@ that are visually contained _within_ the outer atom. In this example, we use the
                           {:Symbol "#00FFFF" :include false :AoI "Bravo"}
                           {:Symbol "#0000FF" :include false :AoI "Charlie"}]})
 
-(def def-2 {:mol/components  {"table-one"  {:atm/role :ui/component :atm/kind :react-table/table
-                                            :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-                              "table-two" {:atm/role :ui/component :atm/kind :react-table/table
+(def def-2 {:mol/components  {"table-one" {:atm/role           :ui/component :atm/kind :react-table/table
                                            :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-                              "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
-                                            :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
-                              "data/one" {:atm/role :source/local :atm/kind :data/one
-                                          :atm/default-data data-one}
-                              "data/two" {:atm/role :source/local :atm/kind :data/one
-                                          :atm/default-data data-two}}
-            :mol/links       {"data/one" {:data {"table-one"  :data}}
-                              "data/two" {:data {"table-two"  :data}}}
+                              "table-two" {:atm/role           :ui/component :atm/kind :react-table/table
+                                           :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                              "v-scroll"  {:atm/role  :ui/component :atm/kind :rc/v-scroll
+                                           :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
+                              "data/one"  {:atm/role         :source/local :atm/kind :data/one
+                                           :atm/default-data data-one}
+                              "data/two"  {:atm/role         :source/local :atm/kind :data/one
+                                           :atm/default-data data-two}}
+            :mol/links       {"data/one" {:data {"table-one" :data}}
+                              "data/two" {:data {"table-two" :data}}}
             :mol/grid-layout [{:i "v-scroll" :x 0 :y 0 :w 10 :h 11 :static true}]})
 
 
