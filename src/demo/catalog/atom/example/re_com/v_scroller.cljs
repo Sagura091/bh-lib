@@ -1,9 +1,6 @@
 (ns demo.catalog.atom.example.re-com.v-scroller
-  (:require [bh-ui.atom.re-com.v-scroller :as v-scroller]
-            [woolybear.ad.containers :as containers]
-            [bh-ui.atom.chart.area-chart :as area]
-            [bh-ui.atom.chart.line-chart :as line]
-            [reagent.core :as r]
+  (:require [woolybear.ad.containers :as containers]
+            [bh-ui.core :as bh]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
@@ -20,15 +17,15 @@
 (def chart-size {:height "250px" :width "550px"})
 
 (def chart-children [[rc/box
-                      :child [area/component
-                              :data area/sample-data
+                      :child [bh/area-chart-component
+                              :data bh/area-chart-sample-data
                               :component-id "chart-children-example-area"
                               :container "chart-children-example"]
                       :style (merge {:border "1px solid"} chart-size)]
                      [rc/gap :size "25px"]
                      [rc/box
-                      :child [line/component
-                              :data area/sample-data
+                      :child [bh/line-chart-component
+                              :data bh/line-chart-sample-data
                               :component-id "chart-children-example-line"
                               :container "chart-children-example"]
                       :style (merge {:border "1px solid"} chart-size)]])
@@ -40,12 +37,12 @@
     "Wrap any kind of visual components (atoms) in a vertical scroll pane"
 
     [layout/centered {:extra-classes :width-50}
-     [v-scroller/v-scroller
+     [bh/recom-v-scroll
       :height "300px"
       :children example-children]]
 
     '[layout/centered {:extra-classes :width-50}
-      [v-scroller/v-scroller
+      [bh/recom-v-scroll
        :children example-children]]))
 
 
@@ -54,12 +51,12 @@
     "Wrap any kind of visual components (atoms) in a vertical scroll pane"
 
     [layout/centered {:extra-classes :width-50}
-     [v-scroller/v-scroller
+     [bh/recom-v-scroll
       :height "300px"
       :children chart-children]]
 
     '[layout/centered {:extra-classes :width-50}
-      [v-scroller/component
+      [bh/recom-v-scroll
        :children chart-children]]))
 
 

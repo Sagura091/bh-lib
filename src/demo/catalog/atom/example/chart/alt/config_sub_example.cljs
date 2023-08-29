@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.chart.alt.config-sub-example
   (:require [demo.catalog.atom.utils :as e]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
+            [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [re-com.core :as rc]
             [reagent.core :as r]
@@ -38,13 +37,13 @@
   ;(log/info "component" default-config-data "//" params)
 
   (let [id (r/atom nil)
-        input-params (assoc params :component-id (h/path->keyword component-id "chart"))]
+        input-params (assoc params :component-id (bh/utils-path->keyword component-id "chart"))]
 
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id (config default-config-data))
-        (ui-utils/dispatch-local @id [:container] container-id))
+        (bh/utils-init-container-locals @id (config default-config-data))
+        (bh/utils-dispatch-local @id [:container] container-id))
 
       (reduce into [config-update-example :component component] (seq input-params)))))
 

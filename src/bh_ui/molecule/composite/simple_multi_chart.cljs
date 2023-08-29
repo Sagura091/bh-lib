@@ -12,6 +12,12 @@
 
 (def sample-data chart/sample-data)
 
+(def default-config-data {:brush false
+                          :uv    {:include true, :fill (color/get-color 0), :stackId ""}
+                          :pv    {:include true, :fill (color/get-color 1), :stackId ""}
+                          :tv    {:include true, :fill (color/get-color 2), :stackId ""}
+                          :amt   {:include true, :fill (color/get-color 3), :stackId ""}})
+
 
 (def ui-definition
   {:mol/components  {":ui/bar-chart"  {:atm/role    :ui/component :atm/kind :rechart/bar

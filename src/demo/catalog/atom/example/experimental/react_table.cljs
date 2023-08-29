@@ -2,7 +2,7 @@
   (:require
     [woolybear.ad.layout :as layout]
     [woolybear.ad.catalog.utils :as acu]
-    [bh-ui.atom.experimental.react-table :as react-table]
+    [bh-ui.core :as bh]
     [reagent.core :as r]
     [woolybear.ad.icons :as icons]))
 
@@ -150,7 +150,7 @@
   (acu/demo
     "React-Table Standard Table"
     [layout/centered {:extra-classes :width-50}
-     [react-table/table-component
+     [bh/react-table
       ; TODO: should this be the norm, or should we pass the complex data in
       ;       and fix up how :source/locals passes data to downstream components
       :data data
@@ -162,7 +162,7 @@
   (acu/demo
     "React-Table Expandable Table"
     [layout/centered {:extra-classes :width-50}
-     [react-table/table-component
+     [bh/react-table
       :data group-data
       :config group-data-config
       :style table-style]]))
@@ -212,7 +212,7 @@
   (acu/demo
     "Subchannel Table"
     [layout/centered {:extra-classes :width-50}
-     [react-table/table-component
+     [bh/react-table
       :data subchannel-groups-data
       :config subchannel-groups-config
       :style table-style]]))

@@ -2,8 +2,7 @@
   (:require
     [woolybear.ad.layout :as layout]
     [woolybear.ad.catalog.utils :as acu]
-    [bh-ui.atom.experimental.tab-set :as tab-set]
-    [bh-ui.atom.experimental.react-table :as t]
+    [bh-ui.core :as bh]
     [demo.catalog.atom.example.experimental.react-table :as tc]
     [reagent.core :as r]
     [re-com.core :as rc]
@@ -52,7 +51,7 @@ user to click a tab and see the corresponding page.
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [[tab-set/tab-set :config sample-config-1 :children sample-children-1]]]]]]
+                  :children [[bh/tab-set :config sample-config-1 :children sample-children-1]]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
@@ -91,22 +90,22 @@ user to click a tab and see the corresponding page
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [[tab-set/tab-set :config sample-config-2 :children sample-children-2]]]]]]
+                  :children [[bh/tab-set :config sample-config-2 :children sample-children-2]]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))
 
 
 (def sample-config-3 {:labels ["One" "Two" "Three"]})
-(def sample-children-3 [[t/table-component
+(def sample-children-3 [[bh/react-table
                          :data tc/data
                          :config tc/data-config
                          :component-id :tab-set.example.ui.table-one :container-id :tab-set.example]
-                        [t/table-component
+                        [bh/react-table
                          :data tc/group-data
                          :config tc/group-data-config
                          :component-id :tab-set.example.ui.table-two :container-id :tab-set.example]
-                        [t/table-component
+                        [bh/react-table
                          :data tc/data
                          :config tc/data-config
                          :component-id :tab-set.example.ui.table-three :container-id :tab-set.example]])
@@ -126,7 +125,7 @@ user to click a tab and see the corresponding page.
       :children [[rc/h-box :src (rc/at)
                   :width "100%"
                   :gap "25px"
-                  :children [[tab-set/tab-set :config sample-config-3 :children sample-children-3]]]]]]
+                  :children [[bh/tab-set :config sample-config-3 :children sample-children-3]]]]]]
 
     '[layout/centered {:extra-classes :width-50}
       []]))

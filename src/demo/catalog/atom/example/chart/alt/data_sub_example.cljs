@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.chart.alt.data-sub-example
   (:require [demo.catalog.atom.utils :as e]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
+            [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
@@ -43,7 +42,7 @@
 (defn- dummy-container [component default-data random-data
                         & {:keys [component-id container-id] :as params}]
   (let [id           (r/atom nil)
-        input-params (assoc params :component-id (h/path->keyword component-id "chart")
+        input-params (assoc params :component-id (bh/utils-path->keyword component-id "chart")
                                    :container-id component-id)]
 
     ;(log/info "dummy-container" component "//" params)
@@ -51,8 +50,8 @@
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id (config default-data))
-        (ui-utils/dispatch-local @id [:container] container-id))
+        (bh/utils-init-container-locals @id (config default-data))
+        (bh/utils-dispatch-local @id [:container] container-id))
 
       (reduce into [data-update-example :component component] (seq input-params)))))
 
@@ -96,11 +95,11 @@
 ; mess with the data at the subscribed location
 (comment
   (def data [:area-chart-2-data-sub-demo :blackboard :topic.sample-data])
-  (def old-data (ui-utils/subscribe-local data [:data]))
+  (def old-data (bh/utils-subscribe-local data [:data]))
 
 
-  (h/handle-change-path data [:data]
-    (assoc-in @(ui-utils/subscribe-local data [:data]) [0 :uv] 10000))
+  (bh/utils-handle-change-path data [:data]
+    (assoc-in @(bh/utils-subscribe-local data [:data]) [0 :uv] 10000))
 
 
   ())

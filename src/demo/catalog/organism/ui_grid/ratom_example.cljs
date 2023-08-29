@@ -1,11 +1,5 @@
 (ns demo.catalog.organism.ui-grid.ratom-example
-  (:require [bh-ui.organism.ui-grid :as grid]
-            [bh-ui.molecule.composite.chart-remote-data :as chart-remote-data]
-            [bh-ui.molecule.composite.coverage-plan :as coverage-plan]
-            [bh-ui.molecule.composite.simple-multi-chart :as simple-multi-chart]
-            [bh-ui.molecule.composite.simple-multi-chart-2 :as simple-multi-chart-2]
-            [bh-ui.molecule.grid-container :as grid-container]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -22,25 +16,25 @@
 ;(def bar-chart-widget ["bar-chart" "Bar Chart"
 ;                       [grid-container/component
 ;                        :data (r/atom chart-remote-data/ui-definition)
-;                        :component-id (h/path->keyword container-id "bar-chart")
+;                        :component-id (bh/utils-path->keyword container-id "bar-chart")
 ;                        :resizable true]
 ;                       :green :white])
 (def multi-chart-widget ["multi-chart" "Multi-Chart"
-                         [grid-container/component
-                          :data (r/atom simple-multi-chart/ui-definition)
-                          :component-id (h/path->keyword container-id "multi-chart")
+                         [bh/grid-container
+                          :data (r/atom bh/simple-multi-chart1-ui-def)
+                          :component-id (bh/utils-path->keyword container-id "multi-chart")
                           :resizable true]
                          :blue :white])
 (def multi-chart-2-widget ["multi-chart-2" "Multi-Chart-2"
-                           [grid-container/component
-                            :data (r/atom simple-multi-chart-2/ui-definition)
-                            :component-id (h/path->keyword container-id "multi-chart-2")
+                           [bh/grid-container
+                            :data (r/atom bh/simple-multi-chart2-ui-def)
+                            :component-id (bh/utils-path->keyword container-id "multi-chart-2")
                             :resizable true]
                            :rebeccapurple :white])
 ;(def coverage-plan-widget ["coverage-plan" "Coverage Plan"
 ;                           [grid-container/component
 ;                            :data (r/atom coverage-plan/ui-definition)
-;                            :component-id (h/path->keyword container-id "coverage-plan")
+;                            :component-id (bh/utils-path->keyword container-id "coverage-plan")
 ;                            :resizable true]
 ;                           :yellow :black])
 (def default-widgets #{multi-chart-widget})
@@ -103,13 +97,13 @@
 
      [rc/v-box :src (rc/at)
       :gap "5px"
-      :children [[grid/component
+      :children [[bh/ui-grid
                   :widgets widgets
                   :layout layout
                   :container-id container-id]
                  [widget-tools widgets layout default-widgets default-layout]]]]
 
-    '[grid/component
+    '[bh/ui-grid
       :widgets widgets
       :layout layout
       :container-id container-id]))

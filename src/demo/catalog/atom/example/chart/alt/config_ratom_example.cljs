@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.chart.alt.config-ratom-example
-  (:require [bh-ui.atom.chart.utils :as chart-utils]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
             [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [re-com.core :as rc]
             [reagent.core :as r]
@@ -37,7 +36,7 @@
 
   ;(log/info "example" params)
 
-  (let [component-id (utils/path->keyword container-id "chart")
+  (let [component-id (bh/utils-path->keyword container-id "chart")
         data (r/atom sample-data)
         input-params (assoc params :component-id component-id
                                    :data data

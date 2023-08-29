@@ -3,8 +3,7 @@
   Misc utilities for rendering demonstrations in the Catalog, including
   a utility for pop-up source code blocks.
   "
-  (:require [bh-ui.atom.bhui.navbar :as navbar]
-            [bh-ui.utils :as ui-utils]
+  (:require [bh-ui.core :as bh]
             [clojure.string :as string]
             [re-com.core :as rc]
             ["react-markdown" :as ReactMarkdown]
@@ -20,7 +19,7 @@
   (let [data-or-config [[config "config"]
                         [data "data"]]]
     [:div.chart-config.h-w-100pc
-     [navbar/navbar data-or-config [panel]]
+     [bh/bh-navbar data-or-config [panel]]
 
      [rc/scroller
       :v-scroll :auto
@@ -94,7 +93,7 @@
                                    source-code
                                    extra-classes] :as params}]
 
-  (ui-utils/init-container component-id)
+  (bh/utils-init-container component-id)
 
   (let [input-params      (dissoc params :title :sample-data :description :extra-classes :source-code :component)
         paramed-component (reduce into [component] (seq input-params))]
@@ -125,7 +124,7 @@
 
   ;(log/info "example" params)
 
-  (ui-utils/init-container-locals container-id config)
+  (bh/utils-init-container-locals container-id config)
 
   (let [config-key   (keyword container-id "config")
         data-key     (keyword container-id "data")

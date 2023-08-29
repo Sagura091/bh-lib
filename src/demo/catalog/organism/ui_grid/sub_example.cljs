@@ -1,13 +1,5 @@
 (ns demo.catalog.organism.ui-grid.sub-example
-  (:require [demo.subs :as subs]
-            [bh-ui.molecule.composite.chart-remote-data :as chart-remote-data]
-            [bh-ui.molecule.composite.coverage-plan :as coverage-plan]
-            [bh-ui.molecule.composite.simple-multi-chart :as simple-multi-chart]
-            [bh-ui.molecule.composite.simple-multi-chart-2 :as simple-multi-chart-2]
-            [bh-ui.molecule.grid-container :as grid-container]
-            [bh-ui.organism.ui-grid :as grid]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -22,27 +14,27 @@
 (def container-id :ui-grid-sub-demo)
 
 ;(def bar-chart-widget ["bar-chart" "Bar Chart"
-;                       [grid-container/component
+;                       [bh/grid-container
 ;                        :data (r/atom chart-remote-data/ui-definition)
-;                        :component-id (h/path->keyword container-id "bar-chart")
+;                        :component-id (bh/utils-path->keyword container-id "bar-chart")
 ;                        :resizable true]
 ;                       :green :white])
 (def multi-chart-widget ["multi-chart" "Multi-Chart"
-                         [grid-container/component
-                          :data (r/atom simple-multi-chart/ui-definition)
-                          :component-id (h/path->keyword container-id "multi-chart")
+                         [bh/grid-container
+                          :data (r/atom bh/simple-multi-chart1-ui-def)
+                          :component-id (bh/utils-path->keyword container-id "multi-chart")
                           :resizable true]
                          :blue :white])
 (def multi-chart-2-widget ["multi-chart-2" "Multi-Chart-2"
-                           [grid-container/component
-                            :data (r/atom simple-multi-chart-2/ui-definition)
-                            :component-id (h/path->keyword container-id "multi-chart-2")
+                           [bh/grid-container
+                            :data (r/atom bh/simple-multi-chart2-ui-def)
+                            :component-id (bh/utils-path->keyword container-id "multi-chart-2")
                             :resizable true]
                            :rebeccapurple :white])
 ;(def coverage-plan-widget ["coverage-plan" "Coverage Plan"
-;                           [grid-container/component
+;                           [bh/grid-container
 ;                            :data (r/atom coverage-plan/ui-definition)
-;                            :component-id (h/path->keyword container-id "coverage-plan")
+;                            :component-id (bh/utils-path->keyword container-id "coverage-plan")
 ;                            :resizable true]
 ;                           :yellow :black])
 (def default-widgets #{multi-chart-widget})
@@ -64,7 +56,7 @@
 
 
 (defn- grid-reset [container-id widget-val layout-val]
-  (h/handle-change [container-id] {:widgets widget-val :layout layout-val}))
+  (bh/utils-handle-change [container-id] {:widgets widget-val :layout layout-val}))
 
 
 (defn- toggle-val [s val]
@@ -74,9 +66,9 @@
 
 
 (defn- grid-update [container-id widgets layout widget-val layout-val]
-  (h/handle-change [container-id]
-    {:widgets (toggle-val @(h/resolve-value widgets) widget-val)
-     :layout  (toggle-val @(h/resolve-value layout) layout-val)}))
+  (bh/utils-handle-change [container-id]
+    {:widgets (toggle-val @(bh/utils-resolve-value widgets) widget-val)
+     :layout  (toggle-val @(bh/utils-resolve-value layout) layout-val)}))
 
 
 (defn- widget-tools [container-id widgets layout default-widgets]
@@ -112,11 +104,11 @@
     (fn []
       (when (nil? @id)
         (reset! id container-id)
-        (ui-utils/init-container-locals @id config)
-        (ui-utils/dispatch-local @id [:container] container-id)
-        (ui-utils/build-subs container-id config))
+        (bh/utils-init-container-locals @id config)
+        (bh/utils-dispatch-local @id [:container] container-id)
+        (bh/utils-build-subs container-id config))
 
-      [grid/component
+      [bh/ui-grid
        :widgets widgets
        :layout layout
        :container-id container-id])))
@@ -139,7 +131,7 @@
                     :container-id container-id]
                    [widget-tools container-id widgets layout default-widgets default-layout]]]]
 
-      '[grid/component
+      '[bh/ui-grid
         :widgets widgets
         :layout layout
         :container-id container-id])))

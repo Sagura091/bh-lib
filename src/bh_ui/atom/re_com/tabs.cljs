@@ -134,23 +134,18 @@
                   [rc/box :src (rc/at)
                    :child (:child (item-for-id @selected-tab contents))]]])))
 
-
 (defn h-tabs [& {:keys [children style config]}]
   (h-tab* rc/horizontal-tabs children style config))
 
-
 (defn h-bar-tabs [& {:keys [children style config]}]
   (h-tab* rc/horizontal-bar-tabs children style config))
-
 
 (defn h-pill-tabs [& {:keys [children style config] :as params}]
   (reset! last-params params)
   (h-tab* rc/horizontal-pill-tabs children style config))
 
-
 (defn v-bar-tabs [& {:keys [children style config]}]
   (v-tab* rc/vertical-bar-tabs children style config))
-
 
 (defn v-pill-tabs [& {:keys [children style config]}]
   (v-tab* rc/vertical-pill-tabs children style config))

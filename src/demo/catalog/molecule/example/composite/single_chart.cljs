@@ -1,8 +1,6 @@
 (ns demo.catalog.molecule.example.composite.single-chart
   (:require [woolybear.ad.catalog.utils :as acu]
-            [bh-ui.utils.example-data :as example-data]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
+            [bh-ui.core :as bh]
             [reagent.core :as r]
             [woolybear.ad.layout :as layout]))
 
@@ -30,7 +28,7 @@
 
                    :mol/grid-layout [{:i "box" :x 0 :y 0 :w 10 :h 10 :static true}]})
 
-(def data example-data/meta-tabular-data)
+(def data bh/example-meta-tabular-data)
 (def data-2 [(sort-by :x (generate-chart-data 100 100))
              (sort-by :x (generate-chart-data 100 100))
              (sort-by :x (generate-chart-data 100 100))])
@@ -55,7 +53,7 @@
 
 (defn example []
   (let [container-id "single-chart-molecule"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Molecule with a Single Chart"
         "A means to experiment putting chart atoms into a very simple molecule as a means to
@@ -63,7 +61,7 @@
 
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom mol)
            :component-id component-id
            :resizable true

@@ -1,22 +1,20 @@
 (ns demo.catalog.atom.example.diagram.flow-diagram
-  (:require [bh-ui.atom.diagram.flow-diagram :as flow]
-            ["reactflow" :refer (Position)]
-            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dn]
+  (:require ["reactflow" :refer (Position)]
             [demo.catalog.atom.utils :as example]
-            [bh-ui.utils :as utils]
+            [bh-ui.core :as bh]
             [reagent.core :as r]
             [re-frame.core :as rf]
             [taoensso.timbre :as log]))
 
 
-(def node-types {":ui/component"  (partial dn/custom-node :ui/component)
-                 ":source/remote" (partial dn/custom-node :source/remote)
-                 ":source/local"  (partial dn/custom-node :source/local)
-                 ":source/fn"     (partial dn/custom-node :source/fn)})
-(def bootstrap-node-data {":ui/component"  (partial dn/node-data :ui/component)
-                          ":source/remote" (partial dn/node-data :source/remote)
-                          ":source/local"  (partial dn/node-data :source/local)
-                          ":source/fn"     (partial dn/node-data :source/fn)})
+(def node-types {":ui/component"  (partial bh/dsl-nodes-custom-node :ui/component)
+                 ":source/remote" (partial bh/dsl-nodes-custom-node :source/remote)
+                 ":source/local"  (partial bh/dsl-nodes-custom-node :source/local)
+                 ":source/fn"     (partial bh/dsl-nodes-custom-node :source/fn)})
+(def bootstrap-node-data {":ui/component"  (partial bh/dsl-nodes-node-data :ui/component)
+                          ":source/remote" (partial bh/dsl-nodes-node-data :source/remote)
+                          ":source/local"  (partial bh/dsl-nodes-node-data :source/local)
+                          ":source/fn"     (partial bh/dsl-nodes-node-data :source/fn)})
 
 (def initialEdges [{:id     "lightning->line-chart",
                     :source "100", :sourceHandle "data-out"
@@ -96,8 +94,8 @@
      :config {:node-types   node-types
               :node-data    bootstrap-node-data
               :node-kind-fn default-node-kind}
-     :component flow/component
-     :component-id (utils/path->keyword container-id "flow-diagram")
+     :component bh/flow-diagram
+     :component-id (bh/utils-path->keyword container-id "flow-diagram")
      :source-code '[]]))
 
 ;flow/source-code]))

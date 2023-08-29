@@ -1,8 +1,6 @@
 (ns demo.catalog.molecule.example.composite.bigger-coverage-plan
-  (:require [demo.subs :as subs]
-            [demo.catalog.molecule.example.composite.bigger-coverage-plan :as coverage-plan]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
+  (:require [demo.catalog.molecule.example.composite.bigger-coverage-plan :as coverage-plan]
+            [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -30,9 +28,9 @@
          ;; that really means "be as big as you need" and ResponsiveContainer then doesn't know what to do.
          ;;
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom coverage-plan/ui-definition)
-           :component-id (h/path->keyword container-id "grid-widget")
+           :component-id (bh/utils-path->keyword container-id "grid-widget")
            :container-id container-id
            :resizable true
            :tools true]]])
@@ -61,11 +59,11 @@
          ;; that really means "be as big as you need" and ResponsiveContainer then doesn't know what to do.
          ;;
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom
                    (assoc-in coverage-plan/ui-definition
                      [:components :ui/globe :name] :r/globe))
-           :component-id (h/path->keyword container-id "grid-widget")
+           :component-id (bh/utils-path->keyword container-id "grid-widget")
            :container-id container-id
            :resizable true
            :tools true]]])
@@ -95,11 +93,11 @@
            ;; that really means "be as big as you need" and ResponsiveContainer then doesn't know what to do.
            ;;
            [:div.molecule-content
-            [grid/component
+            [bh/grid-container
              :data (r/atom
                      (assoc-in coverage-plan/ui-definition
                        [:components :ui/globe :name] :l/globe))
-             :component-id (h/path->keyword container-id "grid-widget")
+             :component-id (bh/utils-path->keyword container-id "grid-widget")
              :container-id container-id
              :resizable true
              :tools true]]])

@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.re-com.meta-coc-editable-table
-  (:require [bh-ui.atom.re-com.editable-table :as table]
+  (:require [bh-ui.core :as bh]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.layout :as layout]))
@@ -8,7 +8,7 @@
 (log/info "demo.catalog.atom.example.re-com.meta-coc-editable-table")
 
 
-(defonce data table/meta-coc-sample-data)
+(defonce data bh/recom-edit-table-meta-coc-sample-data)
 
 
 (defn cell-styling-fn [{:keys [amt uv pv] :as row}
@@ -41,7 +41,7 @@
 > This example has data ***with*** Chain-of-custody!"
 
     [layout/centered
-     [table/table
+     [bh/recom-edit-table
       :data data
       :max-rows 5
       :width 2000
@@ -49,7 +49,7 @@
       :cell-style cell-styling-fn]]
 
     '[layout/centered {:extra-classes :width-50}
-      [table/table
+      [bh/recom-edit-table
        :data data
        :max-rows 5
        :width 2000

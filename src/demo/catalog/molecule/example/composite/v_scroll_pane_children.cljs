@@ -1,8 +1,5 @@
 (ns demo.catalog.molecule.example.composite.v-scroll-pane-children
-  (:require [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.atom.chart.area-chart :as chart]
-            [bh-ui.utils :as ui-utils]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -23,8 +20,8 @@
                                                     :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                       "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
                                                     :atm/label "Multiple Views" :atm/children ["bar" "line"]}
-                                      "topic/data" {:atm/label        "Combined Charts" :atm/role :source/local :atm/kind :topic/data
-                                                    :atm/default-data chart/sample-data}
+                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :topic/data
+                                                    :atm/default-data bh/area-chart-sample-data}
                                       "carousel"   {:atm/role           :ui/component :atm/kind :bhui/carousel
                                                     :atm/label          "Carousel" :atm/children ["bar" "line"]
                                                     :atm/default-config {:showIndicators true :showThumbs true
@@ -38,7 +35,7 @@
 
 (defn example []
   (let [container-id "v-scroll-with-children"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Containers (Vertical Scroll & Carousel) with Child Charts"
         "The goal is to support atoms which can have 'children', i.e., other atoms
@@ -46,7 +43,7 @@ that are visually contained _within_ the outer atom. In this example, we use the
 the carousel (based upon react-responsive-carousel)."
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom ui-definition)
            :component-id component-id
            :resizable true
@@ -109,7 +106,7 @@ the carousel (based upon react-responsive-carousel)."
 
 (defn example-2 []
   (let [container-id "v-scroll-with-table-children"
-        component-id (h/path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")]
     (fn []
       (acu/demo "Vertical Scroll with Child Tables"
         "This example is ***IN PROGRESS***, and may not be working yet.
@@ -118,7 +115,7 @@ The goal is to support atoms which can have 'children', i.e., other atoms
 that are visually contained _within_ the outer atom. In this example, we use the v-scroller (re-com) atom."
         [layout/frame
          [:div.molecule-content
-          [grid/component
+          [bh/grid-container
            :data (r/atom def-2)
            :component-id component-id
            :resizable true

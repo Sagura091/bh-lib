@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.icons.simple-image
-  (:require [bh-ui.atom.bhui.markdown :as markdown]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]
             [woolybear.ad.images :as images]
@@ -10,7 +10,7 @@
   [rc/v-box :src (rc/at)
    :gap "15px"
    :align :center
-   :children [[markdown/markdown (str "`" image-size "`")]
+   :children [[bh/bh-markdown (str "`" image-size "`")]
               [images/image {:src           "/imgs/hammer-icon-16x16.png"
                              :extra-classes #{:is-4by1 image-size}}]]])
 
@@ -37,7 +37,7 @@
        :children [[rc/v-box :src (rc/at)
                    :gap "15px"
                    :align :center
-                   :children [[markdown/markdown (str "`" :is-32x32 "`")]
+                   :children [[bh/bh-markdown (str "`" :is-32x32 "`")]
                               [images/image {:src           "/imgs/hammer-icon-16x16.png"
                                              :extra-classes #{:is-4by1 :is-32x32}}]]]]]]))
 

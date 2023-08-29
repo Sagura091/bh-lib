@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.misc.hex-color-picker
-  (:require [bh-ui.utils.color :as color]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [reagent.core :as r]
             [woolybear.ad.catalog.utils :as acu]
@@ -21,8 +21,8 @@
               [rc/button :src (rc/at)
                :label "Button"
                :style {:background-color @config
-                       :color            (color/best-text-color
-                                           (color/hex->rgba @config))}]]])
+                       :color            (bh/utils-best-text-color
+                                           (bh/utils-hex->rgba @config))}]]])
 
 
 (defn- component-panel [config]

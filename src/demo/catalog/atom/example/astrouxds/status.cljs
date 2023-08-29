@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.astrouxds.status
-  (:require [bh-ui.atom.astrouxds.status :as status]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]))
 
@@ -12,27 +12,27 @@
      :children [[rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Off"]
-                            [status/status "off"]]]
+                            [bh/astro-status "off"]]]
                 [rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Standby"]
-                            [status/status "standby"]]]
+                            [bh/astro-status "standby"]]]
                 [rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Normal"]
-                            [status/status "normal"]]]
+                            [bh/astro-status "normal"]]]
                 [rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Caution"]
-                            [status/status "caution"]]]
+                            [bh/astro-status "caution"]]]
                 [rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Serious"]
-                            [status/status "serious"]]]
+                            [bh/astro-status "serious"]]]
                 [rc/v-box :src (rc/at)
                  :align :center
                  :children [[:p "Critical"]
-                            [status/status "critical"]]]]]))
+                            [bh/astro-status "critical"]]]]]))
 
 
 

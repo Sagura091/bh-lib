@@ -1,19 +1,19 @@
 (ns demo.catalog.atom.example.astrouxds.button
-  (:require [bh-ui.atom.astrouxds.button :as button]
+  (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]))
 
 (defn- button-sm []
-  [button/button :label "small" :size "small"])
+  [bh/astro-button :label "small" :size "small"])
 
 (defn- button-md []
-  [button/button :label "medium" :size "medium"])
+  [bh/astro-button :label "medium" :size "medium"])
 
 (defn- button-lg []
-  [button/button :label "large" :size "large"])
+  [bh/astro-button :label "large" :size "large"])
 
 (defn- button-lg-icon []
-  [button/button :label "large w/ icon" :size "large" :icon "settings"])
+  [bh/astro-button :label "large w/ icon" :size "large" :icon "settings"])
 
 (defn example []
   (acu/demo

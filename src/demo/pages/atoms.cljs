@@ -1,5 +1,5 @@
 (ns demo.pages.atoms
-  (:require [bh-ui.atom.bhui.tabbed-panel :as tabbed-panel]
+  (:require [bh-ui.core :as bh]
             [demo.catalog.atom.all :as all-demo]
             [demo.catalog.atom.astrouxds :as astro-demo]
             [demo.catalog.atom.buttons :as buttons-demo]
@@ -43,7 +43,7 @@
    ;[layout/page-header {:extra-classes :is-fluid}
    ; [:h1.has-text-info "'Atoms'"]]
 
-   [tabbed-panel/tabbed-panel
+   [bh/bh-tabbed-panel
     :extra-classes {:extra-classes :is-fluid
                     :height        "85vh"}
     :title ""

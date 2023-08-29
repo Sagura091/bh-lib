@@ -45,7 +45,7 @@
       (into {}))))
 
 
-(defn- config [component-id data]
+(defn config [component-id data]
   (-> ui-utils/default-pub-sub
     (merge
       utils/default-config

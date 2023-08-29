@@ -1,7 +1,5 @@
 (ns demo.catalog.molecule.example.composite.grid-widget
-  (:require [bh-ui.molecule.composite.coverage-plan :as plan]
-            [bh-ui.molecule.grid-container :as grid]
-            [bh-ui.utils.helpers :as h]
+  (:require [bh-ui.core :as bh]
             [woolybear.ad.catalog.utils :as acu]
             [re-frame.core :as re-frame]
             [re-com.core :as rc]
@@ -15,9 +13,9 @@
         (acu/demo "Coverage Plan using a Grid for layout"
           "This experiment uses a GRID to layout the various UI components that make up the 'composite'.  Constructs 'coverage-plan', drawing the layout from `:grid-layout` which provides X/Y/W/H for each component on the widget's internal grid."
           [layout/frame
-           [grid/component
-            :data plan/ui-definition
-            :component-id (h/path->keyword container-id "grid-widget")
+           [bh/grid-container
+            :data bh/coverage-plan-ui-def
+            :component-id (bh/utils-path->keyword container-id "grid-widget")
             :container-id container-id
             :resizable true
             :tools true]])

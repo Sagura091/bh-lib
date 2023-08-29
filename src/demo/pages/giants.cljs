@@ -3,8 +3,7 @@
             [woolybear.ad.layout :as layout]
             [woolybear.packs.flex-panel :as flex]
             [re-com.core :as rc]
-
-            [bh-ui.atom.card.flippable-card :as flippable]))
+            [bh-ui.core :as bh]))
 
 
 (def image-style {:width        "170px" :height "170px"
@@ -179,9 +178,9 @@
   "
   [name description & [image]]
   ;(log/info "personality" image)
-  [flippable/card
+  [bh/flippable-card
    :style {:style {:width 270 :height 400}}
-   :front [:div flippable/default-style
+   :front [:div bh/flippable-card-style
            [rc/v-box :src (rc/at)
             :gap "10px"
             :align :center
@@ -195,7 +194,7 @@
                                         "imgs/hammer-icon-16x16.png")}]]
                        [rc/gap :size "15px"]
                        [:p.title.is-1.has-text-centered name]]]]
-   :back [:div flippable/default-style
+   :back [:div bh/flippable-card-style
           [layout/section
            [layout/markdown-block description]]]])
 
