@@ -6,7 +6,7 @@
 
 
 (rf/reg-event-db
-  :register-meta
+  ::register-meta
   (fn-traced [db [_ meta-data]]
     ;(log/info ":register-meta" meta-data)
     (if (:meta-data-registry db)
