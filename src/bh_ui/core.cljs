@@ -338,7 +338,7 @@
 
 ;;;;;;;;;;; FAST CHARTS ;;;;;;;;;
 
-(def fast-canvas-js-chart                   fast-chart/canvas-js-chart)
+(def fast-canvas-js-chart                   fast-chart/canvas-js-chart) ;; remove?
 (def fast-line-chart                        fast-chart/line-chart)
 (def fast-spline-chart                      fast-chart/spline-chart)
 

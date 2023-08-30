@@ -2,6 +2,7 @@
   (:require ["@canvasjs/react-charts$default" :as CanvasJSReact]
             ["reactflow" :refer (Position)]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.component-validator :as cv]
             [bh-ui.atom.data-transformation :as xform]
             [cljs.spec.alpha :as spec]
             [malli.core :as m]
@@ -31,23 +32,23 @@
 
   ; TODO: how do we make CanvasJSChart fit inside it's parent?
   (let [CanvasJSChart (.-CanvasJSChart CanvasJSReact)
-        d             (h/resolve-value data)
+        d (h/resolve-value data)
 
-        cooked-data   (cook-data @d)
-        options       {:zoomEnabled      true
-                       :animationEnabled true
-                       :height           (or (:height config) nil)
-                       :width            (or (:width config) nil)
-                       :exportEnabled    (or (:exportEnabled config) false)
-                       :theme            (or (:theme config) "light1")
-                       :title            {:text (or (:title config) "")}
-                       :axisX            {:title (or (:x-axis-title config) "")}
-                       :axisY            {:title (or (:y-axis-title config) "")}
-                       :data             (mapv (fn [data]
-                                                 {:type       type
-                                                  :markerSize (or (:line-size config) 1)
-                                                  :dataPoints data})
-                                           cooked-data)}]
+        cooked-data (cook-data @d)
+        options {:zoomEnabled      true
+                 :animationEnabled true
+                 :height           (or (:height config) nil)
+                 :width            (or (:width config) nil)
+                 :exportEnabled    (or (:exportEnabled config) false)
+                 :theme            (or (:theme config) "light1")
+                 :title            {:text (or (:title config) "")}
+                 :axisX            {:title (or (:x-axis-title config) "")}
+                 :axisY            {:title (or (:y-axis-title config) "")}
+                 :data             (mapv (fn [data]
+                                           {:type       type
+                                            :markerSize (or (:line-size config) 1)
+                                            :dataPoints data})
+                                         cooked-data)}]
 
     ;(log/info "canvas-js-chart (b)"
     ;  data
@@ -66,12 +67,17 @@
                [:x-axis-title string?]
                [:line-size int?]]]]))
 
+; TODO: CanvasJs uses a "spline" type to draw curved line charts. Consider changing
+;       Recharts to match (both have "line" - no curves, both have "spline" - curved
+
 (defn line-chart [& {:keys [data config style]}]
   ;(log/info "line-chart" data "//" config)
 
-  ; TODO: CanvasJs uses a "spline" type to draw curved line charts. Consider changing
-  ;       Recharts to match (both have "line" - no curves, both have "spline" - curved
-  (canvas-js-chart "line" data config style))
+  (if (cv/component-validator :schema fast-chart-schema
+                              :data data
+                              :config config)
+    (canvas-js-chart "line" data config style)
+    (cv/invalid-component-explanation fast-chart-schema {:data data :config config :style style})))
 
 
 (defn spline-chart [& {:keys [data config style]}]
