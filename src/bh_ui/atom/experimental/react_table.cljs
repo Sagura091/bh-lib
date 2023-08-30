@@ -85,13 +85,8 @@
              [:r> "tr" (.getHeaderGroupProps hg)
               (doall
                 (for [col (.-headers hg)]
-
                   [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
-
-
-
                    (.render col "Header")
-
                    (if (.-canSort col)
                      [:span
                       (let [up-arrow      (:sort-up-arrow-icon @config)
