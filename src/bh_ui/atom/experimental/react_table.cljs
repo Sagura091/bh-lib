@@ -242,7 +242,7 @@
                                                 :data   :port/source-sink}}})
 
 
-(re-frame/dispatch-sync [:bh-ui.atom.component-registry/register-meta meta-data])
+(re-frame/dispatch-sync [:register-meta meta-data])
 
 
 (comment
