@@ -1,6 +1,6 @@
 (ns bh-ui.atom.experimental.react-table
   (:require
-    [bh-ui.core :as bh]
+    [bh-ui.atom.bhui.color-picker :as picker]
     [reagent.core :as r]
     [reagent.dom :as rdom]
     [re-frame.core :as re-frame]
@@ -36,13 +36,14 @@
           :popover [rc/popover-content-wrapper :src (rc/at)
                     :close-button? false
                     :no-clip? false
-                    :body [bh/bh-hex-color-picker
+                    :body [picker/hex-color-picker
                            :color (:color d)
                            :on-change (fn [x]
                                         ;(log/info "hex-color" x (js->clj x))
                                         (update-val (assoc d :color (js->clj x)) rest))]]]]))))
 (defn aoi [value]
-  [:div {:on-click #(re-frame/dispatch [::demo/demo-update :main-grid.coverage-plan])} value])
+  [:div                                                     ;{:on-click #(re-frame/dispatch [::demo/demo-update :main-grid.coverage-plan])}
+   value])
 (defn edit-save [value]
   (let [is-editing (r/atom false)]
     (fn []
