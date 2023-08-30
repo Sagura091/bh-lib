@@ -118,6 +118,7 @@
 
             [bh-ui.utils.bounding-box :as bounding-box]
             [bh-ui.utils.color :as color]
+            [bh-ui.utils.component-validator :as component-validator]
             [bh-ui.utils.container :as container]
             [bh-ui.utils.example-data :as example-data]
             [bh-ui.utils.helpers :as helpers]
@@ -548,6 +549,9 @@
 (def utils-relative-luminance               color/relative-luminance)
 (def utils-best-text-color                  color/best-text-color)
 (def utils-best-text-color-alpha            color/best-text-color-alpha)
+
+;; component validator utils
+(def component_validator component-validator/component-validator)
 
 ;; container utils
 
