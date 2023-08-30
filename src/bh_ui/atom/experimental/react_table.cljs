@@ -1,14 +1,71 @@
 (ns bh-ui.atom.experimental.react-table
   (:require
+    [bh-ui.core :as bh]
     [reagent.core :as r]
     [reagent.dom :as rdom]
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
+    [re-com.core :as rc]
     [bh-ui.utils.helpers :as h]
     [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
+(defn checkbox [value update-val & rest]
+  [:input
+   {:type     "checkbox"
+    :checked  value
+    :onChange (fn [e] (update-val (not value) rest))}])
 
+(defn hex-color-picker [value update-val & rest]
+  (let [showing? (r/atom false)]
+    (fn [value update-val & rest]
+      (let [d    (into {}
+                       (for [[k v] (js->clj value)]
+                         [(keyword k) v]))]
+        ^{:key (str "symb-" (:name d))}
+        [:div {:style {:color :white
+                       :text-align :left}}
+         [rc/popover-anchor-wrapper :src (rc/at)
+          :showing? @showing?
+          :position :below-right
+          :anchor [:span.icon.has-text-success.is-small
+                   [:i.fas.fa-circle
+                    {:style    {:color (:color d)}
+                     :on-click #(do
+                                  (swap! showing? not))}]]
+          :popover [rc/popover-content-wrapper :src (rc/at)
+                    :close-button? false
+                    :no-clip? false
+                    :body [bh/bh-hex-color-picker
+                           :color (:color d)
+                           :on-change (fn [x]
+                                        ;(log/info "hex-color" x (js->clj x))
+                                        (update-val (assoc d :color (js->clj x)) rest))]]]]))))
+(defn aoi [value]
+  [:div {:on-click #(re-frame/dispatch [::demo/demo-update :main-grid.coverage-plan])} value])
+(defn edit-save [value]
+  (let [is-editing (r/atom false)]
+    (fn []
+      ;^{:key (str "edit-" name)}
+      [:div {:on-click #(if @is-editing
+                          (do
+                            (reset! is-editing false))
+                          (do
+                            (reset! is-editing true)))}
+       (if @is-editing
+         [:span.icon.has-text-success.is-small [:i.far.fa-save]]
+         [:span.icon.has-text-info.is-small [:i.far.fa-edit]])])))
+
+(defn icon [value update-val & rest]
+  ;^{:key (str "delete-" name)}
+  [:div {:on-click #(do)}
+   [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])
+
+(def cell-mapping {:check-box-cell checkbox
+                   :hex-color-picker-cell hex-color-picker
+                   :aoi-cell aoi
+                   :edit-save-cell edit-save
+                   :icon-cell icon})
 (defn- table [columns data table-type config]
   ;(log/info "table (render)" (js->clj data))
 
@@ -131,7 +188,7 @@
                                          subRowIndex (.-index (.-row cellProps))
                                          colId       (keyword (.-id (.-column (.-cell cellProps))))]
                                      (if (contains? m :render)
-                                       (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
+                                       (r/as-element [((:render m) cell-mapping) value update-val orig-data index subRowIndex colId data react-data config])
                                        (str value)))))
                 :mainRowCell   (if (or (= (:colProp m) :expandable) (= (:group-by @config) (:colId m)))
                                  (if (= (:colProp m) :expandable)
@@ -147,7 +204,7 @@
                                            subRowIndex nil
                                            colId       (.-id (.-column (.-cell cellProps)))]
                                        (if (contains? m :render)
-                                         (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
+                                         (r/as-element [((:render m) cell-mapping) value update-val orig-data index subRowIndex colId data react-data config])
                                          (str value)))))
                                  (fn []
                                    nil))})
@@ -158,36 +215,36 @@
   "configures standard table properties based on the table's config info"
   [data orig-data react-data config]
   (into []
-    (map
-      (fn [m]
-        {:Header        (cond
-                          (= (:colProp m) :select-all)
-                          (r/as-element [:button
-                                         {:onClick (fn [e]
-                                                     (toggle true (:colSelect m) orig-data data react-data config))}
-                                         (str (:colHeader m))])
+        (map
+          (fn [m]
+            {:Header        (cond
+                              (= (:colProp m) :select-all)
+                              (r/as-element [:button
+                                             {:onClick (fn [e]
+                                                         (toggle true (:colSelect m) orig-data data react-data config))}
+                                             (str (:colHeader m))])
 
-                          (= (:colProp m) :select-none)
-                          (r/as-element [:button
-                                         {:onClick (fn [e]
-                                                     (toggle false (:colSelect m) orig-data data react-data config))}
-                                         (str (:colHeader m))])
+                              (= (:colProp m) :select-none)
+                              (r/as-element [:button
+                                             {:onClick (fn [e]
+                                                         (toggle false (:colSelect m) orig-data data react-data config))}
+                                             (str (:colHeader m))])
 
-                          :else (:colHeader m))
-         :accessor      (:colId m)
-         :sortType      (or (:sortType m) "alphanumeric")
-         :disableSortBy (if (= (:disableSortBy m) false)
-                          false true)
-         :mainRowCell   (fn [cellProps]
-                          (let [value       (.-value cellProps)
-                                index       (js/parseInt (.-id (.-row cellProps)))
-                                subRowIndex nil
-                                colId       (.-id (.-column (.-cell cellProps)))]
-                            (if (contains? m :render)
-                              (r/as-element [(:render m) value update-val orig-data index
-                                             subRowIndex colId data react-data config])
-                              (str value))))})
-      (:columns @config))))
+                              :else (:colHeader m))
+             :accessor      (:colId m)
+             :sortType      (or (:sortType m) "alphanumeric")
+             :disableSortBy (if (= (:disableSortBy m) false)
+                              false true)
+             :mainRowCell   (fn [cellProps]
+                              (let [value       (.-value cellProps)
+                                    index       (js/parseInt (.-id (.-row cellProps)))
+                                    subRowIndex nil
+                                    colId       (.-id (.-column (.-cell cellProps)))]
+                                (if (contains? m :render)
+                                  (r/as-element [((:render m) cell-mapping) value update-val orig-data index
+                                                 subRowIndex colId data react-data config])
+                                  (str value))))})
+          (:columns @config))))
 
 
 (defn- configure-data
