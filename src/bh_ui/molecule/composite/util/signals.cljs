@@ -183,12 +183,14 @@ The function takes a hash-map with the following keys defined:
 (def last-hiccup "atom to help debugging at the repl" (atom nil))
 (def last-locals "atom to help debugging at the repl" (atom nil))
 (def last-cfg "atom to help debugging at the repl" (atom nil))
+(def last-atm-set (atom nil))
 
 
 ; :ui/component
 (defmethod component->ui :ui/component [{:keys [node atm-set registry configuration component-id container-id] :as params}]
 
   (reset! last-params params)
+  (reset! last-atm-set @atm-set)
 
   (let [ui-type    (get-in configuration [:mol/components node :atm/kind])
         bh-ui      (if (keyword? ui-type)
@@ -214,7 +216,9 @@ The function takes a hash-map with the following keys defined:
                                   [:enumerated nil]
                                   (do
                                     ;(log/info "enumerated child" node "//" child)
-                                    (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
+                                    (into [(or bh-ui error-ui)
+                                           (merge (or styl {:style {:height "100%" :width "100%"}})
+                                             (or def-config {}))]
                                       (:component ((fn [c] (get @atm-set c)) child))))
 
                                   [:keyword nil]
@@ -227,8 +231,10 @@ The function takes a hash-map with the following keys defined:
 
                                   [nil :enumerated]
                                   (do
-                                    ;(log/info "enumerated children" node "//" children)
-                                    (into [(or bh-ui error-ui) (or styl {:style {:height "100%" :width "100%"}})]
+                                    (log/info "enumerated children" node "//" children)
+                                    (into [(or bh-ui error-ui)
+                                           (merge (or styl {:style {:height "100%" :width "100%"}})
+                                             (or def-config {}))]
                                       (map (fn [c] (:component (get @atm-set c))) children)))
 
                                   [nil :keyword]
@@ -405,7 +411,7 @@ to isolate this widget from all other
 
     ;(log/info "process-components-stateful (a)" cfg "//" edges)
 
-    ;(log/info "process-components-stateful (b)" g "//" sorted-config)
+    (log/info "process-components-stateful (b)" g "//" sorted-config)
 
     (doall
       (map (fn [[node meta-data]]

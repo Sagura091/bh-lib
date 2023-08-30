@@ -1,7 +1,6 @@
 (ns demo.catalog.atom.example.fast-chart.fast-line-chart
   (:require [woolybear.ad.catalog.utils :as acu]
             [bh-ui.core :as bh]
-            [bh-ui.utils.component-validator :as cv]
             [bh-ui.utils.example-data :as example-data]))
 
 
