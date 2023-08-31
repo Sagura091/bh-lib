@@ -103,14 +103,14 @@
    [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])
 
 
-(def cell-mapping {:check-box-cell checkbox
-                   :hex-color-picker-cell hex-color-picker
-                   :aoi-cell aoi
-                   :target-edit-save-cell target-edit-save
-                   :target-delete-cell target-delete
-                   :rgba-color-picker rgba-color-picker
-                   :platform-cell platform
-                   :fa-icon       fa-icon})
+(def cell-mapping (atom {:check-box-cell checkbox
+                         :hex-color-picker-cell hex-color-picker
+                         :aoi-cell aoi
+                         :target-edit-save-cell target-edit-save
+                         :target-delete-cell target-delete
+                         :rgba-color-picker rgba-color-picker
+                         :platform-cell platform
+                         :fa-icon       fa-icon}))
 (defn- table [columns data table-type config]
   ;(log/info "table (render)" (js->clj data))
 
@@ -233,7 +233,7 @@
                                          subRowIndex (.-index (.-row cellProps))
                                          colId       (keyword (.-id (.-column (.-cell cellProps))))]
                                      (if (contains? m :render)
-                                       (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
+                                       (r/as-element [((:render m) @cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
                                        (str value)))))
                 :mainRowCell   (if (or (= (:colProp m) :expandable) (= (:group-by @config) (:colId m)))
                                  (if (= (:colProp m) :expandable)
@@ -249,7 +249,7 @@
                                            subRowIndex nil
                                            colId       (.-id (.-column (.-cell cellProps)))]
                                        (if (contains? m :render)
-                                         (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
+                                         (r/as-element [((:render m) @cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
                                          (str value)))))
                                  (fn []
                                    nil))})
@@ -286,7 +286,7 @@
                                 subRowIndex nil
                                 colId       (.-id (.-column (.-cell cellProps)))]
                             (if (contains? m :render)
-                              (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index
+                              (r/as-element [((:render m) @cell-mapping) value (:params m) update-val orig-data index
                                              subRowIndex colId data react-data config])
                               (str value))))})
       (:columns @config))))
