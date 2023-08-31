@@ -26,7 +26,7 @@
    ; depend on :source/remote
 
    ;[chart-remote-data/example]
-   ;[coverage-plan/ww-example]
+   [coverage-plan/ww-example]
    ;[coverage-plan/r-example]
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]

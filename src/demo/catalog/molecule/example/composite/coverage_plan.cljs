@@ -2,6 +2,7 @@
   (:require [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
+            [day8.re-frame.tracing :refer-macros [fn-traced]]
             [reagent.core :as r]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
@@ -31,12 +32,7 @@
              :component-id (bh/utils-path->keyword container-id "grid-widget")
              :container-id container-id
              :resizable true
-             :tools true]]])
-        (acu/demo
-          "Coverage Plan"
-          [rc/alert-box :src (rc/at)
-           :alert-type :info
-           :heading "Waiting for (demo) Log-in"]))))
+             :tools true]]]))))
 
 (defn r-example []
   (let [container-id     "coverage-plan-demo-r"]
