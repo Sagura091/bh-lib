@@ -30,49 +30,33 @@
                       {:Symbol "#8FBC8F" :include false :AoI "Ft-202210-0003"}
                       {:Symbol "#9400D3" :include false :AoI "Ft-202210-0004"}]})
 (def data-config {:table-type :standard                     ;specify table type, :standard or :expandable
-                  :columns    [{:colHeader "Include?"       ; specifies what is rendered for each column header.
-                                :colId     :include         ; unique column id
-                                :disableSortBy true
-                                ;include render function if you want to enhance table data
-                                ;Params:
-                                ;value      - value of cell passed from react-table component
-                                ;update-val - callback function to update value
-                                ;rest       - cell info pertaining to react-table component (row index and column id)
-                                :render    (fn [value update-val & rest] ;
-                                             (r/as-element [:input
-                                                            {:type     "checkbox"
-                                                             :checked  value
-                                                             :onChange (fn [e] (update-val (not value) rest))}]))}
+                  :columns    [{:colHeader     "Include?"       ; specifies what is rendered for each column header.
+                                :colId         :include         ; unique column id
+                                :render        :check-box-cell}
 
-                               {:colHeader "Symbol"
-                                :colId     :Symbol
-                                :disableSortBy true
-                                :sortType   "alphanumeric"
-                                :render    (fn [value]
-                                             (r/as-element [:div {:style {:background-color (str value)
-                                                                          :height           "20px"
-                                                                          :width            "20px"
-                                                                          :border-radius    "50%"}}]))}
+                               {:colHeader     "Symbol"
+                                :colId         :Symbol
+                                :sortType      "alphanumeric"}
 
-                               {:colHeader "AoI"
-                                :colId     :AoI
+                               {:colHeader     "AoI"
+                                :colId         :AoI
                                 :disableSortBy false}
 
-                               {:colHeader "All"
-                                :colProp   :select-all      ; renders button in column header that switches value in every row to 'true'
-                                :colSelect :include         ; specify which column to switch value
-                                :colId     :select-all
-                                :disableSortBy true
-                                :render    (fn []
-                                             (r/as-element [icons/icon {:icon "save" :extra-classes :has-text-danger}]))}
+                               {:colHeader     "All"
+                                :colProp       :select-all      ; renders button in column header that switches value in every row to 'true'
+                                :colSelect     :include         ; specify which column to switch value
+                                :colId         :select-all
+                                :render        :fa-icon
+                                :params        {:color :red
+                                                :icon  :edit}}
 
-                               {:colHeader "None"
-                                :colProp   :select-none     ; renders button in column header that switches value in every row to 'false'
-                                :colSelect :include         ; specify which column to switch value
-                                :colId     :none
-                                :disableSortBy true
-                                :render    (fn []
-                                             (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
+                               {:colHeader     "None"
+                                :colProp       :select-none     ; renders button in column header that switches value in every row to 'false'
+                                :colSelect     :include         ; specify which column to switch value
+                                :colId         :none
+                                :render        :fa-icon
+                                :params        {:icon :save
+                                                :color :green}}]})
 
 
 (def group-data {:data [{:Symbol "#FFFF00" :time 0 :include false :AoI "Fire-prst-001"}
@@ -98,19 +82,10 @@
 
                                      {:colHeader "Include?"
                                       :colId     :include
-                                      :render    (fn [value update-val & rest]
-                                                   (r/as-element [:input
-                                                                  {:type     "checkbox"
-                                                                   :checked  value
-                                                                   :onChange (fn [e] (update-val (not value) rest))}]))}
+                                      :render    :check-box-cell}
 
                                      {:colId     :Symbol
-                                      :colHeader "Symbol"
-                                      :render    (fn [value]
-                                                   (r/as-element [:div {:style {:background-color (str value)
-                                                                                :height           "20px"
-                                                                                :width            "20px"
-                                                                                :border-radius    "50%"}}]))}
+                                      :colHeader "Symbol"}
                                      {:colHeader "AoI"
                                       :colId     :AoI}
 
@@ -118,15 +93,14 @@
                                       :colProp   :select-all
                                       :colSelect :include
                                       :colId     :select-all
-                                      :render    (fn []
-                                                   (r/as-element [icons/icon {:icon "save" :extra-classes :has-text-danger}]))}
+                                      :render    :fa-icon
+                                      :params    {:color :green
+                                                  :icon  :save}}
 
                                      {:colHeader "None"
                                       :colProp   :select-none
                                       :colSelect :include
-                                      :colId     :none
-                                      :render    (fn []
-                                                   (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
+                                      :colId     :none}]})
 
 
 (def table-style {:width                  "600px"

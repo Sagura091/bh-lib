@@ -59,7 +59,7 @@
 
 (def fast-chart-schema
   (m/schema [:map
-             [:data map?]
+             ;[:data map?]
              [:config
               [:map
                [:theme string?]
@@ -73,11 +73,11 @@
 (defn line-chart [& {:keys [data config style]}]
   ;(log/info "line-chart" data "//" config)
 
-  (if (cv/component-validator :schema fast-chart-schema
-                              :data data
-                              :config config)
-    (canvas-js-chart "line" data config style)
-    (cv/invalid-component-explanation fast-chart-schema {:data data :config config :style style})))
+  ;(if (cv/component-validator :schema fast-chart-schema
+  ;                            :data data
+  ;                            :config config)
+  (canvas-js-chart "line" data config style))
+  ;  (cv/invalid-component-explanation fast-chart-schema {:data data :config config :style style})))
 
 
 (defn spline-chart [& {:keys [data config style]}]

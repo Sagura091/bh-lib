@@ -45,5 +45,6 @@
    [multi-chart-widget/example]
 
    [with-fn/example]
-   [fc/example]])
+   [fc/example]
+   ])
 

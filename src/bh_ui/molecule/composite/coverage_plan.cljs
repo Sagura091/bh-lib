@@ -473,155 +473,62 @@
 (def target-table-config {:table-type :standard
                           :columns    [{:colHeader "Include?"
                                         :colId     :include?
-                                        :render    (fn [value update-val & rest]
-                                                     (r/as-element [:input
-                                                                    {:type     "checkbox"
-                                                                     :checked  value
-                                                                     :onChange (fn [e] (update-val (not value) rest))}]))}
-
+                                        :render    :check-box-cell}
                                        {:colHeader "Symbol"
                                         :colId     :symbol
-                                        :render    (fn [value update-val & rest]
-                                                     (let [showing? (r/atom false)]
-                                                       (fn [value update-val & rest]
-                                                         (let [d    (into {}
-                                                                          (for [[k v] (js->clj value)]
-                                                                            [(keyword k) v]))]
-                                                           ^{:key (str "symb-" (:name d))}
-                                                           [:div {:style {:color :white
-                                                                          :text-align :left}}
-                                                            [rc/popover-anchor-wrapper :src (rc/at)
-                                                             :showing? @showing?
-                                                             :position :below-right
-                                                             :anchor [:span.icon.has-text-success.is-small
-                                                                      [:i.fas.fa-circle
-                                                                       {:style    {:color (:color d)}
-                                                                        :on-click #(do
-                                                                                     (swap! showing? not))}]]
-                                                             :popover [rc/popover-content-wrapper :src (rc/at)
-                                                                       :close-button? false
-                                                                       :no-clip? false
-                                                                       :body [picker/hex-color-picker
-                                                                              :color (:color d)
-                                                                              :on-change (fn [x]
-                                                                                           ;(log/info "hex-color" x (js->clj x))
-                                                                                           (update-val (assoc d :color (js->clj x)) rest))]]]]))))}
-
-
-
+                                        :render    :hex-color-picker-cell}
                                        {:colHeader "AoI"
                                         :colId     :aoi
-                                        :render    (fn [value]
-                                                     [:div  ;{:on-click #(re-frame/dispatch [::demo/demo-update :main-grid.coverage-plan])}
-                                                      value])}
-
+                                        :render    :aoi-cell}
                                        {:colHeader "all"
                                         :colProp   :select-all
                                         :colSelect :include?
                                         :colId     :select-all
-                                        :render    (fn [value update-val & rest]
-                                                     (let [is-editing (r/atom false)]
-                                                       (fn []
-                                                         ^{:key (str "edit-" name)}
-                                                         [:div {:on-click #(if @is-editing
-                                                                             (do
-                                                                               ;(log/info "SAVE" name)
-                                                                               (reset! is-editing false))
-                                                                             (do
-                                                                               ;(log/info "EDIT" name)
-                                                                               (reset! is-editing true)))}
-                                                          (if @is-editing
-                                                            [:span.icon.has-text-success.is-small [:i.far.fa-save]]
-                                                            [:span.icon.has-text-info.is-small [:i.far.fa-edit]])])))}
-
+                                        :render    :target-edit-save-cell}
                                        {:colHeader "none"
                                         :colProp   :select-none
                                         :colSelect :include?
                                         :colId     :none
-                                        :render    (fn [value update-val & rest]
-                                                     ;^{:key (str "delete-" name)}
-                                                     [:div {:on-click #(do)}
-                                                      [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])}]})
+                                        :render    :target-delete-cell}]})
+
 (def sensor-table-config {:table-type :standard
-                          :columns    [{:colHeader "Include?"
-                                        :colId     :include?
-                                        :render    (fn [value update-val & rest]
-                                                     (r/as-element [:input
-                                                                    {:type     "checkbox"
-                                                                     :checked  value
-                                                                     :onChange (fn [e] (update-val (not value) rest))}]))}
+                   :columns    [{:colHeader "Include?"
+                                 :colId     :include?
+                                 :render    :check-box-cell}
 
-                                       {:colHeader "Sensor/Color"
-                                        :colId     :sensor
-                                        :render    (fn [value update-val & rest]
-                                                     (let [showing? (r/atom false)]
-                                                       (fn [value update-val & rest]
-                                                         (let [d (js->clj value :keywordize-keys true)]
-                                                           ;(log/info "rgba color picker" d)
-                                                           [:div
-                                                            {:style {:background-color :transparent
-                                                                     :border-width     "1px"
-                                                                     :text-align       :left}}
-                                                            [rc/popover-anchor-wrapper :src (rc/at)
-                                                             :showing? @showing?
-                                                             :position :below-right
-                                                             :anchor [:div {:style    {:padding          "5px 10px 5px 10px"
-                                                                                       :background-color (or (c/hash->rgba (:color d)) :green)}
-                                                                            :on-click #(swap! showing? not)}
-                                                                      (:name d)]
-                                                             :popover [rc/popover-content-wrapper :src (rc/at)
-                                                                       :close-button? false
-                                                                       :no-clip? false
-                                                                       :body [picker/rgba-color-picker
-                                                                              :color (:color d)
-                                                                              :on-change (fn [x]
-                                                                                           (update-val (assoc d :color (js->clj x :keywordize-keys true)) rest))]]]]))))}
+                                {:colHeader "Sensor/Color"
+                                 :colId     :sensor
+                                 :render    :rgba-color-picker}
+                                {:colHeader "Platform"
+                                 :colId     :platform
+                                 :render    :platform-cell}
 
+                                {:colHeader "all"
+                                 :colProp   :select-all
+                                 :colSelect :include?
+                                 :colId     :select-all}
 
+                                {:colHeader "none"
+                                 :colProp   :select-none
+                                 :colSelect :include?
+                                 :colId     :none}]})
 
-                                       {:colHeader "Platform"
-                                        :colId     :platform
-                                        :render    (fn [value]
-                                                     [:div  ;{:on-click #(re-frame/dispatch [::demo/demo-reset :main-grid.coverage-plan])}
-                                                      value])}
-
-                                       {:colHeader "all"
-                                        :colProp   :select-all
-                                        :colSelect :include?
-                                        :colId     :select-all}
-
-                                       {:colHeader "none"
-                                        :colProp   :select-none
-                                        :colSelect :include?
-                                        :colId     :none}]})
 (def imagery-table-config {:table-type :standard
                            :columns    [{:colHeader "Include?"
                                          :colId     :include?
-                                         :render    (fn [value update-val & rest]
-                                                      (r/as-element [:input
-                                                                     {:type     "checkbox"
-                                                                      :checked  value
-                                                                      :onChange (fn [e] (update-val (not value) rest))}]))}
-
+                                         :render    :check-box-cell}
                                         {:colHeader "Description"
                                          :colId     :description}
-
-
-
-
                                         {:colHeader "all"
                                          :colProp   :select-all
                                          :colSelect :include?
                                          :colId     :select-all
-                                         :render    (fn [value update-val & rest]
-                                                      ^{:key (str "delete-" name)}
-                                                      [:div {:on-click #(do)}
-                                                       [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])}
-
+                                         :render    :target-delete-cell}
                                         {:colHeader "none"
                                          :colProp   :select-none
                                          :colSelect :include?
                                          :colId     :none}]})
+
 
 (def remote-satellites
   {:title "Satellites",
@@ -2298,7 +2205,7 @@
                                       :topic/satellite-data      {:atm/role :source/local :atm/kind :source/satellites :atm/default-data remote-satellites}
                                       :topic/coverage-data       {:atm/role :source/local :atm/kind :source/coverages :atm/default-data remote-coverages}
                                       :topic/glm-data            {:atm/role :source/local :atm/kind :source/glm :atm/default-data glm}
-                                      ;:topic/meso-data           {:atm/role :source/local :atm/kind :source/meso-1 :atm/default-data meso}
+                                      :topic/meso-data           {:atm/role :source/local :atm/kind :source/meso-1 :atm/default-data meso}
 
                                       ;transformation functions
                                       :fn/filtered-targets       {:atm/role :source/fn :atm/kind :bigger-coverage-plan/fn-filtered-targets}

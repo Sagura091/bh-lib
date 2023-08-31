@@ -4,11 +4,113 @@
     [reagent.dom :as rdom]
     [re-frame.core :as re-frame]
     ["react-table" :as rt]
+    [re-com.core :as rc]
+    [bh-ui.utils.color :as c]
+    [bh-ui.atom.bhui.color-picker :as picker]
     [bh-ui.utils.helpers :as h]
     [bh-ui.utils.locals :as l]
     [taoensso.timbre :as log]))
 
 
+(def fa-colors {:green ".has-text-success"
+                :red   ".has-text-danger"})
+(def fa-icons {:save [:i.far.fa-save]
+               :edit [:i.far.fa-edit]})
+
+(defn fa-icon [value params update-val & rest]
+  [:div [(keyword (str "span.icon" ((:color params) fa-colors))) ((:icon params) fa-icons)]])
+(defn checkbox [value params update-val & rest]
+  [:input
+   {:type     "checkbox"
+    :checked  value
+    :onChange (fn [e] (update-val (not value) rest))}])
+
+
+(defn rgba-color-picker [value params update-val & rest]
+  (let [showing? (r/atom false)]
+    (fn [value update-val & rest]
+      (let [d (js->clj value :keywordize-keys true)]
+        ;(log/info "rgba color picker" d)
+        [:div
+         {:style {:background-color :transparent
+                  :border-width     "1px"
+                  :text-align       :left}}
+         [rc/popover-anchor-wrapper :src (rc/at)
+          :showing? @showing?
+          :position :below-right
+          :anchor [:div {:style    {:padding          "5px 10px 5px 10px"
+                                    :background-color (or (c/hash->rgba (:color d)) :green)}
+                         :on-click #(swap! showing? not)}
+                   (:name d)]
+          :popover [rc/popover-content-wrapper :src (rc/at)
+                    :close-button? false
+                    :no-clip? false
+                    :body [picker/rgba-color-picker
+                           :color (:color d)
+                           :on-change (fn [x]
+                                        (update-val (assoc d :color (js->clj x :keywordize-keys true)) rest))]]]]))))
+
+(defn hex-color-picker [value params update-val & rest]
+  (let [showing? (r/atom false)]
+    (fn [value update-val & rest]
+      (let [d    (into {}
+                       (for [[k v] (js->clj value)]
+                         [(keyword k) v]))]
+        ^{:key (str "symb-" (:name d))}
+        [:div {:style {:color :white
+                       :text-align :left}}
+         [rc/popover-anchor-wrapper :src (rc/at)
+          :showing? @showing?
+          :position :below-right
+          :anchor [:span.icon.has-text-success.is-small
+                   [:i.fas.fa-circle
+                    {:style    {:color (:color d)}
+                     :on-click #(do
+                                  (swap! showing? not))}]]
+          :popover [rc/popover-content-wrapper :src (rc/at)
+                    :close-button? false
+                    :no-clip? false
+                    :body [picker/hex-color-picker
+                           :color (:color d)
+                           :on-change (fn [x]
+                                        ;(log/info "hex-color" x (js->clj x))
+                                        (update-val (assoc d :color (js->clj x)) rest))]]]]))))
+
+
+(defn aoi [value params update-val & rest]
+  [:div                                                     ;{:on-click #(re-frame/dispatch [::demo/demo-update :main-grid.coverage-plan])}
+   value])
+
+(defn platform [value params update-val & rest]
+  [:div  ;{:on-click #(re-frame/dispatch [::demo/demo-reset :main-grid.coverage-plan])}
+  value])
+(defn target-edit-save [value params update-val & rest]
+  (let [is-editing (r/atom false)]
+    (fn []
+      ;^{:key (str "edit-" name)}
+      [:div {:on-click #(if @is-editing
+                          (do
+                            (reset! is-editing false))
+                          (do
+                            (reset! is-editing true)))}
+       (if @is-editing
+         [:span.icon.has-text-success.is-small [:i.far.fa-save]]
+         [:span.icon.has-text-info.is-small [:i.far.fa-edit]])])))
+
+(defn target-delete [value params update-val & rest]
+  ;^{:key (str "delete-" name)}
+  [:div {:on-click #(do)}
+   [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])
+
+
+(def cell-mapping {:check-box-cell checkbox
+                   :hex-color-picker-cell hex-color-picker
+                   :aoi-cell aoi
+                   :target-edit-save-cell target-edit-save
+                   :target-delete-cell target-delete
+                   :rgba-color-picker rgba-color-picker
+                   :platform-cell platform
+                   :fa-icon       fa-icon})
 (defn- table [columns data table-type config]
   ;(log/info "table (render)" (js->clj data))
 
@@ -131,7 +233,7 @@
                                          subRowIndex (.-index (.-row cellProps))
                                          colId       (keyword (.-id (.-column (.-cell cellProps))))]
                                      (if (contains? m :render)
-                                       (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
+                                       (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
                                        (str value)))))
                 :mainRowCell   (if (or (= (:colProp m) :expandable) (= (:group-by @config) (:colId m)))
                                  (if (= (:colProp m) :expandable)
@@ -147,7 +249,7 @@
                                            subRowIndex nil
                                            colId       (.-id (.-column (.-cell cellProps)))]
                                        (if (contains? m :render)
-                                         (r/as-element [(:render m) value update-val orig-data index subRowIndex colId data react-data config])
+                                         (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index subRowIndex colId data react-data config])
                                          (str value)))))
                                  (fn []
                                    nil))})
@@ -184,7 +286,7 @@
                                 subRowIndex nil
                                 colId       (.-id (.-column (.-cell cellProps)))]
                             (if (contains? m :render)
-                              (r/as-element [(:render m) value update-val orig-data index
+                              (r/as-element [((:render m) cell-mapping) value (:params m) update-val orig-data index
                                              subRowIndex colId data react-data config])
                               (str value))))})
       (:columns @config))))
