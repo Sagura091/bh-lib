@@ -28,7 +28,7 @@
 
 (defn rgba-color-picker [value params update-val & rest]
   (let [showing? (r/atom false)]
-    (fn [value update-val & rest]
+    (fn [value params update-val & rest]
       (let [d (js->clj value :keywordize-keys true)]
         ;(log/info "rgba color picker" d)
         [:div
@@ -52,7 +52,8 @@
 
 (defn hex-color-picker [value params update-val & rest]
   (let [showing? (r/atom false)]
-    (fn [value update-val & rest]
+    ;(log/info "mounting")
+    (fn [value params update-val & rest]
       (let [d    (into {}
                        (for [[k v] (js->clj value)]
                          [(keyword k) v]))]
@@ -173,6 +174,7 @@
         d             (if (= :standard (:table-type @config))
                         @react-data
                         (into [] (mapcat #(get %1 :subRows) @react-data)))]
+    ;(log/info "sync-data" @react-data)
     (condp = [reframe-path? data-key?]
       [true true] (h/handle-change-path orig-data [[assoc-in [:data] d]])
       [true false] (h/handle-change-path orig-data [[l/set-val [] d]])
@@ -184,8 +186,9 @@
   "toggle all values to true or false in a column for all rows"
   [value colId orig-data data react-data config]
   (let [type (:table-type @config)]
+    (log/info @data)
     (cond
-      (= type :standard) (reset! react-data (into [] (map #(assoc % colId value) @react-data)))
+      (= type :standard) (reset! react-data (into [] (map #(assoc % colId value) (or (:data @data) @data))))
       (= type :expandable) (reset! react-data (into []
                                                 (map
                                                   (fn [m]
@@ -287,7 +290,7 @@
                                 colId       (.-id (.-column (.-cell cellProps)))]
                             (if (contains? m :render)
                               (r/as-element [((:render m) @cell-mapping) value (:params m) update-val orig-data index
-                                             subRowIndex colId data react-data config])
+                                             subRowIndex colId data (r/atom (or (:data @data) @data)) config])
                               (str value))))})
       (:columns @config))))
 
@@ -321,16 +324,17 @@
 
   (let [cfg (h/resolve-value config)
         d   (h/resolve-value data)
-        s   (h/resolve-value style)]
+        s   (h/resolve-value style)
+        react-data    (r/atom (configure-data d cfg))
+        column-config (clj->js (if (= :expandable (:table-type @cfg))
+                                 (configure-expandable-columns d data react-data cfg s)
+                                 (configure-standard-columns d data react-data cfg)))]
 
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
       ;(log/info "table-component (render)" data)
-      (let [react-data    (r/atom (configure-data d cfg))
-            column-config (clj->js (if (= :expandable (:table-type @cfg))
-                                     (configure-expandable-columns d data react-data cfg s)
-                                     (configure-standard-columns d data react-data cfg)))]
+      (let [react-data    (r/atom (configure-data d cfg))]
         [:f> table
          column-config
          (clj->js @react-data)

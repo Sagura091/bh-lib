@@ -81,19 +81,10 @@
                                  ;value      - value of cell passed from react-table component
                                  ;update-val - callback function to update value
                                  ;rest       - cell info pertaining to react-table component (row index and column id)
-                                 :render    (fn [value update-val & rest] ;
-                                              (r/as-element [:input
-                                                             {:type     "checkbox"
-                                                              :checked  value
-                                                              :onChange (fn [e] (update-val (not value) rest))}]))}
+                                 :render     :check-box-cell}
 
                                 {:colHeader "Symbol"
-                                 :colId     :Symbol
-                                 :render    (fn [value]
-                                              (r/as-element [:div {:style {:background-color (str value)
-                                                                           :height           "20px"
-                                                                           :width            "20px"
-                                                                           :border-radius    "50%"}}]))}
+                                 :colId     :Symbol}
 
                                 {:colHeader "AoI"
                                  :colId     :AoI}
@@ -102,15 +93,17 @@
                                  :colProp   :select-all     ; renders button in column header that switches value in every row to 'true'
                                  :colSelect :include        ; specify which column to switch value
                                  :colId     :select-all
-                                 :render    (fn []
-                                              (r/as-element [icons/icon {:icon "save" :extra-classes :has-text-danger}]))}
+                                 :render    :fa-icon
+                                 :params    {:color :red
+                                             :icon  :edit}}
 
                                 {:colHeader "None"
                                  :colProp   :select-none    ; renders button in column header that switches value in every row to 'false'
                                  :colSelect :include        ; specify which column to switch value
                                  :colId     :none
-                                 :render    (fn []
-                                              (r/as-element [icons/icon {:icon "edit" :extra-classes :has-text-success}]))}]})
+                                 :render    :fa-icon
+                                 :params    {:icon :save
+                                             :color :green}}]})
 
 ; endregion
 

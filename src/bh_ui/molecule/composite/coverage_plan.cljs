@@ -181,13 +181,14 @@
     (first sub-name)
     (fn-traced [_ [event updates]]
                (let [colors-data  @(h/resolve-value colors)
+                     selected-data @(h/resolve-value selected)
                      table-data   (get (first updates) 2)
-                     assigned     (reduce (fn [acc itm]
+                     assigned-colors     (reduce (fn [acc itm]
                                             (assoc acc (:aoi itm) (c/match-colors-hex (:color (:symbol itm)))))
                                           {}
                                           table-data)
                      new-colors   (map (fn [t]
-                                         (assoc t :color (get assigned (:name t))))
+                                         (assoc t :color (or (get assigned-colors (:name t)) (:color t))))
                                        colors-data)
                      new-selected (reduce (fn [acc itm]
                                             (if (:include? itm)
