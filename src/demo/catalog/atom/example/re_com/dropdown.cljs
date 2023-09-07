@@ -1,5 +1,9 @@
 (ns demo.catalog.atom.example.re-com.dropdown
   (:require [re-com.core :as rc]
+            [bh-ui.atom.re-com.dropdown :as dropdown]
+            [woolybear.ad.catalog.utils :as acu]
+            [woolybear.ad.layout :as layout]
+            [reagent.core :as r]
             [reagent.core    :as    reagent]
             [re-com.util     :refer [item-for-id]]))
 
@@ -192,3 +196,18 @@
                                :max-height  "400px"
                                :filter-box? false
                                :on-change   #(reset! selected-country-id %)]]]]])))
+
+(def data (r/atom {:choices [{:id :first :label "first selection"}
+                             {:id :second :label "second selection"}
+                             {:id :third :label "third selection"}]
+                   :selected :first}))
+(def config {:label "Dropdown label"})
+(def style {:width "300px"})
+(defn example []
+  (acu/demo
+    "Dropdown"
+    [layout/centered {:extra-classes :width-50}
+     [dropdown/dropdown
+      :data data
+      :config config
+      :style style]]))

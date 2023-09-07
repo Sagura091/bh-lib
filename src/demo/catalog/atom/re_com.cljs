@@ -21,7 +21,8 @@
             [demo.catalog.atom.example.re-com.login :as login]
             [demo.catalog.atom.example.re-com.v-scroller :as v-scroller]
             [demo.catalog.atom.example.re-com.tabs :as tabs]
-            [demo.catalog.atom.example.re-com.input-field :as input]))
+            [demo.catalog.atom.example.re-com.input-field :as input]
+            [demo.catalog.atom.example.re-com.dropdown :as dropdown]))
 
 
 (defn examples
@@ -59,4 +60,5 @@
    [splitter/vertical-example]
    [header-bar/example]
    [login/example]
-   [input/example]])
+   [input/example]
+   [dropdown/example]])
