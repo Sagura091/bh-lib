@@ -18,10 +18,13 @@
     "A simple Card, based upon [Bulma](https://bulma.io)"
     [layout/centered {:extra-classes :width-50}
      [bh/card
-      :style node-style
-      :title "Rich Hickey"
-      :content [layout/markdown-block
-                "Rich created the [Clojure]() programming language, and the [Datomic]() database."]]]
+      :data {:content [layout/markdown-block
+                       "Rich created the [Clojure]() programming language, and the [Datomic]() database."]}
+      :config {:title "Rich Hickey"}
+      :style {:style node-style}]]
+
+      
+
     bh/card-src-code))
 
 

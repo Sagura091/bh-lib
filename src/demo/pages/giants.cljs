@@ -179,24 +179,25 @@
   [name description & [image]]
   ;(log/info "personality" image)
   [bh/flippable-card
-   :style {:style {:width 270 :height 400}}
-   :front [:div bh/flippable-card-style
-           [rc/v-box :src (rc/at)
-            :gap "10px"
-            :align :center
-            :justify :center
-            :children [[:figure.image {:style {:width "200px" :height "200px"}}
-                        ; see https://www.youtube.com/watch?v=4ALLynsZ0u0
-                        [:img {:style {:border-top-left-radius "5rem"
-                                       :border-bottom-right-radius "5rem"
-                                       :background "#808080"}
-                               :src (or (if (empty? image) nil image)
-                                        "imgs/hammer-icon-16x16.png")}]]
-                       [rc/gap :size "15px"]
-                       [:p.title.is-1.has-text-centered name]]]]
-   :back [:div bh/flippable-card-style
-          [layout/section
-           [layout/markdown-block description]]]])
+   :data {:front [:div bh/flippable-card-style
+                  [rc/v-box :src (rc/at)
+                   :gap "10px"
+                   :align :center
+                   :justify :center
+                   :children [[:figure.image {:style {:width "200px" :height "200px"}}
+                               ; see https://www.youtube.com/watch?v=4ALLynsZ0u0
+                               [:img {:style {:border-top-left-radius "5rem"
+                                              :border-bottom-right-radius "5rem"
+                                              :background "#808080"}
+                                      :src (or (if (empty? image) nil image)
+                                               "imgs/hammer-icon-16x16.png")}]]
+                              [rc/gap :size "15px"]
+                              [:p.title.is-1.has-text-centered name]]]]
+          :back [:div bh/flippable-card-style
+                 [layout/section
+                  [layout/markdown-block description]]]}
+
+   :style {:style {:width 270 :height 400}}])
 
 
 (defn columns

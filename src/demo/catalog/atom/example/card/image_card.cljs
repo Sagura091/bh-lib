@@ -22,17 +22,17 @@
                           :margin-left  :auto
                           :margin-right :auto}})
 
-
 (defn example []
   (acu/demo "Image Card"
     "A Card with an image, based upon [Bulma](https://bulma.io)"
     [layout/centered {:extra-classes :width-50}
      [bh/image-card
-      :title "Rich Hickey"
-      :image "imgs/giants/rich-hickey.jpeg"
-      :content [layout/markdown-block
-                "Rich created the [Clojure](https://clojure.org) programming language, and the [Datomic](https://www.datomic.com) database."]
-      :style node-style-square
-      :image-style image-style]]
+      :data { :content
+             [layout/markdown-block
+              "Rich created the [Clojure](https://clojure.org) programming language, and the [Datomic](https://www.datomic.com) database."]}
+      :config {:title "Rich Hickey"
+               :image "imgs/giants/rich-hickey.jpeg"}
+      :style {:style node-style-square
+              :image-style image-style}]]
     bh/image-card-src-code))
 

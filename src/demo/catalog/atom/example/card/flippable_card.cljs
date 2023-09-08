@@ -31,14 +31,16 @@
     "
     [layout/centered {:extra-classes :width-50}
      [bh/flippable-card
-      :style node-style-square
-      :front [rc/v-box
-              :gap "10px"
-              :children [[rc/gap :size "20px"]
-                         [:figure.image
-                          [:img.is-rounded {:style image-style
-                                            :src   "/imgs/giants/rich-hickey.jpeg"}]]
-                         [:p.title.is-4 "Rich Hickey"]]]
-      :back [layout/markdown-block
-             "Rich created the [Clojure](https://clojure.org/) programming language, and the [Datomic](https://www.datomic.com/) database."]]]
+      :data {:front [rc/v-box
+                     :gap "10px"
+                     :children [[rc/gap :size "20px"]
+                                [:figure.image
+                                 [:img.is-rounded {:style image-style
+                                                   :src   "/imgs/giants/rich-hickey.jpeg"}]]
+                                [:p.title.is-4 "Rich Hickey"]]]
+             :back [layout/markdown-block
+                    "Rich created the [Clojure](https://clojure.org/) programming language, and the [Datomic](https://www.datomic.com/) database."]}
+      :style node-style-square]]
+
+
     bh/flippable-card-src-code))
