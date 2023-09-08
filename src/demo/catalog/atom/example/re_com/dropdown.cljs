@@ -201,7 +201,6 @@
                              {:id :second :label "second selection"}
                              {:id :third :label "third selection"}]
                    :selected :first}))
-(def config {:label "Dropdown label"})
 (def style {:width "300px"})
 (defn example []
   (acu/demo
@@ -209,5 +208,4 @@
     [layout/centered {:extra-classes :width-50}
      [dropdown/dropdown
       :data data
-      :config config
       :style style]]))
