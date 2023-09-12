@@ -39,7 +39,7 @@
                  :animationEnabled true
                  :height           (or (:height config) nil)
                  :width            (or (:width config) nil)
-                 :exportEnabled    (or (:exportEnabled config) false)
+                 :exportEnabled    (or (:export-enabled config) false)
                  :theme            (or (:theme config) "light1")
                  :title            {:text (or (:title config) "")}
                  :axisX            {:title (or (:x-axis-title config) "")}
@@ -70,7 +70,19 @@
 ; TODO: CanvasJs uses a "spline" type to draw curved line charts. Consider changing
 ;       Recharts to match (both have "line" - no curves, both have "spline" - curved
 
-(defn line-chart [& {:keys [data config style]}]
+(defn line-chart
+  "data - array (required) - Ex: [[{:x 1 :y 2} {:x 5 :y 8}] [{:x 4 :y 2} {:x 2 :y 9}]]
+   config - Map
+    :title (required) String - title Ex: \"Title\"
+    :theme (optional) String - name of theme Ex: \"light1, dark1\"
+    :x-axis-title (optional) String - title Ex: \"X-Axis\"
+    :y-axis-title (optional) String - title Ex: \"Y-Axis\"
+    :line-size (optional) Integer - size of data points Ex: 1
+    :export-default (optional) Boolean - displays a menu to export the chart to formats such as .pdf, .png etc.
+    :height (optional) Integer - fixed height of chart
+    :width (optional) Integer - fixed width of chart"
+
+  [& {:keys [data config style]}]
   ;(log/info "line-chart" data "//" config)
 
   ;(if (cv/component-validator :schema fast-chart-schema
@@ -80,7 +92,18 @@
   ;  (cv/invalid-component-explanation fast-chart-schema {:data data :config config :style style})))
 
 
-(defn spline-chart [& {:keys [data config style]}]
+(defn spline-chart
+  "data - array (required) - Ex: [[{:x 1 :y 2} {:x 5 :y 8}] [{:x 4 :y 2} {:x 2 :y 9}]]
+   config - Map
+    :title (required) String - title Ex: \"Title\"
+    :theme (optional) String - name of theme Ex: \"light1, dark1\"
+    :x-axis-title (optional) String - title Ex: \"X-Axis\"
+    :y-axis-title (optional) String - title Ex: \"Y-Axis\"
+    :line-size (optional) Integer - size of data points Ex: 1
+    :export-default (optional) Boolean - displays a menu to export the chart to formats such as .pdf, .png etc.
+    :height (optional) Integer - fixed height of chart
+    :width (optional) Integer - fixed width of chart"
+  [& {:keys [data config style]}]
   ;(log/info "line-chart" data "//" config)
 
   ; TODO: CanvasJs uses a "spline" type to draw curved line charts. Consider changing
