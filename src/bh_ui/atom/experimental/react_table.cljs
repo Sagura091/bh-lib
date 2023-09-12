@@ -319,9 +319,67 @@
 
 (def last-params (atom nil))
 
-(defn table-component [& {:keys [data config style]}]
-  ;(log/info "table-component (a)" data)
+(defn table-component
+  "React table v7 (https://github.com/TanStack/table/tree/v7/docs/src/pages/)
+  Table supports standard or expandable table types
 
+  data - Map (required)
+   :data (required) Array - Ex:
+
+   \"standard table data\"
+   [{:Symbol \"#FFFF00\" :include false :AoI \"Fire-prst-001\"}
+    {:Symbol \"#00FFFF\" :include false :AoI \"Ft-202210-0010\"}
+    {:Symbol \"#0000FF\" :include false :AoI \"Ft-202210-0011\"}]
+
+   \"group table data\"
+   [{:Symbol \"#FFFF00\" :time 0 :include false :AoI \"Fire-prst-001\"}
+    {:Symbol \"#00FFFF\" :time 0 :include false :AoI \"Ft-202210-0010\"}
+    {:Symbol \"#0000FF\" :time 0 :include false :AoI \"Ft-202210-0011\"}]
+
+  config - Map (required) Ex:
+  \"standard config data\"
+  {:table-type :standard                     ;specify table type, :standard or :expandable
+   :columns    [{:colHeader     \"Include?\"       ; specifies what is rendered for each column header.
+                 :colId         :include         ; unique column id
+                 :render        :check-box-cell}
+
+                {:colHeader     \"Symbol\"
+                 :colId         :Symbol
+                 :sortType      \"alphanumeric\"}
+
+                {:colHeader     \"AoI\"
+                 :colId         :AoI
+                 :disableSortBy false}]}
+
+  \"group config data\"
+  {:table-type :expandable             ;specify table type, :standard or :expandable
+   :group-by   :time                   ;specify which column you want to group rows by
+   :columns    [{:colProp   :expandable ; column property for expandable column
+                 :colHeader \"\"
+                 :colId     :expander}
+
+                {:colHeader \"Time\"
+                 :colId     :time
+                 :disableSortBy false}
+
+                {:colHeader \"Include?\"
+                 :colId     :include
+                 :render    :check-box-cell}
+   style - Map (optional) Ex:
+    {:width                  \"600px\"
+     :height                 \"300px\"
+     :text-color             \"black\"
+     :header-bg-color        \"lightgray\"
+     :body-bg-color          \"whitesmoke\"
+     :table-border           \"2px solid black\"
+     :row-border-color       \"lightgray\"
+     :expand-row-icon        \"\uD83D\uDC49\"
+     :fold-row-icon          \"\uD83D\uDC47\"
+     :sort-up-arrow-icon     \"\u2B06\"
+     :sort-down-arrow-icon   \"\u2B07\"
+     :sort-not-selected-icon \"\u25BC\"
+     :row-bg-color           \"white\"}"
+ [& {:keys [data config style]}]
   (let [cfg (h/resolve-value config)
         d   (h/resolve-value data)
         s   (h/resolve-value style)
