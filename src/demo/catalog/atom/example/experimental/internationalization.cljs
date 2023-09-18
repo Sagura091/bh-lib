@@ -17,15 +17,18 @@
 (def local-atom (atom ":en"))
 
 (def Selected-Languges {:name "default"})
+
+
 (defn check-box [language]
-  (log/info "Rendering the check-box - first time through")
+  ;(log/info "Rendering the check-box - first time through")
   (r/with-let [clicked? (ratom/atom false)]
-              (log/info "Rendering the check-box in with-let" @language)
-              [rc/checkbox
-               :src (rc/at)
-               :label (inter/translate :demo (keyword @language) :demo/check-box-label)
-               :model clicked?
-               :on-change #(reset! clicked? %)]))
+    ;(log/info "Rendering the check-box in with-let" @language)
+    [rc/checkbox
+     :src (rc/at)
+     :label (inter/translate :demo (keyword @language) :demo/check-box-label)
+     :model clicked?
+     :on-change #(reset! clicked? %)]))
+
 
 (defn single-dropdown
   []

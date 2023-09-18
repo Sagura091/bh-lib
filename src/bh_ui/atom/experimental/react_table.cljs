@@ -186,7 +186,7 @@
   "toggle all values to true or false in a column for all rows"
   [value colId orig-data data react-data config]
   (let [type (:table-type @config)]
-    (log/info @data)
+    ;(log/info @data)
     (cond
       (= type :standard) (reset! react-data (into [] (map #(assoc % colId value) (or (:data @data) @data))))
       (= type :expandable) (reset! react-data (into []

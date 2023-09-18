@@ -14,7 +14,7 @@
 (defn- data-tools [data]
   (let [old-data (bh/utils-subscribe-local data [])]
 
-    (log/info "data-tools" data "//" @old-data)
+    ;(log/info "data-tools" data "//" @old-data)
 
     (fn []
       [rc/h-box :src (rc/at)
@@ -30,18 +30,18 @@
                   [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
                    :label "A -> 10000"]
 
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data] {:name "Page Q" :uv 1100
-                                                                                        :pv   1100 :tv 1100 :amt 1100}]])
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data] {:name "Page Q" :uv 1100}
+                                                                                        :pv   1100 :tv 1100 :amt 1100]])
                    :label "Add 'Q'"]
 
                   [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]]
                                                                     [assoc :data (into []
                                                                                    (map (fn [x]
                                                                                           (assoc x :new-item (rand-int 7000)))
-                                                                                     (:data @old-data)))]])
+                                                                                     (:data @old-data)))])
                    :label "Add :new-item"]]])))
 
 

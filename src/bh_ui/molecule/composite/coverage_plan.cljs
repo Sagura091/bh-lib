@@ -137,7 +137,7 @@
   "
   [{:keys [data sub-name]}]
 
-  (log/info "fn-range" range "//" data)
+  ;(log/info "fn-range" range "//" data)
 
   (re-frame/reg-sub
     (first sub-name)

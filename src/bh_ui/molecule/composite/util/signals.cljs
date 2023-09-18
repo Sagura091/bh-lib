@@ -231,7 +231,7 @@ The function takes a hash-map with the following keys defined:
 
                                   [nil :enumerated]
                                   (do
-                                    (log/info "enumerated children" node "//" children)
+                                    ;(log/info "enumerated children" node "//" children)
                                     (into [(or bh-ui error-ui)
                                            (merge (or styl {:style {:height "100%" :width "100%"}})
                                              (or def-config {}))]
