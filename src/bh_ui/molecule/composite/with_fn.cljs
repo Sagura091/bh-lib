@@ -63,8 +63,8 @@
                                    :atm/config-data {}}
                      "line-chart" {:atm/role        :ui/component :atm/kind :rechart/line
                                    :atm/config-data {}}
-                     "data"       {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
-                     "computed"   {:atm/role :source/local :atm/kind :topic/computed}
+                     "data"       {:atm/role :source/local :atm/kind :source/local :atm/default-data sample-data}
+                     "computed"   {:atm/role :source/local :atm/kind :source/local}
 
                      "data-fn"    {:atm/role :source/fn :atm/kind :with-fn/compute-new-data}}
 

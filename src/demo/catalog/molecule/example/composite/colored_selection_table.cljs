@@ -10,9 +10,9 @@
 (def ui-definition {:mol/components  {"table"      {:atm/role           :ui/component :atm/kind :react-table/table
                                                     :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
                                       "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
-                                      "input-data" {:atm/role :source/local :atm/kind :topic/input-data
+                                      "input-data" {:atm/role :source/local :atm/kind :source/local
                                                     :atm/default-data  demo.catalog.atom.example.experimental.react-table/data}
-                                      "colorized-data" {:atm/role :source/local :atm/kind :topic/colorized-data}}
+                                      "colorized-data" {:atm/role :source/local :atm/kind :source/local}}
 
                     :mol/links       {"input-data" {:data {"colorize" :data}}
                                       "colorize"   {:sub-name {"colorized-data" :data}}

@@ -20,7 +20,7 @@
                                                     :atm/style {:border "1px solid" :width "600px" :height "250px"}}
                                       "v-scroll"   {:atm/role  :ui/component :atm/kind :rc/v-scroll
                                                     :atm/label "Multiple Views" :atm/children ["bar" "line"]}
-                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :topic/data
+                                      "topic/data" {:atm/label "Combined Charts" :atm/role :source/local :atm/kind :source/local
                                                     :atm/default-data bh/area-chart-sample-data}
                                       "carousel"   {:atm/role           :ui/component :atm/kind :bhui/carousel
                                                     :atm/label          "Carousel" :atm/children ["bar" "line"]

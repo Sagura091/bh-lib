@@ -20,7 +20,7 @@
 
 
 (def mol-def
-  {:mol/components  {"input-data" {:atm/role         :source/local :atm/kind :input/data
+  {:mol/components  {"input-data" {:atm/role         :source/local :atm/kind :source/local
                                    :atm/default-data example-data}
                      "chart"      {:atm/role :ui/component :atm/kind :rechart/bar}
                      "add-b"      {:atm/role :source/fn :atm/kind :fn/add-b}
