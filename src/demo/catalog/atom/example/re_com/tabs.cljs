@@ -15,18 +15,18 @@
 
 
 (defn text-block [& {:keys [data config style component-id container-id] :as params}]
-  (log/info "text-block (a)" params)
+  ;(log/info "text-block (a)" params)
 
   (let [id (r/atom nil)
         d  (bh/utils-resolve-value data)]
     (fn []
       (when (nil? @id)
-        (log/info "text-block (b)" component-id)
+        ;(log/info "text-block (b)" component-id)
         (reset! id component-id)
         (bh/utils-init-container-locals @id {:container container-id})
         (bh/utils-dispatch-local @id [:container] container-id))
 
-      (log/info "text-block (c)" component-id "//" @d)
+      ;(log/info "text-block (c)" component-id "//" @d)
 
       [rc/input-textarea
        :src (rc/at)
@@ -35,7 +35,7 @@
 
 
 (defn text-block-3 [& {:keys [data config style component-id container-id] :as params}]
-  (log/info "text-block (a)" params)
+  ;(log/info "text-block (a)" params)
 
   [rc/input-textarea
    :src (rc/at)
@@ -44,7 +44,7 @@
 
 
 (defn text-block-4 [& {:keys [data config style component-id container-id] :as params}]
-  (log/info "text-block (a)" params)
+  ;(log/info "text-block (a)" params)
 
   [:div {:style {:font-style :italic}} data])
 

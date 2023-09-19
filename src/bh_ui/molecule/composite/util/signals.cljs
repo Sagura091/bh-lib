@@ -411,7 +411,7 @@ to isolate this widget from all other
 
     ;(log/info "process-components-stateful (a)" cfg "//" edges)
 
-    (log/info "process-components-stateful (b)" g "//" sorted-config)
+    ;(log/info "process-components-stateful (b)" g "//" sorted-config)
 
     (doall
       (map (fn [[node meta-data]]

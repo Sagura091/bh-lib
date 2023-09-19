@@ -18,6 +18,10 @@
 (log/info "bh-ui.molecule.grid-container")
 
 
+(def last-config (atom nil))
+(def last-full-config (atom nil))
+
+
 (defn- config
   "set up the local config keys, specifically we want the :mol/layout key, so we can
   track updates to the layout should the user drag/resize any of the internal
@@ -27,8 +31,8 @@
   dispatch updates (via on-layout-update) using (locals/dispatch-local ...)
   "
   [full-config]
-  {:blackboard {};:defs {:source full-config
-                ;       :dag    {:open-details ""}}
+  {:blackboard {}                                           ;:defs {:source full-config
+   ;       :dag    {:open-details ""}}
    :container  ""
    :layout     (:mol/grid-layout full-config)})
 
@@ -85,9 +89,9 @@
   "
 
   [component-id new-layout all-layouts]
-  (let [new-layout*  (js->clj new-layout :keywordize-keys true)
+  (let [new-layout* (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
-        fst          (first new-layout*)]
+        fst (first new-layout*)]
 
     ;(log/info "on-layout-change" new-layout*
     ;  "//" all-layouts*
@@ -144,18 +148,18 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout           (locals/subscribe-local component-id [:layout])
+  (let [layout (locals/subscribe-local component-id [:layout])
         component-lookup (into {}
                            (sig/process-components-stateful
                              configuration :ui/component
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; build UI components (with subscription/event signals against the blackboard or remotes)
-        visual-layout    (->> configuration
-                           :mol/grid-layout
-                           (map (fn [{:keys [i]}] i)))
-        composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
-        open?            (r/atom false)]
+        visual-layout (->> configuration
+                        :mol/grid-layout
+                        (map (fn [{:keys [i]}] i)))
+        composed-ui (map wrap-component (select-keys component-lookup visual-layout))
+        open? (r/atom false)]
 
     ;(reset! last-component-lookup {:lookup component-lookup
     ;                               :viz visual-layout
@@ -203,21 +207,30 @@
   [& {:keys [data component-id container-id resizable tools] :as params}]
 
   ;(reset! last-data @data)
+  (reset! last-config data)
 
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
-  (let [id             (r/atom nil)
-        configuration  @data
-        graph          (apply lg/digraph (ui/compute-edges configuration))
-        comp-or-dag?   (r/atom :component)
+  (let [id (r/atom nil)
+        configuration (update @data :mol/components ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+                        (fn [x]
+                          (into {}
+                            (map (fn [[k v]]
+                                   {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+                              x))))
+        graph (apply lg/digraph (ui/compute-edges configuration))
+        comp-or-dag? (r/atom :component)
         partial-config (assoc configuration
                          :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
                          :nodes (-> configuration :mol/components keys set)
                          :edges (into [] (lg/edges graph)))
-        full-config    (assoc partial-config
-                         :graph graph
-                         :container container-id)]
+        full-config (assoc partial-config
+                      :graph graph
+                      :container container-id)]
+
+
+    (reset! last-full-config full-config)
 
     (fn []
       (when (nil? @id)
@@ -615,7 +628,7 @@
 (comment
   (do
     (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
-                                                     :atm/style {:style {:height "500px", :width "700px"}}
+                                                     :atm/style    {:style {:height "500px", :width "700px"}}
                                                      :atm/children ["line" "bar"]}
                                          "data"     {:atm/role :source/local :atm/kind :source/local}
                                          "line"     {:atm/role :ui/component :atm/kind :rechart/line}
@@ -625,6 +638,28 @@
     (sig/process-components-stateful
       configuration :ui/component
       @(re-frame/subscribe [:meta-data-registry]) "test-mol-dsl"))
+
+
+  ())
+
+
+
+; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+(comment
+  (do
+    (def configuration @@last-config))
+
+
+  (update configuration :mol/components
+    (fn [x]
+      (into {}
+        (map (fn [[k v]]
+               {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+          x))))
+
+
+
+
 
 
   ())

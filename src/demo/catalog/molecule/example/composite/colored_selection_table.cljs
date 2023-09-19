@@ -40,7 +40,7 @@
 
 
 (defn- colorize [{:keys [data sub-name]}]
-  (log/info "colorize (a)" sub-name "//" data)
+  ;(log/info "colorize (a)" sub-name "//" data)
 
   (let [next-target-color (atom -1)
         [component topic] (-> sub-name
@@ -57,11 +57,11 @@
       :<- data
       :<- path
       (fn [[d p] _]
-        (log/info "colorize (c)" d)
+        ;(log/info "colorize (c)" d)
 
         (let [ret (color-entities d p next-target-color topic :name)]
 
-          (log/info "colorize (d)" ret)
+          ;(log/info "colorize (d)" ret)
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color

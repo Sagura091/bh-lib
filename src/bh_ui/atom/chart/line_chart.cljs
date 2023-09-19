@@ -131,21 +131,64 @@
   ;(log/info "component-2" params)
 
   (let [input-params (assoc params :component* component*
-                                   :component-panel wrapper/component-panel
-                                   :config config
-                                   :local-config local-config)]
+                       :component-panel wrapper/component-panel
+                       :config config
+                       :local-config local-config)]
 
     (reduce into [wrapper/base-chart] (seq input-params))))
 
 
 (def meta-data {:rechart/line {:component component
+                               :atm/role  :ui/component
                                :ports     {:data   :port/sink
-                                           :config :port/sink}
-                               :handles   {:inputs  [{:label "data-in" :style {:top 10 :background "#555"} :position (.-Left Position)}
-                                                     {:label "config-in" :style {:top 20 :background "#555"} :position (.-Left Position)}]
-                                           :outputs [{:label "data-out" :style {:top 10 :background "#999"} :position (.-Right Position)}
-                                                     {:label "config-out" :style {:top 20 :background "#999"} :position (.-Right Position)}]}}})
+                                           :config :port/sink}}})
 
 
 (rf/dispatch-sync [:register-meta meta-data])
 
+
+
+; logic to turn :ports into :handles for the flow-diagram
+(comment
+
+  (def ports (-> meta-data :rechart/line :ports))
+
+
+  ; :port/sink -> inputs
+  ; :port/source -> outputs
+  ; :port/source-sink -> inputs AND outputs
+  (group-by (fn [[_ direction]] direction)
+    (-> meta-data :rechart/line :ports))
+
+  (->> (-> meta-data :rechart/line :ports)
+    (group-by (fn [[_ direction]] direction))
+    (map (fn [[direction ports]]
+           {:d direction :p ports})))
+
+
+  ; build port handle data
+  (map-indexed (fn [idx [p _]]
+                 {p {:label (str (name p) "-in")
+                     :style {:top (+ 10 (* idx 10)) :background "#555"}
+                     :position (.-Left Position)}})
+    [[:data :port/sink]
+     [:config :port/sink]])
+
+
+
+  (->> (-> meta-data :rechart/line :ports)
+    (group-by (fn [[_ direction]] direction))
+    (map (fn [[direction ports]]
+           (condp = direction
+             :port/source {:outputs (bh-ui.atom.component-registry/build-outputs ports)}
+             :port/sink {:inputs (bh-ui.atom.component-registry/build-inputs ports)}
+             :port/source-sink {:outputs (bh-ui.atom.component-registry/build-outputs ports)
+                                :inputs (bh-ui.atom.component-registry/build-inputs ports)})))
+    (into {}))
+
+
+
+
+
+
+  ())

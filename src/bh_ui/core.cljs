@@ -319,13 +319,13 @@
 
 (def dag-custom-minimap-node-color          composite-dag-support/custom-minimap-node-color)
 (def dag-default-custom-node                composite-dag-support/default-custom-node)
-(def dag-default-node-types                 composite-dag-support/default-node-types)
+;(def dag-default-node-types                 composite-dag-support/default-node-types)
 (def dag-default-tool-types                 composite-dag-support/default-tool-types)
 (def dagre-graph                            dagre-support/dagre-graph)
 (def dagre-build-layout                     dagre-support/build-layout)
-(def editable-digraph                       editable-digraph/component)
-(def editable-digraph-source-code           editable-digraph/source-code)
-(def editable-digraph-sample-data           editable-digraph/sample-data)
+;(def editable-digraph                       editable-digraph/component)
+;(def editable-digraph-source-code           editable-digraph/source-code)
+;(def editable-digraph-sample-data           editable-digraph/sample-data)
 (def flow-diagram                           flow-diagram/component)
 
 ;;;;;;;;;;; EXPERIMENTAL ;;;;;;;;;;;

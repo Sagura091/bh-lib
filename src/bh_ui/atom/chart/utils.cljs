@@ -271,14 +271,14 @@
   "
   [config label path]
 
-  (log/info "boolean-config (a)" config "//" label "//" path)
+  ;(log/info "boolean-config (a)" config "//" label "//" path)
 
   (let [cfg (u/subscribe-local config [])]
-    (log/info "boolean-config (b)" config "//" @cfg)
+    ;(log/info "boolean-config (b)" config "//" @cfg)
 
     (fn []
       (let [checked? (r/atom (get-in @cfg path))]
-        (log/info "boolean-config (c)" config "//" checked?)
+        ;(log/info "boolean-config (c)" config "//" checked?)
         [rc/checkbox :src (rc/at)
          :label (cond
                   (and (string? label) (empty? label)) ""

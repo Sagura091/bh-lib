@@ -2,57 +2,58 @@
   (:require ["reactflow" :refer (Position)]
             [demo.catalog.atom.utils :as example]
             [bh-ui.core :as bh]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
             [reagent.core :as r]
             [re-frame.core :as rf]
             [taoensso.timbre :as log]))
 
 
-(def node-types {":ui/component"  (partial bh/dsl-nodes-custom-node :ui/component)
-                 ":source/remote" (partial bh/dsl-nodes-custom-node :source/remote)
-                 ":source/local"  (partial bh/dsl-nodes-custom-node :source/local)
-                 ":source/fn"     (partial bh/dsl-nodes-custom-node :source/fn)})
-(def bootstrap-node-data {":ui/component"  (partial bh/dsl-nodes-node-data :ui/component)
-                          ":source/remote" (partial bh/dsl-nodes-node-data :source/remote)
-                          ":source/local"  (partial bh/dsl-nodes-node-data :source/local)
-                          ":source/fn"     (partial bh/dsl-nodes-node-data :source/fn)})
+;(def node-types {":ui/component"  (partial bh/dsl-nodes-custom-node :ui/component)})
+;                 ":source/remote" (partial bh/dsl-nodes-custom-node :source/remote)
+;                 ":source/local"  (partial bh/dsl-nodes-custom-node :source/local)
+;                 ":source/fn"     (partial bh/dsl-nodes-custom-node :source/fn)})
+;(def bootstrap-node-data {":ui/component"  (partial bh/dsl-nodes-node-data :ui/component)
+;                          ":source/remote" (partial bh/dsl-nodes-node-data :source/remote)
+;                          ":source/local"  (partial bh/dsl-nodes-node-data :source/local)
+;                          ":source/fn"     (partial bh/dsl-nodes-node-data :source/fn)})
 
 (def initialEdges [{:id     "lightning->line-chart",
-                    :source "100", :sourceHandle "data-out"
-                    :target "200" :targetHandle "data-in"
+                    :source "lightning", :sourceHandle "data"
+                    :target "line-chart" :targetHandle "data-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
                    {:id     "lightning->bar-chart",
-                    :source "100", :sourceHandle "data-out"
-                    :target "300" :targetHandle "data-in"
+                    :source "lightning", :sourceHandle "data"
+                    :target "bar-chart" :targetHandle "data-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
                    {:id     "config->time-range",
-                    :source "10", :sourceHandle "data"
-                    :target "20" :targetHandle "data"
+                    :source "config", :sourceHandle "data"
+                    :target "time-range" :targetHandle "data"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
                    {:id     "time-range->bar-chart",
-                    :source "20", :sourceHandle "range"
-                    :target "300" :targetHandle "config-in"
+                    :source "time-range", :sourceHandle "range"
+                    :target "bar-chart" :targetHandle "config-in"
+                    :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+                   {:id     "time-range->line-chart",
+                    :source "time-range", :sourceHandle "range"
+                    :target "line-chart" :targetHandle "config-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
-; TODO: how to manage :source/*
-(def initialNodes [{:id "100", :type ":source/local" :position {:x 150, :y 100}, :data {:label "lightning" :kind ":source/local"}}
-                   {:id "10", :type ":source/local" :position {:x 10, :y 200}, :data {:label "config" :kind ":source/local"}}
-                   {:id "20", :type ":source/fn" :position {:x 150, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
-                   {:id "200", :type ":ui/component" :position {:x 300, :y 100}, :data {:label "line-chart" :kind ":rechart/line"}}
-                   {:id "300", :type ":ui/component" :position {:x 300, :y 150}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
+(def initialNodes [{:id "lightning", :type ":source/remote" :position {:x 150, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
+                   {:id "config", :type ":source/local" :position {:x 10, :y 200}, :data {:label "config" :kind ":source/local"}}
+                   {:id "time-range", :type ":source/fn" :position {:x 150, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
+                   {:id "line-chart", :type ":ui/component" :position {:x 300, :y 100}, :data {:label "line-chart" :kind ":rechart/line"}}
+                   {:id "bar-chart", :type ":ui/component" :position {:x 300, :y 150}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
 
 
-(def remote-sources [":source/lightning" ":source/targets" ":source/platforms"])
-(def remote-source-handles {:handles {:outputs [{:label "data" :style {:background "#999"} :position (.-Right Position)}]}})
+;(def remote-sources [:source/lightning])
+;(def remote-source-handles {:handles {:outputs [{:label "data" :style {:background "#999"} :position (.-Right Position)}]}})
 
 
-(defn register-remotes [sources]
+(defn register-dummys []
   (doall
-    (map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) sources)))
-
-
-(defn default-node-kind [node-type]
-  (condp = node-type
-    ":ui/component" ":ui/table"
-    node-type))
+    ;(map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) sources)
+    (rf/dispatch-sync [:register-meta {:simple-multi-chart-2/fn-make-config
+                                       {:handles {:inputs [{:label "data" :style {:background "#999"} :position (.-Left Position)}]
+                                                  :outputs [{:label "range" :style {:background "#999"} :position (.-Right Position)}]}}}])))
 
 
 (defn- dsl->react-flow []
@@ -63,7 +64,7 @@
                   {:id       (str "node-" (:id node))
                    :type     type
                    :position position
-                   :data     {:label label :kind kind}}))
+                   :data     {:label label :kind kind :kind-js (str kind)}}))
 
         edges (for [edge initialEdges]
                 (let [{:keys [id
@@ -75,13 +76,16 @@
                    :sourceHandle  sourceHandle
                    :target        (str "node-" target)
                    :targetHandle  targetHandle
+                   :label         (str sourceHandle "->" targetHandle)
                    :style         style
-                   :arrowHeadType arrowHeadType}))]
+                   :arrowHeadType arrowHeadType
+                   :animated      false}))]
 
     (r/atom {:nodes nodes :edges edges})))
 
+
 (defn example []
-  (register-remotes remote-sources)
+  (register-dummys)
 
   (let [container-id "flow-diagram-demo"
         data         (dsl->react-flow)]
@@ -91,11 +95,20 @@
      :title "Flow Diagram (take 2)"
      :description "A simple Flow Diagram built using [react-flow](https://reactflow.dev)"
      :data data
-     :config {:node-types   node-types
-              :node-data    bootstrap-node-data
-              :node-kind-fn default-node-kind}
+     :config {:node-types   dsl/node-types
+              :node-data    dsl/bootstrap-node-data
+              :node-kind-fn dsl/default-node-kind}
      :component bh/flow-diagram
      :component-id (bh/utils-path->keyword container-id "flow-diagram")
      :source-code '[]]))
 
-;flow/source-code]))
+
+
+
+(comment
+
+  (map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) remote-sources)
+
+  @(rf/subscribe [:meta-data-registry])
+
+  ())

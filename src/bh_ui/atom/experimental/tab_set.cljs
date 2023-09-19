@@ -6,7 +6,7 @@
 
 (def last-params (atom nil))
 (defn- make-button [label selected-tab]
-  (log/info "make-button" label)
+  ;(log/info "make-button" label)
 
   ^{:key label} [rc/button :src (rc/at)
                  :label label
@@ -35,7 +35,7 @@
         selected-tab (r/atom (-> pages first :id))]
 
     (fn []
-      (log/info "tab-set2 (render)" @selected-tab)
+      ;(log/info "tab-set2 (render)" @selected-tab)
       [rc/v-box :src (rc/at)
        :children [[rc/h-box :src (rc/at)
                    :children (map (fn [{:keys [label child]}]
@@ -73,7 +73,7 @@
   (let [label "Two"
         child [:child-two]
         vis (if (= @selected-tab label) "visible" "hidden")]
-    (log/info "contents" label "//" vis "//" @selected-tab)
+    ;(log/info "contents" label "//" vis "//" @selected-tab)
     (when vis
       ^{:key label} [:div child]))
 

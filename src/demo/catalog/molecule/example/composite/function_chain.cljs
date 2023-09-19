@@ -34,17 +34,17 @@
 
 
 (defn- make-handler [data sub-name]
-  (log/info "make-handler" sub-name "//" data)
+  ;(log/info "make-handler" sub-name "//" data)
 
   (re-frame/reg-event-fx
     (first sub-name)
     (fn-traced [_ updates]
-      (log/info sub-name "handler" updates)
+      ;(log/info sub-name "handler" updates)
       {:dispatch (apply conj data (drop 1 updates))})))
 
 
 (defn add-b [{:keys [data sub-name]}]
-  (log/info "add-b (a)" sub-name "//" data)
+  ;(log/info "add-b (a)" sub-name "//" data)
 
   (re-frame/reg-sub
     (first sub-name)
@@ -90,7 +90,7 @@
 (defn- data-tools [data source-data]
   (let [old-data (bh/utils-subscribe-local data [])]
 
-    (log/info "data-tools" data "//" source-data)
+    ;(log/info "data-tools" data "//" source-data)
 
     (fn []
       [rc/h-box :src (rc/at)

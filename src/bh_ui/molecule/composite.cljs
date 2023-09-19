@@ -15,25 +15,26 @@ need to make a distinction (in fact the code is a bit cleaner if we don't) and w
 needs to implement the correct usage anyway). The flow-diagram, on the other hand, is easier if we DO make the
 distinction, so we can quickly build all the Nodes and Handles used for the diagram...
 "
-  (:require [bh-ui.atom.bhui.table :as bhui-table]
-            [bh-ui.atom.diagram.editable-digraph :as digraph]
+  (:require [bh-ui.atom.diagram.flow-diagram :as digraph]
             [bh-ui.atom.diagram.diagram.composite-dag-support :as dag-support]
-            [bh-ui.atom.experimental.ui-element :as e]
-            [bh-ui.atom.re-com.label :as rc-label]
-            [bh-ui.atom.re-com.slider :as rc-slider]
-            [bh-ui.atom.re-com.table :as rc-table]
-            [bh-ui.atom.resium.globe :as r-globe]
-            [bh-ui.atom.worldwind.globe :as ww-globe]
-            [bh-ui.atom.leaflet.globe :as l-globe]
+            [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
+    ;[bh-ui.atom.bhui.table :as bhui-table]
+    ;[bh-ui.atom.experimental.ui-element :as e]
+    ;[bh-ui.atom.re-com.label :as rc-label]
+    ;[bh-ui.atom.re-com.slider :as rc-slider]
+    ;[bh-ui.atom.re-com.table :as rc-table]
+    ;[bh-ui.atom.resium.globe :as r-globe]
+    ;[bh-ui.atom.worldwind.globe :as ww-globe]
+    ;[bh-ui.atom.leaflet.globe :as l-globe]
             [bh-ui.molecule.composite.util.digraph :as dig]
             [bh-ui.molecule.composite.util.signals :as sig]
             [bh-ui.molecule.composite.util.ui :as ui]
             [bh-ui.utils :as ui-utils]
-            [bh-ui.atom.chart.bar-chart :as bar-chart]
-            [bh-ui.atom.chart.area-chart :as area-chart]
-            [bh-ui.atom.chart.colored-pie-chart :as colored-pie-chart]
-            [bh-ui.atom.chart.line-chart :as line-chart]
-            [bh-ui.atom.component-registry :as registry]
+    ;[bh-ui.atom.chart.bar-chart :as bar-chart]
+    ;[bh-ui.atom.chart.area-chart :as area-chart]
+    ;[bh-ui.atom.chart.colored-pie-chart :as colored-pie-chart]
+    ;[bh-ui.atom.chart.line-chart :as line-chart]
+    ;[bh-ui.atom.component-registry :as registry]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [loom.graph :as lg]
             [re-com.core :as rc]
@@ -74,8 +75,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   [& {:keys [configuration]}]
 
   (let [components (:mol/components configuration)
-        links      (:mol/links configuration)
-        layout     (:mol/grid-layout configuration)]
+        links (:mol/links configuration)
+        layout (:mol/grid-layout configuration)]
 
     ;(log/info "definition-panel" components)
     ;(log/info "definition-panel" links)
@@ -106,21 +107,21 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   [& {:keys [configuration component-id container-id ui]}]
 
-  (let [flow           (r/atom (ui/make-flow configuration))
-        node-types     {":ui/component"  (partial ui/custom-node :ui/component)
-                        ":source/remote" (partial ui/custom-node :source/remote)
-                        ":source/local"  (partial ui/custom-node :source/local)
-                        ":source/fn"     (partial ui/custom-node :source/fn)}
+  (let [flow (r/atom (ui/make-flow configuration))
         minimap-styles {:nodeStrokeColor  (partial dag-support/custom-minimap-node-color
                                             dag-support/default-color-pallet digraph/color-white)
                         :node-color       (partial dag-support/custom-minimap-node-color
                                             dag-support/default-color-pallet digraph/color-black)
                         :nodeBorderRadius 5}]
 
+    ;(log/info "dag-panel" digraph/component)
+
     [digraph/component
      :component-id component-id
      :data flow
-     :node-types node-types
+     :config {:node-types   dsl/node-types
+              :node-data    dsl/bootstrap-node-data
+              :node-kind-fn dsl/default-node-kind}
      :tool-types dag-support/default-tool-types
      :minimap-styles minimap-styles]))
 

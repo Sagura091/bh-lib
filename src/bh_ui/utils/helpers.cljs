@@ -186,7 +186,7 @@
       (or (coll? value)
         (string? value)                                     ; need this in case the Mol-DSL only has a string for this
         (keyword? value)) (do
-                            (log/info "handle-change-path (path)" update-event)
+                            ;(log/info "handle-change-path (path)" update-event)
                             (re-frame/dispatch update-event))
 
       ; TODO: do we really need to support string "path" to the data via subscription
@@ -296,7 +296,7 @@
                                    (form x)))]
                   (recur threaded (next forms)))
                 x))]
-    (log/info "loop" db "//" base-path "//" ret)
+    ;(log/info "loop" db "//" base-path "//" ret)
 
     (if (associative? db)
       (assoc-in db base-path ret)

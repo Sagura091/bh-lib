@@ -445,7 +445,7 @@
 
   (let [[min max] @(h/resolve-value range)]
 
-    (log/info "slider" value "//" range "// [" min " " max "]")
+    ;(log/info "slider" value "//" range "// [" min " " max "]")
 
     [rc/h-box :src (rc/at)
      :gap "2px"

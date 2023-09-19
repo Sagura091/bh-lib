@@ -80,7 +80,7 @@
 
 ; TODO: refactor (config-panel ...) for :source/local :config-data
 (defn- config-panel [& {:keys [data component-id container-id] :as params}]
-  (log/info "config-panel (a)" params)
+  ;(log/info "config-panel (a)" params)
 
 
   (let [c             (h/resolve-value data)

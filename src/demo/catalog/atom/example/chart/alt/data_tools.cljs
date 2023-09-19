@@ -17,7 +17,7 @@
               ; TODO: need to pass a "meaningful" random-data-set builder function into the tools
               [rc/button :label "Random" :on-click #(reset! data (random-data))]
               [rc/button :label "A(uv) -> 10,000" :on-click #(do
-                                                               (log/info "meta-tabular-data-ratom-tools (button)" data)
+                                                               ;(log/info "meta-tabular-data-ratom-tools (button)" data)
                                                                (swap! data assoc-in [:data 0 :uv] 10000))]
               [rc/button :label "Add 'Q'"
                :on-click #(swap! data assoc :data

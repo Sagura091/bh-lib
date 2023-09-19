@@ -25,20 +25,51 @@
                          :background   :white :color :black})
 
 
+(declare custom-node)
+(declare node-data)
+
+(def node-types {":ui/component"  (partial custom-node :ui/component)
+                 ":source/remote" (partial custom-node :source/remote)
+                 ":source/local"  (partial custom-node :source/local)
+                 ":source/fn"     (partial custom-node :source/fn)})
+                 ;:ui/component  (partial custom-node :ui/component)
+                 ;:source/remote (partial custom-node :source/remote)
+                 ;:source/local  (partial custom-node :source/local)
+                 ;:source/fn     (partial custom-node :source/fn)})
+
+
+(def bootstrap-node-data {":ui/component"  (partial node-data :ui/component)
+                          ":source/remote" (partial node-data :source/remote)
+                          ":source/local"  (partial node-data :source/local)
+                          ":source/fn"     (partial node-data :source/fn)})
+
+
+(defn default-node-kind [node-type]
+  (condp = node-type
+    ":ui/component" ":ui/table"
+    node-type))
+
+
 (defn- open-details [open-details? node]
   (reset! open-details? (js->clj node)))
 
 
 (defn string->keyword [s]
-  ; TODO: needs to handle the case where we don't have a ":" to start the string
-  (if (clojure.string/index-of (subs s 1) "/")
-    (keyword
-      (subs (subs s 1)
-            0 (clojure.string/index-of (subs s 1) "/"))
-      (subs (subs s 1)
-            (inc (clojure.string/index-of (subs s 1) "/"))))
-    (keyword
-      (subs s 1))))
+  ;(log/info "string->keyword" s)
+
+  (cond
+    (nil? s) "missing"
+    (keyword? s) s
+
+    ; TODO: needs to handle the case where we don't have a ":" to start the string
+    :else (if (clojure.string/index-of (subs s 1) "/")
+            (keyword
+              (subs (subs s 1)
+                    0 (clojure.string/index-of (subs s 1) "/"))
+              (subs (subs s 1)
+                    (inc (clojure.string/index-of (subs s 1) "/"))))
+            (keyword
+              (subs s 1)))))
 
 
 (defn- handle [id t style position isConnectable]
@@ -51,20 +82,29 @@
               :isConnectable isConnectable}])
 
 
-(defn- make-handle [direction {:keys [label style position]}]
+(defn- make-handle [direction [_ {:keys [label style position :as params]}]]
+  ;(log/info "make-handle" direction "//" params)
+
   ^{:key label} [handle label direction style position true])
 
 
 (defn look-up-ui-component [node-type]
-  (-> @(rf/subscribe [:meta-data-registry])
-      (get (string->keyword node-type))
-      :handles))
+  ;(log/info "look-up-ui-component (a)" node-type)
+  ;(log/info "look-up-ui-component (b)" (-> (string->keyword node-type)
+  ;                                       bh-ui.atom.component-registry/lookup-component
+  ;                                       :handles))
+
+  (-> (string->keyword node-type)
+    bh-ui.atom.component-registry/lookup-component
+    :handles))
 
 
 (defn node-data [node-type node-id node-kind position]
   ;(log/info "node-data" node-type node-id node-kind)
 
-  (let [handles (-> @(rf/subscribe [:meta-data-registry]) node-kind :handles)]
+  (let [handles (-> (string->keyword node-type)
+                  bh-ui.atom.component-registry/lookup-component
+                  :handles)]
     {:id       node-id
      :type     node-type
      :data     {:label   node-id
@@ -79,48 +119,71 @@
   green, since this is a 'view', and one Handle for each input (along the top)
   and output (along the bottom)
   "
-  [node-type open-details? node & extras?]
-  (let [data                (js->clj node)
-        node-id             (get data "id")
-        text                (get-in data ["data" "label"])
-        kind-of-element     (r/atom (get-in data ["data" "kind"]))
-        inputs              (get-in data ["data" "inputs"])
-        outputs             (get-in data ["data" "outputs"])
-        update-node-kind-fn (get-in data ["data" "update-node-kind-fn"])
-        style               (merge default-node-style (node-type node-style))
-        handles             (look-up-ui-component @kind-of-element)
-        [isVisible set-visibility on-change-visibility] (useState false)]
+  [node-type _ node & extras?]
 
-    ;(log/info "custom-node" text node-type @kind-of-element (type node-type)
-    ;  "///" handles)
-    ;"///" data
-    ;"///" inputs
-    ;"///" outputs
-    ;"//" extras?)
+  ;(log/info "custom-node (a)" node-type  "//" extras?)
 
-    (r/as-element
+  (if node
+    (let [data                (js->clj node)
+          node-id             (get data "id")
+          text                (get-in data ["data" "label"])
+          kind-of-element     (r/atom (get-in data ["data" "kind-js"]))
+          style               (merge default-node-style (node-type node-style))
+          handles             (look-up-ui-component @kind-of-element)
+          [isVisible set-visibility on-change-visibility] (useState false)]
 
-      [:div {:style style :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)}
+      ;(log/info "custom-node (b)" data
+      ;  ;"//" text
+      ;  ;"//" node-type
+      ;  "//" @kind-of-element
+      ;  ;"//" (type node-type)
+      ;  "///" handles)
+      ;  ;"//" extras?)
 
-       [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
+      (r/as-element
 
-       (map #(make-handle "target" %) (:inputs handles))
+        [:div {:style style :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)}
 
-       [rc/v-box
-        :gap "1px"
-        :children [[label/label :style (merge {:textAlign :center} style)
-                    :value text]
-                   [label/label-sm :style (merge {:textAlign :center} style)
-                    :value @kind-of-element]]]
+         [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
 
-       (map #(make-handle "source" %) (:outputs handles))])))
+         (map #(make-handle "target" %) (:inputs handles))
+
+         [rc/v-box
+          :gap "1px"
+          :children [[label/label :style (merge {:textAlign :center} style)
+                      :value text]
+                     [label/label-sm :style (merge {:textAlign :center} style)
+                      :value @kind-of-element]]]
+
+         (map #(make-handle "source" %) (:outputs handles))]))
+
+    (r/as-element [:div])))
 
 
 (def meta-data {:source/remote {:ports   {:data :port/source}
                                 :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
                 :source/local  {:ports   {:data :port/source}
-                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                :source/fn     {:ports   {:data :port/source-sink}
-                                :handles {:inputs  [{:label "data-in" :style {:background "#999"} :position (.-Left Position)}]
-                                          :outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
+                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
+
+
 (rf/dispatch-sync [:register-meta meta-data])
+
+
+
+
+
+(comment
+
+  (def handles {:inputs {:data {:label "data-in", :style {:top 10, :background "#555"},
+                                :position "left"},
+                         :config {:label "config-in", :style {:top 20, :background "#555"},
+                                  :position "left"}}})
+
+  (map (fn [[_ m]]
+         {:m m})
+    (:inputs handles))
+
+  (map #(make-handle "target" %) (:inputs handles))
+
+
+  ())

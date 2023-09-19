@@ -53,9 +53,9 @@
                                       x         (- (.-x dagreNode) (/ nodeWidth 2))
                                       y         (- (.-y dagreNode) (/ nodeHeight 2))]
                                   ;(log/info "pos" (:id element) x y "//" (.-x dagreNode) (.-y dagreNode))
-                                  (assoc element :position {:x x :y y}
-                                                 :targetPosition "top"
-                                                 :sourcePosition "bottom")))
+                                  (assoc element :position {:x x :y y})))
+                                                 ;:targetPosition "top"
+                                                 ;:sourcePosition "bottom")))
                            nodes))
                 :edges edges}]
                 ;(doall
