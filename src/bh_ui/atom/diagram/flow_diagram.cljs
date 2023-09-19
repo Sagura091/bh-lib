@@ -262,7 +262,7 @@
                            on-change-nodes on-change-edges on-drop on-drag-over
                            zoom-on-scroll preventScrolling connectFn] :as params}]
 
-  ;(log/info "diagram(star) (params)" node-types "=============" edge-types)
+  ;(log/info "diagram(star) (params)" nodes "=====" node-types "======" edge-types)
 
   (let [params (apply merge {:nodes               (or nodes [])
                              :edges               (or edges [])
@@ -280,7 +280,7 @@
                  (when node-types {:node-types node-types})
                  (when edge-types {:edge-types edge-types}))]
 
-    ;(log/info "flow-star (local-params)" params)
+    ;(log/info "diagram(star) (local-params)" params)
 
     [:> ReactFlow params
      [:> MiniMap (if minimap-styles minimap-styles {})]
@@ -372,10 +372,10 @@
         flowInstance (clojure.core/atom nil)]
 
     ;(log/info "component (DIGRAPH)"
-    ;  data
+    ;  data)
     ;  "//" (:nodes @d)
     ;  "// node-types" node-types)
-      ;"// n-types" n-types)
+    ;  "// n-types" n-types)
 
     (fn []
       [:f> diagram

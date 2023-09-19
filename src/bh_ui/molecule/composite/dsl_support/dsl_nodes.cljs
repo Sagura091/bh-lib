@@ -7,41 +7,21 @@
             [re-com.core :as rc]
             [bh-ui.atom.re-com.label :as label]))
 
+
 (log/info "demo.catalog.atom.example.diagram.node-types.custom-node")
 
 
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
-
 (def node-style {:ui/component  {:background :green :color :white}
                  :source/remote {:background :orange :color :black}
                  :source/local  {:background :blue :color :white}
                  :source/fn     {:background :pink :color :black}})
-
 (def default-node-style {:minHeight    "20px"
                          :minWidth     "100px"
                          :width        "100%"
                          :height       "100%"
                          :borderRadius "5px" :margin :auto
                          :background   :white :color :black})
-
-
-(declare custom-node)
-(declare node-data)
-
-(def node-types {":ui/component"  (partial custom-node :ui/component)
-                 ":source/remote" (partial custom-node :source/remote)
-                 ":source/local"  (partial custom-node :source/local)
-                 ":source/fn"     (partial custom-node :source/fn)})
-                 ;:ui/component  (partial custom-node :ui/component)
-                 ;:source/remote (partial custom-node :source/remote)
-                 ;:source/local  (partial custom-node :source/local)
-                 ;:source/fn     (partial custom-node :source/fn)})
-
-
-(def bootstrap-node-data {":ui/component"  (partial node-data :ui/component)
-                          ":source/remote" (partial node-data :source/remote)
-                          ":source/local"  (partial node-data :source/local)
-                          ":source/fn"     (partial node-data :source/fn)})
 
 
 (defn default-node-kind [node-type]
@@ -115,13 +95,12 @@
 
 
 (defn custom-node
-  "build a custom node for the flow diagram, this time for :ui/component, so
-  green, since this is a 'view', and one Handle for each input (along the top)
+  "build a custom node for the flow diagram, with one Handle for each input (along the top)
   and output (along the bottom)
   "
-  [node-type _ node & extras?]
+  [node-type two node & params]
 
-  ;(log/info "custom-node (a)" node-type  "//" extras?)
+  ;(log/info "custom-node (a)" node-type "//" two "//" node "//" params)
 
   (if node
     (let [data                (js->clj node)
@@ -167,6 +146,20 @@
 
 
 (rf/dispatch-sync [:register-meta meta-data])
+
+
+
+(def node-types {":ui/component"  (partial custom-node :ui/component)
+                 ":source/remote" (partial custom-node :source/remote)
+                 ":source/local"  (partial custom-node :source/local)
+                 ":source/fn"     (partial custom-node :source/fn)})
+
+
+(def bootstrap-node-data {":ui/component"  (partial node-data :ui/component)
+                          ":source/remote" (partial node-data :source/remote)
+                          ":source/local"  (partial node-data :source/local)
+                          ":source/fn"     (partial node-data :source/fn)})
+
 
 
 
