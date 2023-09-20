@@ -11,6 +11,8 @@
 (log/info "demo.catalog.atom.example.diagram.node-types.custom-node")
 
 
+(def last-node (atom nil))
+
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
 (def node-style {:ui/component  {:background :green :color :white}
                  :source/remote {:background :orange :color :black}
@@ -45,9 +47,9 @@
     :else (if (clojure.string/index-of (subs s 1) "/")
             (keyword
               (subs (subs s 1)
-                    0 (clojure.string/index-of (subs s 1) "/"))
+                0 (clojure.string/index-of (subs s 1) "/"))
               (subs (subs s 1)
-                    (inc (clojure.string/index-of (subs s 1) "/"))))
+                (inc (clojure.string/index-of (subs s 1) "/"))))
             (keyword
               (subs s 1)))))
 
@@ -103,21 +105,23 @@
   ;(log/info "custom-node (a)" node-type "//" two "//" node "//" params)
 
   (if node
-    (let [data                (js->clj node)
-          node-id             (get data "id")
-          text                (get-in data ["data" "label"])
-          kind-of-element     (r/atom (get-in data ["data" "kind-js"]))
-          style               (merge default-node-style (node-type node-style))
-          handles             (look-up-ui-component @kind-of-element)
+    (let [data (js->clj node)
+          node-id (get data "id")
+          text (get-in data ["data" "label"])
+          kind-of-element (r/atom (get-in data ["data" "kind-js"]))
+          style (merge default-node-style (node-type node-style))
+          handles (look-up-ui-component @kind-of-element)
           [isVisible set-visibility on-change-visibility] (useState false)]
 
+      (reset! last-node data)
+
       ;(log/info "custom-node (b)" data
-      ;  ;"//" text
-      ;  ;"//" node-type
-      ;  "//" @kind-of-element
-      ;  ;"//" (type node-type)
-      ;  "///" handles)
-      ;  ;"//" extras?)
+        ;  "//" text
+        ;  "//" node-type
+        ;"//" @kind-of-element
+        ;"//" (type node-type)
+        ;"///" handles)
+      ;  "//" extras?)
 
       (r/as-element
 
@@ -163,13 +167,11 @@
 
 
 
-
-
 (comment
 
-  (def handles {:inputs {:data {:label "data-in", :style {:top 10, :background "#555"},
-                                :position "left"},
-                         :config {:label "config-in", :style {:top 20, :background "#555"},
+  (def handles {:inputs {:data   {:label    "data-in", :style {:top 10, :background "#555"},
+                                  :position "left"},
+                         :config {:label    "config-in", :style {:top 20, :background "#555"},
                                   :position "left"}}})
 
   (map (fn [[_ m]]
@@ -178,5 +180,19 @@
 
   (map #(make-handle "target" %) (:inputs handles))
 
+
+  ())
+
+
+(comment
+  (do
+    (def node @last-node)
+    (def node-type :source/fn)
+    (def kind-of-element (r/atom (get-in node ["data" "kind-js"])))
+    (def handles (look-up-ui-component @kind-of-element)))
+
+  (-> (string->keyword @kind-of-element)
+    bh-ui.atom.component-registry/lookup-component
+    :handles)
 
   ())

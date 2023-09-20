@@ -8,15 +8,12 @@
             [taoensso.timbre :as log]))
 
 
-;(def node-types {":ui/component"  (partial bh/dsl-nodes-custom-node :ui/component)})
-;                 ":source/remote" (partial bh/dsl-nodes-custom-node :source/remote)
-;                 ":source/local"  (partial bh/dsl-nodes-custom-node :source/local)
-;                 ":source/fn"     (partial bh/dsl-nodes-custom-node :source/fn)})
-;(def bootstrap-node-data {":ui/component"  (partial bh/dsl-nodes-node-data :ui/component)
-;                          ":source/remote" (partial bh/dsl-nodes-node-data :source/remote)
-;                          ":source/local"  (partial bh/dsl-nodes-node-data :source/local)
-;                          ":source/fn"     (partial bh/dsl-nodes-node-data :source/fn)})
 
+(def initialNodes [{:id "lightning", :type ":source/remote" :position {:x 50, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
+                   {:id "config", :type ":source/local" :position {:x 200, :y 100}, :data {:label "config" :kind ":source/local"}}
+                   {:id "time-range", :type ":source/fn" :position {:x 200, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
+                   {:id "line-chart", :type ":ui/component" :position {:x 50, :y 300}, :data {:label "line-chart" :kind ":rechart/line"}}
+                   {:id "bar-chart", :type ":ui/component" :position {:x 200, :y 300}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
 (def initialEdges [{:id     "lightning->line-chart",
                     :source "lightning", :sourceHandle "data"
                     :target "line-chart" :targetHandle "data-in"
@@ -37,23 +34,15 @@
                     :source "time-range", :sourceHandle "range"
                     :target "line-chart" :targetHandle "config-in"
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
-(def initialNodes [{:id "lightning", :type ":source/remote" :position {:x 150, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
-                   {:id "config", :type ":source/local" :position {:x 10, :y 200}, :data {:label "config" :kind ":source/local"}}
-                   {:id "time-range", :type ":source/fn" :position {:x 150, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
-                   {:id "line-chart", :type ":ui/component" :position {:x 300, :y 100}, :data {:label "line-chart" :kind ":rechart/line"}}
-                   {:id "bar-chart", :type ":ui/component" :position {:x 300, :y 150}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
-
-
-;(def remote-sources [:source/lightning])
-;(def remote-source-handles {:handles {:outputs [{:label "data" :style {:background "#999"} :position (.-Right Position)}]}})
 
 
 (defn register-dummys []
   (doall
-    ;(map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) sources)
-    (rf/dispatch-sync [:register-meta {:simple-multi-chart-2/fn-make-config
-                                       {:handles {:inputs [{:label "data" :style {:background "#999"} :position (.-Left Position)}]
-                                                  :outputs [{:label "range" :style {:background "#999"} :position (.-Right Position)}]}}}])))
+    (rf/dispatch-sync [:register-meta
+                       {:simple-multi-chart-2/fn-make-config {:component [:div]
+                                                              :atm/role  :source/fn
+                                                              :ports     {:data   :port/sink
+                                                                          :range :port/source}}}])))
 
 
 (defn- dsl->react-flow []
