@@ -28,14 +28,14 @@
 (defn tab-set [& {:keys [children config style
                          component-id container-id] :as params}]
 
-  ;(log/info "tab-set2 (a)" children "//" config)
+  ;(log/info "tab-set (a)" children "//" config)
   (reset! last-params {:ch children :cfg config})
 
   (let [pages        (map make-tab (zipmap (:labels config) children))
         selected-tab (r/atom (-> pages first :id))]
 
     (fn []
-      ;(log/info "tab-set2 (render)" @selected-tab)
+      ;(log/info "tab-set (render)" @selected-tab)
       [rc/v-box :src (rc/at)
        :children [[rc/h-box :src (rc/at)
                    :children (map (fn [{:keys [label child]}]

@@ -38,16 +38,16 @@
                                      "area-chart" {:atm/role :ui/component :atm/kind :rechart/area}
                                      "fast-line"  {:atm/role :ui/component :atm/kind :fc/line}
 
-                                     "bar"        {:atm/role  :ui/component :atm/kind :rc/box :atm/child "bar-chart"
+                                     "bar"        {:atm/role  :ui/container :atm/kind :rc/box :atm/child "bar-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "line"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "line-chart"
+                                     "line"       {:atm/role  :ui/container :atm/kind :rc/box :atm/child "line-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "area"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "area-chart"
+                                     "area"       {:atm/role  :ui/container :atm/kind :rc/box :atm/child "area-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "f-line"     {:atm/role  :ui/component :atm/kind :rc/box :atm/child "fast-line"
+                                     "f-line"     {:atm/role  :ui/container :atm/kind :rc/box :atm/child "fast-line"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
 
-                                     "tabs"       {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                                     "tabs"       {:atm/role           :ui/container :atm/kind :rc/h-tabs
                                                    :atm/label          "Multiple Views"
                                                    :atm/children       ["bar" "line" "area" "f-line"]
                                                    :atm/default-config tabs-config}
@@ -108,7 +108,7 @@
 
 (def molecule2 {:mol/components  {"item-1"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "One"}
                                   "item-2"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "Two"}
-                                  "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
+                                  "tabs"     {:atm/role     :ui/container :atm/kind :rc/h-tabs
                                               :atm/label    "Multiple Views"
                                               :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}
                                   "data/one" {:atm/role :source/local :atm/kind :data/one :atm/default-data chart-data-one}

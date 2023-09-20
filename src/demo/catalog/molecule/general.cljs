@@ -25,14 +25,14 @@
   [:div
    ; depend on :source/remote
 
-   ;[chart-remote-data/example]
    [coverage-plan/ww-example]
+
+   ;[chart-remote-data/example]
    ;[coverage-plan/r-example]
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
 
    [single-chart/example]
-
    [cs-table/example]
    [v-scroll/example]
    [v-scroll/example-2]
@@ -43,7 +43,7 @@
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
    [multi-chart-widget/example]
-   ;
+
    [with-fn/example]
    [fc/example]])
 

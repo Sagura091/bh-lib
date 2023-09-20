@@ -204,10 +204,86 @@ The function takes a hash-map with the following keys defined:
         def-config (-> configuration :mol/components (get node) :atm/default-config)
         label      (-> configuration :mol/components (get node) :atm/label)
 
-        ;_         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
-        ;            children? "//" children "//"
-        ;            child? "//" child "//"
-        ;            @atm-set)
+        _         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
+                    children? "//" children "//"
+                    child? "//" child "//"
+                    @atm-set)
+
+        ret        {node
+
+                    {:component (condp = [child? children?]
+
+                                  [:enumerated nil]
+                                  (do
+                                    ;(log/info "enumerated child" node "//" child)
+                                    (into [(or bh-ui error-ui)
+                                           (merge (or styl {:style {:height "100%" :width "100%"}})
+                                             (or def-config {}))]
+                                      (:component ((fn [c] (get @atm-set c)) child))))
+
+                                  [:keyword nil]
+                                  (do
+                                    ;(log/info "keyword child" node "//" child)
+                                    [(or bh-ui error-ui)
+                                     :style (or styl {:height "100%" :width "100%"})
+                                     :config def-config
+                                     :child (:component ((fn [c] (get @atm-set c)) child))])
+
+                                  [nil :enumerated]
+                                  (do
+                                    ;(log/info "enumerated children" node "//" children)
+                                    (into [(or bh-ui error-ui)
+                                           (merge (or styl {:style {:height "100%" :width "100%"}})
+                                             (or def-config {}))]
+                                      (map (fn [c] (:component (get @atm-set c))) children)))
+
+                                  [nil :keyword]
+                                  (do
+                                    ;(log/info "keyword children" node "//" children)
+                                    [(or bh-ui error-ui)
+                                     :style (or styl {:height "100%" :width "100%"})
+                                     :config def-config
+                                     :children (into [] (map (fn [c] (:component (get @atm-set c))) children))])
+
+                                  [nil nil]
+                                  (do
+                                    ;(log/info "NO Children!" node)
+                                    (reduce into [(or bh-ui error-ui)
+                                                  :component-id component-id :container-id container-id
+                                                  :style (or styl {:height "100%" :width "100%"})
+                                                  :config def-config]
+                                      (seq
+                                        (merge
+                                          (make-params configuration node :inputs container-id)
+                                          (make-params configuration node :outputs container-id))))))
+                     :label     label}}]
+
+    (reset! last-hiccup ret)
+    ret))
+
+
+; :ui/container
+(defmethod component->ui :ui/container [{:keys [node atm-set registry configuration component-id container-id] :as params}]
+
+  (reset! last-params params)
+  (reset! last-atm-set @atm-set)
+
+  (let [ui-type    (get-in configuration [:mol/components node :atm/kind])
+        bh-ui      (if (keyword? ui-type)
+                     (->> registry ui-type :component)
+                     ui-type)
+        styl       (get-in configuration [:mol/components node :atm/style])
+        children?  (->> registry ui-type :children)
+        children   (-> configuration :mol/components (get node) :atm/children)
+        child?     (->> registry ui-type :child)
+        child      (-> configuration :mol/components (get node) :atm/child)
+        def-config (-> configuration :mol/components (get node) :atm/default-config)
+        label      (-> configuration :mol/components (get node) :atm/label)
+
+        _         (log/info "component->ui :ui/container" node "//" ui-type "//" bh-ui "//"
+                    children? "//" children "//"
+                    child? "//" child "//"
+                    @atm-set)
 
         ret        {node
 
@@ -378,15 +454,15 @@ to isolate this widget from all other
 
 > Note 2: this function uses [Loom](https://github.com/aysylu/loom) to organize the dependencies
   "
-  [configuration node-type registry container-id]
+  [configuration node-types registry container-id]
 
-  (reset! last-cfg {:cfg configuration :nt node-type :r registry :id container-id})
+  (reset! last-cfg {:cfg configuration :nt node-types :r registry :id container-id})
 
   (let [atm-set       (atom {})
         cfg           (->> configuration
                         :mol/components
                         (filter (fn [[_ meta-data]]
-                                  (= node-type (:atm/role meta-data))))
+                                  (contains? node-types (:atm/role meta-data))))
                         (into {}))
         edges         (reduce conj
                         (mapcat (fn [[name {:keys [atm/children]}]]

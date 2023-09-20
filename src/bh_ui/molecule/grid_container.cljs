@@ -19,7 +19,10 @@
 
 
 (def last-config (atom nil))
+(def last-data (atom nil))
+(def last-params (atom nil))
 (def last-full-config (atom nil))
+(def last-component-lookup (atom nil))
 
 
 (defn- config
@@ -151,7 +154,7 @@
   (let [layout (locals/subscribe-local component-id [:layout])
         component-lookup (into {}
                            (sig/process-components-stateful
-                             configuration :ui/component
+                             configuration #{:ui/component :ui/container}
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; build UI components (with subscription/event signals against the blackboard or remotes)
@@ -161,10 +164,10 @@
         composed-ui (map wrap-component (select-keys component-lookup visual-layout))
         open? (r/atom false)]
 
-    ;(reset! last-component-lookup {:lookup component-lookup
-    ;                               :viz visual-layout
-    ;                               :keys (select-keys component-lookup visual-layout)
-    ;                               :wrappers composed-ui})
+    (reset! last-component-lookup {:lookup   component-lookup
+                                   :viz      visual-layout
+                                   :keys     (select-keys component-lookup visual-layout)
+                                   :wrappers composed-ui})
 
     (fn []
       ;(log/info "component-panel INNER" component-id
@@ -213,7 +216,7 @@
   ;(log/info "component (params)" params)
 
   (let [id (r/atom nil)
-        configuration (update @data :mol/components ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+        configuration (update @data :mol/components         ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
                         (fn [x]
                           (into {}
                             (map (fn [[k v]]
@@ -630,6 +633,8 @@
     (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/component :atm/kind :bhui/v-scroll-pane
                                                      :atm/style    {:style {:height "500px", :width "700px"}}
                                                      :atm/children ["line" "bar"]}
+                                         "bar-box"  {:atm/role :ui/component :atm/kind :rc/box :atm/child "bar"}
+                                         "line-box" {:atm/role :ui/component :atm/kind :rc/box :atm/child "line"}
                                          "data"     {:atm/role :source/local :atm/kind :source/local}
                                          "line"     {:atm/role :ui/component :atm/kind :rechart/line}
                                          "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}}))
@@ -642,6 +647,32 @@
 
   ())
 
+
+; play with process-components-stateful (now with :ui/container)
+(comment
+  (do
+    (def configuration {:mol/components {"v-scroll" {:atm/role     :ui/container :atm/kind :bhui/v-scroll-pane
+                                                     :atm/style    {:style {:height "500px", :width "700px"}}
+                                                     :atm/children ["line" "bar"]}
+                                         "bar-box"  {:atm/role :ui/container :atm/kind :rc/box :atm/child "bar"}
+                                         "line-box" {:atm/role :ui/container :atm/kind :rc/box :atm/child "line"}
+                                         "data"     {:atm/role :source/local :atm/kind :source/local}
+                                         "line"     {:atm/role :ui/component :atm/kind :rechart/line}
+                                         "bar"      {:atm/role :ui/component :atm/kind :rechart/bar}}}))
+
+  (merge
+    (into {}
+      (sig/process-components-stateful
+        configuration :ui/component
+        @(re-frame/subscribe [:meta-data-registry]) "test-mol-dsl"))
+
+    (into {}
+      (sig/process-components-stateful
+        configuration :ui/container
+        @(re-frame/subscribe [:meta-data-registry]) "test-mol-dsl")))
+
+
+  ())
 
 
 ; need to make :atm/kind be a string (called kind-js) for passing to react-flow

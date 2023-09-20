@@ -143,10 +143,8 @@
     (r/as-element [:div])))
 
 
-(def meta-data {:source/remote {:ports   {:data :port/source}
-                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}
-                :source/local  {:ports   {:data :port/source}
-                                :handles {:outputs [{:label "data-out" :style {:background "#999"} :position (.-Right Position)}]}}})
+(def meta-data {:source/remote {:ports   {:data :port/source}}
+                :source/local  {:ports   {:data :port/source-sink}}})
 
 
 (rf/dispatch-sync [:register-meta meta-data])
