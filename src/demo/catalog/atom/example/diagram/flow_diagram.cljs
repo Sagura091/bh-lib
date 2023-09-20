@@ -65,7 +65,7 @@
                    :sourceHandle  sourceHandle
                    :target        (str "node-" target)
                    :targetHandle  targetHandle
-                   :label         (str sourceHandle "->" targetHandle)
+                   :label         (str sourceHandle)
                    :style         style
                    :arrowHeadType arrowHeadType
                    :animated      false}))]
