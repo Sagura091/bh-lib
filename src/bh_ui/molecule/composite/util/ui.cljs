@@ -138,7 +138,7 @@
   "
   [configuration]
 
-  ;(log/info "make-flow (a)" (keys configuration))
+  (log/info "make-flow (a)" (keys configuration))
 
   (let [flow {:nodes (map #(create-flow-node configuration %) (:nodes configuration))
               :edges (map-indexed (fn [idx node]
@@ -178,6 +178,22 @@
   (sig/process-components configuration :source/fn registry component-id))
 
 
+
+
+
+
+
+; TODO: 1) need to build a tree/digraph of the nodes for the flow-diagram, including parent/child stuff
+; TODO: 2) Drag new nodes
+; TODO: 3) update attributes of nodes (:atm/kind, etc.)
+; TODO: 4) need a way to setup parent/child relationship using d&d
+; TODO: 5) connect nodes
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; Rich Comment
 
 ; fix create-flow-edge
 (comment
@@ -236,14 +252,14 @@
 
   (def inputs (->> configuration
                 (get-in [:denorm node-id :atm/kind])
-                (bh-ui.atom.component-registry/lookup-component)
+                bh-ui.atom.component-registry/lookup-component
                 :handles
                 :inputs
                 (#(into {} %))))
 
   (def outputs (-> configuration
                  (get-in [:mol/components node-id :atm/kind])
-                 (bh-ui.atom.component-registry/lookup-component)
+                 bh-ui.atom.component-registry/lookup-component
                  :handles
                  :outputs
                  (#(into {} %))))
@@ -255,7 +271,7 @@
 
   (-> configuration
     (get-in [:mol/components node-id :atm/kind])
-    (bh-ui.atom.component-registry/lookup-component)
+    bh-ui.atom.component-registry/lookup-component
     :handles
     :outputs)
 
@@ -298,3 +314,5 @@
 
 
   ())
+
+; endregion

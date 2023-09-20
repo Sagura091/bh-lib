@@ -8,14 +8,20 @@
             [taoensso.timbre :as log]))
 
 
+(def last-dsl (atom nil))
 
-(def initialNodes [{:id "lightning", :type ":source/remote" :position {:x 50, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
-                   {:id "carousel", :type ":ui/container" :position {:x 25, :y 250}, :data {:label "carousel" :kind ":bhui/carousel"
-                                                                                            :children ["bar-chart" "line-chart"]}}
+
+(def initialNodes [{:id "carousel", :type ":ui/container"
+                    :position {:x 25, :y 300},
+                    :data {:label "carousel" :kind ":bhui/carousel"
+                           :children ["bar-chart" "line-chart"]}}
+                   {:id "lightning", :type ":source/remote" :position {:x 50, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
                    {:id "config", :type ":source/local" :position {:x 200, :y 100}, :data {:label "config" :kind ":source/local"}}
                    {:id "time-range", :type ":source/fn" :position {:x 200, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
-                   {:id "line-chart", :type ":ui/component" :position {:x 50, :y 300}, :data {:label "line-chart" :kind ":rechart/line"}}
-                   {:id "bar-chart", :type ":ui/component" :position {:x 200, :y 300}, :data {:label "bar-chart" :kind ":rechart/bar"}}])
+                   {:id "line-chart", :type ":ui/component" :position {:x 25, :y 50},
+                    :parentNode "carousel" :data {:label "line-chart" :kind ":rechart/line"}}
+                   {:id "bar-chart", :type ":ui/component" :position {:x 150, :y 50},
+                    :parentNode "carousel" :data {:label "bar-chart" :kind ":rechart/bar"}}])
 (def initialEdges [{:id     "lightning->line-chart",
                     :source "lightning", :sourceHandle "data"
                     :target "line-chart" :targetHandle "data-in"
@@ -49,15 +55,16 @@
 
 (defn- dsl->react-flow []
   (let [nodes (for [node initialNodes]
-                (let [{:keys [type position data ]} node
+                (let [{:keys [type position data parentNode]} node
                       kind  (get data :kind)
                       label (get data :label)
                       children (get data :children)]
-                  {:id       (str "node-" (:id node))
-                   :type     type
-                   :position position
-                   :data     {:label label :kind kind :kind-js (str kind)
-                              :children children}}))
+                  (merge {:id       (str (:id node))
+                          :type     type
+                          :position position
+                          :data     {:label label :kind kind :kind-js (str kind)
+                                     :children children}}
+                    (when parentNode {:parentNode parentNode}))))
 
         edges (for [edge initialEdges]
                 (let [{:keys [id
@@ -65,14 +72,16 @@
                               target targetHandle
                               style arrowHeadType]} edge]
                   {:id            (str "edge-" id)
-                   :source        (str "node-" source)
+                   :source        (str source)
                    :sourceHandle  sourceHandle
-                   :target        (str "node-" target)
+                   :target        (str target)
                    :targetHandle  targetHandle
                    :label         (str sourceHandle)
                    :style         style
                    :arrowHeadType arrowHeadType
                    :animated      false}))]
+
+    (reset! last-dsl {:nodes nodes :edges edges})
 
     (r/atom {:nodes nodes :edges edges})))
 

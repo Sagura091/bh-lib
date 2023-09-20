@@ -26,7 +26,6 @@
                          :borderRadius "5px" :margin :auto
                          :background   :white :color :black})
 (def minimap-styles {:nodeStrokeColor        (fn [n]
-                                               (log/info "minimap-styles" n)
                                                (condp = (-> n js->clj (get "type"))
                                                  ":ui/component" "#008800"
                                                  ":ui/container" "#DCDCDC"
@@ -35,7 +34,6 @@
                                                  ":source/fn" "#FFC0CB"
                                                  "#FFFFFF"))
                      :nodeColor        (fn [n]
-                                         (log/info "minimap-styles" n)
                                          (condp = (-> n js->clj (get "type"))
                                            ":ui/component" "#008800"
                                            ":ui/container" "#F5F5DC"
@@ -128,9 +126,9 @@
         style (merge default-node-style (:ui/container node-style))
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    (log/info "container-node (b)" data
-      "//" text
-      "//" children)
+    ;(log/info "container-node (b)" data
+    ;  "//" text
+    ;  "//" children)
     ;  "//" node-type
     ;"//" @kind-of-element
     ;"//" (type node-type)
@@ -140,11 +138,11 @@
     (r/as-element
 
       [:div {:style          (merge style {:border "1px dashed"
-                                           :width  "300px" :height "125px"})
+                                           :width  "275px" :height "100px"})
              :on-mouse-enter #(set-visibility true)
              :on-mouse-leave #(set-visibility false)}
 
-       [:> NodeResizer {:color "#000000" :isVisible isVisible}]
+       [:> NodeResizer {:color "#000000" :isVisible isVisible :width  "100%" :height "100%"}]
 
        [rc/v-box
         :gap "1px"
