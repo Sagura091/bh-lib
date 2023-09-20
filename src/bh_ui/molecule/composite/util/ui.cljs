@@ -63,11 +63,15 @@
 
   (let [node-role (get-in configuration [:mol/components node-id :atm/role])
         node-kind (get-in configuration [:mol/components node-id :atm/kind])
+        children (merge []
+                   (get-in configuration [:mol/components node-id :atm/child])
+                   (get-in configuration [:mol/components node-id :atm/children]))
         ret {:id       (str node-id)
              :type     (str node-role)
              :data     {:label   (str node-id)
                         :kind    node-kind
                         :kind-js (str node-kind)
+                        :children children
                         :inputs  (-> configuration
                                    (get-in [:mol/components node-id :atm/kind])
                                    bh-ui.atom.component-registry/lookup-component
@@ -82,7 +86,7 @@
                                    (#(into {} %)))}
              :position {:x 0 :y 0}}]
 
-    ;(log/info "create-flow-node" node-id "///" node-role "///" node-kind "///" ret)
+    (log/info "create-flow-node" node-id "///" node-role "///" node-kind "///" ret)
 
     ret))
 
@@ -272,6 +276,25 @@
   (def kind (get-in config [:mol/components id :atm/kind]))
   (def comp (get-in (bh-ui.atom.component-registry/lookup-component kind)
               [:handles :outputs port]))
+
+
+  ())
+
+
+
+; gather child/children of :ui/container nodes
+(comment
+  (do
+      (def configuration (:config @last-params))
+      (def config configuration)
+      (def node-id (:id @last-params))
+      (def id node-id)
+      (def port :data)
+      (def node-details (:details @last-params)))
+
+  (merge []
+    (get-in configuration [:mol/components node-id :atm/child])
+    (get-in configuration [:mol/components node-id :atm/children]))
 
 
   ())

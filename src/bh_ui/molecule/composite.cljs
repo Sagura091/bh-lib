@@ -121,7 +121,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
      :data flow
      :config {:node-types   dsl/node-types
               :node-data    dsl/bootstrap-node-data
-              :node-kind-fn dsl/default-node-kind}
+              :node-kind-fn dsl/default-node-kind
+              :minimap-styles dsl/minimap-styles}
      :tool-types dag-support/default-tool-types
      :minimap-styles minimap-styles]))
 

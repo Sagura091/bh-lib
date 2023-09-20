@@ -10,6 +10,8 @@
 
 
 (def initialNodes [{:id "lightning", :type ":source/remote" :position {:x 50, :y 100}, :data {:label "lightning" :kind ":source/remote"}}
+                   {:id "carousel", :type ":ui/container" :position {:x 25, :y 250}, :data {:label "carousel" :kind ":bhui/carousel"
+                                                                                            :children ["bar-chart" "line-chart"]}}
                    {:id "config", :type ":source/local" :position {:x 200, :y 100}, :data {:label "config" :kind ":source/local"}}
                    {:id "time-range", :type ":source/fn" :position {:x 200, :y 200}, :data {:label "time-range" :kind ":simple-multi-chart-2/fn-make-config"}} ;":coverage-plan/fn-range"}}
                    {:id "line-chart", :type ":ui/component" :position {:x 50, :y 300}, :data {:label "line-chart" :kind ":rechart/line"}}
@@ -47,13 +49,15 @@
 
 (defn- dsl->react-flow []
   (let [nodes (for [node initialNodes]
-                (let [{:keys [type position data]} node
+                (let [{:keys [type position data ]} node
                       kind  (get data :kind)
-                      label (get data :label)]
+                      label (get data :label)
+                      children (get data :children)]
                   {:id       (str "node-" (:id node))
                    :type     type
                    :position position
-                   :data     {:label label :kind kind :kind-js (str kind)}}))
+                   :data     {:label label :kind kind :kind-js (str kind)
+                              :children children}}))
 
         edges (for [edge initialEdges]
                 (let [{:keys [id
@@ -86,7 +90,8 @@
      :data data
      :config {:node-types   dsl/node-types
               :node-data    dsl/bootstrap-node-data
-              :node-kind-fn dsl/default-node-kind}
+              :node-kind-fn dsl/default-node-kind
+              :minimap-styles dsl/minimap-styles}
      :component bh/flow-diagram
      :component-id (bh/utils-path->keyword container-id "flow-diagram")
      :source-code '[]]))
