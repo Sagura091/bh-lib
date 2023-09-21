@@ -422,6 +422,7 @@
 
   ; endregion
 
+
   ; region ; what about positioning the node?
 
   ; we can use an atom to hold state for each container (with a default one for the overall
@@ -454,9 +455,6 @@
       (swap! layout
         #(-> %
            (assoc-in [parent :children child :parent] parent)
-           ;(update-in [parent :children child :size] (fn [{width :width height :height}]
-           ;                                              {:width (+ width width-offset)
-           ;                                               :height (+ height height-offset)}))
            (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
            (update-in [parent :next] (fn [{x :x y :y}]
                                        (let [[new-x new-y] (if (< x 300)
@@ -468,26 +466,54 @@
                                          {:x new-x :y new-y})))))))
 
 
-  (+ nil 10)
   (sub-layout layout :diagram)
   (sub-layout layout "v-scroll-1")
   (sub-layout layout "v-scroll-2")
 
 
-  (set-position layout :diagram "v-scroll-1")
-  (set-position layout "v-scroll-1" "table-one")
-  (set-position layout "v-scroll-1" "table-two")
-  (set-position layout "v-scroll-1" "table-three")
-  (set-position layout "v-scroll-1" "table-four")
-  (set-position layout "v-scroll-1" "table-ten")
+  (do
+    (set-position layout :diagram "v-scroll-1")
+    (set-position layout "v-scroll-1" "table-one")
+    (set-position layout "v-scroll-1" "table-two")
+    (set-position layout "v-scroll-1" "table-three")
+    (set-position layout "v-scroll-1" "table-four")
+    (set-position layout "v-scroll-1" "table-ten")
 
-  (set-position layout :diagram "v-scroll-2")
-  (set-position layout "v-scroll-2" "table-five")
-  (set-position layout "v-scroll-2" "table-six")
+    (set-position layout :diagram "v-scroll-2")
+    (set-position layout "v-scroll-2" "table-five")
+    (set-position layout "v-scroll-2" "table-six"))
+
 
   ; endregion
 
 
+  ; region ; figure out how large the "parent" should be to fit all the children
+  (do
+    (def parent "v-scroll-1")
+    (def children (get-in @layout [parent :children]))
+    (def min-x (->> children
+                 (map (fn [[_ {{:keys [x]} :position}]] x))
+                 (apply min)))
+    (def max-x (->> children
+                 (map (fn [[_ {{:keys [x]} :position}]] x))
+                 (apply max)))
+    (def min-y (->> children
+                 (map (fn [[_ {{:keys [y]} :position}]] y))
+                 (apply min)))
+    (def max-y (->> children
+                 (map (fn [[_ {{:keys [y]} :position}]] y))
+                 (apply max)))
+    (def width (+ (- max-x min-x) (* x-offset 2)))
+    (def height (+ (- max-y min-y) (* y-offset 2))))
+
+
+
+  ; endregion
+
+
+  ; region ; put it all together?
+
+  ; endregion
 
   (make-flow full-config)
 
