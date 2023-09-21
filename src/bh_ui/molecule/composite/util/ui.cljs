@@ -472,16 +472,19 @@
 
 
   (do
-    (set-position layout :diagram "v-scroll-1")
+    (set-position layout :diagram "data/one")
+    (set-position layout :diagram "data/two")
+
+    (set-position layout :diagram "carousel")
+    (set-position layout "carousel" "v-scroll-1")
     (set-position layout "v-scroll-1" "table-one")
     (set-position layout "v-scroll-1" "table-two")
-    (set-position layout "v-scroll-1" "table-three")
-    (set-position layout "v-scroll-1" "table-four")
-    (set-position layout "v-scroll-1" "table-ten")
 
-    (set-position layout :diagram "v-scroll-2")
-    (set-position layout "v-scroll-2" "table-five")
-    (set-position layout "v-scroll-2" "table-six"))
+    (set-position layout "carousel" "v-scroll-2")
+    (set-position layout "v-scroll-2" "table-three")
+    (set-position layout "v-scroll-2" "table-four"))
+
+
 
 
   ; endregion
@@ -512,6 +515,60 @@
 
 
   ; region ; put it all together?
+
+  ; region ; this is what we want:
+  (def dsl-layout-gold
+    {:nodes [{:id       "carousel", :type ":ui/container"
+              :position {:x 25, :y 125},
+              :data     {:label    "carousel" :kind ":rc/carousel"
+                         :size     {:width 575 :height 200}
+                         :children {"v-scroll-1" {:position {:x 25, :y 25}}
+                                    "v-scroll-2" {:position {:x 125, :y 25}}}}}
+             {:id   "data/one", :type ":source/local" :position {:x 25, :y 25},
+              :data {:label "data/one" :kind ":source/local"}}
+             {:id   "data/two", :type ":source/local" :position {:x 150, :y 25},
+              :data {:label "data/two" :kind ":source/local"}}
+
+             {:id         "v-scroll-1", :type ":ui/container"
+              :position   {:x 25, :y 50},
+              :parentNode "carousel" :data {:label    "v-scroll-1" :kind ":rc/v-scroll"
+                                            :size     {:width 250 :height 125}
+                                            :children {"table-one" {:position {:x 25, :y 25}}
+                                                       "table-two" {:position {:x 125, :y 25}}}}}
+             {:id         "v-scroll-2", :type ":ui/container"
+              :position   {:x 300, :y 50},
+              :parentNode "carousel" :data {:label    "v-scroll-2" :kind ":rc/v-scroll"
+                                            :size     {:width 250 :height 125}
+                                            :children {"table-three" {:position {:x 25, :y 25}}
+                                                       "table-four"  {:position {:x 125, :y 25}}}}}
+
+             {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
+              :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}
+             {:id         "table-two", :type ":ui/component" :position {:x 125, :y 50},
+              :parentNode "v-scroll-1" :data {:label "table-two" :kind ":react-table/table"}}
+             {:id         "table-three", :type ":ui/component" :position {:x 25, :y 50},
+              :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}
+             {:id         "table-four", :type ":ui/component" :position {:x 125, :y 50},
+              :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}]
+
+     :edges [{:id     "data/one->table-one",
+              :source "data/one", :sourceHandle "data"
+              :target "table-one" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/one->table-three",
+              :source "data/one", :sourceHandle "data"
+              :target "table-three" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/two->table-two",
+              :source "data/two", :sourceHandle "data"
+              :target "table-two" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/two->table-four",
+              :source "data/two", :sourceHandle "data"
+              :target "table-four" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}]})
+  ; endregion
+
 
   ; endregion
 

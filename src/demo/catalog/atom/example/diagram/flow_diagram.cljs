@@ -46,6 +46,58 @@
                     :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}])
 
 
+(def dsl-layout-gold
+  {:nodes [{:id       "carousel", :type ":ui/container"
+            :position {:x 25, :y 125},
+            :data     {:label    "carousel" :kind ":rc/carousel"
+                       :size     {:width 625 :height 200}
+                       :children {"v-scroll-1" {:position {:x 25, :y 25}}
+                                  "v-scroll-2" {:position {:x 125, :y 25}}}}}
+           {:id   "data/one", :type ":source/local" :position {:x 25, :y 25},
+            :data {:label "data/one" :kind ":source/local"}}
+           {:id   "data/two", :type ":source/local" :position {:x 150, :y 25},
+            :data {:label "data/two" :kind ":source/local"}}
+
+           {:id         "v-scroll-1", :type ":ui/container"
+            :position   {:x 25, :y 50},
+            :parentNode "carousel" :data {:label    "v-scroll-1" :kind ":rc/v-scroll"
+                                          :size     {:width 275 :height 125}
+                                          :children {"table-one" {:position {:x 25, :y 25}}
+                                                     "table-two" {:position {:x 125, :y 25}}}}}
+           {:id         "v-scroll-2", :type ":ui/container"
+            :position   {:x 325, :y 50},
+            :parentNode "carousel" :data {:label    "v-scroll-2" :kind ":rc/v-scroll"
+                                          :size     {:width 275 :height 125}
+                                          :children {"table-three" {:position {:x 25, :y 25}}
+                                                     "table-four"  {:position {:x 125, :y 25}}}}}
+
+           {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
+            :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}
+           {:id         "table-two", :type ":ui/component" :position {:x 150, :y 50},
+            :parentNode "v-scroll-1" :data {:label "table-two" :kind ":react-table/table"}}
+           {:id         "table-three", :type ":ui/component" :position {:x 25, :y 50},
+            :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}
+           {:id         "table-four", :type ":ui/component" :position {:x 150, :y 50},
+            :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}]
+
+   :edges [{:id     "data/one->table-one",
+            :source "data/one", :sourceHandle "data"
+            :target "table-one" :targetHandle "data-in"
+            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+           {:id     "data/one->table-three",
+            :source "data/one", :sourceHandle "data"
+            :target "table-three" :targetHandle "data-in"
+            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+           {:id     "data/two->table-two",
+            :source "data/two", :sourceHandle "data"
+            :target "table-two" :targetHandle "data-in"
+            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+           {:id     "data/two->table-four",
+            :source "data/two", :sourceHandle "data"
+            :target "table-four" :targetHandle "data-in"
+            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}]})
+
+
 (defn register-dummys []
   (doall
     (rf/dispatch-sync [:register-meta
@@ -55,20 +107,23 @@
                                                                           :range :port/source}}}])))
 
 
-(defn- dsl->react-flow []
-  (let [nodes (for [node initialNodes]
+(defn- dsl->react-flow [n e]
+  (let [nodes (for [node n]
                 (let [{:keys [type position data parentNode]} node
-                      kind (get data :kind)
-                      label (get data :label)
-                      children (get data :children)]
+                      kind     (get data :kind)
+                      label    (get data :label)
+                      children (get data :children)
+                      size     (get data :size)]
+                  (log/info "dsl->react-flow" label size)
                   (merge {:id       (str (:id node))
                           :type     type
                           :position position
-                          :data     {:label    label :kind kind :kind-js (str kind)
-                                     :children children}}
+                          :data     (merge {:label    label :kind kind :kind-js (str kind)
+                                            :children children}
+                                      (when size {:size size}))}
                     (when parentNode {:parentNode parentNode}))))
 
-        edges (for [edge initialEdges]
+        edges (for [edge e]
                 (let [{:keys [id
                               source sourceHandle
                               target targetHandle
@@ -92,7 +147,7 @@
   (register-dummys)
 
   (let [container-id "flow-diagram-demo"
-        data (dsl->react-flow)]
+        data         (dsl->react-flow initialNodes initialEdges)]
 
     [example/component-example
      :container-id container-id
@@ -108,12 +163,59 @@
      :source-code '[]]))
 
 
+(defn example-2 []
+  (register-dummys)
+
+  (let [container-id "flow-diagram-demo-2"
+        data         (dsl->react-flow (:nodes dsl-layout-gold) (:edges dsl-layout-gold))]
+
+    [example/component-example
+     :container-id container-id
+     :title "Flow Diagram (more complex)"
+     :description "A simple Flow Diagram built using [react-flow](https://reactflow.dev)"
+     :data data
+     :config {:node-types     dsl/node-types
+              :node-data      dsl/bootstrap-node-data
+              :node-kind-fn   dsl/default-node-kind
+              :minimap-styles dsl/minimap-styles}
+     :component bh/flow-diagram
+     :component-id (bh/utils-path->keyword container-id "flow-diagram")
+     :source-code '[]]))
+
+
 
 
 (comment
 
-  (map #(rf/dispatch-sync [:register-meta {% remote-source-handles}]) remote-sources)
-
   @(rf/subscribe [:meta-data-registry])
+
+  (do
+    (def parentNode nil)
+    (def size {:width 1 :height 1})
+
+    (def options (merge
+                   (when parentNode {:parentNode parentNode})
+                   (when size {:size size}))))
+
+  (merge {:one 1} options)
+
+
+
+  (def c-node (clj->js (let [node     (-> dsl-layout-gold :nodes first)
+                             {:keys [type position size data parentNode]} node
+                             kind     (get data :kind)
+                             label    (get data :label)
+                             children (get data :children)
+                             options  (merge
+                                        (when parentNode {:parentNode parentNode})
+                                        (when size {:size size}))]
+                         (merge {:id       (str (:id node))
+                                 :type     type
+                                 :position position
+                                 :data     {:label    label :kind kind :kind-js (str kind)
+                                            :children children}}
+                           options))))
+
+  (get (js->clj c-node) "size")
 
   ())

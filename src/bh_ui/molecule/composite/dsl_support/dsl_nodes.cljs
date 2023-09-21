@@ -15,7 +15,7 @@
 
 (def handle-style {:width "8px" :height "8px" :borderRadius "50%"})
 (def node-style {:ui/component  {:background :green :color :white}
-                 :ui/container  {:background :beige :color :gray}
+                 :ui/container  {:color :gray}
                  :source/remote {:background :orange :color :black}
                  :source/local  {:background :blue :color :white}
                  :source/fn     {:background :pink :color :black}})
@@ -23,16 +23,19 @@
                          :minWidth     "100px"
                          :width        "100%"
                          :height       "100%"
-                         :borderRadius "5px" :margin :auto
-                         :background   :white :color :black})
-(def minimap-styles {:nodeStrokeColor        (fn [n]
-                                               (condp = (-> n js->clj (get "type"))
-                                                 ":ui/component" "#008800"
-                                                 ":ui/container" "#DCDCDC"
-                                                 ":source/remote" "#FFA500"
-                                                 ":source/local" "#0000FF"
-                                                 ":source/fn" "#FFC0CB"
-                                                 "#FFFFFF"))
+                         :borderRadius "5px"})
+
+(def default-text-style {:color      :black
+                         :margin     :auto
+                         :textAlign  :center})
+(def minimap-styles {:nodeStrokeColor  (fn [n]
+                                         (condp = (-> n js->clj (get "type"))
+                                           ":ui/component" "#008800"
+                                           ":ui/container" "#DCDCDC"
+                                           ":source/remote" "#FFA500"
+                                           ":source/local" "#0000FF"
+                                           ":source/fn" "#FFC0CB"
+                                           "#FFFFFF"))
                      :nodeColor        (fn [n]
                                          (condp = (-> n js->clj (get "type"))
                                            ":ui/component" "#008800"
@@ -118,22 +121,35 @@
 
 
 (defn- container-node [node]
-  (let [data (js->clj node)
-        node-id (get data "id")
-        text (get-in data ["data" "label"])
-        children (get-in data ["data" "children"])
+  (let [data            (js->clj node)
+        node-id         (get data "id")
+        size            (get-in data ["data" "size"])
+        text            (get-in data ["data" "label"])
+        children        (get-in data ["data" "children"])
+        parent          (get-in data "parentNode")
         kind-of-element (r/atom (get-in data ["data" "kind-js"]))
-        style (merge default-node-style (:ui/container node-style))
+        node-styling    (-> default-node-style
+                          (merge (:ui/container node-style))
+                          (merge {:border "1px dashed"})
+                          (merge (into {}
+                                   (map (fn [[k v]]
+                                          {(keyword k) v}) size))))
+        text-style      (merge default-text-style (:ui/container node-style))
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    ;(log/info "container-node (b)" data
-    ;  "//" text
-    ;  "//" children)
-    ;  "//" node-type
+    (log/info "container-node (b)"
+      text-style)
+    ;data
+    ;"//" text
+    ;"//" children
+    ;"//" size
+    ;"//" (into {} (map (fn [[k v]] {(keyword k) v}) size))
+    ;"//" node-type
+    ;"//" node-styling
     ;"//" @kind-of-element
     ;"//" (type node-type)
-    ;"///" handles)
-    ;  "//" extras?)
+    ;"///" handles
+    ;"//" extras?)
 
     (r/as-element
 
@@ -144,11 +160,9 @@
 
        [rc/v-box
         :gap "1px"
-        :style          (merge style {:border "1px dashed"})
-        :children [[label/label :style (merge {:textAlign :center} style)
-                    :value text]
-                   [label/label-sm :style (merge {:textAlign :center} style)
-                    :value @kind-of-element]]]])))
+        :style node-styling
+        :children [[label/label :style text-style :value text]
+                   [label/label-sm :style text-style :value @kind-of-element]]]])))
 
 
 (defn custom-node
@@ -160,12 +174,12 @@
   ;(log/info "custom-node (a)" node-type "//" two "//" node "//" params)
 
   (if node
-    (let [data (js->clj node)
-          node-id (get data "id")
-          text (get-in data ["data" "label"])
+    (let [data            (js->clj node)
+          node-id         (get data "id")
+          text            (get-in data ["data" "label"])
           kind-of-element (r/atom (get-in data ["data" "kind-js"]))
-          style (merge default-node-style (node-type node-style))
-          handles (look-up-ui-component @kind-of-element)
+          style           (merge default-node-style (node-type node-style))
+          handles         (look-up-ui-component @kind-of-element)
           [isVisible set-visibility on-change-visibility] (useState false)]
 
       (reset! last-node data)
@@ -252,5 +266,12 @@
   (-> (string->keyword @kind-of-element)
     bh-ui.atom.component-registry/lookup-component
     :handles)
+
+
+  (def size (clj->js {:width 100}))
+
+  (map (fn [[k v]] {(keyword k) v}) {"width" 100})
+
+  (js->clj size :keywordize-keys true)
 
   ())
