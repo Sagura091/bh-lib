@@ -78,6 +78,7 @@
             [bh-ui.atom.re-com.table :as table]
             [bh-ui.atom.re-com.tabs :as tabs]
             [bh-ui.atom.re-com.v-scroller :as v-scroll]
+            [bh-ui.atom.re-com.popover :as popover]
 
             [bh-ui.atom.resium.globe :as res-globe]
             [bh-ui.atom.resium.shape :as res-shape]
@@ -398,6 +399,8 @@
 (def recom-v-bar-tabs                       tabs/v-bar-tabs)
 (def recom-v-pill-tabs                      tabs/v-pill-tabs)
 (def recom-v-scroll                         v-scroll/v-scroller)
+(def clickable-popover                      popover/clickable-popover)
+(def hover-popover                          popover/hover-popover)
 
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 
