@@ -68,22 +68,22 @@
                    (get-in configuration [:mol/components node-id :atm/children]))
         ret {:id       (str node-id)
              :type     (str node-role)
-             :data     {:label   (str node-id)
-                        :kind    node-kind
-                        :kind-js (str node-kind)
+             :data     {:label    (str node-id)
+                        :kind     node-kind
+                        :kind-js  (str node-kind)
                         :children children
-                        :inputs  (-> configuration
-                                   (get-in [:mol/components node-id :atm/kind])
-                                   bh-ui.atom.component-registry/lookup-component
-                                   :handles
-                                   :inputs
-                                   (#(into {} %)))
-                        :outputs (-> configuration
-                                   (get-in [:mol/components node-id :atm/kind])
-                                   bh-ui.atom.component-registry/lookup-component
-                                   :handles
-                                   :outputs
-                                   (#(into {} %)))}
+                        :inputs   (-> configuration
+                                    (get-in [:mol/components node-id :atm/kind])
+                                    bh-ui.atom.component-registry/lookup-component
+                                    :handles
+                                    :inputs
+                                    (#(into {} %)))
+                        :outputs  (-> configuration
+                                    (get-in [:mol/components node-id :atm/kind])
+                                    bh-ui.atom.component-registry/lookup-component
+                                    :handles
+                                    :outputs
+                                    (#(into {} %)))}
              :position {:x 0 :y 0}}]
 
     (log/info "create-flow-node" node-id "///" node-role "///" node-kind "///" ret)
@@ -140,12 +140,12 @@
 
   (log/info "make-flow (a)" (keys configuration))
 
-  (let [flow {:nodes (map #(create-flow-node configuration %) (:nodes configuration))
-              :edges (map-indexed (fn [idx node]
-                                    (create-flow-edge configuration idx node))
-                       (:edges configuration))
+  (let [flow {:nodes   (map #(create-flow-node configuration %) (:nodes configuration))
+              :edges   (map-indexed (fn [idx node]
+                                      (create-flow-edge configuration idx node))
+                         (:edges configuration))
               :rankdir "TB"
-              :align "UL"}]
+              :align   "UL"}]
 
     ;(log/info "make-flow (b)" (first (:nodes flow)))
 
@@ -187,7 +187,7 @@
 ; TODO: 2) Drag new nodes
 ; TODO: 3) update attributes of nodes (:atm/kind, etc.)
 ; TODO: 4) need a way to setup parent/child relationship using d&d
-; TODO: 5) connect nodes
+; TODO: 5) connect nodes (working??? mostly working???)
 
 
 
@@ -301,12 +301,12 @@
 ; gather child/children of :ui/container nodes
 (comment
   (do
-      (def configuration (:config @last-params))
-      (def config configuration)
-      (def node-id (:id @last-params))
-      (def id node-id)
-      (def port :data)
-      (def node-details (:details @last-params)))
+    (def configuration (:config @last-params))
+    (def config configuration)
+    (def node-id (:id @last-params))
+    (def id node-id)
+    (def port :data)
+    (def node-details (:details @last-params)))
 
   (merge []
     (get-in configuration [:mol/components node-id :atm/child])
@@ -314,5 +314,197 @@
 
 
   ())
+
+
+
+
+; turn the "DSL" into the flow-diagram nodes/edges(?)
+(comment
+
+  ; region ; build the full-config
+  (do
+    (def container-id "dummy-container")
+    ; note: we've deliberately added 2 layers of container-ship for testing
+    (def def {:mol/components  {"table-one"   {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-two"   {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-three" {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-four"  {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "v-scroll-1"  {:atm/role  :ui/container :atm/kind :rc/v-scroll
+                                               :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
+                                "v-scroll-2"  {:atm/role  :ui/container :atm/kind :rc/v-scroll
+                                               :atm/label "Multiple Views" :atm/children ["table-three" "table-four"]}
+                                "carousel"    {:atm/role  :ui/container :atm/kind :rc/carousel
+                                               :atm/label "Carousel" :atm/children ["v-scroll-1" "v-scroll-2"]}
+                                "data/one"    {:atm/role         :source/local :atm/kind :source/local
+                                               :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-one}
+                                "data/two"    {:atm/role         :source/local :atm/kind :source/local
+                                               :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-two}}
+              :mol/links       {"data/one" {:data {"table-one" :data}}
+                                "data/two" {:data {"table-two" :data}}}
+              :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 11 :static true}]
+              :mol/dsl-layout  {:nodes [{}]
+                                :edges [{}]}})
+    (def data (atom def))
+    (def configuration (update @data :mol/components        ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+                         (fn [x]
+                           (into {}
+                             (map (fn [[k v]]
+                                    {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+                               x)))))
+    (def graph (apply loom.graph/digraph (compute-edges configuration)))
+    (def partial-config (assoc configuration
+                          :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                                    graph (:mol/links configuration) (loom.graph/nodes graph))
+                          :nodes (-> configuration :mol/components keys set)
+                          :edges (into [] (loom.graph/edges graph))))
+
+    ; at this point we have :graph which does NOT include the :ui/container called "v-scroll"
+    ; because it isn't involved in any links. we need to fix this, and we should do that by
+    ; adding ANOTHER key (so we don't break anything that is currently working)
+    (def containership-graph (->> partial-config
+                               :nodes
+                               (mapcat (fn [node-id]
+                                         (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
+                                                          (get-in configuration [:mol/components node-id :atm/children]))]
+                                           {node-id (vec children)})))
+                               (filter (fn [[_ children]] (not-empty children)))
+                               (into {})))
+
+    ; now we should go the other way, children should identify their parents
+    (def parent-graph (->> containership-graph
+                        (mapcat (fn [[parent children]]
+                                  (map (fn [child]
+                                         {child parent}) children)))
+                        (into {})))
+
+    (def full-config (assoc partial-config
+                       :graph graph
+                       :containership-graph containership-graph
+                       :parent-graph parent-graph
+                       :container container-id)))
+  ; endregion
+
+
+  ; region ; make flow-nodes
+
+  (do
+    (def node-id "v-scroll-1")
+    (def node-role (get-in full-config [:mol/components node-id :atm/role]))
+    (def node-kind (get-in full-config [:mol/components node-id :atm/kind]))
+    (def children (get-in full-config [:containership-graph node-id]))
+    (def parent (get-in full-config [:parent-graph node-id])))
+
+
+  (def the-node {:id       (str node-id)
+                 :type     (str node-role)
+                 :data     (merge {:label    (str node-id)
+                                   :kind     node-kind
+                                   :kind-js  (str node-kind)
+                                   :children children
+                                   :inputs   (-> configuration
+                                               (get-in [:mol/components node-id :atm/kind])
+                                               bh-ui.atom.component-registry/lookup-component
+                                               :handles
+                                               :inputs
+                                               (#(into {} %)))
+                                   :outputs  (-> configuration
+                                               (get-in [:mol/components node-id :atm/kind])
+                                               bh-ui.atom.component-registry/lookup-component
+                                               :handles
+                                               :outputs
+                                               (#(into {} %)))}
+                             (when parent {:parentNode parent}))
+                 :position {:x 0 :y 0}})
+
+  ; endregion
+
+  ; region ; what about positioning the node?
+
+  ; we can use an atom to hold state for each container (with a default one for the overall
+  ;   diagram) so we can space each node away from previously processed nodes
+
+  (do
+    (def x-offset 25)
+    (def y-offset 25)
+    (def width 100)
+    (def height 50)
+
+    (def layout (atom {:diagram {:children {}
+                                 :next     {:x x-offset :y y-offset}}}))
+    (def parent-id "v-scroll-1")
+    (def child-id "table-one")
+
+    (defn sub-layout [layout parent-id]
+      (if-let [ret (get @layout parent-id)]
+        ret
+        (let [setup {:children {} :next {:x x-offset :y y-offset}}]
+          (swap! layout assoc parent-id setup)
+          setup)))
+
+    (defn set-position [layout parent child]
+      (sub-layout layout parent)
+      (swap! layout
+        #(-> %
+           (assoc-in [parent :children child :parent] parent)
+           (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+           (update-in [parent :next] (fn [{x :x y :y}]
+                                       (let [[new-x new-y] (if (< x 300)
+                                                             [(+ x width) y]
+                                                             [x-offset
+                                                              (if (< y 300)
+                                                                (+ y height)
+                                                                y-offset)])]
+                                         {:x new-x :y new-y})))))))
+
+  (sub-layout layout :diagram)
+  (sub-layout layout "v-scroll-1")
+  (sub-layout layout "v-scroll-2")
+
+
+  ; update the :next-x/:next-y
+  (let [child "v-scroll-1"
+        sub-layout (sub-layout layout :diagram)
+        next-x (-> sub-layout :next :x)
+        next-y (-> sub-layout)
+        position {:x next-x :y next-y}]
+
+    (swap! layout
+      #(-> %
+         (assoc-in [:diagram :children child :position] (get-in @layout [:diagram :next]))
+         (update-in [:diagram :next] (fn [{x :x y :y}]
+                                       (let [[new-x new-y] (if (< x 300)
+                                                             [(+ x width) y]
+                                                             [x-offset
+                                                              (if (< y 300)
+                                                                (+ y height)
+                                                                y-offset)])]
+
+                                         {:x new-x :y new-y}))))))
+
+
+  (set-position layout :diagram "v-scroll-1")
+  (set-position layout "v-scroll-1" "table-one")
+  (set-position layout "v-scroll-1" "table-two")
+  (set-position layout "v-scroll-1" "table-three")
+  (set-position layout "v-scroll-1" "table-four")
+  (set-position layout "v-scroll-1" "table-ten")
+
+  (set-position layout :diagram "v-scroll-2")
+  (set-position layout "v-scroll-2" "table-five")
+  (set-position layout "v-scroll-2" "table-six")
+
+  ; endregion
+
+
+
+  (make-flow full-config)
+
+
+  ())
+
 
 ; endregion

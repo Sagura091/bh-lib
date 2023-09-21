@@ -137,15 +137,14 @@
 
     (r/as-element
 
-      [:div {:style          (merge style {:border "1px dashed"
-                                           :width  "275px" :height "100px"})
-             :on-mouse-enter #(set-visibility true)
+      [:div {:on-mouse-enter #(set-visibility true)
              :on-mouse-leave #(set-visibility false)}
 
-       [:> NodeResizer {:color "#000000" :isVisible isVisible :width  "100%" :height "100%"}]
+       [:> NodeResizer {:color "#000000" :isVisible isVisible}]
 
        [rc/v-box
         :gap "1px"
+        :style          (merge style {:border "1px dashed"})
         :children [[label/label :style (merge {:textAlign :center} style)
                     :value text]
                    [label/label-sm :style (merge {:textAlign :center} style)
