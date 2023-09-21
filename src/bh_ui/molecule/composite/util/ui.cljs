@@ -430,10 +430,14 @@
   (do
     (def x-offset 25)
     (def y-offset 25)
-    (def width 100)
-    (def height 50)
+    (def width 75)
+    (def width-offset 100)
+    (def height 25)
+    (def height-offset 50)
 
     (def layout (atom {:diagram {:children {}
+                                 :parent   nil
+                                 :size     {:width 0 :height 0}
                                  :next     {:x x-offset :y y-offset}}}))
     (def parent-id "v-scroll-1")
     (def child-id "table-one")
@@ -450,40 +454,24 @@
       (swap! layout
         #(-> %
            (assoc-in [parent :children child :parent] parent)
+           ;(update-in [parent :children child :size] (fn [{width :width height :height}]
+           ;                                              {:width (+ width width-offset)
+           ;                                               :height (+ height height-offset)}))
            (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
            (update-in [parent :next] (fn [{x :x y :y}]
                                        (let [[new-x new-y] (if (< x 300)
-                                                             [(+ x width) y]
+                                                             [(+ x width-offset) y]
                                                              [x-offset
                                                               (if (< y 300)
-                                                                (+ y height)
+                                                                (+ y height-offset)
                                                                 y-offset)])]
                                          {:x new-x :y new-y})))))))
 
+
+  (+ nil 10)
   (sub-layout layout :diagram)
   (sub-layout layout "v-scroll-1")
   (sub-layout layout "v-scroll-2")
-
-
-  ; update the :next-x/:next-y
-  (let [child "v-scroll-1"
-        sub-layout (sub-layout layout :diagram)
-        next-x (-> sub-layout :next :x)
-        next-y (-> sub-layout)
-        position {:x next-x :y next-y}]
-
-    (swap! layout
-      #(-> %
-         (assoc-in [:diagram :children child :position] (get-in @layout [:diagram :next]))
-         (update-in [:diagram :next] (fn [{x :x y :y}]
-                                       (let [[new-x new-y] (if (< x 300)
-                                                             [(+ x width) y]
-                                                             [x-offset
-                                                              (if (< y 300)
-                                                                (+ y height)
-                                                                y-offset)])]
-
-                                         {:x new-x :y new-y}))))))
 
 
   (set-position layout :diagram "v-scroll-1")
