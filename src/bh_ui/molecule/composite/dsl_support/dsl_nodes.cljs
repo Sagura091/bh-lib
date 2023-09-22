@@ -39,7 +39,7 @@
                      :nodeColor        (fn [n]
                                          (condp = (-> n js->clj (get "type"))
                                            ":ui/component" "#008800"
-                                           ":ui/container" "#F5F5DC"
+                                           ":ui/container" "transparent"
                                            ":source/remote" "#FFA500"
                                            ":source/local" "#0000FF"
                                            ":source/fn" "#FFC0CB"
@@ -137,8 +137,7 @@
         text-style      (merge default-text-style (:ui/container node-style))
         [isVisible set-visibility on-change-visibility] (useState false)]
 
-    (log/info "container-node (b)"
-      text-style)
+    ;(log/info "container-node (b)"
     ;data
     ;"//" text
     ;"//" children
@@ -146,6 +145,7 @@
     ;"//" (into {} (map (fn [[k v]] {(keyword k) v}) size))
     ;"//" node-type
     ;"//" node-styling
+    ;  text-style
     ;"//" @kind-of-element
     ;"//" (type node-type)
     ;"///" handles
