@@ -1414,7 +1414,7 @@ a.box:active {
 .content sub {
   font-size: 75%; }
 
-.content table {
+/*.content table {
   width: 100%; }
   .content table td,
   .content table th {
@@ -1436,7 +1436,7 @@ a.box:active {
     color: #363636; }
   .content table tbody tr:last-child td,
   .content table tbody tr:last-child th {
-    border-bottom-width: 0; }
+    border-bottom-width: 0; } */
 
 .content .tabs li + li {
   margin-top: 0; }
