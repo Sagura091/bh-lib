@@ -49,9 +49,8 @@
   ;(if-let [ret (get @layout parent-id)]
   ;  ret
   (when (nil? (get-in @layout [parent-id :children]))
-   (let [setup {:children {} :next {:x x-offset :y y-offset}}]
-     (swap! layout update parent-id
-       #(assoc % :children {} :next {:x x-offset :y y-offset})))))
+    (swap! layout update parent-id
+      #(assoc % :children {} :next {:x x-offset :y y-offset}))))
 
 
 (defn- set-position [layout parent child]
@@ -585,6 +584,18 @@
   ; 3) [ true         true   ]     <- "contained" containers
   ; 4) [ true         nil    ]     <- children, at any level
   ;
+  ; this maps over our example:
+  ;     "data/one     [:diagram nil]    (1)
+  ;     "v-scroll-1"  [true true]       (3)
+  ;     "carousel"    [:diagram true]   (2)
+  ;     :diagram      [nil true]        (0)
+  ;     "table-one    [true nil]        (4)
+  ;     "table-four"  [true nil]        (4)
+  ;     "table-two"   [true nil]        (4)
+  ;     "table-three" [true nil]        (4)
+  ;     "v-scroll-2"  [true true]       (3)
+  ;     "data/two     [:diagram nil]    (1)
+
 
 
   (map (fn [[k v]] {:p (:parent v)}) @layout)
