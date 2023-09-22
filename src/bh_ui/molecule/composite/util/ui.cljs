@@ -45,11 +45,13 @@
 
 
 (defn- sub-layout [layout parent-id]
-  (if-let [ret (get @layout parent-id)]
-    ret
-    (let [setup {:children {} :next {:x x-offset :y y-offset}}]
-      (swap! layout assoc parent-id setup)
-      setup)))
+  (log/info "sub-layout" parent-id)
+  ;(if-let [ret (get @layout parent-id)]
+  ;  ret
+  (when (nil? (get-in @layout [parent-id :children]))
+   (let [setup {:children {} :next {:x x-offset :y y-offset}}]
+     (swap! layout update parent-id
+       #(assoc % :children {} :next {:x x-offset :y y-offset})))))
 
 
 (defn- set-position [layout parent child]
@@ -58,6 +60,8 @@
     #(-> %
        (assoc-in [parent :children child :parent] parent)
        (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+       (assoc-in [child :parent] parent)
+       (assoc-in [child :position] (get-in @layout [parent :next]))
        (update-in [parent :next] (fn [{x :x y :y}]
                                    (let [[new-x new-y] (if (< x 300)
                                                          [(+ x width-offset x-gap) y]
@@ -467,8 +471,6 @@
                                  :parent   nil
                                  :size     {:width 0 :height 0}
                                  :next     {:x x-offset :y y-offset}}}))
-    (def parent-id "v-scroll-1")
-    (def child-id "table-one")
 
     (set-position layout :diagram "data/one")
     (set-position layout :diagram "data/two")
@@ -482,21 +484,15 @@
     (set-position layout "v-scroll-2" "table-three")
     (set-position layout "v-scroll-2" "table-four"))
 
-  ; one problem: this dataset does NOT include the innermost components, like table-one
+  ; (OBE as of 09/21/2023) one problem: this dataset does NOT include the innermost components, like table-one
   ; which means we either:
   ;       1) need to add them via (set-position), OR
-  ;       2) we need to process a different dataset
+  ;       2) we need to process a different dataset which does include them
   ;
   ; so that they are included in the :mol/dsl-layout, since that dataset needs all the nodes
   ; for the flow-diagram
   ;
-  ; choosing #1 will make this subsequent processing easier...
-
-
-  (map (fn [node]))
-
-
-
+  ; choosing #1 will make this subsequent processing easier... DONE.
 
   ; endregion
 
@@ -580,13 +576,15 @@
 
 
   ; need to worry about the order so that react-flow sets up the parent/child stuff
-  ; correctly. 4 cases, in order:
+  ; correctly. 5 cases, in order:
   ;
-  ;      parent children
-  ; 1) [  nil     nil    ]     <- stand-alone components
-  ; 2) [  nil     true   ]     <- outermost containers
-  ; 3) [  true    true   ]     <- "contained" containers
-  ; 4) [  true    nil    ]     <- children, at any level
+  ;       parent    children
+  ; 0) [   nil        true   ]     <- :diagram (not needed in :mol/dsl-layout)
+  ; 1) [ :diagram     nil    ]     <- stand-alone components
+  ; 2) [ :diagram     true   ]     <- outermost containers
+  ; 3) [ true         true   ]     <- "contained" containers
+  ; 4) [ true         nil    ]     <- children, at any level
+  ;
 
 
   (map (fn [[k v]] {:p (:parent v)}) @layout)
