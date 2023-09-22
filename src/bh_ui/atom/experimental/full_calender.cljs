@@ -210,7 +210,8 @@
 
 (def meta-data {:full-calender/calender {:component component
                                          :ports     {:config :port/sink
-                                                     :data   :port/sink}}})
+                                                     :data   :port/sink
+                                                     :style  :port/sink}}})
 
 (re-frame/dispatch-sync [:register-meta meta-data])
 (comment
