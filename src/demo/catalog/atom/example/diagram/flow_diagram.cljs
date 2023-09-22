@@ -78,7 +78,7 @@
            {:id         "table-three", :type ":ui/component" :position {:x 25, :y 50},
             :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}
            {:id         "table-four", :type ":ui/component" :position {:x 150, :y 50},
-            :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}]
+            :parentNode "v-scroll-2" :data {:label "table-four" :kind ":react-table/table"}}]
 
    :edges [{:id     "data/one->table-one",
             :source "data/one", :sourceHandle "data"
