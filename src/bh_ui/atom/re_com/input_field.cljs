@@ -26,15 +26,15 @@
 
 
 (defn make-handler [data sub-name]
-  (log/info "make-handler" sub-name "//" data)
+  ;(log/info "make-handler" sub-name "//" data)
 
   (re-frame/reg-event-fx
     (first sub-name)
     (fn-traced [_ updates]
-               (log/info sub-name "handler" updates)
+               ;(log/info sub-name "handler" updates)
                {:dispatch (apply conj data (drop 1 updates))})))
 (defn filter-fn [{:keys [data filter-value data-key sub-name]  :as params}]
-  (print "data-key" data-key)
+  ;(print "data-key" data-key)
   (re-frame/reg-sub
     (first sub-name)
     :<- data

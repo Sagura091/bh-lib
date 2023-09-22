@@ -16,11 +16,11 @@
 (defn default-custom-node
   "build a custom node for the flow diagram, based on the :type property of the node
   "
-  [type open-details? node & extras?]
+  [type open-details? node & extras?])
 
   ;(log/info "default-custom-node" type "//" @open-details? "//" node "//" extras?)
 
-  (ui/custom-node type open-details? node))
+  ;(ui/custom-node type open-details? node))
 
 
 (def color-black "#000000")
@@ -34,13 +34,13 @@
                            ":source/remote" "#FFA500"
                            ":source/local"  "#0000ff"
                            ":source/fn"     "#FFC0CB"})
-(def custom-node-types {":ui/component" (partial dn/custom-node :ui/component)})
+;(def custom-node-types {":ui/component"  (partial dn/custom-node :ui/component)})
 
 
-(def default-node-types {":ui/component"  (partial bh-ui.molecule.composite.util.ui/custom-node :ui/component)})
-                         ;":source/remote" (partial default-custom-node :source/remote)
-                         ;":source/local"  (partial default-custom-node :source/local)
-                         ;":source/fn"     (partial default-custom-node :source/fn)})
+;(def default-node-types {":ui/component"  (partial bh-ui.molecule.composite.util.ui/custom-node :ui/component)})
+;                         ;":source/remote" (partial default-custom-node :source/remote)
+;                         ;":source/local"  (partial default-custom-node :source/local)
+;                         ;":source/fn"     (partial default-custom-node :source/fn)})
 (def default-minimap-styles {:nodeStrokeColor  (partial custom-minimap-node-color
                                                  default-color-pallet color-white)
                              :node-color       (partial custom-minimap-node-color

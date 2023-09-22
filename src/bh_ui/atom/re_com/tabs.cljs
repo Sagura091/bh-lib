@@ -48,7 +48,7 @@
   [tab-kind children style config]
   ; TODO: where does :style apply?
 
-  (log/info "h-tab (a)" config "//" children)
+  ;(log/info "h-tab (a)" config "//" children)
 
   (let [pages        (map make-tab (zipmap (:labels config) children))
         selected-tab (r/atom (-> pages first :id))]

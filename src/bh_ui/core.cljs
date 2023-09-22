@@ -78,6 +78,7 @@
             [bh-ui.atom.re-com.table :as table]
             [bh-ui.atom.re-com.tabs :as tabs]
             [bh-ui.atom.re-com.v-scroller :as v-scroll]
+            [bh-ui.atom.re-com.popover :as popover]
 
             [bh-ui.atom.resium.globe :as res-globe]
             [bh-ui.atom.resium.shape :as res-shape]
@@ -319,13 +320,13 @@
 
 (def dag-custom-minimap-node-color          composite-dag-support/custom-minimap-node-color)
 (def dag-default-custom-node                composite-dag-support/default-custom-node)
-(def dag-default-node-types                 composite-dag-support/default-node-types)
+;(def dag-default-node-types                 composite-dag-support/default-node-types)
 (def dag-default-tool-types                 composite-dag-support/default-tool-types)
 (def dagre-graph                            dagre-support/dagre-graph)
 (def dagre-build-layout                     dagre-support/build-layout)
-(def editable-digraph                       editable-digraph/component)
-(def editable-digraph-source-code           editable-digraph/source-code)
-(def editable-digraph-sample-data           editable-digraph/sample-data)
+;(def editable-digraph                       editable-digraph/component)
+;(def editable-digraph-source-code           editable-digraph/source-code)
+;(def editable-digraph-sample-data           editable-digraph/sample-data)
 (def flow-diagram                           flow-diagram/component)
 
 ;;;;;;;;;;; EXPERIMENTAL ;;;;;;;;;;;
@@ -398,6 +399,8 @@
 (def recom-v-bar-tabs                       tabs/v-bar-tabs)
 (def recom-v-pill-tabs                      tabs/v-pill-tabs)
 (def recom-v-scroll                         v-scroll/v-scroller)
+(def clickable-popover                      popover/clickable-popover)
+(def hover-popover                          popover/hover-popover)
 
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 

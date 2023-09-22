@@ -80,7 +80,7 @@
 
 ; TODO: refactor (config-panel ...) for :source/local :config-data
 (defn- config-panel [& {:keys [data component-id container-id] :as params}]
-  (log/info "config-panel (a)" params)
+  ;(log/info "config-panel (a)" params)
 
 
   (let [c             (h/resolve-value data)
@@ -129,8 +129,8 @@
                      "ui/bar"         {:atm/role :ui/component :atm/kind :rechart/bar}
                      "ui/area"        {:atm/role :ui/component :atm/kind :rechart/area}
                      "ui/config"      {:atm/role :ui/component :atm/kind :multi-chart/config-panel}
-                     "topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
-                     "topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data default-config-data}}
+                     "topic/data"     {:atm/role :source/local :atm/kind :source/local :atm/default-data sample-data}
+                     "topic/config"   {:atm/role :source/local :atm/kind :source/local :atm/default-data default-config-data}}
 
    :mol/links       {"ui/config"      {:data {"topic/config" :data}}
                      "topic/data"     {:data {"ui/line"        :data

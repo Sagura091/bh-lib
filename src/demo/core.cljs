@@ -9,6 +9,10 @@
             [reagent.dom :as rdom]
             [taoensso.timbre :as log]))
 
+
+(set! *print-namespace-maps* false)
+
+
 (defn dev-setup []
   (when config/debug?
     (log/info "dev mode")))

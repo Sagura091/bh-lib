@@ -1,5 +1,5 @@
 (ns demo.catalog.molecule.example.composite.bigger-coverage-plan
-  (:require [demo.catalog.molecule.example.composite.bigger-coverage-plan :as coverage-plan]
+  (:require [demo.catalog.molecule.example.composite.coverage-plan :as coverage-plan]
             [bh-ui.core :as bh]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]

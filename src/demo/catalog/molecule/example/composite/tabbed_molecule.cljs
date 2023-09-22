@@ -38,23 +38,23 @@
                                      "area-chart" {:atm/role :ui/component :atm/kind :rechart/area}
                                      "fast-line"  {:atm/role :ui/component :atm/kind :fc/line}
 
-                                     "bar"        {:atm/role  :ui/component :atm/kind :rc/box :atm/child "bar-chart"
+                                     "bar"        {:atm/role  :ui/container :atm/kind :rc/box :atm/child "bar-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "line"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "line-chart"
+                                     "line"       {:atm/role  :ui/container :atm/kind :rc/box :atm/child "line-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "area"       {:atm/role  :ui/component :atm/kind :rc/box :atm/child "area-chart"
+                                     "area"       {:atm/role  :ui/container :atm/kind :rc/box :atm/child "area-chart"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
-                                     "f-line"     {:atm/role  :ui/component :atm/kind :rc/box :atm/child "fast-line"
+                                     "f-line"     {:atm/role  :ui/container :atm/kind :rc/box :atm/child "fast-line"
                                                    :atm/style {:border "1px solid" :width "600px" :height "250px"}}
 
-                                     "tabs"       {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                                     "tabs"       {:atm/role           :ui/container :atm/kind :rc/h-tabs
                                                    :atm/label          "Multiple Views"
                                                    :atm/children       ["bar" "line" "area" "f-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bh/bar-chart-sample-data}
-                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
-                                     "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
+                                     "data/one"   {:atm/role :source/local :atm/kind :source/local :atm/default-data bh/bar-chart-sample-data}
+                                     "data/two"   {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-two}
+                                     "data/three" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
                                      "data/two"   {:data {"line-chart" :data
                                                           "area-chart" :data}}
@@ -76,9 +76,9 @@
                                                    :atm/children       ["bar" "line" "area" "fast-line"]
                                                    :atm/default-config tabs-config}
 
-                                     "data/one"   {:atm/role :source/local :atm/kind :data/one :atm/default-data bh/bar-chart-sample-data}
-                                     "data/two"   {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}
-                                     "data/three" {:atm/role :source/local :atm/kind :data/three :atm/default-data chart-data-three}}
+                                     "data/one"   {:atm/role :source/local :atm/kind :source/local :atm/default-data bh/bar-chart-sample-data}
+                                     "data/two"   {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-two}
+                                     "data/three" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-three}}
                    :mol/links       {"data/one"   {:data {"bar-chart" :data}}
                                      "data/two"   {:data {"line-chart" :data
                                                           "area-chart" :data}}
@@ -108,11 +108,11 @@
 
 (def molecule2 {:mol/components  {"item-1"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "One"}
                                   "item-2"   {:atm/role :ui/component :atm/kind :stunt/text-block :atm/label "Two"}
-                                  "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
+                                  "tabs"     {:atm/role     :ui/container :atm/kind :rc/h-tabs
                                               :atm/label    "Multiple Views"
                                               :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}
-                                  "data/one" {:atm/role :source/local :atm/kind :data/one :atm/default-data chart-data-one}
-                                  "data/two" {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}}
+                                  "data/one" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-one}
+                                  "data/two" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-two}}
                 :mol/links       {"data/one" {:data {"item-1" :data}}
                                   "data/two" {:data {"item-2" :data}}}
                 :mol/grid-layout [{:i "tabs" :x 0 :y 0 :w 10 :h 11 :static true}]})
@@ -121,8 +121,8 @@
                                        "tabs"     {:atm/role     :ui/component :atm/kind :rc/h-tabs
                                                    :atm/label    "Multiple Views"
                                                    :atm/children ["item-1" "item-2"] :atm/default-config {:labels ["One" "Two"]}}
-                                       "data/one" {:atm/role :source/local :atm/kind :data/one :atm/default-data chart-data-one}
-                                       "data/two" {:atm/role :source/local :atm/kind :data/two :atm/default-data chart-data-two}}
+                                       "data/one" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-one}
+                                       "data/two" {:atm/role :source/local :atm/kind :source/local :atm/default-data chart-data-two}}
                      :mol/links       {"data/one" {:data {"item-1" :data}}
                                        "data/two" {:data {"item-2" :data}}}
                      :mol/grid-layout [{:i "tabs" :x 0 :y 0 :w 10 :h 11 :static true}]})

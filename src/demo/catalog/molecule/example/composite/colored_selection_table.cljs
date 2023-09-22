@@ -7,24 +7,24 @@
             [woolybear.ad.layout :as layout]))
 
 
-(def ui-definition {:mol/components  {"table"      {:atm/role           :ui/component :atm/kind :react-table/table
-                                                    :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
-                                      "colorize"   {:atm/role :source/fn :atm/kind :bh-fn/colorize}
-                                      "input-data" {:atm/role :source/local :atm/kind :topic/input-data
-                                                    :atm/default-data  demo.catalog.atom.example.experimental.react-table/data}
-                                      "colorized-data" {:atm/role :source/local :atm/kind :topic/colorized-data}}
+(def ui-definition {:mol/components  {"table"          {:atm/role           :ui/component :atm/kind :react-table/table
+                                                        :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                      "colorize"       {:atm/role :source/fn :atm/kind :bh-fn/colorize}
+                                      "input-data"     {:atm/role         :source/local :atm/kind :source/local
+                                                        :atm/default-data demo.catalog.atom.example.experimental.react-table/data}
+                                      "colorized-data" {:atm/role :source/local :atm/kind :source/local}}
 
-                    :mol/links       {"input-data" {:data {"colorize" :data}}
-                                      "colorize"   {:sub-name {"colorized-data" :data}}
+                    :mol/links       {"input-data"     {:data {"colorize" :data}}
+                                      "colorize"       {:colored {"colorized-data" :data}}
                                       "colorized-data" {:data {"table" :data}}}
 
                     :mol/grid-layout [{:i "table" :x 0 :y 0 :w 10 :h 10}]})
 
 
 (defn- color-entities [d p next-color topic k]
-  (let [cnt          (count bh/bh-color-pallet)
-        last-data    ((keyword topic) p)
-        assigned     (map (juxt k :color) last-data)
+  (let [cnt (count bh/bh-color-pallet)
+        last-data ((keyword topic) p)
+        assigned (map (juxt k :color) last-data)
         assigned-set (->> assigned (map first) set)]
 
     (assoc d :data (doall
@@ -40,14 +40,14 @@
 
 
 (defn- colorize [{:keys [data sub-name]}]
-  (log/info "colorize (a)" sub-name "//" data)
+  ;(log/info "colorize (a)" sub-name "//" data)
 
   (let [next-target-color (atom -1)
         [component topic] (-> sub-name
                             first
                             name
                             (clojure.string/split #".blackboard."))
-        path              [(keyword (str component ".blackboard"))]]
+        path [(keyword (str component ".blackboard"))]]
 
     ;(log/info "colorize (b)" sub-name "//" data "//" colored
     ;  "//" path "//" component "//" topic)
@@ -57,11 +57,11 @@
       :<- data
       :<- path
       (fn [[d p] _]
-        (log/info "colorize (c)" d)
+        ;(log/info "colorize (c)" d)
 
         (let [ret (color-entities d p next-target-color topic :name)]
 
-          (log/info "colorize (d)" ret)
+          ;(log/info "colorize (d)" ret)
 
           ; need to store this in the app-db because this fn is STATEFUL, we don't
           ; want to change a target if it has already been assigned a color
@@ -72,7 +72,8 @@
 
 (re-frame/dispatch-sync
   [:register-meta {:bh-fn/colorize {:function colorize
-                                    :ports    {:data :port/sink}}}])
+                                    :ports    {:data    :port/sink
+                                               :colored :port/source}}}])
 
 
 (def source-code '[])

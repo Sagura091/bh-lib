@@ -112,31 +112,31 @@
                                                                                                                     :y-axis-title "dBm"
                                                                                                                     :width 1400
                                                                                                                     :height 250}}
-                              "tabs"               {:atm/role           :ui/component :atm/kind :rc/h-tabs
+                              "tabs"               {:atm/role           :ui/container :atm/kind :rc/h-tabs
                                                     :atm/children       ["subchannel-box" "table-box" "table-box" "table-box" "table-box"]
                                                     :atm/default-config subchannel-tabs}
 
                               "subchannel-filter"  {:atm/role :ui/component :atm/kind :rc/input-field}
 
-                              "input-data"         {:atm/role :source/local :atm/kind :input/data :atm/default-data ""}
+                              "input-data"         {:atm/role :source/local :atm/kind :source/local :atm/default-data ""}
 
-                              "filter-key"         {:atm/role :source/local :atm/kind :input/data :atm/default-data :subchannel-group}
+                              "filter-key"         {:atm/role :source/local :atm/kind :source/local :atm/default-data :subchannel-group}
 
                               "filter-subchannels" {:atm/role :source/fn :atm/kind :fn/filter-fn}
 
 
-                              "subchannel-box"     {:atm/role  :ui/component :atm/kind :rc/v-box :atm/children ["subchannel-filter"
+                              "subchannel-box"     {:atm/role  :ui/container :atm/kind :rc/v-box :atm/children ["subchannel-filter"
                                                                                                                 "subchannel-table"]
                                                     :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
                               "subchannel-table"   {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config subchannel-groups-config}
 
-                              "table-box"          {:atm/role  :ui/component :atm/kind :rc/box :atm/child "table-two"
+                              "table-box"          {:atm/role  :ui/container :atm/kind :rc/box :atm/child "table-two"
                                                     :atm/style {:border "1px solid" :width "1400px" :height "250px"}}
                               "table-two"          {:atm/role :ui/component :atm/kind :react-table/table :atm/default-config table-config}
 
-                              "signal-data"        {:atm/role :source/local :atm/kind :signal/one :atm/default-data d/signal-data}
-                              "subchannel-data"    {:atm/role :source/local :atm/kind :data/one :atm/default-data subchannel-groups-data}
-                              "data-two"           {:atm/role :source/local :atm/kind :data/two :atm/default-data data-two}}
+                              "signal-data"        {:atm/role :source/local :atm/kind :source/local :atm/default-data d/signal-data}
+                              "subchannel-data"    {:atm/role :source/local :atm/kind :source/local :atm/default-data subchannel-groups-data}
+                              "data-two"           {:atm/role :source/local :atm/kind :source/local :atm/default-data data-two}}
 
             :mol/links       {"signal-data"        {:data {"signal-trace" :data}}
                               "subchannel-data"    {:data {"filter-subchannels" :data}}

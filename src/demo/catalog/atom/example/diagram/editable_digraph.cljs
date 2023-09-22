@@ -5,18 +5,18 @@
 
 
 
-(defn example []
-  (let [container-id "editable-flow-diagram-demo"]
-    [:<>
-     [example/component-example
-      :title "Editable Digraph"
-      :description "An Editable Digraph, built using [react-flow](https://reactflow.dev)"
-      :data (r/atom bh/editable-digraph-sample-data)
-      :node-types bh/dag-default-node-types
-      :tool-types bh/dag-default-tool-types
-      :component bh/editable-digraph
-      :component-id (bh/utils-path->keyword container-id "editable-digraph")
-      :source-code bh/editable-digraph-source-code]]))
+(defn example [])
+  ;(let [container-id "editable-flow-diagram-demo"]
+  ;  [:<>
+  ;   [example/component-example
+  ;    :title "Editable Digraph"
+  ;    :description "An Editable Digraph, built using [react-flow](https://reactflow.dev)"
+  ;    :data (r/atom bh/editable-digraph-sample-data)
+  ;    :node-types bh/dag-default-node-types
+  ;    :tool-types bh/dag-default-tool-types
+  ;    :component bh/editable-digraph
+  ;    :component-id (bh/utils-path->keyword container-id "editable-digraph")
+  ;    :source-code bh/editable-digraph-source-code]]))
 
      ;[example/component-example
      ; :title "Editable Digraph"

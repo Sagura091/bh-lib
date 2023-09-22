@@ -21,6 +21,11 @@
 (log/info "bh-ui.atom.diagram.flow-diagram")
 
 
+(def last-data (atom nil))
+(def last-types (atom nil))
+(def last-inputs (atom nil))
+
+
 (declare node)
 
 (def color-black "#000000")
@@ -142,6 +147,11 @@
   "
 
   [label inputs outputs]
+
+  ;(log/info "input-output-handles" label "//" inputs)
+
+  ;(reset! last-inputs {:in inputs :out outputs})
+
   [:<>
    ; add the input handles
    (doall
@@ -252,12 +262,12 @@
                            on-change-nodes on-change-edges on-drop on-drag-over
                            zoom-on-scroll preventScrolling connectFn] :as params}]
 
-  ;(log/info "diagram(star) (params)" params "// (edge-types)" edge-types)
+  ;(log/info "diagram(star) (params)" nodes "=====" node-types "======" edge-types)
 
-  (let [params (apply merge {:nodes               nodes
-                             :edges               edges
-                             :onNodesChange       on-change-nodes
-                             :onEdgesChange       on-change-edges
+  (let [params (apply merge {:nodes               (or nodes [])
+                             :edges               (or edges [])
+                             :onNodesChange       (or on-change-nodes #())
+                             :onEdgesChange       (or on-change-edges #())
                              :zoomOnScroll        (or zoom-on-scroll false)
                              :preventScrolling    (or preventScrolling false)
                              :onConnect           (or connectFn #())
@@ -270,7 +280,7 @@
                  (when node-types {:node-types node-types})
                  (when edge-types {:edge-types edge-types}))]
 
-    ;(log/info "flow-star (local-params)" params)
+    ;(log/info "diagram(star) (local-params)" params)
 
     [:> ReactFlow params
      [:> MiniMap (if minimap-styles minimap-styles {})]
@@ -288,13 +298,32 @@
                           flowInstance
                           force-layout?] :as params}]
 
-  ;(log/info "diagram (params)" params)
+  ;(log/info "diagram" (first nodes))
 
-  (let [n       nodes
+  ;(reset! last-types node-types)
+
+  (let [n nodes
+        ;[{:id             ":ui/bar-chart",
+        ;  ;:type           ":ui/component",
+        ;  :data           {:label   ":ui/bar-chart",
+        ;                   :kind    :rechart/bar,
+        ;                   :kind-js ":rechart/bar",
+        ;                   :inputs  {:data   {:label "data-in", :style {:left 10, :background "#555"}, :position "top"},
+        ;                             :config {:label "config-in", :style {:left 20, :background "#555"}, :position "top"}},
+        ;                   :outputs {}},
+        ;  :position       {:x 0, :y 86},
+        ;  :targetPosition "top",
+        ;  :sourcePosition "bottom"}]
+        ;[{:id "node-lightning",
+        ;  ;:type ":source/remote",
+        ;  :position {:x 150, :y 100},
+        ;  :data {:label "lightning", :kind ":source/remote"}}]                                              ;nodes
         e       edges
         [ns set-nodes on-change-nodes] (useNodesState (clj->js n))
         [es set-edges on-change-edges] (useEdgesState (clj->js e))
         wrapper (clojure.core/atom nil)]
+
+    ;(log/info "diagram (b)" n "////" node-types)
 
     [:> ReactFlowProvider
      [:div#wrapper {:style {:width "800px" :height "700px"}
@@ -322,9 +351,11 @@
                            component-id container-id
                            force-layout?]}]
 
-  ;(log/info "editable-diagram")
-  ;  ;data @data
-  ;  node-types)
+  ;(log/info "component"
+    ;@data
+    ;config
+
+  (reset! last-data @data)
 
   (let [d (h/resolve-value data)
         {:keys [node-types edge-types
@@ -340,7 +371,11 @@
                   (clj->js))
         flowInstance (clojure.core/atom nil)]
 
-    ;(log/info "component (DIGRAPH)" "//" data "//" @d "// node-types" node-types "// n-types" (js->clj n-types))
+    ;(log/info "component (DIGRAPH)"
+    ;  data)
+    ;  "//" (:nodes @d)
+    ;  "// node-types" node-types)
+    ;  "// n-types" n-types)
 
     (fn []
       [:f> diagram
@@ -358,8 +393,47 @@
        :flowInstance flowInstance
        :force-layout? force-layout?])))
 
+
+
+
+
 (comment
   (let [{:keys [one two]} {:one "1" :two "2"}]
     [one two])
 
+
+  (do
+    (def inputs @last-inputs))
+
+  (doall
+    (->> inputs
+      (map-indexed (fn [idx [target ports]]
+                     (let [[source-port target-port] ports]
+                       ;(log/info "input-handle" label "/" target-port "///" target "/" source-port)
+                       [:> Handle {:id    target-port :type "target" :position "top"
+                                   :style (merge handle-style {:left (+ 20 (* 10 idx))})}])))
+      (into [:<>])))
+
+
   ())
+
+
+(comment
+  [{:id "node-lightning",
+    :type ":source/remote",
+    :position {:x 150, :y 100},
+    :data {:label "lightning", :kind ":source/remote"}}]
+
+  ())
+
+
+
+;(comment
+;  (do
+;    (def data @last-data)
+;    (def nodes (:nodes data))
+;    (def edges (:edges data)))
+;
+;
+;
+;  ())
