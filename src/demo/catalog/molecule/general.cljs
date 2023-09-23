@@ -2,6 +2,7 @@
 (ns demo.catalog.molecule.general
   "Catalog and demonstrations of general components."
   (:require [taoensso.timbre :as log]
+            [demo.catalog.molecule.example.composite.dsl-example :as dsl]
             [demo.catalog.molecule.example.two-d-three-d-globe :as two-d-three-d-globe]
             [demo.catalog.molecule.example.composite.coverage-plan :as coverage-plan]
             [demo.catalog.molecule.example.composite.chart-remote-data :as chart-remote-data]
@@ -24,6 +25,8 @@
 
   [:div
    ; depend on :source/remote
+
+   [dsl/example]
 
    [coverage-plan/ww-example]
 
