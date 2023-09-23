@@ -92,9 +92,9 @@
   "
 
   [component-id new-layout all-layouts]
-  (let [new-layout* (js->clj new-layout :keywordize-keys true)
+  (let [new-layout*  (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
-        fst (first new-layout*)]
+        fst          (first new-layout*)]
 
     ;(log/info "on-layout-change" new-layout*
     ;  "//" all-layouts*
@@ -151,18 +151,18 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout (locals/subscribe-local component-id [:layout])
+  (let [layout           (locals/subscribe-local component-id [:layout])
         component-lookup (into {}
                            (sig/process-components-stateful
                              configuration #{:ui/component :ui/container}
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; build UI components (with subscription/event signals against the blackboard or remotes)
-        visual-layout (->> configuration
-                        :mol/grid-layout
-                        (map (fn [{:keys [i]}] i)))
-        composed-ui (map wrap-component (select-keys component-lookup visual-layout))
-        open? (r/atom false)]
+        visual-layout    (->> configuration
+                           :mol/grid-layout
+                           (map (fn [{:keys [i]}] i)))
+        composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
+        open?            (r/atom false)]
 
     (reset! last-component-lookup {:lookup   component-lookup
                                    :viz      visual-layout
@@ -215,22 +215,53 @@
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
-  (let [id (r/atom nil)
-        configuration (update @data :mol/components         ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
-                        (fn [x]
-                          (into {}
-                            (map (fn [[k v]]
-                                   {k (assoc v :atm/kind-js (str (:atm/kind v)))})
-                              x))))
-        graph (apply lg/digraph (ui/compute-edges configuration))
-        comp-or-dag? (r/atom :component)
-        partial-config (assoc configuration
-                         :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
-                         :nodes (-> configuration :mol/components keys set)
-                         :edges (into [] (lg/edges graph)))
-        full-config (assoc partial-config
-                      :graph graph
-                      :container container-id)]
+  (let [id                  (r/atom nil)
+        configuration       (update @data :mol/components   ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+                              (fn [x]
+                                (into {}
+                                  (map (fn [[k v]]
+                                         {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+                                    x))))
+        graph               (apply lg/digraph (ui/compute-edges configuration))
+        comp-or-dag?        (r/atom :component)
+        nodes               (-> configuration :mol/components keys set)
+        edges               (into [] (lg/edges graph))
+
+        ; new stuff to support the :mol/flow-components and :mol/flow-edges parts of the Mol-DSL
+        ; (see bh-ui.molecule.composite.util.ui)
+        containership-graph (->> configuration
+                              :mol/components
+                              keys
+                              set
+                              (mapcat (fn [node-id]
+                                        (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
+                                                         (get-in configuration [:mol/components node-id :atm/children]))]
+                                          {node-id (vec children)})))
+                              (filter (fn [[_ children]] (not-empty children)))
+                              (into {}))
+        parent-graph        (->> containership-graph
+                              (mapcat (fn [[parent children]]
+                                        (map (fn [child]
+                                               {child parent}) children)))
+                              (into {}))
+        flow-nodes          (reduce (fn [layout node]
+                                      (let [parent (get parent-graph node)]
+                                        (ui/set-position layout (or parent :diagram) node)))
+                              {:diagram {:children {}
+                                         :parent   nil
+                                         :size     {:width 0 :height 0}
+                                         :next     {:x ui/x-offset :y ui/y-offset}}}
+                              nodes)
+
+        full-config         (assoc configuration
+                              :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+                              :nodes nodes
+                              :edges edges
+                              :containership-graph containership-graph
+                              :parent-graph parent-graph
+                              :flow-nodes flow-nodes
+                              :graph graph
+                              :container container-id)]
 
 
     (reset! last-full-config full-config)
@@ -238,10 +269,10 @@
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id (config partial-config))
+        (ui-utils/init-container-locals @id (config full-config))
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
-        (ui/prep-environment partial-config @id @(re-frame/subscribe [:meta-data-registry])))
+        (ui/prep-environment full-config @id @(re-frame/subscribe [:meta-data-registry])))
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}

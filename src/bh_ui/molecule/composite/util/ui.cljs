@@ -22,6 +22,7 @@
 
 (def last-params (atom nil))
 (def last-flow-edge (atom nil))
+(def last-flow (atom nil))
 
 
 (def x-offset 25)
@@ -44,29 +45,31 @@
                  :source/fn     {:background :pink :color :black}})
 
 
-(defn- sub-layout [layout parent-id]
-  (log/info "sub-layout" parent-id)
-  (when (nil? (get-in @layout [parent-id :children]))
-    (swap! layout update parent-id
-      #(assoc % :children {} :next {:x x-offset :y y-offset}))))
+(defn sub-layout [layout parent]
+  (if (nil? (get-in layout [parent :children]))
+    (update layout parent
+      #(assoc % :children {}
+                :size {:width 0 :height 0}
+                :next {:x x-offset :y y-offset}))
+    layout))
 
 
-(defn- set-position [layout parent child]
-  (sub-layout layout parent)
-  (swap! layout
-    #(-> %
-       (assoc-in [parent :children child :parent] parent)
-       (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
-       (assoc-in [child :parent] parent)
-       (assoc-in [child :position] (get-in @layout [parent :next]))
-       (update-in [parent :next] (fn [{x :x y :y}]
-                                   (let [[new-x new-y] (if (< x 300)
-                                                         [(+ x width-offset x-gap) y]
-                                                         [x-offset
-                                                          (if (< y 300)
-                                                            (+ y height-offset y-gap)
-                                                            y-offset)])]
-                                     {:x new-x :y new-y}))))))
+(defn set-position [layout parent child]
+  (let [current-layout (sub-layout layout parent)
+        position       (get-in current-layout [parent :next])]
+    (-> current-layout
+      (assoc-in [parent :children child :parent] parent)
+      (assoc-in [parent :children child :position] position)
+      (assoc-in [child :parent] parent)
+      (assoc-in [child :position] position)
+      (update-in [parent :next] (fn [{x :x y :y}]
+                                  (let [[new-x new-y] (if (< x 300)
+                                                        [(+ x width-offset x-gap) y]
+                                                        [x-offset
+                                                         (if (< y 300)
+                                                           (+ y height-offset y-gap)
+                                                           y-offset)])]
+                                    {:x new-x :y new-y}))))))
 
 
 (defn- open-details [open-details? node]
@@ -82,7 +85,7 @@
 
 
 (defn- get-handle-out [config id port]
-  ;(log/info "get-handle-out" id port)
+  (log/info "get-handle-out" id port)
   (let [kind (get-in config [:mol/components id :atm/kind])]
     (get-in (bh-ui.atom.component-registry/lookup-component kind)
       [:handles :outputs port])))
@@ -138,8 +141,8 @@
         {source-handle :label} (get-handle-out configuration source-id source-port)
         {target-handle :label} (get-handle-in configuration target-id target-port)]
 
-    ;(log/info "create-flow-edge" idx "/" source-id "/" source-port "/" source-handle
-    ;  "///" target-id "/" target-port "/" target-handle)
+    (log/info "create-flow-edge" idx "/" source-id "/" source-port "/" source-handle
+      "///" target-id "/" target-port "/" target-handle)
 
     {:id            (str "edge-" idx)
      :source        (str source-id)
@@ -175,16 +178,26 @@
 
   (log/info "make-flow (a)" (keys configuration))
 
-  (let [flow {:nodes   (map #(create-flow-node configuration %) (:nodes configuration))
-              :edges   (map-indexed (fn [idx node]
-                                      (create-flow-edge configuration idx node))
-                         (:edges configuration))
+  (let [flow-nodes (:mol/flow-nodes configuration)
+        flow-edges (:mol/flow-edges configuration)
+        flow {:nodes   (if (empty? flow-nodes)
+                           (map #(create-flow-node configuration %) (:nodes configuration))
+                           flow-nodes)
+              :edges   (if (empty? flow-edges)
+                           (map-indexed (fn [idx node]
+                                          (create-flow-edge configuration idx node))
+                             (:edges configuration))
+                           flow-edges)
               :rankdir "TB"
               :align   "UL"}]
 
-    ;(log/info "make-flow (b)" (first (:nodes flow)))
+    (log/info "make-flow (b)" (:nodes flow))
 
-    (dagre/build-layout flow)))
+    (reset! last-flow flow)
+
+    flow))
+
+    ;(dagre/build-layout flow)))
 
 
 (defn prep-environment [configuration component-id registry]
@@ -415,6 +428,15 @@
                                          {child parent}) children)))
                         (into {})))
 
+    (def flow-nodes (reduce (fn [layout node]
+                              (let [parent (get-in full-config [:parent-graph node])]
+                                (set-position layout (or parent :diagram) node)))
+                      {:diagram {:children {}
+                                 :parent   nil
+                                 :size     {:width 0 :height 0}
+                                 :next     {:x x-offset :y y-offset}}}
+                      (:nodes full-config)))
+
     (def full-config (assoc configuration
                        :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
                                  graph (:mol/links configuration) (loom.graph/nodes graph))
@@ -423,6 +445,7 @@
                        :graph graph
                        :containership-graph containership-graph
                        :parent-graph parent-graph
+                       :flow-nodes flow-nodes
                        :container container-id)))
   ; endregion
 
@@ -467,28 +490,27 @@
   ;   diagram) so we can space each node away from previously processed nodes
 
   (do
-    (def layout (atom {:diagram {:children {}
-                                 :parent   nil
-                                 :size     {:width 0 :height 0}
-                                 :next     {:x x-offset :y y-offset}}}))
+    (def layout {:diagram {:children {}
+                           :parent   nil
+                           :size     {:width 0 :height 0}
+                           :next     {:x x-offset :y y-offset}}})
     (def parent :diagram)
     (def child "carousel")
     (sub-layout layout parent)
 
-    (swap! layout
-      #(-> %
-         (assoc-in [parent :children child :parent] parent)
-         (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
-         (assoc-in [child :parent] parent)
-         (assoc-in [child :position] (get-in @layout [parent :next]))
-         (update-in [parent :next] (fn [{x :x y :y}]
-                                     (let [[new-x new-y] (if (< x 300)
-                                                           [(+ x width-offset x-gap) y]
-                                                           [x-offset
-                                                            (if (< y 300)
-                                                              (+ y height-offset y-gap)
-                                                              y-offset)])]
-                                       {:x new-x :y new-y}))))))
+    (-> layout
+      (assoc-in [parent :children child :parent] parent)
+      (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+      (assoc-in [child :parent] parent)
+      (assoc-in [child :position] (get-in @layout [parent :next]))
+      (update-in [parent :next] (fn [{x :x y :y}]
+                                  (let [[new-x new-y] (if (< x 300)
+                                                        [(+ x width-offset x-gap) y]
+                                                        [x-offset
+                                                         (if (< y 300)
+                                                           (+ y height-offset y-gap)
+                                                           y-offset)])]
+                                    {:x new-x :y new-y})))))
 
 
   (do
@@ -496,27 +518,27 @@
     (def child "v-scroll-1")
     (sub-layout layout parent)
 
-    (swap! layout
-      #(-> %
-         (assoc-in [parent :children child :parent] parent)
-         (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
-         (assoc-in [child :parent] parent)
-         (assoc-in [child :position] (get-in @layout [parent :next]))
-         (update-in [parent :next] (fn [{x :x y :y}]
-                                     (let [[new-x new-y] (if (< x 300)
-                                                           [(+ x width-offset x-gap) y]
-                                                           [x-offset
-                                                            (if (< y 300)
-                                                              (+ y height-offset y-gap)
-                                                              y-offset)])]
-                                       {:x new-x :y new-y}))))))
+    (-> layout
+      (assoc-in [parent :children child :parent] parent)
+      (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+      (assoc-in [child :parent] parent)
+      (assoc-in [child :position] (get-in @layout [parent :next]))
+      (update-in [parent :next] (fn [{x :x y :y}]
+                                  (let [[new-x new-y] (if (< x 300)
+                                                        [(+ x width-offset x-gap) y]
+                                                        [x-offset
+                                                         (if (< y 300)
+                                                           (+ y height-offset y-gap)
+                                                           y-offset)])]
+                                    {:x new-x :y new-y})))))
 
 
 
-  (set-position layout :diagram "carousel")
-  (set-position layout "carousel" "v-scroll-1")
-  (set-position layout "v-scroll-1" "table-one")
-  (set-position layout :diagram "data/one")
+  (-> layout
+    (set-position :diagram "carousel")
+    (set-position "carousel" "v-scroll-1")
+    (set-position "v-scroll-1" "table-one")
+    (set-position :diagram "data/one"))
 
 
 
@@ -739,53 +761,28 @@
     (def layout {:diagram {:children {}
                            :parent   nil
                            :size     {:width 0 :height 0}
-                           :next     {:x x-offset :y y-offset}}})
-
-    (defn sub-layout-2 [layout parent]
-      (if (nil? (get-in layout [parent :children]))
-        (update layout parent
-          #(assoc % :children {}
-                    :size {:width 0 :height 0}
-                    :next {:x x-offset :y y-offset}))
-        layout))
-
-    (defn set-position-2 [layout parent child]
-      (let [current-layout (sub-layout-2 layout parent)
-            position       (get-in current-layout [parent :next])]
-        (-> current-layout
-          (assoc-in [parent :children child :parent] parent)
-          (assoc-in [parent :children child :position] position)
-          (assoc-in [child :parent] parent)
-          (assoc-in [child :position] position)
-          (update-in [parent :next] (fn [{x :x y :y}]
-                                      (let [[new-x new-y] (if (< x 300)
-                                                            [(+ x width-offset x-gap) y]
-                                                            [x-offset
-                                                             (if (< y 300)
-                                                               (+ y height-offset y-gap)
-                                                               y-offset)])]
-                                        {:x new-x :y new-y})))))))
+                           :next     {:x x-offset :y y-offset}}}))
 
   (-> {:diagram {:children {}
                  :parent   nil
                  :size     {:width 0 :height 0}
                  :next     {:x x-offset :y y-offset}}}
-    (set-position-2 :diagram "data/one")
-    (set-position-2 :diagram "data/two")
+    (set-position :diagram "data/one")
+    (set-position :diagram "data/two")
 
-    (set-position-2 :diagram "carousel")
-    (set-position-2 "carousel" "v-scroll-1")
-    (set-position-2 "v-scroll-1" "table-one")
-    (set-position-2 "v-scroll-1" "table-two")
+    (set-position :diagram "carousel")
+    (set-position "carousel" "v-scroll-1")
+    (set-position "v-scroll-1" "table-one")
+    (set-position "v-scroll-1" "table-two")
 
-    (set-position-2 "carousel" "v-scroll-2")
-    (set-position-2 "v-scroll-2" "table-three")
-    (set-position-2 "v-scroll-2" "table-four"))
+    (set-position "carousel" "v-scroll-2")
+    (set-position "v-scroll-2" "table-three")
+    (set-position "v-scroll-2" "table-four"))
 
 
   (reduce (fn [layout node]
             (let [parent (get (:parent-graph full-config) node)]
-              (set-position-2 layout (or parent :diagram) node)))
+              (set-position layout (or parent :diagram) node)))
     {:diagram {:children {}
                :parent   nil
                :size     {:width 0 :height 0}

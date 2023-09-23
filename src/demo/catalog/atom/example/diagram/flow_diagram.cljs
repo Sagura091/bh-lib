@@ -1,5 +1,5 @@
 (ns demo.catalog.atom.example.diagram.flow-diagram
-  (:require ["reactflow" :refer (Position)]
+  (:require ["reactflow" :refer (Position MarkerType)]
             [demo.catalog.atom.utils :as example]
             [bh-ui.core :as bh]
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
@@ -49,55 +49,86 @@
 (def dsl-layout-gold
   {:nodes [{:id       "carousel", :type ":ui/container"
             :position {:x 25, :y 125},
-            :data     {:label    "carousel" :kind ":rc/carousel"
+            :data     {:label    "carousel" :kind ":bhui/carousel" :kind-js ":bhui/carousel"
                        :size     {:width 625 :height 200}
                        :children {"v-scroll-1" {:position {:x 25, :y 50} :size {:width 275 :height 125}}
-                                  "v-scroll-2" {:position {:x 125, :y 50} :size {:width 275 :height 125}}}}}
+                                  "v-scroll-2" {:position {:x 125, :y 50} :size {:width 275 :height 125}}}
+                       :inputs   {} :outputs {}}}
            {:id   "data/one", :type ":source/local" :position {:x 25, :y 25},
-            :data {:label "data/one" :kind ":source/local"}}
+            :data {:label   "data/one" :kind ":source/local" :kind-js ":source/local"
+                   :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                   :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}
            {:id   "data/two", :type ":source/local" :position {:x 150, :y 25},
-            :data {:label "data/two" :kind ":source/local"}}
+            :data {:label   "data/two" :kind ":source/local" :kind-js ":source/local"
+                   :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                   :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}
 
            {:id         "v-scroll-1", :type ":ui/container"
             :position   {:x 25, :y 50},
             :parentNode "carousel"
-            :data       {:label    "v-scroll-1" :kind ":rc/v-scroll"
+            :data       {:label    "v-scroll-1" :kind ":rc/v-scroll" :kind-js ":rc/v-scroll"
                          :size     {:width 275 :height 125}
                          :children {"table-one" {:position {:x 25, :y 50}}
-                                    "table-two" {:position {:x 125, :y 50}}}}}
+                                    "table-two" {:position {:x 125, :y 50}}}
+                         :inputs   {} :outputs {}}}
            {:id         "v-scroll-2", :type ":ui/container"
             :position   {:x 325, :y 50},
             :parentNode "carousel"
-            :data       {:label    "v-scroll-2" :kind ":rc/v-scroll"
+            :data       {:label    "v-scroll-2" :kind ":rc/v-scroll" :kind-js ":rc/v-scroll"
                          :size     {:width 275 :height 125}
                          :children {"table-three" {:position {:x 25, :y 25}}
-                                    "table-four"  {:position {:x 125, :y 25}}}}}
+                                    "table-four"  {:position {:x 125, :y 25}}}
+                         :inputs   {} :outputs {}}}
 
            {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
-            :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}
+            :parentNode "v-scroll-1" :data {:label   "table-one"
+                                            :kind    ":react-table/table" :kind-js ":react-table/table"
+                                            :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                                            :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}
            {:id         "table-two", :type ":ui/component" :position {:x 150, :y 50},
-            :parentNode "v-scroll-1" :data {:label "table-two" :kind ":react-table/table"}}
+            :parentNode "v-scroll-1" :data {:label   "table-two"
+                                            :kind    ":react-table/table" :kind-js ":react-table/table"
+                                            :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                                            :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}
            {:id         "table-three", :type ":ui/component" :position {:x 25, :y 50},
-            :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}
+            :parentNode "v-scroll-2" :data {:label   "table-three"
+                                            :kind    ":react-table/table" :kind-js ":react-table/table"
+                                            :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                                            :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}
            {:id         "table-four", :type ":ui/component" :position {:x 150, :y 50},
-            :parentNode "v-scroll-2" :data {:label "table-four" :kind ":react-table/table"}}]
+            :parentNode "v-scroll-2" :data {:label   "table-four"
+                                            :kind    ":react-table/table" :kind-js ":react-table/table"
+                                            :inputs  {:data {:label "data-in", :style {:left 10, :background "#555"}, :position "top"}},
+                                            :outputs {:data {:label "data-out", :style {:left 10, :background "#999"}, :position "bottom"}}}}]
 
-   :edges [{:id     "data/one->table-one",
-            :source "data/one", :sourceHandle "data"
-            :target "table-one" :targetHandle "data-in"
-            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-           {:id     "data/one->table-three",
-            :source "data/one", :sourceHandle "data"
-            :target "table-three" :targetHandle "data-in"
-            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-           {:id     "data/two->table-two",
-            :source "data/two", :sourceHandle "data"
-            :target "table-two" :targetHandle "data-in"
-            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
-           {:id     "data/two->table-four",
-            :source "data/two", :sourceHandle "data"
-            :target "table-four" :targetHandle "data-in"
-            :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}]})
+   :edges [{:id        "data/one->table-one",
+            :source    "data/one", :sourceHandle "data"
+            :target    "table-one" :targetHandle "data-in"
+            :label     "data"
+            :style     {:strokeWidth 2 :stroke :green}
+            :markerEnd {:type  (.-ArrowClosed MarkerType)
+                        :width 10, :height 10, :color :green}}
+           {:id        "data/one->table-three",
+            :source    "data/one", :sourceHandle "data"
+            :target    "table-three" :targetHandle "data-in"
+            :label     "data"
+            :style     {:strokeWidth 2 :stroke :green}
+            :markerEnd {:type (.-ArrowClosed MarkerType)
+                        :width 10, :height 10, :color :green}}
+           {:id        "data/two->table-two",
+            :source    "data/two", :sourceHandle "data"
+            :target    "table-two" :targetHandle "data-in"
+            :label     "data"
+            :style     {:strokeWidth 2 :stroke :green}
+            :markerEnd {:type (.-ArrowClosed MarkerType)
+                        :width 10, :height 10, :color :green}}
+           {:id        "data/two->table-four",
+            :source    "data/two", :sourceHandle "data"
+            :target    "table-four" :targetHandle "data-in"
+            :label     "data"
+            :style     {:strokeWidth 2 :stroke :green}
+            :markerEnd {:type (.-ArrowClosed MarkerType)
+                        :width 10, :height 10, :color :green}}]})
 
 
 (defn register-dummys []
@@ -129,16 +160,17 @@
                 (let [{:keys [id
                               source sourceHandle
                               target targetHandle
-                              style arrowHeadType]} edge]
-                  {:id            (str "edge-" id)
-                   :source        (str source)
-                   :sourceHandle  sourceHandle
-                   :target        (str target)
-                   :targetHandle  targetHandle
-                   :label         (str sourceHandle)
-                   :style         style
-                   :arrowHeadType arrowHeadType
-                   :animated      false}))]
+                              style markerStart markerEnd]} edge]
+                  {:id           (str "edge-" id)
+                   :source       (str source)
+                   :sourceHandle sourceHandle
+                   :target       (str target)
+                   :targetHandle targetHandle
+                   :label        (str sourceHandle)
+                   :style        style
+                   :markerStart  (or markerStart {})
+                   :markerEnd    (or markerEnd {})
+                   :animated     false}))]
 
     (reset! last-dsl {:nodes nodes :edges edges})
 
