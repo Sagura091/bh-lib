@@ -19,6 +19,8 @@
 
 (defn fa-icon [value params update-val & rest]
   [:div [(keyword (str "span.icon" ((:color params) fa-colors))) ((:icon params) fa-icons)]])
+
+
 (defn checkbox [value params update-val & rest]
   [:input
    {:type     "checkbox"
@@ -50,15 +52,16 @@
                            :on-change (fn [x]
                                         (update-val (assoc d :color (js->clj x :keywordize-keys true)) rest))]]]]))))
 
+
 (defn hex-color-picker [value params update-val & rest]
   (let [showing? (r/atom false)]
     ;(log/info "mounting")
     (fn [value params update-val & rest]
-      (let [d    (into {}
-                       (for [[k v] (js->clj value)]
-                         [(keyword k) v]))]
+      (let [d (into {}
+                (for [[k v] (js->clj value)]
+                  [(keyword k) v]))]
         ^{:key (str "symb-" (:name d))}
-        [:div {:style {:color :white
+        [:div {:style {:color      :white
                        :text-align :left}}
          [rc/popover-anchor-wrapper :src (rc/at)
           :showing? @showing?
@@ -83,8 +86,10 @@
    value])
 
 (defn platform [value params update-val & rest]
-  [:div  ;{:on-click #(re-frame/dispatch [::demo/demo-reset :main-grid.coverage-plan])}
-  value])
+  [:div                                                     ;{:on-click #(re-frame/dispatch [::demo/demo-reset :main-grid.coverage-plan])}
+   value])
+
+
 (defn target-edit-save [value params update-val & rest]
   (let [is-editing (r/atom false)]
     (fn []
@@ -98,24 +103,27 @@
          [:span.icon.has-text-success.is-small [:i.far.fa-save]]
          [:span.icon.has-text-info.is-small [:i.far.fa-edit]])])))
 
+
 (defn target-delete [value params update-val & rest]
   ;^{:key (str "delete-" name)}
   [:div {:on-click #(do)}
    [:span.icon.has-text-danger.is-small [:i.far.fa-trash-alt]]])
 
 
-(def cell-mapping (atom {:check-box-cell checkbox
+(def cell-mapping (atom {:check-box-cell        checkbox
                          :hex-color-picker-cell hex-color-picker
-                         :aoi-cell aoi
+                         :aoi-cell              aoi
                          :target-edit-save-cell target-edit-save
-                         :target-delete-cell target-delete
-                         :rgba-color-picker rgba-color-picker
-                         :platform-cell platform
-                         :fa-icon       fa-icon}))
-(defn- table [columns data table-type config]
-  ;(log/info "table (render)" (js->clj data))
+                         :target-delete-cell    target-delete
+                         :rgba-color-picker     rgba-color-picker
+                         :platform-cell         platform
+                         :fa-icon               fa-icon}))
 
-  (let [^js table (rt/useTable (clj->js {:columns columns :data data :autoResetExpanded false}) rt/useSortBy rt/useExpanded)]
+
+(defn- table [columns data table-type config]
+  (log/info "table" (js->clj data))
+
+  (let [^js table (rt/useTable (clj->js {:columns columns :data (or data []) :autoResetExpanded false}) rt/useSortBy rt/useExpanded)]
     [:div {:style {:max-height  (or (:height @config) "300px")
                    :overflow    "auto"
                    :white-space "no-wrap"
@@ -134,8 +142,6 @@
 
                   [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
 
-
-
                    (.render col "Header")
 
                    (if (.-canSort col)
@@ -148,6 +154,7 @@
                             (str " " down-arrow)
                             (str " " up-arrow))
                           (str " " neutral-arrow)))])]))])))]
+
       [:r> "tbody" (.getTableBodyProps table (clj->js {:style {:backgroundColor (or (:body-bg-color @config) "white")}}))
        (doall
          (for [row (.-rows table)]
@@ -319,6 +326,7 @@
 
 (def last-params (atom nil))
 
+
 (defn table-component
   "React table v7 (https://github.com/TanStack/table/tree/v7/docs/src/pages/)
   Table supports standard or expandable table types
@@ -379,20 +387,22 @@
      :sort-down-arrow-icon   \"\u2B07\"
      :sort-not-selected-icon \"\u25BC\"
      :row-bg-color           \"white\"}"
- [& {:keys [data config style]}]
-  (let [cfg (h/resolve-value config)
-        d   (h/resolve-value data)
-        s   (h/resolve-value style)
+  [& {:keys [data config style]}]
+  (let [cfg           (h/resolve-value config)
+        d             (h/resolve-value data)
+        s             (h/resolve-value style)
         react-data    (r/atom (configure-data d cfg))
         column-config (clj->js (if (= :expandable (:table-type @cfg))
                                  (configure-expandable-columns d data react-data cfg s)
                                  (configure-standard-columns d data react-data cfg)))]
 
+    (log/info "table-component" data "//" config "//" style)
+
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
-      ;(log/info "table-component (render)" data)
-      (let [react-data    (r/atom (configure-data d cfg))]
+      (log/info "table-component (render)" data)
+      (let [react-data (r/atom (configure-data d cfg))]
         [:f> table
          column-config
          (clj->js @react-data)
