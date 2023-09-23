@@ -51,8 +51,8 @@
             :position {:x 25, :y 125},
             :data     {:label    "carousel" :kind ":rc/carousel"
                        :size     {:width 625 :height 200}
-                       :children {"v-scroll-1" {:position {:x 25, :y 25}}
-                                  "v-scroll-2" {:position {:x 125, :y 25}}}}}
+                       :children {"v-scroll-1" {:position {:x 25, :y 50} :size {:width 275 :height 125}}
+                                  "v-scroll-2" {:position {:x 125, :y 50} :size {:width 275 :height 125}}}}}
            {:id   "data/one", :type ":source/local" :position {:x 25, :y 25},
             :data {:label "data/one" :kind ":source/local"}}
            {:id   "data/two", :type ":source/local" :position {:x 150, :y 25},
@@ -60,16 +60,18 @@
 
            {:id         "v-scroll-1", :type ":ui/container"
             :position   {:x 25, :y 50},
-            :parentNode "carousel" :data {:label    "v-scroll-1" :kind ":rc/v-scroll"
-                                          :size     {:width 275 :height 125}
-                                          :children {"table-one" {:position {:x 25, :y 25}}
-                                                     "table-two" {:position {:x 125, :y 25}}}}}
+            :parentNode "carousel"
+            :data       {:label    "v-scroll-1" :kind ":rc/v-scroll"
+                         :size     {:width 275 :height 125}
+                         :children {"table-one" {:position {:x 25, :y 50}}
+                                    "table-two" {:position {:x 125, :y 50}}}}}
            {:id         "v-scroll-2", :type ":ui/container"
             :position   {:x 325, :y 50},
-            :parentNode "carousel" :data {:label    "v-scroll-2" :kind ":rc/v-scroll"
-                                          :size     {:width 275 :height 125}
-                                          :children {"table-three" {:position {:x 25, :y 25}}
-                                                     "table-four"  {:position {:x 125, :y 25}}}}}
+            :parentNode "carousel"
+            :data       {:label    "v-scroll-2" :kind ":rc/v-scroll"
+                         :size     {:width 275 :height 125}
+                         :children {"table-three" {:position {:x 25, :y 25}}
+                                    "table-four"  {:position {:x 125, :y 25}}}}}
 
            {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
             :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}

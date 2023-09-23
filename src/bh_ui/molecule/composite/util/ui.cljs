@@ -25,7 +25,7 @@
 
 
 (def x-offset 25)
-(def y-offset 25)
+(def y-offset 50)
 (def x-gap 25)
 (def y-gap 25)
 (def width 75)
@@ -46,8 +46,6 @@
 
 (defn- sub-layout [layout parent-id]
   (log/info "sub-layout" parent-id)
-  ;(if-let [ret (get @layout parent-id)]
-  ;  ret
   (when (nil? (get-in @layout [parent-id :children]))
     (swap! layout update parent-id
       #(assoc % :children {} :next {:x x-offset :y y-offset}))))
@@ -380,8 +378,10 @@
                                                :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-one}
                                 "data/two"    {:atm/role         :source/local :atm/kind :source/local
                                                :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-two}}
-              :mol/links       {"data/one" {:data {"table-one" :data}}
-                                "data/two" {:data {"table-two" :data}}}
+              :mol/links       {"data/one" {:data {"table-one" :data
+                                                   "table-two" :data}}
+                                "data/two" {:data {"table-three" :data
+                                                   "table-four"  :data}}}
               :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 11 :static true}]
               :mol/dsl-layout  {:nodes [{}]
                                 :edges [{}]}})
@@ -393,17 +393,14 @@
                                     {k (assoc v :atm/kind-js (str (:atm/kind v)))})
                                x)))))
     (def graph (apply loom.graph/digraph (compute-edges configuration)))
-    (def partial-config (assoc configuration
-                          :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
-                                    graph (:mol/links configuration) (loom.graph/nodes graph))
-                          :nodes (-> configuration :mol/components keys set)
-                          :edges (into [] (loom.graph/edges graph))))
 
-    ; at this point we have :graph which does NOT include the :ui/container called "v-scroll"
-    ; because it isn't involved in any links. we need to fix this, and we should do that by
+    ; at this point we have :graph which does NOT include the :ui/containers "carousel", "v-scroll-1"
+    ; and "v-scroll-2" because they aren't involved in any links. we need to fix this, and we should do that by
     ; adding ANOTHER key (so we don't break anything that is currently working)
-    (def containership-graph (->> partial-config
-                               :nodes
+    (def containership-graph (->> configuration
+                               :mol/components
+                               keys
+                               set
                                (mapcat (fn [node-id]
                                          (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
                                                           (get-in configuration [:mol/components node-id :atm/children]))]
@@ -418,7 +415,11 @@
                                          {child parent}) children)))
                         (into {})))
 
-    (def full-config (assoc partial-config
+    (def full-config (assoc configuration
+                       :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                                 graph (:mol/links configuration) (loom.graph/nodes graph))
+                       :nodes (-> configuration :mol/components keys set)
+                       :edges (into [] (loom.graph/edges graph))
                        :graph graph
                        :containership-graph containership-graph
                        :parent-graph parent-graph
@@ -426,7 +427,7 @@
   ; endregion
 
 
-  ; region ; make flow-nodes
+  ; region ; make flow-nodes (original)
 
   (do
     (def node-id "v-scroll-1")
@@ -470,28 +471,88 @@
                                  :parent   nil
                                  :size     {:width 0 :height 0}
                                  :next     {:x x-offset :y y-offset}}}))
+    (def parent :diagram)
+    (def child "carousel")
+    (sub-layout layout parent)
 
-    (set-position layout :diagram "data/one")
-    (set-position layout :diagram "data/two")
+    (swap! layout
+      #(-> %
+         (assoc-in [parent :children child :parent] parent)
+         (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+         (assoc-in [child :parent] parent)
+         (assoc-in [child :position] (get-in @layout [parent :next]))
+         (update-in [parent :next] (fn [{x :x y :y}]
+                                     (let [[new-x new-y] (if (< x 300)
+                                                           [(+ x width-offset x-gap) y]
+                                                           [x-offset
+                                                            (if (< y 300)
+                                                              (+ y height-offset y-gap)
+                                                              y-offset)])]
+                                       {:x new-x :y new-y}))))))
 
-    (set-position layout :diagram "carousel")
-    (set-position layout "carousel" "v-scroll-1")
-    (set-position layout "v-scroll-1" "table-one")
-    (set-position layout "v-scroll-1" "table-two")
 
-    (set-position layout "carousel" "v-scroll-2")
-    (set-position layout "v-scroll-2" "table-three")
-    (set-position layout "v-scroll-2" "table-four"))
+  (do
+    (def parent "carousel")
+    (def child "v-scroll-1")
+    (sub-layout layout parent)
 
-  ; (OBE as of 09/21/2023) one problem: this dataset does NOT include the innermost components, like table-one
-  ; which means we either:
-  ;       1) need to add them via (set-position), OR
-  ;       2) we need to process a different dataset which does include them
-  ;
-  ; so that they are included in the :mol/dsl-layout, since that dataset needs all the nodes
-  ; for the flow-diagram
-  ;
-  ; choosing #1 will make this subsequent processing easier... DONE.
+    (swap! layout
+      #(-> %
+         (assoc-in [parent :children child :parent] parent)
+         (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+         (assoc-in [child :parent] parent)
+         (assoc-in [child :position] (get-in @layout [parent :next]))
+         (update-in [parent :next] (fn [{x :x y :y}]
+                                     (let [[new-x new-y] (if (< x 300)
+                                                           [(+ x width-offset x-gap) y]
+                                                           [x-offset
+                                                            (if (< y 300)
+                                                              (+ y height-offset y-gap)
+                                                              y-offset)])]
+                                       {:x new-x :y new-y}))))))
+
+
+
+  (set-position layout :diagram "carousel")
+  (set-position layout "carousel" "v-scroll-1")
+  (set-position layout "v-scroll-1" "table-one")
+  (set-position layout :diagram "data/one")
+
+
+
+  (-> {:diagram {:children {}
+                 :parent   nil
+                 :size     {:width 0 :height 0}
+                 :next     {:x x-offset :y y-offset}}}
+    (set-position :diagram "data/one")
+    (set-position :diagram "data/two")
+
+    (set-position :diagram "carousel")
+    (set-position "carousel" "v-scroll-1")
+    (set-position "v-scroll-1" "table-one")
+    (set-position "v-scroll-1" "table-two")
+
+    (set-position "carousel" "v-scroll-2")
+    (set-position "v-scroll-2" "table-three")
+    (set-position "v-scroll-2" "table-four"))
+
+
+  (let [v (get-in full-config [:parent-graph (second (:nodes full-config))])]
+    {:v v})
+
+  (map (fn [node]
+         (let [parent (get-in full-config [:parent-graph node])]
+           (set-position layout (or parent :diagram) node)))
+    (:nodes full-config))
+
+  (def flow-layout (reduce (fn [layout node]
+                             (let [parent (get-in full-config [:parent-graph node])]
+                               (set-position layout (or parent :diagram) node)))
+                     {:diagram {:children {}
+                                :parent   nil
+                                :size     {:width 0 :height 0}
+                                :next     {:x x-offset :y y-offset}}}
+                     (:nodes full-config)))
 
   ; endregion
 
@@ -515,6 +576,8 @@
     (def width (+ x-gap (- max-x min-x) (* x-offset 2) x-gap))
     (def height (+ y-gap (- max-y min-y) (* y-offset 2) y-gap)))
 
+  {:size {:w width :h height}}
+
   ; endregion
 
 
@@ -535,16 +598,18 @@
 
              {:id         "v-scroll-1", :type ":ui/container"
               :position   {:x 25, :y 50},
-              :parentNode "carousel" :data {:label    "v-scroll-1" :kind ":rc/v-scroll"
-                                            :size     {:width 250 :height 125}
-                                            :children {"table-one" {:position {:x 25, :y 25}}
-                                                       "table-two" {:position {:x 125, :y 25}}}}}
+              :parentNode "carousel"
+              :data       {:label    "v-scroll-1" :kind ":rc/v-scroll"
+                           :size     {:width 250 :height 125}
+                           :children {"table-one" {:position {:x 25, :y 25}}
+                                      "table-two" {:position {:x 125, :y 25}}}}}
              {:id         "v-scroll-2", :type ":ui/container"
               :position   {:x 300, :y 50},
-              :parentNode "carousel" :data {:label    "v-scroll-2" :kind ":rc/v-scroll"
-                                            :size     {:width 250 :height 125}
-                                            :children {"table-three" {:position {:x 25, :y 25}}
-                                                       "table-four"  {:position {:x 125, :y 25}}}}}
+              :parentNode "carousel"
+              :data       {:label    "v-scroll-2" :kind ":rc/v-scroll"
+                           :size     {:width 250 :height 125}
+                           :children {"table-three" {:position {:x 25, :y 25}}
+                                      "table-four"  {:position {:x 125, :y 25}}}}}
 
              {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
               :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}
@@ -578,11 +643,15 @@
   ; correctly. 5 cases, in order:
   ;
   ;       parent    children
-  ; 0) [   nil        true   ]     <- :diagram (not needed in :mol/dsl-layout)
-  ; 1) [ :diagram     nil    ]     <- stand-alone components
-  ; 2) [ :diagram     true   ]     <- outermost containers
-  ; 3) [ true         true   ]     <- "contained" containers
-  ; 4) [ true         nil    ]     <- children, at any level
+  ; 0) [   nil        true   ]     <- :diagram (not needed in :mol/dsl-layout) [root]
+  ; 1) [ :diagram     nil    ]     <- stand-alone components                   [rhizome?]
+  ; 2) [ :diagram     true   ]     <- outermost containers                     [trunk]
+  ; 3) [ true         true   ]     <- "contained" containers                   [branches]
+  ; 4) [ true         nil    ]     <- children, at any level                   [leaves]
+  ;
+  ; Note: level 3 and 4 should NOT be included in any Dagre calls for a generated layout
+  ;
+  ;
   ;
   ; this maps over our example:
   ;     "data/one     [:diagram nil]    (1)
@@ -594,11 +663,16 @@
   ;     "table-two"   [true nil]        (4)
   ;     "table-three" [true nil]        (4)
   ;     "v-scroll-2"  [true true]       (3)
-  ;     "data/two     [:diagram nil]    (1)
+  ;     "data/two"    [:diagram nil]    (1)
 
 
 
   (map (fn [[k v]] {:p (:parent v)}) @layout)
+  (map (fn [[k v]] {:c (:children v)}) @layout)
+
+  (map (fn [[k v]]
+         {k [(:parent v) (:children v)]}) @layout)
+
 
   (do
     (def stand-alone [(filter (fn [[k v]] (:parent v)) @layout)]))
@@ -624,7 +698,7 @@
                     (get-in dsl-config [:mol/components node-id :atm/children]))))
 
 
-  ;
+  (:containership-graph @mol)
 
 
 
@@ -655,5 +729,74 @@
 
   ())
 
+
+; make layout support reduce, rather than need an atom
+(comment
+
+  (do
+    (def parent :diagram)
+    (def child "data/one")
+    (def layout {:diagram {:children {}
+                           :parent   nil
+                           :size     {:width 0 :height 0}
+                           :next     {:x x-offset :y y-offset}}})
+
+    (defn sub-layout-2 [layout parent]
+      (if (nil? (get-in layout [parent :children]))
+        (update layout parent
+          #(assoc % :children {}
+                    :size {:width 0 :height 0}
+                    :next {:x x-offset :y y-offset}))
+        layout))
+
+    (defn set-position-2 [layout parent child]
+      (let [current-layout (sub-layout-2 layout parent)
+            position       (get-in current-layout [parent :next])]
+        (-> current-layout
+          (assoc-in [parent :children child :parent] parent)
+          (assoc-in [parent :children child :position] position)
+          (assoc-in [child :parent] parent)
+          (assoc-in [child :position] position)
+          (update-in [parent :next] (fn [{x :x y :y}]
+                                      (let [[new-x new-y] (if (< x 300)
+                                                            [(+ x width-offset x-gap) y]
+                                                            [x-offset
+                                                             (if (< y 300)
+                                                               (+ y height-offset y-gap)
+                                                               y-offset)])]
+                                        {:x new-x :y new-y})))))))
+
+  (-> {:diagram {:children {}
+                 :parent   nil
+                 :size     {:width 0 :height 0}
+                 :next     {:x x-offset :y y-offset}}}
+    (set-position-2 :diagram "data/one")
+    (set-position-2 :diagram "data/two")
+
+    (set-position-2 :diagram "carousel")
+    (set-position-2 "carousel" "v-scroll-1")
+    (set-position-2 "v-scroll-1" "table-one")
+    (set-position-2 "v-scroll-1" "table-two")
+
+    (set-position-2 "carousel" "v-scroll-2")
+    (set-position-2 "v-scroll-2" "table-three")
+    (set-position-2 "v-scroll-2" "table-four"))
+
+
+  (reduce (fn [layout node]
+            (let [parent (get (:parent-graph full-config) node)]
+              (set-position-2 layout (or parent :diagram) node)))
+    {:diagram {:children {}
+               :parent   nil
+               :size     {:width 0 :height 0}
+               :next     {:x x-offset :y y-offset}}}
+    (:nodes full-config))
+
+
+
+
+
+
+  ())
 
 ; endregion
