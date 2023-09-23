@@ -8,6 +8,7 @@
             [demo.catalog.atom.example.re-com.plain-table :as plain-table]
             [demo.catalog.atom.example.experimental.internationalization :as inter]
             [re-frame.core :as re-frame]
+            [demo.catalog.atom.example.experimental.full-calender :as calender]
             [demo.subs :as sub]))
 
 
@@ -21,12 +22,14 @@
    [tab-set/example-2]
    [tab-set/example-3]
 
-   [plain-table/example]
+    [plain-table/example]
    [react-table/standard-table]
    [react-table/expandable-table]
    [react-table/subchannel-table]
-
-   [inter/internationalization (re-frame/subscribe[::sub/i18n])]])
+   ;[react-table/example-table]
+   [inter/internationalization (re-frame/subscribe[::sub/i18n])]
+   [calender/example]
+   ])
 
    ;[ui-element/selectable-table]])
    ;[ui-element/three-d-globe]

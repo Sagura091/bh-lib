@@ -11,7 +11,6 @@
             [demo.catalog.molecule.example.composite.with-fn-example :as with-fn]
             [demo.catalog.molecule.example.composite.multi-chart-widget :as multi-chart-widget]
             [demo.catalog.molecule.example.composite.v-scroll-pane-children :as v-scroll]
-            [demo.catalog.molecule.example.composite.colored-selection-table :as cs-table]
             [demo.catalog.molecule.example.composite.tabbed-molecule :as tabbed]
             [demo.catalog.molecule.example.composite.signal-analysis :as signal]
             [demo.catalog.molecule.example.composite.single-chart :as single-chart]
@@ -36,7 +35,6 @@
    ;[two-d-three-d-globe/example]
 
    [single-chart/example]
-   [cs-table/example]
    [v-scroll/example]
    [v-scroll/example-2]
    [tabbed/example]
