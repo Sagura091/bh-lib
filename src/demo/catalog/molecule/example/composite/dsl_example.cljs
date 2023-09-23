@@ -90,10 +90,10 @@
                                 "data/two" {:data {"table-three" :data
                                                    "table-four"  :data}}}
 
-              :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 10}]
+              :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 10}]})
 
-              :mol/flow-nodes  (:nodes demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)
-              :mol/flow-edges  (:edges demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)})
+              ;:mol/flow-nodes  (:nodes demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)
+              ;:mol/flow-edges  (:edges demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)})
 
 
 (defn example []

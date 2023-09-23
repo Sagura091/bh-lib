@@ -99,32 +99,42 @@
 
   (reset! last-params {:config configuration :id node-id})
 
-  (let [node-role (get-in configuration [:mol/components node-id :atm/role])
-        node-kind (get-in configuration [:mol/components node-id :atm/kind])
-        children  (merge []
-                    (get-in configuration [:mol/components node-id :atm/child])
-                    (get-in configuration [:mol/components node-id :atm/children]))
-        ret       {:id       (str node-id)
-                   :type     (str node-role)
-                   :data     {:label    (str node-id)
-                              :kind     node-kind
-                              :kind-js  (str node-kind)
-                              :children children
-                              :inputs   (-> configuration
-                                          (get-in [:mol/components node-id :atm/kind])
-                                          bh-ui.atom.component-registry/lookup-component
-                                          :handles
-                                          :inputs
-                                          (#(into {} %)))
-                              :outputs  (-> configuration
-                                          (get-in [:mol/components node-id :atm/kind])
-                                          bh-ui.atom.component-registry/lookup-component
-                                          :handles
-                                          :outputs
-                                          (#(into {} %)))}
-                   :position {:x 0 :y 0}}]
+  (let [node-role  (get-in configuration [:mol/components node-id :atm/role])
+        node-kind  (get-in configuration [:mol/components node-id :atm/kind])
+        position   (get-in configuration [:flow-nodes node-id :position])
+        parentNode (get-in configuration [:flow-nodes node-id :parent])
+        size       (get-in configuration [:flow-nodes node-id :size])
+        children   (merge []
+                     (get-in configuration [:mol/components node-id :atm/child])
+                     (get-in configuration [:mol/components node-id :atm/children]))
+        ret        (merge {:id       (str node-id)
+                           :type     (str node-role)
+                           :data     (merge {:label    (str node-id)
+                                             :kind     node-kind
+                                             :kind-js  (str node-kind)
+                                             :children children
+                                             :inputs   (-> configuration
+                                                         (get-in [:mol/components node-id :atm/kind])
+                                                         bh-ui.atom.component-registry/lookup-component
+                                                         :handles
+                                                         :inputs
+                                                         (#(into {} %)))
+                                             :outputs  (-> configuration
+                                                         (get-in [:mol/components node-id :atm/kind])
+                                                         bh-ui.atom.component-registry/lookup-component
+                                                         :handles
+                                                         :outputs
+                                                         (#(into {} %)))}
+                                       (when size {:size size}))
+                           :position (or position {:x 0 :y 0})}
+                     (when (and parentNode (not= :diagram parentNode))
+                       {:parentNode parentNode}))]
 
-    (log/info "create-flow-node" node-id "///" node-role "///" node-kind "///" ret)
+    (log/info "create-flow-node" node-id "///" node-role
+      "///" node-kind
+      "@@@@@@@@@@" size
+      "///" ret
+      "+++++++++++" (get-in configuration [:flow-nodes node-id]))
 
     ret))
 
@@ -180,16 +190,16 @@
 
   (let [flow-nodes (:mol/flow-nodes configuration)
         flow-edges (:mol/flow-edges configuration)
-        flow {:nodes   (if (empty? flow-nodes)
-                           (map #(create-flow-node configuration %) (:nodes configuration))
-                           flow-nodes)
-              :edges   (if (empty? flow-edges)
-                           (map-indexed (fn [idx node]
-                                          (create-flow-edge configuration idx node))
-                             (:edges configuration))
-                           flow-edges)
-              :rankdir "TB"
-              :align   "UL"}]
+        flow       {:nodes   (if (empty? flow-nodes)
+                               (map #(create-flow-node configuration %) (:nodes configuration))
+                               flow-nodes)
+                    :edges   (if (empty? flow-edges)
+                               (map-indexed (fn [idx node]
+                                              (create-flow-edge configuration idx node))
+                                 (:edges configuration))
+                               flow-edges)
+                    :rankdir "TB"
+                    :align   "UL"}]
 
     (log/info "make-flow (b)" (:nodes flow))
 
@@ -197,7 +207,7 @@
 
     flow))
 
-    ;(dagre/build-layout flow)))
+;(dagre/build-layout flow)))
 
 
 (defn prep-environment [configuration component-id registry]
