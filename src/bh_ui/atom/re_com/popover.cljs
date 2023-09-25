@@ -1,7 +1,9 @@
 (ns bh-ui.atom.re-com.popover
   (:require [re-com.core :as rc]
             [reagent.core :as r]
-            [taoensso.timbre :as log]))
+            [bh-ui.utils.helpers :as h]
+            [taoensso.timbre :as log]
+            [woolybear.ad.layout :as layout]))
 
 
 (log/info "bh-ui.atom.re-com.popover")
@@ -14,20 +16,22 @@
 
    config - Map
     :title (optional) String - title of popover Ex: \"Title\"
-    :body (required) String - body text of popover Ex: \"Body\"
+    :body-text (optional) String - body text of popover Ex: \"Body\"
     :position (optional) keyword - position of the popover relative to component Ex: \":above-left\", \":below-center\""
   [& {:keys [data config]}]
-  (let [showing? (r/atom false)]
+  (let [cfg           (h/resolve-value config)
+        d             (h/resolve-value data)
+        showing? (r/atom false)]
     [:div
      [rc/popover-anchor-wrapper :src (rc/at)
       :showing? showing?
-      :position (or (:position config) :above-center)
+      :position (or (:position @cfg) :above-center)
       :anchor [:div {:on-click #(swap! showing? not)}
-               (:component data)]
+               (:component @d)]
       :popover [rc/popover-content-wrapper :src (rc/at)
-                :title (:title config)
+                :title (:title @cfg)
                 :no-clip? true
-                :body (:body-text config)]]]))
+                :body [layout/markdown-block (:body-text @cfg)]]]]))
 
 (defn hover-popover
 
@@ -37,23 +41,25 @@
    :component (required) Hiccup - the component that the popover is attached to
 
   config - Map
-   :title (optional) String - title of popover Ex: \"Title\"
-   :body (required) String - body text of popover Ex: \"Body\"
-   :position (optional) keyword - position of the popover relative to component Ex: \":above-left\", \":below-center\""
+    :title (optional) String - title of popover Ex: \"Title\"
+    :body-text (optional) String - body text of popover Ex: \"Body\"
+    :position (optional) keyword - position of the popover relative to component Ex: \":above-left\", \":below-center\""
   [& {:keys [data config]}]
-  (let [showing? (r/atom false)]
+  (let [cfg           (h/resolve-value config)
+        d             (h/resolve-value data)
+        showing? (r/atom false)]
     [:div
      [rc/popover-anchor-wrapper :src (rc/at)
       :showing? showing?
-      :position (or (:position config) :above-center)
+      :position (or (:position @cfg) :above-center)
       :anchor [:div {:on-mouse-enter #(reset! showing? true)
                      :on-mouse-leave #(reset! showing? false)}
-               (:component data)]
+               (:component @d)]
       :popover [rc/popover-content-wrapper :src (rc/at)
-                :title (:title config)
+                :title (:title @cfg)
                 :no-clip? true
                 :close-button? false
-                :body (:body-text config)]]]))
+                :body [layout/markdown-block (:body-text @cfg)]]]]))
 
 
 
