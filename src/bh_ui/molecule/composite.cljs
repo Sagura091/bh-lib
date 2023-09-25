@@ -48,6 +48,13 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                          :source/fn     {:label ":source/fn" :type :source/fn :color "pink" :text-color :black :border-color "pink"}})
 
 
+(def minimap-styles {:nodeStrokeColor  (partial dag-support/custom-minimap-node-color
+                                         dag-support/default-color-pallet diagram/color-white)
+                     :node-color       (partial dag-support/custom-minimap-node-color
+                                         dag-support/default-color-pallet diagram/color-black)
+                     :nodeBorderRadius 5})
+
+
 (defn config [full-config]
   {:blackboard {:defs {:source full-config
                        :dag    {:open-details ""}}}
@@ -93,30 +100,24 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn dag-panel
-  "show the DAG, built from the configuration in[ Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
+  "show the DAG, built from the configuration in [Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
   (alongside the actual UI)
   "
 
   [& {:keys [configuration component-id container-id ui]}]
 
-  (let [flow (r/atom (ui/make-flow configuration))
-        drop-tools [rc/v-box :src (rc/at)
-                    :gap "5px"
-                    :padding "5px"
-                    :height "100%"
-                    :style {:border "1px solid gray" :border-radius "4px"}
-                    :children (make-drag-tools default-tool-types)]
-        minimap-styles {:nodeStrokeColor  (partial dag-support/custom-minimap-node-color
-                                            dag-support/default-color-pallet diagram/color-white)
-                        :node-color       (partial dag-support/custom-minimap-node-color
-                                            dag-support/default-color-pallet diagram/color-black)
-                        :nodeBorderRadius 5}]
+  (let [flow (r/atom (ui/make-flow configuration))]
 
     ;(log/info "dag-panel" diagram/component)
 
     [rc/h-box :src (rc/at)
      :gap "10px"
-     :children [drop-tools
+     :children [[rc/v-box :src (rc/at)
+                 :gap "5px"
+                 :padding "5px"
+                 :height "100%"
+                 :style {:border "1px solid gray" :border-radius "4px"}
+                 :children (make-drag-tools default-tool-types)]
                 [diagram/component
                  :component-id component-id
                  :data flow
