@@ -1,4 +1,5 @@
 (ns bh-ui.molecule.grid-container
+  (:require [cljs.core.match :refer-macros [match]])
   (:require [bh-ui.atom.layout.responsive-grid :as grid]
             [bh-ui.molecule.composite :as composite]
             [bh-ui.molecule.composite.util.digraph :as dig]
@@ -126,6 +127,99 @@
 ;(def last-data (atom nil))
 
 
+(defn- jsify-node [configuration]
+  (update configuration :mol/components                     ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+    (fn [x]
+      (into {}
+        (map (fn [[k v]]
+               {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+          x)))))
+
+
+(defn- compute-containership [configuration]
+  (->> configuration
+    :mol/components
+    keys
+    set
+    (mapcat (fn [node-id]
+              (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
+                               (get-in configuration [:mol/components node-id :atm/children]))]
+                {node-id (vec children)})))
+    (filter (fn [[_ children]] (not-empty children)))
+    (into {})))
+
+
+(defn- compute-parents [configuration]
+  (->> configuration
+    (mapcat (fn [[parent children]]
+              (map (fn [child]
+                     {child parent}) children)))
+    (into {})))
+
+
+(defn- compute-flow-nodes [parent-graph nodes]
+  (reduce (fn [layout node]
+            (let [parent (get parent-graph node)]
+              (ui/set-position layout (or parent :diagram) node)))
+    {:diagram {:children {}
+               :parent   nil
+               :size     {:width 0 :height 0}
+               :next     {:x ui/x-offset :y ui/y-offset}}}
+    nodes))
+
+
+(defn- compute-flow-layout [parent-graph nodes]
+  (reduce (fn [layout node]
+            (let [parent (get parent-graph node)]
+              (ui/set-position layout (or parent :diagram) node)))
+    {:diagram {:children {}
+               :parent   nil
+               :size     {:width 0 :height 0}
+               :next     {:x ui/x-offset :y ui/y-offset}}}
+    nodes))
+
+
+(defn- compute-node-sizes [flow-layout flow-nodes]
+  (->> flow-nodes
+    (map (fn [[id {children :children :as v}]]
+           (if children
+             {id (assoc v :size (ui/compute-size (get-in flow-layout [id :children])))}
+             {id v})))
+    (into {})))
+
+
+(defn- compute-node-cases [nodes]
+  (->> nodes
+    (map (fn [[k v :as m]]
+           {k ((juxt :parent :children) v)}))
+    (into {})
+    (map (fn [[k [p c]]]
+           {k [(cond
+                 (= :diagram p) :diagram
+                 (nil? p) nil
+                 :else true)
+               (cond
+                 (= :diagram c) :diagram
+                 (nil? c) nil
+                 :else true)]}))
+    (into {})
+    (map (fn [[k v]]
+           {k (match v
+                [nil true] {:case 0}
+                [:diagram nil] {:case 1}
+                [:diagram true] {:case 2}
+                [true true] {:case 3}
+                :else {:case 4})}))))
+
+
+(defn- add-cases-to-nodes [layout nodes]
+  (reduce (fn [config node]
+            (let [[[id {case :case}]] (seq node)]
+              (update config id assoc :case case)))
+    layout
+    nodes))
+
+
 (defn- component-panel
   "Takes a 'configuration' in Mol-DSL and compiles it into a visual representation encoded in
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
@@ -210,18 +304,13 @@
   [& {:keys [data component-id container-id resizable tools] :as params}]
 
   ;(reset! last-data @data)
-  (reset! last-config data)
+  (reset! last-config @data)
 
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
   (let [id                  (r/atom nil)
-        configuration       (update @data :mol/components   ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
-                              (fn [x]
-                                (into {}
-                                  (map (fn [[k v]]
-                                         {k (assoc v :atm/kind-js (str (:atm/kind v)))})
-                                    x))))
+        configuration       (jsify-node @data)
         graph               (apply lg/digraph (ui/compute-edges configuration))
         comp-or-dag?        (r/atom :component)
         nodes               (-> configuration :mol/components keys set)
@@ -229,40 +318,24 @@
 
         ; new stuff to support the :mol/flow-components and :mol/flow-edges parts of the Mol-DSL
         ; (see bh-ui.molecule.composite.util.ui)
-        containership-graph (->> configuration
-                              :mol/components
-                              keys
-                              set
-                              (mapcat (fn [node-id]
-                                        (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
-                                                         (get-in configuration [:mol/components node-id :atm/children]))]
-                                          {node-id (vec children)})))
-                              (filter (fn [[_ children]] (not-empty children)))
-                              (into {}))
-        parent-graph        (->> containership-graph
-                              (mapcat (fn [[parent children]]
-                                        (map (fn [child]
-                                               {child parent}) children)))
-                              (into {}))
-        flow-nodes          (reduce (fn [layout node]
-                                      (let [parent (get parent-graph node)]
-                                        (ui/set-position layout (or parent :diagram) node)))
-                              {:diagram {:children {}
-                                         :parent   nil
-                                         :size     {:width 0 :height 0}
-                                         :next     {:x ui/x-offset :y ui/y-offset}}}
-                              nodes)
-
-        full-config         (assoc configuration
-                              :denorm (dig/denorm-components graph (:mol/links configuration) (lg/nodes graph))
+        containership-graph (compute-containership configuration)
+        parent-graph        (compute-parents containership-graph)
+        flow-nodes          (compute-flow-nodes parent-graph nodes)
+        prep-config         (assoc configuration
+                              :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                                        graph (:mol/links configuration) (loom.graph/nodes graph))
                               :nodes nodes
                               :edges edges
+                              :graph graph
                               :containership-graph containership-graph
                               :parent-graph parent-graph
-                              :flow-nodes flow-nodes
-                              :graph graph
-                              :container container-id)]
-
+                              :container container-id)
+        flow-layout         (compute-flow-layout parent-graph nodes)
+        sized-nodes         (compute-node-sizes flow-layout flow-nodes)
+        node-cases          (compute-node-cases sized-nodes)
+        case-nodes          (add-cases-to-nodes sized-nodes node-cases)
+        full-config         (assoc prep-config
+                              :flow-nodes case-nodes)]
 
     (reset! last-full-config full-config)
 
@@ -312,6 +385,67 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; region ; rich comments
+
+
+(comment
+  (do
+    (def container-id "repl")
+    (def data last-config)
+    (def id (r/atom nil))
+    (def configuration (jsify-node @data))
+    (def graph (apply lg/digraph (ui/compute-edges configuration)))
+    (def comp-or-dag? (r/atom :component))
+    (def nodes (-> configuration :mol/components keys set))
+    (def edges (into [] (lg/edges graph)))
+
+    (def containership-graph (compute-containership configuration))
+    (def parent-graph (compute-parents containership-graph))
+    (def flow-nodes (compute-flow-nodes parent-graph nodes))
+
+    (def prep-config (assoc configuration
+                       :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                                 graph (:mol/links configuration) (loom.graph/nodes graph))
+                       :nodes nodes
+                       :edges edges
+                       :graph graph
+                       :containership-graph containership-graph
+                       :parent-graph parent-graph
+                       :container container-id))
+
+    (def flow-layout (compute-flow-layout parent-graph nodes))
+    (def sized-nodes (compute-node-sizes flow-layout flow-nodes))
+    (def node-cases (compute-node-cases sized-nodes))
+    (def case-nodes (add-cases-to-nodes sized-nodes node-cases))
+
+    (def full-config (assoc prep-config
+                       :flow-nodes case-nodes)))
+
+
+  ; compute-node-sized
+  (map (fn [[id {children :children :as v}]]
+         (if children
+           {id (assoc v :size (ui/compute-size (get-in flow-layout [id :children])))}
+           {id v}))
+    flow-nodes)
+  (->> flow-nodes
+    (map (fn [[id {children :children :as v}]]
+           (if children
+             {id (assoc v :size (ui/compute-size (get-in flow-layout [id :children])))}
+             {id v})))
+    (into {}))
+
+
+  ;(:size (ui/compute-size
+  ;         (get-in flow-layout [id :children])))
+
+  (map (fn [x] {:x x :fx (first x) :v (second x)})
+    [{:key "val"}
+     {:key "val-2"}])
+
+  (into {} [["key" {:value 1}]])
+
+  ())
+
 
 ; make sure the new DSL produces nodes and edges
 (comment
@@ -721,6 +855,520 @@
 
 
 
+
+
+
+  ())
+
+
+; turn the "DSL" into the flow-diagram nodes/edges(?)
+(comment
+
+  ; region ; build the full-config
+  (do
+    (def container-id "dummy-container")
+    ; note: we've deliberately added 2 layers of container-ship for testing
+    (def def {:mol/components  {"table-one"   {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-two"   {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-three" {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "table-four"  {:atm/role           :ui/component :atm/kind :react-table/table
+                                               :atm/default-config demo.catalog.atom.example.experimental.react-table/data-config}
+                                "v-scroll-1"  {:atm/role  :ui/container :atm/kind :rc/v-scroll
+                                               :atm/label "Multiple Views" :atm/children ["table-one" "table-two"]}
+                                "v-scroll-2"  {:atm/role  :ui/container :atm/kind :rc/v-scroll
+                                               :atm/label "Multiple Views" :atm/children ["table-three" "table-four"]}
+                                "carousel"    {:atm/role  :ui/container :atm/kind :rc/carousel
+                                               :atm/label "Carousel" :atm/children ["v-scroll-1" "v-scroll-2"]}
+                                "data/one"    {:atm/role         :source/local :atm/kind :source/local
+                                               :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-one}
+                                "data/two"    {:atm/role         :source/local :atm/kind :source/local
+                                               :atm/default-data demo.catalog.molecule.example.composite.v-scroll-pane-children/data-two}}
+              :mol/links       {"data/one" {:data {"table-one" :data
+                                                   "table-two" :data}}
+                                "data/two" {:data {"table-three" :data
+                                                   "table-four"  :data}}}
+              :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 11 :static true}]
+              :mol/dsl-layout  {:nodes [{}]
+                                :edges [{}]}})
+    (def data (atom def))
+    (def configuration (update @data :mol/components        ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
+                         (fn [x]
+                           (into {}
+                             (map (fn [[k v]]
+                                    {k (assoc v :atm/kind-js (str (:atm/kind v)))})
+                               x)))))
+    (def graph (apply loom.graph/digraph (ui/compute-edges configuration)))
+    (def nodes (-> configuration :mol/components keys set))
+    (def edges (into [] (loom.graph/edges graph)))
+
+    ; at this point we have :graph which does NOT include the :ui/containers "carousel", "v-scroll-1"
+    ; and "v-scroll-2" because they aren't involved in any links. we need to fix this, and we should do that by
+    ; adding ANOTHER key (so we don't break anything that is currently working)
+    (def containership-graph (->> configuration
+                               :mol/components
+                               keys
+                               set
+                               (mapcat (fn [node-id]
+                                         (let [children (concat (get-in configuration [:mol/components node-id :atm/child])
+                                                          (get-in configuration [:mol/components node-id :atm/children]))]
+                                           {node-id (vec children)})))
+                               (filter (fn [[_ children]] (not-empty children)))
+                               (into {})))
+
+    ; now we should go the other way, children should identify their parents
+    (def parent-graph (->> containership-graph
+                        (mapcat (fn [[parent children]]
+                                  (map (fn [child]
+                                         {child parent}) children)))
+                        (into {})))
+
+
+    (def flow-nodes (reduce (fn [layout node]
+                              (let [parent (get parent-graph node)]
+                                (ui/set-position layout (or parent :diagram) node)))
+                      {:diagram {:children {}
+                                 :parent   nil
+                                 :case     0
+                                 :size     {:width 0 :height 0}
+                                 :next     {:x ui/x-offset :y ui/y-offset}}}
+                      nodes))
+
+    (def prep-config (assoc configuration
+                       :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                                 graph (:mol/links configuration) (loom.graph/nodes graph))
+                       :nodes nodes
+                       :edges edges
+                       :graph graph
+                       :containership-graph containership-graph
+                       :parent-graph parent-graph
+                       :container container-id))
+
+    (def flow-layout (reduce (fn [layout node]
+                               (let [parent (get parent-graph node)]
+                                 (ui/set-position layout (or parent :diagram) node)))
+                       {:diagram {:children {}
+                                  :parent   nil
+                                  :size     {:width 0 :height 0}
+                                  :next     {:x ui/x-offset :y ui/y-offset}}}
+                       nodes))
+
+    (def sized-nodes (map (fn [node]
+                            (let [[[id _]] (seq node)]
+                              (if-let [container (get-in flow-layout [id :children])]
+                                (assoc node :size (ui/compute-size container))
+                                node)))
+                       flow-nodes))
+
+    (def node-cases (->> flow-nodes
+                      (map (fn [[k v :as m]]
+                             {k ((juxt :parent :children) v)}))
+                      (into {})
+                      (map (fn [[k [p c]]]
+                             {k [(cond
+                                   (= :diagram p) :diagram
+                                   (nil? p) nil
+                                   :else true)
+                                 (cond
+                                   (= :diagram c) :diagram
+                                   (nil? c) nil
+                                   :else true)]}))
+                      (into {})
+                      (map (fn [[k v]]
+                             {k (match v
+                                  [nil true] {:case 0}
+                                  [:diagram nil] {:case 1}
+                                  [:diagram true] {:case 2}
+                                  [true true] {:case 3}
+                                  :else {:case 4})}))))
+
+    (def case-nodes (reduce (fn [config node]
+                              (let [[[id {case :case}]] (seq node)]
+                                (update config id assoc :case case)))
+                      sized-nodes
+                      node-case))
+
+    (def full-config (assoc prep-config
+                       :flow-nodes case-nodes))
+
+    (:flow-nodes full-config))
+
+  ; endregion
+
+
+  ; region ; what about positioning the node?
+
+  ; we can use an atom to hold state for each container (with a default one for the overall
+  ;   diagram) so we can space each node away from previously processed nodes
+
+  (do
+    (def layout {:diagram {:children {}
+                           :parent   nil
+                           :size     {:width 0 :height 0}
+                           :next     {:x ui/x-offset :y ui/y-offset}}})
+    (def parent :diagram)
+    (def child "carousel")
+    (ui/sub-layout layout parent)
+
+    (-> layout
+      (assoc-in [parent :children child :parent] parent)
+      (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+      (assoc-in [child :parent] parent)
+      (assoc-in [child :position] (get-in @layout [parent :next]))
+      (update-in [parent :next] (fn [{x :x y :y}]
+                                  (let [[new-x new-y] (if (< x 300)
+                                                        [(+ x ui/width-offset ui/x-gap) y]
+                                                        [ui/x-offset
+                                                         (if (< y 300)
+                                                           (+ y ui/height-offset ui/y-gap)
+                                                           ui/y-offset)])]
+                                    {:x new-x :y new-y})))))
+
+
+  (do
+    (def parent "carousel")
+    (def child "v-scroll-1")
+    (ui/sub-layout layout parent)
+
+    (-> layout
+      (assoc-in [parent :children child :parent] parent)
+      (assoc-in [parent :children child :position] (get-in @layout [parent :next]))
+      (assoc-in [child :parent] parent)
+      (assoc-in [child :position] (get-in @layout [parent :next]))
+      (update-in [parent :next] (fn [{x :x y :y}]
+                                  (let [[new-x new-y] (if (< x 300)
+                                                        [(+ x ui/width-offset ui/x-gap) y]
+                                                        [ui/x-offset
+                                                         (if (< y 300)
+                                                           (+ y ui/height-offset ui/y-gap)
+                                                           ui/y-offset)])]
+                                    {:x new-x :y new-y})))))
+
+
+
+  (-> layout
+    (ui/set-position :diagram "carousel")
+    (ui/set-position "carousel" "v-scroll-1")
+    (ui/set-position "v-scroll-1" "table-one")
+    (ui/set-position :diagram "data/one"))
+
+
+
+  (-> {:diagram {:children {}
+                 :parent   nil
+                 :size     {:width 0 :height 0}
+                 :next     {:x ui/x-offset :y ui/y-offset}}}
+    (ui/set-position :diagram "data/one")
+    (ui/set-position :diagram "data/two")
+
+    (ui/set-position :diagram "carousel")
+    (ui/set-position "carousel" "v-scroll-1")
+    (ui/set-position "v-scroll-1" "table-one")
+    (ui/set-position "v-scroll-1" "table-two")
+
+    (ui/set-position "carousel" "v-scroll-2")
+    (ui/set-position "v-scroll-2" "table-three")
+    (ui/set-position "v-scroll-2" "table-four"))
+
+
+  (let [v (get-in full-config [:parent-graph (second (:nodes full-config))])]
+    {:v v})
+
+  (map (fn [node]
+         (let [parent (get-in full-config [:parent-graph node])]
+           (ui/set-position layout (or parent :diagram) node)))
+    (:nodes full-config))
+
+  (def flow-layout (reduce (fn [layout node]
+                             (let [parent (get-in full-config [:parent-graph node])]
+                               (ui/set-position layout (or parent :diagram) node)))
+                     {:diagram {:children {}
+                                :parent   nil
+                                :size     {:width 0 :height 0}
+                                :next     {:x ui/x-offset :y ui/y-offset}}}
+                     (:nodes full-config)))
+
+  ; endregion
+
+
+  ; region ; figure out how large the "parent" should be to fit all the children
+  (do
+    (def flow-layout (reduce (fn [layout node]
+                               (let [parent (get-in full-config [:parent-graph node])]
+                                 (ui/set-position layout (or parent :diagram) node)))
+                       {:diagram {:children {}
+                                  :parent   nil
+                                  :size     {:width 0 :height 0}
+                                  :next     {:x ui/x-offset :y ui/y-offset}}}
+                       (:nodes full-config)))
+
+    (def parent "v-scroll-1")
+    (def children (get-in flow-layout [parent :children]))
+    (def min-x (->> children
+                 (map (fn [[_ {{:keys [x]} :position}]] x))
+                 (apply min)))
+    (def max-x (->> children
+                 (map (fn [[_ {{:keys [x]} :position}]] x))
+                 (apply max)))
+    (def min-y (->> children
+                 (map (fn [[_ {{:keys [y]} :position}]] y))
+                 (apply min)))
+    (def max-y (->> children
+                 (map (fn [[_ {{:keys [y]} :position}]] y))
+                 (apply max)))
+    (def width (+ ui/x-gap (- max-x min-x) (* ui/x-offset 2) ui/x-gap))
+    (def height (+ ui/y-gap (- max-y min-y) (* ui/y-offset 2) ui/y-gap)))
+
+  {:size {:w width :h height}}
+
+
+  (defn compute-size [node]
+    (let [min-x (->> node
+                  (map (fn [[_ {{:keys [x]} :position}]] x))
+                  (apply min))
+          max-x (->> node
+                  (map (fn [[_ {{:keys [x]} :position}]] x))
+                  (apply max))
+          min-y (->> node
+                  (map (fn [[_ {{:keys [y]} :position}]] y))
+                  (apply min))
+          max-y (->> node
+                  (map (fn [[_ {{:keys [y]} :position}]] y))
+                  (apply max))]
+      {:width  (+ ui/x-gap (- max-x min-x) (* ui/x-offset 2) ui/x-gap)
+       :height (+ ui/y-gap (- max-y min-y) (* ui/y-offset 2) ui/y-gap)}))
+
+
+  ; compute sizes of the containers:
+
+  (def sized-nodes (map (fn [[id _ :as node]]
+                          (if-let [container (get-in flow-layout [id :children])]
+                            (assoc node :size (compute-size container))
+                            node))
+                     flow-nodes))
+
+
+
+
+  ; endregion
+
+
+  ; region ; assign 'cases' to the nodes, so we build them in the correct order
+
+  (filter (fn [[k _]] (not= :diagram k))
+    (:flow-nodes full-config))
+
+  (->> full-config
+    :flow-nodes
+    (sort-by (fn [[_ v]] (:case v)))
+    (map (fn [[k v]] [k (:case v)])))
+
+
+
+  (def node-case (->> full-config
+                   :flow-nodes
+                   (map (fn [[k v :as m]]
+                          {k ((juxt :parent :children) v)}))
+                   (into {})
+                   (map (fn [[k [p c]]]
+                          {k [(cond
+                                (= :diagram p) :diagram
+                                (nil? p) nil
+                                :else true)
+                              (cond
+                                (= :diagram c) :diagram
+                                (nil? c) nil
+                                :else true)]}))
+                   (into {})
+                   (map (fn [[k v]]
+                          {k (match v
+                               [nil true] {:case 0}
+                               [:diagram nil] {:case 1}
+                               [:diagram true] {:case 2}
+                               [true true] {:case 3}
+                               :else {:case 4})}))))
+
+
+  (map (fn [node]
+         (let [[[id v]] (seq node)]
+           {:node node :id id :v v}))
+    node-case)
+
+  (reduce (fn [config node]
+            (let [[[id {case :case}]] (seq node)]
+              (update-in config [:flow-nodes id]
+                assoc :case case)))
+    full-config
+    node-case)
+
+  ; this maps over our example:
+  ;     :diagram      [nil true]        (0)
+
+  ;     "data/one     [:diagram nil]    (1)
+  ;     "data/two"    [:diagram nil]    (1)
+
+  ;     "carousel"    [:diagram true]   (2)
+
+  ;     "v-scroll-2"  [true true]       (3)
+  ;     "v-scroll-1"  [true true]       (3)
+
+  ;     "table-one    [true nil]        (4)
+  ;     "table-four"  [true nil]        (4)
+  ;     "table-two"   [true nil]        (4)
+  ;     "table-three" [true nil]        (4)
+
+
+
+  ;(filter #(not= :diagram %))
+
+
+  ; endregion
+
+
+  ; region ; put it all together?
+
+  ; region ; this is what we want:
+  (def dsl-layout-gold
+    {:nodes [{:id       "carousel", :type ":ui/container"
+              :position {:x 25, :y 125},
+              :data     {:label    "carousel" :kind ":rc/carousel"
+                         :size     {:width 575 :height 200}
+                         :children {"v-scroll-1" {:position {:x 25, :y 25}}
+                                    "v-scroll-2" {:position {:x 125, :y 25}}}}}
+             {:id   "data/one", :type ":source/local" :position {:x 25, :y 25},
+              :data {:label "data/one" :kind ":source/local"}}
+             {:id   "data/two", :type ":source/local" :position {:x 150, :y 25},
+              :data {:label "data/two" :kind ":source/local"}}
+
+             {:id         "v-scroll-1", :type ":ui/container"
+              :position   {:x 25, :y 50},
+              :parentNode "carousel"
+              :data       {:label    "v-scroll-1" :kind ":rc/v-scroll"
+                           :size     {:width 250 :height 125}
+                           :children {"table-one" {:position {:x 25, :y 25}}
+                                      "table-two" {:position {:x 125, :y 25}}}}}
+             {:id         "v-scroll-2", :type ":ui/container"
+              :position   {:x 300, :y 50},
+              :parentNode "carousel"
+              :data       {:label    "v-scroll-2" :kind ":rc/v-scroll"
+                           :size     {:width 250 :height 125}
+                           :children {"table-three" {:position {:x 25, :y 25}}
+                                      "table-four"  {:position {:x 125, :y 25}}}}}
+
+             {:id         "table-one", :type ":ui/component" :position {:x 25, :y 50},
+              :parentNode "v-scroll-1" :data {:label "table-one" :kind ":react-table/table"}}
+             {:id         "table-two", :type ":ui/component" :position {:x 125, :y 50},
+              :parentNode "v-scroll-1" :data {:label "table-two" :kind ":react-table/table"}}
+             {:id         "table-three", :type ":ui/component" :position {:x 25, :y 50},
+              :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}
+             {:id         "table-four", :type ":ui/component" :position {:x 125, :y 50},
+              :parentNode "v-scroll-2" :data {:label "table-three" :kind ":react-table/table"}}]
+
+     :edges [{:id     "data/one->table-one",
+              :source "data/one", :sourceHandle "data"
+              :target "table-one" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/one->table-three",
+              :source "data/one", :sourceHandle "data"
+              :target "table-three" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/two->table-two",
+              :source "data/two", :sourceHandle "data"
+              :target "table-two" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}
+             {:id     "data/two->table-four",
+              :source "data/two", :sourceHandle "data"
+              :target "table-four" :targetHandle "data-in"
+              :style  {:strokeWidth 1 :stroke :blue} :arrowHeadType "arrowclosed"}]})
+  ; endregion
+
+
+  ; need to worry about the order so that react-flow sets up the parent/child stuff
+  ; correctly. 5 cases, in order:
+  ;
+  ;       parent    children
+  ; 0) [   nil        true   ]     <- :diagram (not needed in :mol/dsl-layout) [root]
+  ; 1) [ :diagram     nil    ]     <- stand-alone components                   [rhizome?]
+  ; 2) [ :diagram     true   ]     <- outermost containers                     [trunk]
+  ; 3) [ true         true   ]     <- "contained" containers                   [branches]
+  ; 4) [ true         nil    ]     <- children, at any level                   [leaves]
+  ;
+  ; Note: level 3 and 4 should NOT be included in any Dagre calls for a generated layout
+  ;
+  ;
+  ;
+  ; this maps over our example:
+  ;     "data/one     [:diagram nil]    (1)
+  ;     "v-scroll-1"  [true true]       (3)
+  ;     "carousel"    [:diagram true]   (2)
+  ;     :diagram      [nil true]        (0)
+  ;     "table-one    [true nil]        (4)
+  ;     "table-four"  [true nil]        (4)
+  ;     "table-two"   [true nil]        (4)
+  ;     "table-three" [true nil]        (4)
+  ;     "v-scroll-2"  [true true]       (3)
+  ;     "data/two"    [:diagram nil]    (1)
+
+
+
+  (map (fn [[k v]] {:p (:parent v)}) @layout)
+  (map (fn [[k v]] {:c (:children v)}) @layout)
+
+  (map (fn [[k v]]
+         {k [(:parent v) (:children v)]}) @layout)
+
+
+  (do
+    (def stand-alone [(filter (fn [[k v]] (:parent v)) @layout)]))
+
+
+  ; just carousel:
+  (def carousel-def {:id       "carousel", :type ":ui/container"
+                     :position {:x 25, :y 125},
+                     :data     {:label    "carousel" :kind ":rc/carousel"
+                                :size     {:width 575 :height 200}
+                                :children {"v-scroll-1" {:position {:x 25, :y 25}}
+                                           "v-scroll-2" {:position {:x 125, :y 25}}}}})
+
+  ; from (create-flow-node)
+  (do
+    (def mol (atom full-config))
+    (def dsl-config @mol)
+    (def node-id "carousel")
+    (def node-role (get-in dsl-config [:mol/components node-id :atm/role]))
+    (def node-kind (get-in dsl-config [:mol/components node-id :atm/kind]))
+    (def children (concat []
+                    (get-in dsl-config [:mol/components node-id :atm/child])
+                    (get-in dsl-config [:mol/components node-id :atm/children]))))
+
+
+  (:containership-graph @mol)
+
+
+
+  {:id       (str node-id)
+   :type     (str node-role)
+   :data     {:label    (str node-id)
+              :kind     node-kind
+              :kind-js  (str node-kind)
+              :children children
+              :inputs   (-> dsl-config
+                          (get-in [:mol/components node-id :atm/kind])
+                          bh-ui.atom.component-registry/lookup-component
+                          :handles
+                          :inputs
+                          (#(into {} %)))
+              :outputs  (-> dsl-config
+                          (get-in [:mol/components node-id :atm/kind])
+                          bh-ui.atom.component-registry/lookup-component
+                          :handles
+                          :outputs
+                          (#(into {} %)))}
+   :position {:x 0 :y 0}}
+
+  ; endregion
 
 
 
