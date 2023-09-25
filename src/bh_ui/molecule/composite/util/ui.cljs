@@ -10,7 +10,7 @@
             ["reactflow" :refer (ReactFlowProvider MiniMap Controls
                                   Handle MarkerType
                                   NodeToolbar NodeResizer
-                                  Background
+                                  Background MarkerType
                                   applyNodeChanges
                                   applyEdgeChanges
                                   useNodesState
@@ -24,6 +24,7 @@
 (def last-params (atom nil))
 (def last-flow-edge (atom nil))
 (def last-flow (atom nil))
+(def last-nodes (atom nil))
 
 
 (def x-offset 25)
@@ -163,11 +164,11 @@
                      (when (and parentNode (not= :diagram parentNode))
                        {:parentNode parentNode}))]
 
-    (log/info "create-flow-node" node-id "///" node-role
-      "///" node-kind
-      "@@@@@@@@@@" size
-      "///" ret
-      "+++++++++++" (get-in configuration [:flow-nodes node-id]))
+    ;(log/info "create-flow-node" node-id "///" node-role
+    ;  "///" node-kind
+    ;  "@@@@@@@@@@" size
+    ;  "///" ret
+    ;  "+++++++++++" (get-in configuration [:flow-nodes node-id]))
 
     ret))
 
@@ -187,15 +188,16 @@
     (log/info "create-flow-edge" idx "/" source-id "/" source-port "/" source-handle
       "///" target-id "/" target-port "/" target-handle)
 
-    {:id            (str "edge-" idx)
-     :source        (str source-id)
-     :sourceHandle  (str source-handle)
-     :target        (str target-id)
-     :targetHandle  (str target-handle)
-     :label         (str source-handle)
-     :style         {:strokeWidth 1 :stroke :black}
-     :arrowHeadType "arrowclosed"
-     :animated      false}))
+    {:id           (str "edge-" idx)
+     :source       (str source-id)
+     :sourceHandle (str source-handle)
+     :target       (str target-id)
+     :targetHandle (str target-handle)
+     :label        (str source-handle)
+     :style        {:strokeWidth 1 :stroke :black}
+     :markerEnd    {:type  (.-ArrowClosed MarkerType)
+                    :width 10, :height 10, :color :black}
+     :animated     false}))
 
 
 (defn compute-edges
@@ -219,12 +221,20 @@
   "
   [configuration]
 
-  (log/info "make-flow (a)" (keys configuration))
+  ;(log/info "make-flow (a)" (keys configuration))
+
+  (reset! last-nodes configuration)
 
   (let [flow-nodes (:mol/flow-nodes configuration)
         flow-edges (:mol/flow-edges configuration)
         flow       {:nodes   (if (empty? flow-nodes)
-                               (map #(create-flow-node configuration %) (:nodes configuration))
+                               (map #(create-flow-node configuration %)
+                                 (->> configuration
+                                   :flow-nodes
+                                   (sort-by (fn [[_ v]] (:case v)))
+                                   (map first)
+                                   (drop 1)
+                                   vec))
                                flow-nodes)
                     :edges   (if (empty? flow-edges)
                                (map-indexed (fn [idx node]
@@ -267,8 +277,6 @@
   ;
   ; [SIDE EFFECT]
   (sig/process-components configuration :source/fn registry component-id))
-
-
 
 
 

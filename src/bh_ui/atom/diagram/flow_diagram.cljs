@@ -197,25 +197,29 @@
         y               (.-clientY event)
         reactFlowBounds (.getBoundingClientRect @wrapper)]
 
-    ;(log/info "on-drop" node-type)
+    ;(log/info "on-drop" node-type (type node-type))
     ;"//" @wrapper
     ;"//" (.-current @wrapper)
     ;"//" (.getBoundingClientRect @wrapper))
     ;"//" (js->clj reactFlowBounds)
 
     (when (not= node-type "undefined")
-      (let [new-id   (str node-type "-" (swap! next-id inc))
+      (let [node-id   (str node-type "-" (swap! next-id inc))
             position ((.-project @reactFlowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
                                                                :y (- y (.-top reactFlowBounds))}))
+
+            ; TODO: need to update the function called here for each dropped 'node'
             new-node ((get node-data node-type)
+                      node-id
                       node-type
-                      new-id
                       (node-kind-fn node-type)
                       position)]
 
         ;(log/info @data)
 
+        ; TODO: update :mol/components AND :mol/flow-nodes
         (swap! data assoc :nodes (conj (:nodes @data) new-node))
+
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
 
 
@@ -343,7 +347,7 @@
   ;@data
   ;config
 
-  (reset! last-data @data)
+  (reset! last-data data)
 
   (let [d             (h/resolve-value data)
         {:keys [node-types edge-types
@@ -418,12 +422,12 @@
 
 
 
-;(comment
-;  (do
-;    (def data @last-data)
-;    (def nodes (:nodes data))
-;    (def edges (:edges data)))
-;
-;
-;
-;  ())
+(comment
+  (do
+    (def data @@last-data)
+    (def nodes (:nodes data))
+    (def edges (:edges data)))
+
+
+
+  ())

@@ -84,7 +84,13 @@
       (re-frame/subscribe (reduce conj [(path->keyword subs)] opts)))))
 
 
-(defn resolve-value [value & opts]
+(defn resolve-value
+  " takes a data structure, an (atom), a (r/atom), or a re-frame subscription vector and turns it into
+  a deref-able entity containing the actual data.
+
+  i.e., it will set up the re-frame/subscription for you and return the Reaction (deref-able)"
+
+  [value & opts]
   ;(log/info "resolve-value" value "//" opts
   ;  "// (path-kw)" (reduce conj [(path->keyword value)] opts)
   ;  "// (path-sub)" (reduce conj [(path->keyword value)] opts))

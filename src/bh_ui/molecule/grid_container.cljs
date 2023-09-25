@@ -127,15 +127,6 @@
 ;(def last-data (atom nil))
 
 
-(defn- jsify-node [configuration]
-  (update configuration :mol/components                     ; need to make :atm/kind be a string (called kind-js) for passing to react-flow
-    (fn [x]
-      (into {}
-        (map (fn [[k v]]
-               {k (assoc v :atm/kind-js (str (:atm/kind v)))})
-          x)))))
-
-
 (defn- compute-containership [configuration]
   (->> configuration
     :mol/components
@@ -157,17 +148,17 @@
     (into {})))
 
 
-(defn- compute-flow-nodes [parent-graph nodes]
-  (reduce (fn [layout node]
-            (let [parent (get parent-graph node)]
-              (ui/set-position layout (or parent :diagram) node)))
-    {:diagram {:children {}
-               :parent   nil
-               :size     {:width 0 :height 0}
-               :next     {:x ui/x-offset :y ui/y-offset}}}
-    nodes))
-
-
+;(defn- compute-flow-nodes [parent-graph nodes]
+;  (reduce (fn [layout node]
+;            (let [parent (get parent-graph node)]
+;              (ui/set-position layout (or parent :diagram) node)))
+;    {:diagram {:children {}
+;               :parent   nil
+;               :size     {:width 0 :height 0}
+;               :next     {:x ui/x-offset :y ui/y-offset}}}
+;    nodes))
+;
+;
 (defn- compute-flow-layout [parent-graph nodes]
   (reduce (fn [layout node]
             (let [parent (get parent-graph node)]
@@ -179,8 +170,8 @@
     nodes))
 
 
-(defn- compute-node-sizes [flow-layout flow-nodes]
-  (->> flow-nodes
+(defn- compute-node-sizes [flow-layout]
+  (->> flow-layout
     (map (fn [[id {children :children :as v}]]
            (if children
              {id (assoc v :size (ui/compute-size (get-in flow-layout [id :children])))}
@@ -310,7 +301,7 @@
   ;(log/info "component (params)" params)
 
   (let [id                  (r/atom nil)
-        configuration       (jsify-node @data)
+        configuration       @data
         graph               (apply lg/digraph (ui/compute-edges configuration))
         comp-or-dag?        (r/atom :component)
         nodes               (-> configuration :mol/components keys set)
@@ -320,7 +311,7 @@
         ; (see bh-ui.molecule.composite.util.ui)
         containership-graph (compute-containership configuration)
         parent-graph        (compute-parents containership-graph)
-        flow-nodes          (compute-flow-nodes parent-graph nodes)
+        ;flow-nodes          (compute-flow-nodes parent-graph nodes)
         prep-config         (assoc configuration
                               :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
                                         graph (:mol/links configuration) (loom.graph/nodes graph))
@@ -331,7 +322,7 @@
                               :parent-graph parent-graph
                               :container container-id)
         flow-layout         (compute-flow-layout parent-graph nodes)
-        sized-nodes         (compute-node-sizes flow-layout flow-nodes)
+        sized-nodes         (compute-node-sizes flow-layout)
         node-cases          (compute-node-cases sized-nodes)
         case-nodes          (add-cases-to-nodes sized-nodes node-cases)
         full-config         (assoc prep-config

@@ -86,9 +86,9 @@
 
 
               :mol/links       {"data/one" {:data {"table-one" :data
-                                                   "table-two" :data}}
+                                                   "table-four" :data}}
                                 "data/two" {:data {"table-three" :data
-                                                   "table-four"  :data}}}
+                                                   "table-two"  :data}}}
 
               :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 10}]})
 

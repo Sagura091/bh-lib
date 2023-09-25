@@ -25,9 +25,9 @@
                          :height       "100%"
                          :borderRadius "5px"})
 
-(def default-text-style {:color      :black
-                         :margin     :auto
-                         :textAlign  :center})
+(def default-text-style {:color     :black
+                         :margin    :auto
+                         :textAlign :center})
 (def minimap-styles {:nodeStrokeColor  (fn [n]
                                          (condp = (-> n js->clj (get "type"))
                                            ":ui/component" "#008800"
@@ -104,20 +104,36 @@
     :handles))
 
 
-(defn node-data [node-type node-id node-kind children position]
-  ;(log/info "node-data" node-type node-id node-kind)
+(defn node-data
+  ; TODO: UPDATE for dropping nodes (SEE bh-ui.molecule.composite.util.ui/create-flow-node)
+
+  [node-type node-id node-kind children position]
+
+  (log/info "node-data" node-type node-id node-kind)
 
   (let [handles (-> (string->keyword node-type)
                   bh-ui.atom.component-registry/lookup-component
                   :handles)]
     {:id       node-id
-     :type     node-type
+     :type     (str node-type)
+
      :data     {:label    node-id
                 :kind     node-kind
-                :inputs   (:inputs handles)                 ;(:inputs (get ui-component-registry-almost node-kind))
+                :kind-js  (str node-kind)
+                :inputs   (:inputs handles)
                 :outputs  (:outputs handles)
-                :children children}                         ;(:outputs (get ui-component-registry-almost node-kind))}
+                :children children}
      :position position}))
+
+
+(comment
+  (def node-type ":source/local")
+
+  (-> (string->keyword node-type)
+    bh-ui.atom.component-registry/lookup-component
+    :handles)
+
+  ())
 
 
 (defn- container-node [node]
@@ -184,10 +200,10 @@
 
       (reset! last-node data)
 
-      ;(log/info "custom-node (b)" data
-      ;  "//" text
-      ;  "//" node-type
-      ;"//" @kind-of-element
+      (log/info "custom-node (b)" data
+        "//" text
+        "//" node-type
+       "//" @kind-of-element)
       ;"//" (type node-type)
       ;"///" handles)
       ;  "//" extras?)
@@ -216,7 +232,8 @@
 
 
 (def meta-data {:source/remote {:ports {:data :port/source}}
-                :source/local  {:ports {:data :port/source-sink}}})
+                :source/local  {:ports {:data :port/source-sink}}
+                :source/fn     {:ports {}}})
 
 
 (rf/dispatch-sync [:register-meta meta-data])
