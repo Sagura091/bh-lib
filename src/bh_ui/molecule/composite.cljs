@@ -15,26 +15,13 @@ need to make a distinction (in fact the code is a bit cleaner if we don't) and w
 needs to implement the correct usage anyway). The flow-diagram, on the other hand, is easier if we DO make the
 distinction, so we can quickly build all the Nodes and Handles used for the diagram...
 "
-  (:require [bh-ui.atom.diagram.flow-diagram :as digraph]
+  (:require [bh-ui.atom.diagram.flow-diagram :as diagram]
             [bh-ui.atom.diagram.diagram.composite-dag-support :as dag-support]
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
-    ;[bh-ui.atom.bhui.table :as bhui-table]
-    ;[bh-ui.atom.experimental.ui-element :as e]
-    ;[bh-ui.atom.re-com.label :as rc-label]
-    ;[bh-ui.atom.re-com.slider :as rc-slider]
-    ;[bh-ui.atom.re-com.table :as rc-table]
-    ;[bh-ui.atom.resium.globe :as r-globe]
-    ;[bh-ui.atom.worldwind.globe :as ww-globe]
-    ;[bh-ui.atom.leaflet.globe :as l-globe]
             [bh-ui.molecule.composite.util.digraph :as dig]
             [bh-ui.molecule.composite.util.signals :as sig]
             [bh-ui.molecule.composite.util.ui :as ui]
             [bh-ui.utils :as ui-utils]
-    ;[bh-ui.atom.chart.bar-chart :as bar-chart]
-    ;[bh-ui.atom.chart.area-chart :as area-chart]
-    ;[bh-ui.atom.chart.colored-pie-chart :as colored-pie-chart]
-    ;[bh-ui.atom.chart.line-chart :as line-chart]
-    ;[bh-ui.atom.component-registry :as registry]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [loom.graph :as lg]
             [re-com.core :as rc]
@@ -48,18 +35,17 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (log/info "bh-ui.molecule.composite")
 
 
-;(def component-needs {:ui/component  {:name :id}
-;                      :source/remote {:name :id}
-;                      :source/local  {:name :id :default {:choices #{"" 0 [] {} #{}}}}
-;                      :source/fn     {:name  :id
-;                                      :ports {:name :id
-;                                              :type #{:port/source :port/sink :port/source-sink}}}})
-
-
 (def source-code '[composite
                    :data component/ui-definition
                    :component-id :container.component
                    :container-id :container])
+
+
+(def default-tool-types {:ui/component  {:label ":ui/component" :type :ui/component :color "green" :text-color :white :border-color "green"}
+                         :ui/container  {:label ":ui/container" :type :ui/component :color "transparent" :text-color :gray :border-color "gray"}
+                         :source/remote {:label ":source/remote" :type :source/remote :color "orange" :text-color :black :border-color "orange"}
+                         :source/local  {:label ":source/local" :type :source/local :color "blue" :text-color :white :border-color "blue"}
+                         :source/fn     {:label ":source/fn" :type :source/fn :color "pink" :text-color :black :border-color "pink"}})
 
 
 (defn config [full-config]
@@ -100,6 +86,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                    [layout/text-block (str layout)]]]])))
 
 
+(defn- make-drag-tools [tools]
+  (->> tools
+    (map diagram/make-draggable-node)
+    (into [])))
+
+
 (defn dag-panel
   "show the DAG, built from the configuration in[ Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
   (alongside the actual UI)
@@ -108,23 +100,33 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   [& {:keys [configuration component-id container-id ui]}]
 
   (let [flow (r/atom (ui/make-flow configuration))
+        drop-tools [rc/v-box :src (rc/at)
+                    :gap "5px"
+                    :padding "5px"
+                    :height "100%"
+                    :style {:border "1px solid gray" :border-radius "4px"}
+                    :children (make-drag-tools default-tool-types)]
         minimap-styles {:nodeStrokeColor  (partial dag-support/custom-minimap-node-color
-                                            dag-support/default-color-pallet digraph/color-white)
+                                            dag-support/default-color-pallet diagram/color-white)
                         :node-color       (partial dag-support/custom-minimap-node-color
-                                            dag-support/default-color-pallet digraph/color-black)
+                                            dag-support/default-color-pallet diagram/color-black)
                         :nodeBorderRadius 5}]
 
-    ;(log/info "dag-panel" digraph/component)
+    ;(log/info "dag-panel" diagram/component)
 
-    [digraph/component
-     :component-id component-id
-     :data flow
-     :config {:node-types   dsl/node-types
-              :node-data    dsl/bootstrap-node-data
-              :node-kind-fn dsl/default-node-kind
-              :minimap-styles dsl/minimap-styles}
-     :tool-types dag-support/default-tool-types
-     :minimap-styles minimap-styles]))
+    [rc/h-box :src (rc/at)
+     :gap "10px"
+     :children [drop-tools
+                [diagram/component
+                 :component-id component-id
+                 :data flow
+                 :config {:node-types     dsl/node-types
+                          :node-data      dsl/bootstrap-node-data
+                          :node-kind-fn   dsl/default-node-kind
+                          :minimap-styles dsl/minimap-styles
+                          :style {:width "1200px" :height "700px"}}
+                 :tool-types dag-support/default-tool-types
+                 :minimap-styles minimap-styles]]]))
 
 
 

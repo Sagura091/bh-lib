@@ -219,11 +219,13 @@
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
 
 
-(defn- make-draggable-node [[k {:keys [label type color text-color]} :as node]]
+(defn make-draggable-node [[k {:keys [label type color
+                                      text-color border-color]} :as node]]
   ;(log/info "make-draggable-node" label type "//" node)
   ^{:key label} [:div.draggable.draggable-node
                  {:style       {:background color
-                                :color      text-color}
+                                :color      text-color
+                                :border (str "1px solid " border-color)}
                   :onDragStart #(on-drag-start type %)
                   :draggable   true}
                  label])
@@ -293,6 +295,7 @@
                           nodes edges
                           node-types edge-types
                           node-data node-kind-fn
+                          style
                           minimap-styles                    ;on-drop on-drag-over
                           zoom-on-scroll preventScrolling
                           flowInstance
@@ -302,22 +305,7 @@
 
   ;(reset! last-types node-types)
 
-  (let [n nodes
-        ;[{:id             ":ui/bar-chart",
-        ;  ;:type           ":ui/component",
-        ;  :data           {:label   ":ui/bar-chart",
-        ;                   :kind    :rechart/bar,
-        ;                   :kind-js ":rechart/bar",
-        ;                   :inputs  {:data   {:label "data-in", :style {:left 10, :background "#555"}, :position "top"},
-        ;                             :config {:label "config-in", :style {:left 20, :background "#555"}, :position "top"}},
-        ;                   :outputs {}},
-        ;  :position       {:x 0, :y 86},
-        ;  :targetPosition "top",
-        ;  :sourcePosition "bottom"}]
-        ;[{:id "node-lightning",
-        ;  ;:type ":source/remote",
-        ;  :position {:x 150, :y 100},
-        ;  :data {:label "lightning", :kind ":source/remote"}}]                                              ;nodes
+  (let [n       nodes
         e       edges
         [ns set-nodes on-change-nodes] (useNodesState (clj->js n))
         [es set-edges on-change-edges] (useEdgesState (clj->js e))
@@ -326,7 +314,7 @@
     ;(log/info "diagram (b)" n "////" node-types)
 
     [:> ReactFlowProvider
-     [:div#wrapper {:style {:width "800px" :height "700px"}
+     [:div#wrapper {:style (or style {:width "800px" :height "700px"})
                     :ref   (fn [el] (reset! wrapper el))}
       [diagram*
        :component-id component-id
@@ -352,24 +340,25 @@
                            force-layout?]}]
 
   ;(log/info "component"
-    ;@data
-    ;config
+  ;@data
+  ;config
 
   (reset! last-data @data)
 
-  (let [d (h/resolve-value data)
+  (let [d             (h/resolve-value data)
         {:keys [node-types edge-types
                 node-data node-kind-fn
                 minimap-styles
+                style
                 tool-types
                 connectFn zoom-on-scroll preventScrolling]} @(h/resolve-value config)
         open-details? (r/atom {})
-        n-types (->> node-types
-                  (map (fn [[k v]]
-                         {k (partial v open-details?)}))
-                  (into {})
-                  (clj->js))
-        flowInstance (clojure.core/atom nil)]
+        n-types       (->> node-types
+                        (map (fn [[k v]]
+                               {k (partial v open-details?)}))
+                        (into {})
+                        (clj->js))
+        flowInstance  (clojure.core/atom nil)]
 
     ;(log/info "component (DIGRAPH)"
     ;  data)
@@ -387,6 +376,7 @@
        :edge-types edge-types
        :node-data node-data
        :node-kind-fn node-kind-fn
+       :style style
        :minimap-styles (or minimap-styles {})
        :zoom-on-scroll zoom-on-scroll
        :preventScrolling preventScrolling
@@ -419,10 +409,10 @@
 
 
 (comment
-  [{:id "node-lightning",
-    :type ":source/remote",
+  [{:id       "node-lightning",
+    :type     ":source/remote",
     :position {:x 150, :y 100},
-    :data {:label "lightning", :kind ":source/remote"}}]
+    :data     {:label "lightning", :kind ":source/remote"}}]
 
   ())
 
