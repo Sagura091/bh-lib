@@ -28,13 +28,13 @@
   |:data      | map
   | `:front`  | hiccup   | a reagent/react component, typically in [hiccup]() format for the front (unflipped) side of the card |
   | `:back`   | hiccup   | a reagent/react component, typically in [hiccup]() format for the back (flipped) side of the card |
-  |:style    | map      |
+  |:style     | map      |
   | `:style`  | hash-map | hash-map of any html/css style properties (minus the `:style` part itself, i.e., just the content part), typically used to specify the `:width` and `:height` of the card |
 
 
    EX: :data {:front [hiccup]}
              :back [hiccup]}
-       :style :style {:style {:width \"300px\"}}}
+       :style {:style {:width \"300px\"}}}
 
 > Note: this library does NOT work properly on Webkit/Safari due to problems with the CSS. It
 > should be possible to replace this library with just some `divs` and the proper CSS.
