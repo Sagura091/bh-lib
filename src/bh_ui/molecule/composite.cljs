@@ -29,12 +29,15 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
             [reagent.core :as r]
             [taoensso.timbre :as log]
             [woolybear.ad.containers :as containers]
-            [woolybear.ad.layout :as layout]))
+            [woolybear.ad.layout :as layout]
+            ["reactflow" :refer (MarkerType)]))
 
 
 (log/info "bh-ui.molecule.composite")
 
 
+(defonce last-new-edge (atom nil))
+(defonce last-config (atom nil))
 (def next-id (atom 0))
 
 
@@ -64,6 +67,45 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
    :container  ""})
 
 
+(defn- add-flow-node [full-configuration
+                      {:keys [node-data node-kind-fn orig-data
+                              flowInstance set-nodes-fn wrapper] :as inputs}
+                      node-id event]
+
+  (log/info "add-flow-node" (:flow-nodes full-configuration))
+
+  (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
+        x               (.-clientX event)
+        y               (.-clientY event)
+        reactFlowBounds (.getBoundingClientRect @wrapper)]
+
+    (when (not= node-type "undefined")
+      (let [position ((.-project @flowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
+                                                          :y (- y (.-top reactFlowBounds))}))
+
+            new-node ((get node-data node-type)
+                      node-id
+                      node-type
+                      (node-kind-fn node-type)
+                      position)]
+
+        (log/info "add-flow-node (b)" new-node)
+
+        ; TODO: update diagram nodes - should use handle-change-path
+        (swap! orig-data update :nodes conj new-node)
+        (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))
+
+        (update-in full-configuration [:flow-nodes node-id] conj new-node)))))
+
+
+(defn- add-dsl-node [configuration node-id event]
+  (log/info "add-dsl-node" (type configuration))
+
+  (let [node-type (.getData (.-dataTransfer event) "editable-flow")]
+    (update-in configuration [:mol/components node-id]
+      conj {:atm/role node-type :atm/kind node-type})))
+
+
 (defn- on-drop
   "we need a custom (on-drop) as part of the DAG panel because we need to manipulate
   the Mol-DSL configuration itself, as well as the flow-layout (nodes & edges) that
@@ -73,72 +115,91 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   will come in as the first param. the flow-diagram component itself will partial
   in the hash-map of additional information, and the JS callback will pop on the drop EVENT."
 
-  [full-configuration
-   {:keys [component-id node-data node-kind-fn orig-data
-           flowInstance set-nodes-fn wrapper]} event]
+  [full-configuration {:keys [component-id node-data node-kind-fn orig-data
+                              flowInstance set-nodes-fn wrapper] :as inputs} event]
+
   (.preventDefault event)
 
-  (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
-        x               (.-clientX event)
-        y               (.-clientY event)
-        reactFlowBounds (.getBoundingClientRect @wrapper)]
+  (log/info "on-drop" (keys full-configuration))
 
-    ;(log/info "on-drop (a)" node-type (type node-type)
-    ;  "//" (->> @orig-data :nodes (map :id)))
-    ;"//" @wrapper
-    ;"//" (.-current @wrapper)
-    ;"//" (.getBoundingClientRect @wrapper))
-    ;"//" (js->clj reactFlowBounds)
+  (let [node-type (.getData (.-dataTransfer event) "editable-flow")
+        node-id   (str node-type "-" (swap! next-id inc))]
 
-    (when (not= node-type "undefined")
-      ;(log/info "on-drop (b)" @next-id "//" flowInstance)
+    ; TODO: full-configuration is NOT an Atom here...
+    (-> full-configuration
+      ; a new flow-node to the data that was sent to the diagram and the data
+      ; stored inside the diagram
+      (add-flow-node inputs node-id event)
 
-      (let [node-id  (str node-type "-" (swap! next-id inc))
-            position ((.-project @flowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
-                                                          :y (- y (.-top reactFlowBounds))}))
-
-            new-node ((get node-data node-type)
-                      node-id
-                      node-type
-                      (node-kind-fn node-type)
-                      position)]
-
-        ; TODO: update :mol/components AND :mol/flow-nodes
-        (swap! orig-data assoc :nodes (conj (:nodes @orig-data) new-node))
-
-        ;(log/info "on-drop (c)" (->> @orig-data :nodes (map :id)))
-
-        (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
+      ; now, add a new dsl-node to the full-configuration (that was passed in form the outside world)
+      (add-dsl-node node-id event))))
 
 
-(defn on-connect
-  "having access to the 'full-configuration' will allow us to look up the :kind (or :kind-js)
-  of the source node which we cna use to determine the color of the connection line."
-
-  [full-configuration
-   {:keys [orig-data flowInstance set-edges-fn wrapper]} event]
-
-  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
+(defn- add-flow-edge [full-configuration
+                      {:keys [orig-data flowInstance set-edges-fn wrapper]}
+                      event]
 
   (let [event-map     (js->clj event :keywordize-keys true)
         source-id     (:source event-map)
         source-handle (:sourceHandle event-map)
         target-id     (:target event-map)
         target-handle (:targetHandle event-map)
-        new-edge      {:id            (str source-id "->" target-id)
-                       :source        source-id
-                       :sourceHandle  source-handle
-                       :target        target-id
-                       :targetHandle  target-handle
-                       :style         {:stroke :blue :strokeWidth 1}
-                       :arrowHeadType "arrowclosed"}]
-    ;(log/info "connecting" new-edge)
+        color         :black
+        edge-id       (str source-id "->" target-id)
+        new-edge      {:id           edge-id
+                       :source       source-id
+                       :sourceHandle source-handle
+                       :target       target-id
+                       :targetHandle target-handle
+                       :style        {:stroke color :strokeWidth 1}
+                       :markerEnd    {:type  (.-ArrowClosed MarkerType)
+                                      :width 10, :height 10, :color color}}]
 
-    ; TODO: update :mol/links AND :mol/flow-edges
+    ; TODO: need to convert to handle-change-path
     (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
+    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))
+    (update full-configuration :flow-edges conj new-edge)))
 
-    ; and this updates the data internal to the React diagram component..
-    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
+
+(defn- prep-handle [handle]
+  handle)
+
+
+(defn- add-dsl-edge [configuration event]
+  (let [event-map     (js->clj event :keywordize-keys true)
+        source-id     (:source event-map)
+        source-handle (:sourceHandle event-map)
+        target-id     (:target event-map)
+        target-handle (:targetHandle event-map)]
+
+    (log/info "add-dsl-edge" (-> configuration :mol/links keys))
+
+    (update-in configuration [:mol/links source-id]
+      #(merge-with merge %
+         {(prep-handle source-handle) {target-id (prep-handle target-handle)}}))))
+
+
+(defn on-connect
+  "we need the full-configuration to add the new edge into the original dat passed into
+  the diagram from the 'outside world'
+
+  also, having access to the 'full-configuration' will allow us to look up the :kind (or :kind-js)
+  of the source node which we can use to determine the color of the connection line."
+
+  [full-configuration inputs event]
+
+  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
+
+  ; TODO: full-configuration is NOT an Atom here...
+  (-> full-configuration
+    ; add a new flow-edge to the data that was sent to the diagram and the data
+    ; stored inside the diagram
+    (add-flow-edge inputs event)
+
+    ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
+    (add-dsl-edge event)
+
+    (#(reset! last-new-edge %))))
 
 
 (defn definition-panel
@@ -186,7 +247,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   [& {:keys [configuration component-id container-id ui]}]
 
-  (let [flow (r/atom (ui/make-flow configuration))]
+
+  (reset! last-config @configuration)
+
+  (let [flow (r/atom (ui/make-flow @configuration))]
+
+    ; TODO: need to put the "flow" back into :mol/flow-nodes and :mol/flow-edges!
 
     ;(log/info "dag-panel" diagram/component)
 
@@ -220,6 +286,41 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; region ; rich comments
+
+
+
+; merge in the new links with what is already there
+(comment
+  (do
+    (def configuration {:mol/links {"source-1" {:data {"target-1" :data}}}})
+    (def source-id "source-2")
+    (def source-handle :data)
+    (def target-id "target-2")
+    (def target-handle "data-in"))
+
+  (merge-with merge
+    (get-in configuration [:mol/links source-id])
+    {(prep-handle source-handle) {target-id (prep-handle target-handle)}})
+
+
+  (update-in configuration [:mol/links source-id]
+    #(merge-with merge %
+       {(prep-handle source-handle) {target-id (prep-handle target-handle)}}))
+
+  (keys @last-config)
+  (type @last-config)
+  (:edges @last-config)
+  (:flow-nodes @last-config)
+  (:mol/links @last-config)
+
+
+  (keys @last-new-edge)
+  (:flow-edges @last-new-edge)
+  (:mol/links @last-new-edge)
+
+  ())
+
+
 
 ;; basics of Loom (https://github.com/aysylu/loom)
 (comment
