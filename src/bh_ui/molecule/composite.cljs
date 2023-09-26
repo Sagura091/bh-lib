@@ -68,8 +68,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   [& {:keys [configuration]}]
 
   (let [components (:mol/components configuration)
-        links (:mol/links configuration)
-        layout (:mol/grid-layout configuration)]
+        links      (:mol/links configuration)
+        layout     (:mol/grid-layout configuration)]
 
     ;(log/info "definition-panel" components)
     ;(log/info "definition-panel" links)
@@ -121,11 +121,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                 [diagram/component
                  :component-id component-id
                  :data flow
+                 :full-config configuration
                  :config {:node-types     dsl/node-types
                           :node-data      dsl/bootstrap-node-data
                           :node-kind-fn   dsl/default-node-kind
                           :minimap-styles dsl/minimap-styles
-                          :style {:width "1200px" :height "700px"}}
+                          :style          {:width "1200px" :height "700px"}}
                  :tool-types dag-support/default-tool-types
                  :minimap-styles minimap-styles]]]))
 

@@ -54,7 +54,7 @@
     ;  data
     ;  "//" cooked-data
     ;  "//" options)
-    (print "cooked data" cooked-data)
+
     [:> CanvasJSChart {:options options}]))
 
 (def fast-chart-schema

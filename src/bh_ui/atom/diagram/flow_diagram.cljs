@@ -188,8 +188,8 @@
   (set! (.-dropEffect (.-dataTransfer event)) "move"))
 
 
-(defn- on-drop [component-id node-data node-kind-fn data
-                reactFlowInstance set-nodes-fn wrapper event]
+(defn- on-drop [{:keys [component-id node-data node-kind-fn data
+                        reactFlowInstance set-nodes-fn wrapper]} event]
   (.preventDefault event)
 
   (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
@@ -303,6 +303,7 @@
                           minimap-styles                    ;on-drop on-drag-over
                           zoom-on-scroll preventScrolling
                           flowInstance
+                          full-config
                           force-layout?] :as params}]
 
   ;(log/info "diagram" (first nodes))
@@ -332,8 +333,10 @@
        :connectFn (partial on-connect orig-data flowInstance set-edges wrapper)
        :zoom-on-scroll zoom-on-scroll
        :preventScrolling preventScrolling
-       :on-drop (partial on-drop component-id node-data node-kind-fn
-                  orig-data flowInstance set-nodes wrapper)
+       :on-drop (partial on-drop {:component-id component-id :node-data node-data
+                                  :node-kind-fn node-kind-fn :orig-data orig-data
+                                  :flowInstance flowInstance :set-nodes set-nodes
+                                  :wrapper wrapper :full-config full-config})
        :on-drag-over on-drag-over
        :flowInstance flowInstance]]]))
 

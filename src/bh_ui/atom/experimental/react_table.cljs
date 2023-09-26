@@ -121,7 +121,7 @@
 
 
 (defn- table [columns data table-type config]
-  (log/info "table" (js->clj data))
+  ;(log/info "table" (js->clj data))
 
   (let [^js table (rt/useTable (clj->js {:columns columns :data (or data []) :autoResetExpanded false}) rt/useSortBy rt/useExpanded)]
     [:div {:style {:max-height  (or (:height @config) "300px")
@@ -396,12 +396,12 @@
                                  (configure-expandable-columns d data react-data cfg s)
                                  (configure-standard-columns d data react-data cfg)))]
 
-    (log/info "table-component" data "//" config "//" style)
+    ;(log/info "table-component" data "//" config "//" style)
 
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
-      (log/info "table-component (render)" data)
+      ;(log/info "table-component (render)" data)
       (let [react-data (r/atom (configure-data d cfg))]
         [:f> table
          column-config

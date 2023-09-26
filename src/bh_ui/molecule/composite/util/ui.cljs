@@ -119,7 +119,7 @@
 
 
 (defn- get-handle-out [config id port]
-  (log/info "get-handle-out" id port)
+  ;(log/info "get-handle-out" id port)
   (let [kind (get-in config [:mol/components id :atm/kind])]
     (get-in (bh-ui.atom.component-registry/lookup-component kind)
       [:handles :outputs port])))
@@ -185,8 +185,8 @@
         {source-handle :label} (get-handle-out configuration source-id source-port)
         {target-handle :label} (get-handle-in configuration target-id target-port)]
 
-    (log/info "create-flow-edge" idx "/" source-id "/" source-port "/" source-handle
-      "///" target-id "/" target-port "/" target-handle)
+    ;(log/info "create-flow-edge" idx "/" source-id "/" source-port "/" source-handle
+    ;  "///" target-id "/" target-port "/" target-handle)
 
     {:id           (str "edge-" idx)
      :source       (str source-id)
@@ -244,7 +244,7 @@
                     :rankdir "TB"
                     :align   "UL"}]
 
-    (log/info "make-flow (b)" (:nodes flow))
+    ;(log/info "make-flow (b)" (:nodes flow))
 
     (reset! last-flow flow)
 

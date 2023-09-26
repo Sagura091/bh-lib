@@ -204,10 +204,10 @@ The function takes a hash-map with the following keys defined:
         def-config (-> configuration :mol/components (get node) :atm/default-config)
         label      (-> configuration :mol/components (get node) :atm/label)
 
-        _         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
-                    children? "//" children "//"
-                    child? "//" child "//"
-                    @atm-set)
+        ;_         (log/info "component->ui :ui/component" node "//" ui-type "//" bh-ui "//"
+        ;            children? "//" children "//"
+        ;            child? "//" child "//"
+        ;            @atm-set)
 
         ret        {node
 
@@ -280,10 +280,10 @@ The function takes a hash-map with the following keys defined:
         def-config (-> configuration :mol/components (get node) :atm/default-config)
         label      (-> configuration :mol/components (get node) :atm/label)
 
-        _         (log/info "component->ui :ui/container" node "//" ui-type "//" bh-ui "//"
-                    children? "//" children "//"
-                    child? "//" child "//"
-                    @atm-set)
+        ;_         (log/info "component->ui :ui/container" node "//" ui-type "//" bh-ui "//"
+        ;            children? "//" children "//"
+        ;            child? "//" child "//"
+        ;            @atm-set)
 
         ret        {node
 
