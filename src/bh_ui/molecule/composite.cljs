@@ -35,6 +35,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (log/info "bh-ui.molecule.composite")
 
 
+(def next-id (atom 0))
+
+
 (def source-code '[composite
                    :data component/ui-definition
                    :component-id :container.component
@@ -59,6 +62,83 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   {:blackboard {:defs {:source full-config
                        :dag    {:open-details ""}}}
    :container  ""})
+
+
+(defn- on-drop
+  "we need a custom (on-drop) as part of the DAG panel because we need to manipulate
+  the Mol-DSL configuration itself, as well as the flow-layout (nodes & edges) that
+  are shown in flow.
+
+  In th case of the Mol-DSL UI, we need to tack on the :mol/components and such, so that
+  will come in as the first param. the flow-diagram component itself will partial
+  in the hash-map of additional information, and the JS callback will pop on the drop EVENT."
+
+  [full-configuration
+   {:keys [component-id node-data node-kind-fn orig-data
+           flowInstance set-nodes-fn wrapper]} event]
+  (.preventDefault event)
+
+  (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
+        x               (.-clientX event)
+        y               (.-clientY event)
+        reactFlowBounds (.getBoundingClientRect @wrapper)]
+
+    ;(log/info "on-drop (a)" node-type (type node-type)
+    ;  "//" (->> @orig-data :nodes (map :id)))
+    ;"//" @wrapper
+    ;"//" (.-current @wrapper)
+    ;"//" (.getBoundingClientRect @wrapper))
+    ;"//" (js->clj reactFlowBounds)
+
+    (when (not= node-type "undefined")
+      ;(log/info "on-drop (b)" @next-id "//" flowInstance)
+
+      (let [node-id  (str node-type "-" (swap! next-id inc))
+            position ((.-project @flowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
+                                                          :y (- y (.-top reactFlowBounds))}))
+
+            new-node ((get node-data node-type)
+                      node-id
+                      node-type
+                      (node-kind-fn node-type)
+                      position)]
+
+        ; TODO: update :mol/components AND :mol/flow-nodes
+        (swap! orig-data assoc :nodes (conj (:nodes @orig-data) new-node))
+
+        ;(log/info "on-drop (c)" (->> @orig-data :nodes (map :id)))
+
+        (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
+
+
+(defn on-connect
+  "having access to the 'full-configuration' will allow us to look up the :kind (or :kind-js)
+  of the source node which we cna use to determine the color of the connection line."
+
+  [full-configuration
+   {:keys [orig-data flowInstance set-edges-fn wrapper]} event]
+
+  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
+
+  (let [event-map     (js->clj event :keywordize-keys true)
+        source-id     (:source event-map)
+        source-handle (:sourceHandle event-map)
+        target-id     (:target event-map)
+        target-handle (:targetHandle event-map)
+        new-edge      {:id            (str source-id "->" target-id)
+                       :source        source-id
+                       :sourceHandle  source-handle
+                       :target        target-id
+                       :targetHandle  target-handle
+                       :style         {:stroke :blue :strokeWidth 1}
+                       :arrowHeadType "arrowclosed"}]
+    ;(log/info "connecting" new-edge)
+
+    ; TODO: update :mol/links AND :mol/flow-edges
+    (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
+
+    ; and this updates the data internal to the React diagram component..
+    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
 
 (defn definition-panel
@@ -121,11 +201,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                 [diagram/component
                  :component-id component-id
                  :data flow
-                 :full-config configuration
                  :config {:node-types     dsl/node-types
                           :node-data      dsl/bootstrap-node-data
                           :node-kind-fn   dsl/default-node-kind
                           :minimap-styles dsl/minimap-styles
+                          :on-drop        (partial on-drop configuration)
+                          :on-connect     (partial on-connect configuration)
                           :style          {:width "1200px" :height "700px"}}
                  :tool-types dag-support/default-tool-types
                  :minimap-styles minimap-styles]]]))

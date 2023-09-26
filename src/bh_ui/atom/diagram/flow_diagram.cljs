@@ -188,8 +188,8 @@
   (set! (.-dropEffect (.-dataTransfer event)) "move"))
 
 
-(defn- on-drop [{:keys [component-id node-data node-kind-fn data
-                        reactFlowInstance set-nodes-fn wrapper]} event]
+(defn- default-on-drop [{:keys [component-id node-data node-kind-fn orig-data
+                                flowInstance set-nodes-fn wrapper]} event]
   (.preventDefault event)
 
   (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
@@ -197,16 +197,16 @@
         y               (.-clientY event)
         reactFlowBounds (.getBoundingClientRect @wrapper)]
 
-    ;(log/info "on-drop" node-type (type node-type))
+    ;(log/info "default-on-drop" node-type (type node-type))
     ;"//" @wrapper
     ;"//" (.-current @wrapper)
     ;"//" (.getBoundingClientRect @wrapper))
     ;"//" (js->clj reactFlowBounds)
 
     (when (not= node-type "undefined")
-      (let [node-id   (str node-type "-" (swap! next-id inc))
-            position ((.-project @reactFlowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
-                                                               :y (- y (.-top reactFlowBounds))}))
+      (let [node-id  (str node-type "-" (swap! next-id inc))
+            position ((.-project @flowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
+                                                          :y (- y (.-top reactFlowBounds))}))
 
             ; TODO: need to update the function called here for each dropped 'node'
             new-node ((get node-data node-type)
@@ -215,10 +215,10 @@
                       (node-kind-fn node-type)
                       position)]
 
-        ;(log/info @data)
+        ;(log/info "default-on-drop (b) @orig-data)
 
         ; TODO: update :mol/components AND :mol/flow-nodes
-        (swap! data assoc :nodes (conj (:nodes @data) new-node))
+        (swap! orig-data assoc :nodes (conj (:nodes @orig-data) new-node))
 
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))))))
 
@@ -229,13 +229,13 @@
   ^{:key label} [:div.draggable.draggable-node
                  {:style       {:background color
                                 :color      text-color
-                                :border (str "1px solid " border-color)}
+                                :border     (str "1px solid " border-color)}
                   :onDragStart #(on-drag-start type %)
                   :draggable   true}
                  label])
 
 
-(defn on-connect [data flowInstance set-edges-fn wrapper event]
+(defn default-on-connect [{:keys [orig-data flowInstance set-edges-fn wrapper]} event]
   ;(log/info "on-connect" (js->clj event :keywordize-keys true))
 
   (let [event-map     (js->clj event :keywordize-keys true)
@@ -253,7 +253,7 @@
     ;(log/info "connecting" new-edge)
 
     ;add the new nodes to the original nodes data (an atom)...
-    (swap! data assoc :edges (conj (:edges @data) new-edge))
+    (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
 
     ; and this updates the data internal to the React diagram component..
     (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
@@ -266,7 +266,7 @@
                            minimap-styles
                            flowInstance
                            on-change-nodes on-change-edges on-drop on-drag-over
-                           zoom-on-scroll preventScrolling connectFn] :as params}]
+                           zoom-on-scroll preventScrolling on-connect] :as params}]
 
   ;(log/info "diagram(star) (params)" nodes "=====" node-types "======" edge-types)
 
@@ -276,7 +276,7 @@
                              :onEdgesChange       (or on-change-edges #())
                              :zoomOnScroll        (or zoom-on-scroll false)
                              :preventScrolling    (or preventScrolling false)
-                             :onConnect           (or connectFn #())
+                             :onConnect           (or on-connect #())
                              :fitView             true
                              :defaultViewport     {:x 0 :y 0 :zoom 1.5}
                              :attributionPosition "bottom-left"
@@ -303,7 +303,7 @@
                           minimap-styles                    ;on-drop on-drag-over
                           zoom-on-scroll preventScrolling
                           flowInstance
-                          full-config
+                          on-drop on-connect
                           force-layout?] :as params}]
 
   ;(log/info "diagram" (first nodes))
@@ -330,13 +330,16 @@
        :node-types node-types
        :edge-types edge-types
        :minimap-styles minimap-styles
-       :connectFn (partial on-connect orig-data flowInstance set-edges wrapper)
+       :on-connect (partial (or on-connect default-on-connect)
+                     {:orig-data    orig-data :flowInstance flowInstance
+                      :set-edges-fn set-edges :wrapper wrapper})
        :zoom-on-scroll zoom-on-scroll
        :preventScrolling preventScrolling
-       :on-drop (partial on-drop {:component-id component-id :node-data node-data
-                                  :node-kind-fn node-kind-fn :orig-data orig-data
-                                  :flowInstance flowInstance :set-nodes set-nodes
-                                  :wrapper wrapper :full-config full-config})
+       :on-drop (partial (or on-drop default-on-drop)
+                  {:component-id component-id :node-data node-data
+                   :node-kind-fn node-kind-fn :orig-data orig-data
+                   :flowInstance flowInstance :set-nodes-fn set-nodes
+                   :wrapper      wrapper})
        :on-drag-over on-drag-over
        :flowInstance flowInstance]]]))
 
@@ -355,10 +358,10 @@
   (let [d             (h/resolve-value data)
         {:keys [node-types edge-types
                 node-data node-kind-fn
-                minimap-styles
-                style
+                minimap-styles style
+                on-drop on-connect
                 tool-types
-                connectFn zoom-on-scroll preventScrolling]} @(h/resolve-value config)
+                zoom-on-scroll preventScrolling]} @(h/resolve-value config)
         open-details? (r/atom {})
         n-types       (->> node-types
                         (map (fn [[k v]]
@@ -384,6 +387,8 @@
        :node-data node-data
        :node-kind-fn node-kind-fn
        :style style
+       :on-drop on-drop
+       :on-connect on-connect
        :minimap-styles (or minimap-styles {})
        :zoom-on-scroll zoom-on-scroll
        :preventScrolling preventScrolling
