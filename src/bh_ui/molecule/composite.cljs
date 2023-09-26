@@ -156,8 +156,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     ; TODO: need to convert to handle-change-path
     (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
-    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))
-    (swap! full-configuration update :flow-edges conj new-edge)))
+    (swap! full-configuration update :flow-edges conj new-edge)
+    (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
 
 (defn- prep-handle [handle]
@@ -189,16 +189,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   ;(log/info "on-connect" (js->clj event :keywordize-keys true))
 
-  ; TODO: full-configuration is NOT an Atom here...
-  (-> full-configuration
-    ; add a new flow-edge to the data that was sent to the diagram and the data
-    ; stored inside the diagram
-    (add-flow-edge inputs event)
+  ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
+  (add-dsl-edge full-configuration event)
 
-    ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
-    (add-dsl-edge event)
-
-    (#(reset! last-new-edge %))))
+  ; add a new flow-edge to the data that was sent to the diagram and the data
+  ; stored inside the diagram
+  (add-flow-edge full-configuration inputs event))
 
 
 (defn definition-panel
