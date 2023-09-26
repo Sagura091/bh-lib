@@ -19,11 +19,11 @@
 (log/info "bh-ui.molecule.grid-container")
 
 
-(def last-config (atom nil))
-(def last-data (atom nil))
-(def last-params (atom nil))
-(def last-full-config (atom nil))
-(def last-component-lookup (atom nil))
+(defonce last-config (atom nil))
+(defonce last-data (atom nil))
+(defonce last-params (atom nil))
+(defonce last-full-config (atom nil))
+(defonce last-component-lookup (atom nil))
 
 
 (defn- config
@@ -216,7 +216,7 @@
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
   get wrapped around to standardize the visual style and functionality).
 
-  - configuration : (hash-map) the description of the complete UI, encoded in [Mol-DSL](docs/mol-dsl.md)
+  - configuration : *r/atom* around a (hash-map) the description of the complete UI, encoded in [Mol-DSL](docs/mol-dsl.md)
   - component-id : (keyword/string) unique identifier of this UI 'widget' within the current run=time
         used to isolate this widget's data from any other widgets within the re-frame/app-db
   - resizable : (boolean) is this widget resizable (the user can change its size, or not?
@@ -239,20 +239,22 @@
   (let [layout           (locals/subscribe-local component-id [:layout])
         component-lookup (into {}
                            (sig/process-components-stateful
-                             configuration #{:ui/component :ui/container}
+                             @configuration #{:ui/component :ui/container}
                              @(re-frame/subscribe [:meta-data-registry]) component-id))
 
         ; build UI components (with subscription/event signals against the blackboard or remotes)
-        visual-layout    (->> configuration
+        visual-layout    (->> @configuration
                            :mol/grid-layout
                            (map (fn [{:keys [i]}] i)))
         composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
         open?            (r/atom false)]
 
-    (reset! last-component-lookup {:lookup   component-lookup
-                                   :viz      visual-layout
-                                   :keys     (select-keys component-lookup visual-layout)
-                                   :wrappers composed-ui})
+    (reset! last-component-lookup {:component-id component-id
+                                   :config       @configuration
+                                   :lookup       component-lookup
+                                   :viz          visual-layout
+                                   :keys         (select-keys component-lookup visual-layout)
+                                   :wrappers     composed-ui})
 
     (fn []
       ;(log/info "component-panel INNER" component-id
@@ -325,18 +327,18 @@
         sized-nodes         (compute-node-sizes flow-layout)
         node-cases          (compute-node-cases sized-nodes)
         case-nodes          (add-cases-to-nodes sized-nodes node-cases)
-        full-config         (assoc prep-config
-                              :flow-nodes case-nodes)]
+        full-config         (r/atom (assoc prep-config      ; wrap in a r/atom so the dag-panel can make updates
+                                      :flow-nodes case-nodes))]
 
     (reset! last-full-config full-config)
 
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id (config full-config))
+        (ui-utils/init-container-locals @id (config @full-config))
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
-        (ui/prep-environment full-config @id @(re-frame/subscribe [:meta-data-registry])))
+        (ui/prep-environment @full-config @id @(re-frame/subscribe [:meta-data-registry])))
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
@@ -377,13 +379,55 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; region ; rich comments
 
+; need an r/atom around the config data so the use can edit things using the flow-diagram
+(comment
+  (:config @last-component-lookup)
+  (:viz @last-component-lookup)
+  (:lookup @last-component-lookup)
+
+  (let [component-id     (:component-id @last-component-lookup)
+        configuration    (r/atom (:config @last-component-lookup))
+
+        layout           (locals/subscribe-local component-id [:layout])
+        component-lookup (into {}
+                           (sig/process-components-stateful
+                             @configuration #{:ui/component :ui/container}
+                             @(re-frame/subscribe [:meta-data-registry]) component-id))
+
+        ; build UI components (with subscription/event signals against the blackboard or remotes)
+        visual-layout    (->> @configuration
+                           :mol/grid-layout
+                           (map (fn [{:keys [i]}] i)))
+        composed-ui      (map wrap-component (select-keys component-lookup
+                                               visual-layout))]
+
+    {:component-id  component-id
+     :layout        layout
+     ;:component-lookup component-lookup
+     :visual-layout visual-layout
+     :composed-ui   composed-ui})
+
+
+
+  @last-full-config
+  (-> @@last-full-config
+    :flow-nodes
+    keys)
+
+  (->> @@last-full-config
+    :flow-edges
+    (map :id))
+
+
+  ())
+
 
 (comment
   (do
     (def container-id "repl")
     (def data last-config)
     (def id (r/atom nil))
-    (def configuration (jsify-node @data))
+    (def configuration @data)
     (def graph (apply lg/digraph (ui/compute-edges configuration)))
     (def comp-or-dag? (r/atom :component))
     (def nodes (-> configuration :mol/components keys set))
@@ -391,7 +435,7 @@
 
     (def containership-graph (compute-containership configuration))
     (def parent-graph (compute-parents containership-graph))
-    (def flow-nodes (compute-flow-nodes parent-graph nodes))
+    ;(def flow-nodes (compute-flow-nodes parent-graph nodes))
 
     (def prep-config (assoc configuration
                        :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
@@ -404,7 +448,7 @@
                        :container container-id))
 
     (def flow-layout (compute-flow-layout parent-graph nodes))
-    (def sized-nodes (compute-node-sizes flow-layout flow-nodes))
+    ;(def sized-nodes (compute-node-sizes flow-layout flow-nodes))
     (def node-cases (compute-node-cases sized-nodes))
     (def case-nodes (add-cases-to-nodes sized-nodes node-cases))
 
@@ -818,7 +862,7 @@
 
   (merge
     (into {}
-      (sig/process-components-stateful
+      (sig/process-components
         configuration :ui/component
         @(re-frame/subscribe [:meta-data-registry]) "test-mol-dsl"))
 

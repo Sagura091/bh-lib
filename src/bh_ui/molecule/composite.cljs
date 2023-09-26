@@ -94,15 +94,14 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         ; TODO: update diagram nodes - should use handle-change-path
         (swap! orig-data update :nodes conj new-node)
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))
-
-        (update-in full-configuration [:flow-nodes node-id] conj new-node)))))
+        (swap! full-configuration update-in [:flow-nodes node-id] conj new-node)))))
 
 
 (defn- add-dsl-node [configuration node-id event]
   (log/info "add-dsl-node" (type configuration))
 
   (let [node-type (.getData (.-dataTransfer event) "editable-flow")]
-    (update-in configuration [:mol/components node-id]
+    (swap! configuration update-in [:mol/components node-id]
       conj {:atm/role node-type :atm/kind node-type})))
 
 
@@ -120,7 +119,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (.preventDefault event)
 
-  (log/info "on-drop" (keys full-configuration))
+  (log/info "on-drop" (keys @full-configuration))
 
   (let [node-type (.getData (.-dataTransfer event) "editable-flow")
         node-id   (str node-type "-" (swap! next-id inc))]
@@ -158,7 +157,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     ; TODO: need to convert to handle-change-path
     (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
     (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))
-    (update full-configuration :flow-edges conj new-edge)))
+    (swap! full-configuration update :flow-edges conj new-edge)))
 
 
 (defn- prep-handle [handle]
@@ -174,7 +173,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     (log/info "add-dsl-edge" (-> configuration :mol/links keys))
 
-    (update-in configuration [:mol/links source-id]
+    (swap! configuration update-in [:mol/links source-id]
       #(merge-with merge %
          {(prep-handle source-handle) {target-id (prep-handle target-handle)}}))))
 
@@ -243,6 +242,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (defn dag-panel
   "show the DAG, built from the configuration in [Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
   (alongside the actual UI)
+
+
+  - configuration : *r/atom* around a (hash-map
   "
 
   [& {:keys [configuration component-id container-id ui]}]
@@ -252,7 +254,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (let [flow (r/atom (ui/make-flow @configuration))]
 
-    ; TODO: need to put the "flow" back into :mol/flow-nodes and :mol/flow-edges!
+    ; TODO: need to put the "flow" back into :flow-nodes and :mol/flow-edges!
 
     ;(log/info "dag-panel" diagram/component)
 
