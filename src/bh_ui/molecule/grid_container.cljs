@@ -296,27 +296,25 @@
 
   [& {:keys [data component-id container-id resizable tools] :as params}]
 
-  ;(reset! last-data @data)
-  (reset! last-config @data)
+  (reset! last-config data)
 
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
   (let [id                  (r/atom nil)
-        configuration       @data
-        graph               (apply lg/digraph (ui/compute-edges configuration))
+        graph               (apply lg/digraph (ui/compute-edges @data))
         comp-or-dag?        (r/atom :component)
-        nodes               (-> configuration :mol/components keys set)
+        nodes               (-> @data :mol/components keys set)
         edges               (into [] (lg/edges graph))
 
         ; new stuff to support the :mol/flow-components and :mol/flow-edges parts of the Mol-DSL
         ; (see bh-ui.molecule.composite.util.ui)
-        containership-graph (compute-containership configuration)
+        containership-graph (compute-containership @data)
         parent-graph        (compute-parents containership-graph)
         ;flow-nodes          (compute-flow-nodes parent-graph nodes)
-        prep-config         (assoc configuration
+        prep-config         (swap! data assoc
                               :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
-                                        graph (:mol/links configuration) (loom.graph/nodes graph))
+                                        graph (:mol/links @data) (loom.graph/nodes graph))
                               :nodes nodes
                               :edges edges
                               :graph graph
@@ -327,18 +325,20 @@
         sized-nodes         (compute-node-sizes flow-layout)
         node-cases          (compute-node-cases sized-nodes)
         case-nodes          (add-cases-to-nodes sized-nodes node-cases)
-        full-config         (r/atom (assoc prep-config      ; wrap in a r/atom so the dag-panel can make updates
-                                      :flow-nodes case-nodes))]
+        case-config         (swap! data assoc               ; wrap in a r/atom so the dag-panel can make updates
+                              :flow-nodes case-nodes)]
 
-    (reset! last-full-config full-config)
+    (ui/make-flow data)                                     ; update the r/atom with the nodes and edges for the flow-diagram
+
+    (reset! last-full-config data)
 
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (ui-utils/init-container-locals @id (config @full-config))
+        (ui-utils/init-container-locals @id (config @data))
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
-        (ui/prep-environment @full-config @id @(re-frame/subscribe [:meta-data-registry])))
+        (ui/prep-environment @data @id @(re-frame/subscribe [:meta-data-registry])))
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
@@ -358,16 +358,16 @@
                                               :on-change #(reset! comp-or-dag? %)]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
-                             :configuration full-config
+                             :configuration data
                              :component-id @id
                              :container-id container-id]
                        :component [component-panel
-                                   :configuration full-config
+                                   :configuration data
                                    :component-id @id
                                    :container-id container-id
                                    :resizable resizable]
                        :definition [composite/definition-panel
-                                    :configuration configuration]
+                                    :configuration data]
                        :default [rc/alert-box :src (rc/at)
                                  :alert-type :warning
                                  :body "There is a problem with this component."])]]]))))
@@ -382,6 +382,8 @@
 ; need an r/atom around the config data so the use can edit things using the flow-diagram
 (comment
   (:config @last-component-lookup)
+  (keys (:config @last-component-lookup))
+  (->> @last-component-lookup :config :mol/flow-nodes)
   (:viz @last-component-lookup)
   (:lookup @last-component-lookup)
 
@@ -408,15 +410,29 @@
      :composed-ui   composed-ui})
 
 
+  (type last-full-config)
+  (type @last-full-config)
 
-  @last-full-config
-  (-> @@last-full-config
-    :flow-nodes
+  (->> @@last-full-config
     keys)
 
   (->> @@last-full-config
-    :flow-edges
+    :mol/flow-nodes)
+  (->> @@last-full-config
+    :mol/flow-nodes
     (map :id))
+
+  (->> @@last-full-config
+    :mol/components
+    keys)
+
+  (->> @@last-full-config
+    :mol/flow-edges)
+  (->> @@last-full-config
+    :mol/flow-edges
+    (map (juxt :id :source :target)))
+  (->> @@last-full-config
+    :mol/links)
 
 
   ())

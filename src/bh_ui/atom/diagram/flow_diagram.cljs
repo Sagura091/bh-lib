@@ -379,9 +379,9 @@
     (fn []
       [:f> diagram
        :component-id component-id
-       :orig-data d
-       :nodes (:nodes @d)
-       :edges (:edges @d)
+       :orig-data data
+       :nodes (:mol/flow-nodes @d)
+       :edges (:mol/flow-edges @d)
        :node-types n-types
        :edge-types edge-types
        :node-data node-data
@@ -436,6 +436,8 @@
     (def nodes (:nodes data))
     (def edges (:edges data)))
 
+
+  (->> @@last-data :mol/flow-nodes)
 
 
   ())

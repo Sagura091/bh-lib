@@ -25,27 +25,27 @@
   [:div
    ; depend on :source/remote
 
-   [dsl/example]
+   [dsl/example]])
 
-   [coverage-plan/ww-example]
+   ;[coverage-plan/ww-example]
 
    ;[chart-remote-data/example]
    ;[coverage-plan/r-example]
    ;[coverage-plan/twoD-example]
    ;[two-d-three-d-globe/example]
 
-   [single-chart/example]
-   [v-scroll/example]
-   [v-scroll/example-2]
-   [tabbed/example]
-   [tabbed/example-2]
-   [signal/example]
-
-   [simple-multi-chart/example]
-   [simple-multi-chart-2/example]
-   [multi-chart-widget/example]
-
-   [with-fn/example]
-   [fc/example]])
+   ;[single-chart/example]
+   ;[v-scroll/example]
+   ;[v-scroll/example-2]
+   ;[tabbed/example]
+   ;[tabbed/example-2]
+   ;[signal/example]
+   ;
+   ;[simple-multi-chart/example]
+   ;[simple-multi-chart-2/example]
+   ;[multi-chart-widget/example]
+   ;
+   ;[with-fn/example]
+   ;[fc/example]])
 
 

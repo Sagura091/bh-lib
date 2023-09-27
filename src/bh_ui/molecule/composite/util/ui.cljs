@@ -218,33 +218,44 @@
 
 (defn make-flow
   "take the Loom graph and turn it into what react-flow needs to draw it onto the display
+
+  - configuration - r/atom wrapped hash-map
   "
   [configuration]
 
   ;(log/info "make-flow (a)" (keys configuration))
 
-  (reset! last-nodes configuration)
+  (reset! last-nodes @configuration)
 
-  (let [flow-nodes (:mol/flow-nodes configuration)
-        flow-edges (:mol/flow-edges configuration)
-        flow       {:nodes   (if (empty? flow-nodes)
-                               (map #(create-flow-node configuration %)
-                                 (->> configuration
-                                   :flow-nodes
-                                   (sort-by (fn [[_ v]] (:case v)))
-                                   (map first)
-                                   (drop 1)
-                                   vec))
-                               flow-nodes)
-                    :edges   (if (empty? flow-edges)
-                               (map-indexed (fn [idx node]
-                                              (create-flow-edge configuration idx node))
-                                 (:edges configuration))
-                               flow-edges)
+  (let [flow-nodes (:mol/flow-nodes @configuration)
+        flow-edges (:mol/flow-edges @configuration)
+        nodes      (if (empty? flow-nodes)
+                     (into []
+                       (map #(create-flow-node @configuration %)
+                         (->> @configuration
+                           :flow-nodes
+                           (sort-by (fn [[_ v]] (:case v)))
+                           (map first)
+                           (drop 1)
+                           vec)))
+                     flow-nodes)
+        edges      (if (empty? flow-edges)
+                     (into []
+                       (map-indexed (fn [idx node]
+                                      (create-flow-edge @configuration idx node))
+                         (:edges @configuration)))
+                     flow-edges)
+        flow       {:nodes   nodes
+                    :edges   edges
                     :rankdir "TB"
                     :align   "UL"}]
 
     ;(log/info "make-flow (b)" (:nodes flow))
+
+    (swap! configuration
+      #(-> %
+         (assoc :mol/flow-nodes nodes)
+         (assoc :mol/flow-edges edges)))
 
     (reset! last-flow flow)
 
@@ -455,6 +466,16 @@
 
 
 
+  (def configuration (atom @last-nodes))
+  (->> @configuration
+    :flow-nodes
+    (sort-by (fn [[_ v]] (:case v)))
+    (map first)
+    (drop 1)
+    vec)
+
+
+  (keys @configuration)
 
 
   ())

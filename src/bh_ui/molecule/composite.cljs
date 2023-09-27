@@ -72,7 +72,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                               flowInstance set-nodes-fn wrapper] :as inputs}
                       node-id event]
 
-  (log/info "add-flow-node" (:flow-nodes full-configuration))
+  (log/info "add-flow-node (a)" (:mol/flow-nodes @full-configuration))
 
   (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
         x               (.-clientX event)
@@ -89,12 +89,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                       (node-kind-fn node-type)
                       position)]
 
-        (log/info "add-flow-node (b)" new-node)
+        (log/info "add-flow-node (b)" new-node "//" (-> @full-configuration :mol/flow-nodes))
 
         ; TODO: update diagram nodes - should use handle-change-path
         (swap! orig-data update :nodes conj new-node)
         (set-nodes-fn (fn [nds] (.concat nds (clj->js new-node))))
-        (swap! full-configuration update-in [:flow-nodes node-id] conj new-node)))))
+        (swap! full-configuration update :mol/flow-nodes conj new-node)))))
 
 
 (defn- add-dsl-node [configuration node-id event]
@@ -119,19 +119,17 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (.preventDefault event)
 
-  (log/info "on-drop" (keys @full-configuration))
+  (log/info "on-drop" (type full-configuration) "//" (keys @full-configuration))
 
   (let [node-type (.getData (.-dataTransfer event) "editable-flow")
         node-id   (str node-type "-" (swap! next-id inc))]
 
-    ; TODO: full-configuration is NOT an Atom here...
-    (-> full-configuration
-      ; a new flow-node to the data that was sent to the diagram and the data
-      ; stored inside the diagram
-      (add-flow-node inputs node-id event)
+    ; a new flow-node to the data that was sent to the diagram and the data
+    ; stored inside the diagram
+    (add-flow-node full-configuration inputs node-id event)
 
-      ; now, add a new dsl-node to the full-configuration (that was passed in form the outside world)
-      (add-dsl-node node-id event))))
+    ; now, add a new dsl-node to the full-configuration (that was passed in form the outside world)
+    (add-dsl-node full-configuration node-id event)))
 
 
 (defn- add-flow-edge [full-configuration
@@ -156,7 +154,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     ; TODO: need to convert to handle-change-path
     (swap! orig-data assoc :edges (conj (:edges @orig-data) new-edge))
-    (swap! full-configuration update :flow-edges conj new-edge)
+    (swap! full-configuration update :mol/flow-edges conj new-edge)
     (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
 
@@ -203,9 +201,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   [& {:keys [configuration]}]
 
-  (let [components (:mol/components configuration)
-        links      (:mol/links configuration)
-        layout     (:mol/grid-layout configuration)]
+  (let [components (:mol/components @configuration)
+        links      (:mol/links @configuration)
+        layout     (:mol/grid-layout @configuration)]
 
     ;(log/info "definition-panel" components)
     ;(log/info "definition-panel" links)
@@ -246,34 +244,30 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   [& {:keys [configuration component-id container-id ui]}]
 
 
-  (reset! last-config @configuration)
+  (reset! last-config configuration)
 
-  (let [flow (r/atom (ui/make-flow @configuration))]
+  ;(log/info "dag-panel" diagram/component)
 
-    ; TODO: need to put the "flow" back into :flow-nodes and :mol/flow-edges!
-
-    ;(log/info "dag-panel" diagram/component)
-
-    [rc/h-box :src (rc/at)
-     :gap "10px"
-     :children [[rc/v-box :src (rc/at)
-                 :gap "5px"
-                 :padding "5px"
-                 :height "100%"
-                 :style {:border "1px solid gray" :border-radius "4px"}
-                 :children (make-drag-tools default-tool-types)]
-                [diagram/component
-                 :component-id component-id
-                 :data flow
-                 :config {:node-types     dsl/node-types
-                          :node-data      dsl/bootstrap-node-data
-                          :node-kind-fn   dsl/default-node-kind
-                          :minimap-styles dsl/minimap-styles
-                          :on-drop        (partial on-drop configuration)
-                          :on-connect     (partial on-connect configuration)
-                          :style          {:width "1200px" :height "700px"}}
-                 :tool-types dag-support/default-tool-types
-                 :minimap-styles minimap-styles]]]))
+  [rc/h-box :src (rc/at)
+   :gap "10px"
+   :children [[rc/v-box :src (rc/at)
+               :gap "5px"
+               :padding "5px"
+               :height "100%"
+               :style {:border "1px solid gray" :border-radius "4px"}
+               :children (make-drag-tools default-tool-types)]
+              [diagram/component
+               :component-id component-id
+               :data configuration
+               :config {:node-types     dsl/node-types
+                        :node-data      dsl/bootstrap-node-data
+                        :node-kind-fn   dsl/default-node-kind
+                        :minimap-styles dsl/minimap-styles
+                        :on-drop        (partial on-drop configuration)
+                        :on-connect     (partial on-connect configuration)
+                        :style          {:width "1200px" :height "700px"}}
+               :tool-types dag-support/default-tool-types
+               :minimap-styles minimap-styles]]])
 
 
 
