@@ -126,16 +126,6 @@
      :position position}))
 
 
-(comment
-  (def node-type ":source/local")
-
-  (-> (string->keyword node-type)
-    bh-ui.atom.component-registry/lookup-component
-    :handles)
-
-  ())
-
-
 (defn- container-node [node]
   (let [data            (js->clj node)
         node-id         (get data "id")
@@ -170,7 +160,8 @@
     (r/as-element
 
       [:div {:on-mouse-enter #(set-visibility true)
-             :on-mouse-leave #(set-visibility false)}
+             :on-mouse-leave #(set-visibility false)
+             :on-click #(js/alert (str "Clicked on Container: " text))}
 
        [:> NodeResizer {:color "#000000" :isVisible isVisible}]
 
@@ -213,7 +204,8 @@
 
         (r/as-element
 
-          [:div {:style style :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)}
+          [:div {:style style :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)
+                 :on-click #(js/alert (str "Clicked on Node: " text))}
 
            [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
 
@@ -222,9 +214,9 @@
            [rc/v-box
             :gap "1px"
             :children [[label/label :style (merge {:textAlign :center} style)
-                        :value text]
+                        :value text :on-click #(js/alert (str "Clicked on title: " text))]
                        [label/label-sm :style (merge {:textAlign :center} style)
-                        :value @kind-of-element]]]
+                        :value @kind-of-element :on-click #(js/alert (str "Clicked on kind: " @kind-of-element))]]]
 
            (map #(make-handle "source" %) (:outputs handles))])))
 
@@ -292,3 +284,18 @@
   (js->clj size :keywordize-keys true)
 
   ())
+
+
+(comment
+  (def node-type ":source/local")
+
+  (-> (string->keyword node-type)
+    bh-ui.atom.component-registry/lookup-component
+    :handles)
+
+  ())
+
+
+
+
+
