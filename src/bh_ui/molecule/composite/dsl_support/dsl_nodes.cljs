@@ -161,7 +161,7 @@
 
       [:div {:on-mouse-enter #(set-visibility true)
              :on-mouse-leave #(set-visibility false)
-             :on-click #(js/alert (str "Clicked on Container: " text))}
+             :on-double-click #(js/alert (str "Double-Clicked on Container: " text))}
 
        [:> NodeResizer {:color "#000000" :isVisible isVisible}]
 
@@ -204,8 +204,9 @@
 
         (r/as-element
 
-          [:div {:style style :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)
-                 :on-click #(js/alert (str "Clicked on Node: " text))}
+          [:div#custom-node {:style style
+                             :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)
+                             :on-double-click #(js/alert (str "Double-Clicked on Node: " text))}
 
            [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
 
@@ -214,9 +215,9 @@
            [rc/v-box
             :gap "1px"
             :children [[label/label :style (merge {:textAlign :center} style)
-                        :value text :on-click #(js/alert (str "Clicked on title: " text))]
+                        :value text]
                        [label/label-sm :style (merge {:textAlign :center} style)
-                        :value @kind-of-element :on-click #(js/alert (str "Clicked on kind: " @kind-of-element))]]]
+                        :value @kind-of-element]]]
 
            (map #(make-handle "source" %) (:outputs handles))])))
 
