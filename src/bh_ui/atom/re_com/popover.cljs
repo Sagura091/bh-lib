@@ -37,8 +37,8 @@
 
   "A popover that is toggled by hovering over the component
 
-  data Map (required)
-   :component (required) Hiccup - the component that the popover is attached to
+   data Map (required)
+    :component (required) Hiccup - the component that the popover is attached to
 
   config - Map
     :title (optional) String - title of popover Ex: \"Title\"
