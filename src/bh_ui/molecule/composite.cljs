@@ -48,7 +48,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (def default-tool-types {:ui/component  {:label ":ui/component" :type :ui/component :color "green" :text-color :white :border-color "green"}
-                         :ui/container  {:label ":ui/container" :type :ui/component :color "transparent" :text-color :gray :border-color "gray"}
+                         :ui/container  {:label ":ui/container" :type :ui/container :color "transparent" :text-color :gray :border-color "gray"}
                          :source/remote {:label ":source/remote" :type :source/remote :color "orange" :text-color :black :border-color "orange"}
                          :source/local  {:label ":source/local" :type :source/local :color "blue" :text-color :white :border-color "blue"}
                          :source/fn     {:label ":source/fn" :type :source/fn :color "pink" :text-color :black :border-color "pink"}})
@@ -103,6 +103,10 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   (let [node-type (.getData (.-dataTransfer event) "editable-flow")]
     (swap! configuration update-in [:mol/components node-id]
       conj {:atm/role node-type :atm/kind node-type})))
+
+
+
+; TODO: how does the user set up the :mol/grid-layout?
 
 
 (defn- on-drop

@@ -112,3 +112,27 @@ can be used to together to build complex UIs"
            :tools true]]]
 
         '[]))))
+
+
+
+
+(def mol-def-2 {})
+
+
+(defn example-2 []
+  (let [container-id "dsl-example-2"
+        component-id (bh/utils-path->keyword container-id "molecule")]
+    (fn []
+      (acu/demo "DSL Example (Blank)"
+        "The example molecule is intended to show how all the various elements of the DSL
+can be used to together to build complex UIs"
+        [layout/frame
+         [:div.molecule-content
+          [bh/grid-container
+           :data (r/atom mol-def-2)
+           :component-id component-id
+           :resizable true
+           :tools true]]]
+
+        '[]))))
+

@@ -105,21 +105,23 @@
 
 
 (defn node-data
-  ; TODO: UPDATE for dropping nodes (SEE bh-ui.molecule.composite.util.ui/create-flow-node)
-
   [node-type node-id node-kind children position]
 
   (log/info "node-data" node-type node-id node-kind)
 
-  (let [handles (-> (string->keyword node-type)
-                  bh-ui.atom.component-registry/lookup-component
-                  :handles)]
+  (let [handles           (-> (string->keyword node-type)
+                            bh-ui.atom.component-registry/lookup-component
+                            :handles)
+        node-kind-prepped (condp = node-type
+                            :ui/component :stunt/text-block
+                            :ui/container :rc/box
+                            node-type)]
     {:id       node-id
      :type     (str node-type)
 
      :data     {:label    node-id
-                :kind     node-kind
-                :kind-js  (str node-kind)
+                :kind     node-kind-prepped
+                :kind-js  (str node-kind-prepped)
                 :inputs   (:inputs handles)
                 :outputs  (:outputs handles)
                 :children children}
@@ -134,20 +136,24 @@
         children        (get-in data ["data" "children"])
         parent          (get-in data "parentNode")
         kind-of-element (r/atom (get-in data ["data" "kind-js"]))
-        node-styling    (-> default-node-style
-                          (merge (:ui/container node-style))
-                          (merge {:border "1px dashed"})
-                          (merge (into {}
-                                   (map (fn [[k v]]
-                                          {(keyword k) v}) size))))
+        current-size    (r/atom {:x      0 :y 0
+                                 :width  (or (get size "width") "100%")
+                                 :height (or (get size "height") "100%")})
         text-style      (merge default-text-style (:ui/container node-style))
-        [isVisible set-visibility on-change-visibility] (useState false)]
+        [isVisible set-visibility on-change-visibility] (useState false)
+        resize-fn       #(do
+                           (reset! current-size
+                             (js->clj %2 :keywordize-keys true))
+                           (log/info "container-node (c)" %1 "//" %2
+                             "//" (js->clj %2 :keywordize-keys true)
+                             "//" @current-size))]
 
-    ;(log/info "container-node (b)"
-    ;data
-    ;"//" text
-    ;"//" children
-    ;"//" size
+    (log/info "container-node (b)"
+      ;data
+      "//" text
+      ;"//" children
+      "//" size
+      "//" @current-size)
     ;"//" (into {} (map (fn [[k v]] {(keyword k) v}) size))
     ;"//" node-type
     ;"//" node-styling
@@ -159,17 +165,20 @@
 
     (r/as-element
 
-      [:div {:on-mouse-enter #(set-visibility true)
-             :on-mouse-leave #(set-visibility false)
-             :on-double-click #(js/alert (str "Double-Clicked on Container: " text))}
+      [:<>
+       [:> NodeResizer {:color         "#000000" :isVisible isVisible
+                        :on-resize-end resize-fn :on-resize resize-fn}]
 
-       [:> NodeResizer {:color "#000000" :isVisible isVisible}]
-
-       [rc/v-box
-        :gap "1px"
-        :style node-styling
-        :children [[label/label :style text-style :value text]
-                   [label/label-sm :style text-style :value @kind-of-element]]]])))
+       [:div {:style           (-> default-node-style
+                                 (merge (:ui/container node-style))
+                                 (merge {:border "1px dashed"})
+                                 (merge @current-size))
+              :on-click        #(set-visibility (not isVisible))
+              :on-double-click #(js/alert (str "Double-Clicked on Container: " text))}
+        [rc/v-box
+         :gap "1px"
+         :children [[label/label :style text-style :value text]
+                    [label/label-sm :style text-style :value @kind-of-element]]]]])))
 
 
 (defn custom-node
@@ -178,7 +187,7 @@
   "
   [node-type two node & params]
 
-  ;(log/info "custom-node (a)" node-type "//" two "//" node "//" params)
+  (log/info "custom-node (a)" node-type "//" two "//" node "//" params)
 
   (if node
     (let [data            (js->clj node)
@@ -187,6 +196,7 @@
           kind-of-element (r/atom (get-in data ["data" "kind-js"]))
           style           (merge default-node-style (node-type node-style))
           handles         (look-up-ui-component @kind-of-element)
+          current-size    (atom {:x 0 :y 0 :width 0 :height 0})
           [isVisible set-visibility on-change-visibility] (useState false)]
 
       (reset! last-node data)
@@ -204,20 +214,20 @@
 
         (r/as-element
 
-          [:div#custom-node {:style style
-                             :on-mouse-enter #(set-visibility true) :on-mouse-leave #(set-visibility false)
-                             :on-double-click #(js/alert (str "Double-Clicked on Node: " text))}
-
-           [:> NodeResizer {:color "#000000" :isVisible isVisible :minWidth 100 :minHeight 30}]
+          [:<>
+           [:> NodeResizer {:color "#000000" :isVisible isVisible}]
 
            (map #(make-handle "target" %) (:inputs handles))
 
-           [rc/v-box
-            :gap "1px"
-            :children [[label/label :style (merge {:textAlign :center} style)
-                        :value text]
-                       [label/label-sm :style (merge {:textAlign :center} style)
-                        :value @kind-of-element]]]
+           [:div {:style           style
+                  :on-click        #(set-visibility (not isVisible))
+                  :on-double-click #(js/alert (str "Double-Clicked on Node: " text))}
+            [rc/v-box
+             :gap "1px"
+             :children [[label/label :style (merge {:textAlign :center} style)
+                         :value text]
+                        [label/label-sm :style (merge {:textAlign :center} style)
+                         :value @kind-of-element]]]]
 
            (map #(make-handle "source" %) (:outputs handles))])))
 
