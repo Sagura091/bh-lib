@@ -360,8 +360,8 @@
                  :disableSortBy false}]}
 
   \"group config data\"
-  {:table-type :expandable             ;specify table type, :standard or :expandable
-   :group-by   :time                   ;specify which column you want to group rows by
+  {:table-type :expandable              ;specify table type, :standard or :expandable
+   :group-by   :time                    ;specify which column you want to group rows by
    :columns    [{:colProp   :expandable ; column property for expandable column
                  :colHeader \"\"
                  :colId     :expander}
@@ -372,7 +372,7 @@
 
                 {:colHeader \"Include?\"
                  :colId     :include
-                 :render    :check-box-cell}
+                 :render    :check-box-cell}]
    style - Map (optional) Ex:
     {:width                  \"600px\"
      :height                 \"300px\"
@@ -396,12 +396,12 @@
                                  (configure-expandable-columns d data react-data cfg s)
                                  (configure-standard-columns d data react-data cfg)))]
 
-    ;(log/info "table-component" data "//" config "//" style)
+    (log/info "table-component" data "//" config "//" style)
 
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
-      ;(log/info "table-component (render)" data)
+      (log/info "table-component (render)" data)
       (let [react-data (r/atom (configure-data d cfg))]
         [:f> table
          column-config

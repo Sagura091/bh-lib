@@ -78,7 +78,9 @@
   "
   [subs opts]
   (let [[target & _] subs]
-    ;(log/info "resolve-subscription" subs "//" target)
+
+    (log/info "resolve-subscription" subs "//" target)
+
     (if (= target :bhui.subs/source)
       (re-frame/subscribe (reduce conj subs opts))
       (re-frame/subscribe (reduce conj [(path->keyword subs)] opts)))))
@@ -91,9 +93,9 @@
   i.e., it will set up the re-frame/subscription for you and return the Reaction (deref-able)"
 
   [value & opts]
-  ;(log/info "resolve-value" value "//" opts
-  ;  "// (path-kw)" (reduce conj [(path->keyword value)] opts)
-  ;  "// (path-sub)" (reduce conj [(path->keyword value)] opts))
+  (log/info "resolve-value" value "//" opts
+    "// (path-kw)" (reduce conj [(path->keyword value)] opts)
+    "// (path-sub)" (reduce conj [(path->keyword value)] opts))
 
   (let [ret (cond
               (keyword? value) (re-frame/subscribe (reduce conj [(path->keyword value)] opts))
@@ -104,7 +106,7 @@
               (instance? reagent.ratom.Reaction value) value
               (instance? Atom value) value
               :else (r/atom value))]
-    ;(log/info "resolve-value" value "//" opts "//" ret "//" (str @ret))
+    (log/info "resolve-value" value "//" opts "//" ret "//" (str @ret))
     ret))
 
 
