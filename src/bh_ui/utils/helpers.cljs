@@ -79,7 +79,7 @@
   [subs opts]
 
   (let [[target & _] subs]
-    (log/info "resolve-subscription" subs "//" opts "//" target)
+    (log/info "resolve-subscription" subs "//" opts "//" target "//" (type target))
     s
     (if (= target :bhui.subs/source)
       (do
