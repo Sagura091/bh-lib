@@ -79,9 +79,10 @@
   [subs opts]
 
   (let [[target & _] subs]
-    (log/info "resolve-subscription" subs "//" opts "//" target "//" (type target))
-    s
-    (if (= target :bhui.subs/source)
+    (log/info "resolve-subscription" subs "//" opts
+      "//" target "//" (type target) "//" (= target :bh-ui.subs/source))
+
+    (if (= target :bh-ui.subs/source)
       (do
         (log/info "resolve-subscription (remote)" (reduce conj subs opts))
         (re-frame/subscribe (reduce conj subs opts)))
