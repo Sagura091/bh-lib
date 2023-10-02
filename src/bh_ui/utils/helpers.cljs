@@ -79,15 +79,15 @@
   [subs opts]
 
   (let [[target & _] subs]
-    (log/info "resolve-subscription" subs "//" opts
-      "//" target "//" (type target) "//" (= target :bh-ui.subs/source))
+    ;(log/info "resolve-subscription" subs "//" opts
+    ;  "//" target "//" (type target) "//" (= target :bh-ui.subs/source))
 
     (if (= target :bh-ui.subs/source)
       (do
-        (log/info "resolve-subscription (remote)" (reduce conj subs opts))
+        ;(log/info "resolve-subscription (remote)" (reduce conj subs opts))
         (re-frame/subscribe (reduce conj subs opts)))
       (do
-        (log/info "resolve-subscription (local?)" (reduce conj [(path->keyword subs)] opts))
+        ;(log/info "resolve-subscription (local?)" (reduce conj [(path->keyword subs)] opts))
         (re-frame/subscribe (reduce conj [(path->keyword subs)] opts))))))
 
 
@@ -98,9 +98,9 @@
   i.e., it will set up the re-frame/subscription for you and return the Reaction (deref-able)"
 
   [value & opts]
-  (log/info "resolve-value" value "//" opts
-    "// (path-kw)" (reduce conj [(path->keyword value)] opts)
-    "// (path-sub)" (reduce conj [(path->keyword value)] opts))
+  ;(log/info "resolve-value" value "//" opts
+  ;  "// (path-kw)" (reduce conj [(path->keyword value)] opts)
+  ;  "// (path-sub)" (reduce conj [(path->keyword value)] opts))
 
   (let [ret (cond
               (keyword? value) (re-frame/subscribe (reduce conj [(path->keyword value)] opts))
@@ -111,7 +111,7 @@
               (instance? reagent.ratom.Reaction value) value
               (instance? Atom value) value
               :else (r/atom value))]
-    (log/info "resolve-value" value "//" opts "//" ret "//" (str @ret))
+    ;(log/info "resolve-value" value "//" opts "//" ret "//" (str @ret))
     ret))
 
 
