@@ -77,13 +77,17 @@
   LOCAL subscriptions are designed to reach into the Re-frame 'APP-DB' at a certain path
   "
   [subs opts]
+
   (let [[target & _] subs]
-
-    (log/info "resolve-subscription" subs "//" target)
-
+    (log/info "resolve-subscription" subs "//" opts "//" target)
+    s
     (if (= target :bhui.subs/source)
-      (re-frame/subscribe (reduce conj subs opts))
-      (re-frame/subscribe (reduce conj [(path->keyword subs)] opts)))))
+      (do
+        (log/info "resolve-subscription (remote)" (reduce conj subs opts))
+        (re-frame/subscribe (reduce conj subs opts)))
+      (do
+        (log/info "resolve-subscription (local?)" (reduce conj [(path->keyword subs)] opts))
+        (re-frame/subscribe (reduce conj [(path->keyword subs)] opts))))))
 
 
 (defn resolve-value
