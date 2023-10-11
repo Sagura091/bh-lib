@@ -3,6 +3,7 @@
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [demo.db :as db]
             [re-frame.core :as re-frame]
+            [demo.version :as version]
             [taoensso.timbre :as log]))
 
 
@@ -17,13 +18,15 @@
 (re-frame/reg-event-db
   ::get-version
   (fn-traced [db _]
-     (assoc db :version "unknown" :i18n ":en")
-   ))
+     (assoc db
+       :version (or version/version "unknown")
+       :i18n ":en")))
+
+
 (re-frame/reg-event-db
   :set-i18n
   (fn-traced [db [_ i18n]]
              (assoc-in db [:i18n] i18n)))
-
 
 
 (re-frame/reg-event-db

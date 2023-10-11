@@ -34,6 +34,14 @@
              {:extra-deps {io.github.noahtheduke/splint {:mvn/version "1.9.0"}}
               :main-opts  ["-m" "noahtheduke.splint"]}
 
+             ; clj -M:version
+             :version {:extra-deps {metav/metav {:git/url "https://github.com/jgrodziski/metav"
+                                                 :sha     "83dbd1fba42e868783a93c1e58b2a4d3c2a5055b"}}
+                       :main-opts  ["-m" "metav.spit"
+                                    "--output-dir" "./src/"
+                                    "--namespace" "demo.version"
+                                    "--formats" "cljs"]}
+
              ;; build an uberjar (application) with AOT compilation by default:
              :uberjar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.303"}}
                        :exec-fn      hf.depstar/uberjar
