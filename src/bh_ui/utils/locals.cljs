@@ -19,9 +19,9 @@
 
 (defn conj-in [d path value]
   (let [start (get-in d path)
-        c (if (vector? start)
-            (into [] (conj start value))
-            (conj start value))]
+        c     (if (vector? start)
+                (into [] (conj start value))
+                (conj start value))]
     (if (map? d)
       (assoc-in d path c)
       c)))
@@ -29,10 +29,10 @@
 
 (defn disj-in [d path value]
   (let [start (get-in d path)
-        c (cond
-            (set? start) (into #{} (disj start value))
-            (vector? start) (into [] (disj start value))
-            :else (disj start value))]
+        c     (cond
+                (set? start) (into #{} (disj start value))
+                (vector? start) (into [] (disj start value))
+                :else (disj start value))]
     (if (map? d)
       (assoc-in d path c)
       c)))
@@ -40,9 +40,9 @@
 
 (defn drop-last-in [d path value]
   (let [start (get-in d path)
-        c (if (vector? start)
-            (into [] (drop-last value start))
-            (drop-last value start))]
+        c     (if (vector? start)
+                (into [] (drop-last value start))
+                (drop-last value start))]
     (if (map? d)
       (assoc-in d path c)
       c)))
@@ -50,9 +50,9 @@
 
 (defn drop-in [d path value]
   (let [start (get-in d path)
-        c (if (vector? start)
-            (into [] (drop value start))
-            (drop value start))]
+        c     (if (vector? start)
+                (into [] (drop value start))
+                (drop value start))]
     (if (map? d)
       (assoc-in d path c)
       c)))
@@ -62,7 +62,9 @@
   ;(log/info "set-val" d "//" path "//" value)
 
   (if (map? d)
-    (assoc-in d path value)
+    (if (empty? path)
+      value
+      (assoc-in d path value))
     value))
 
 
@@ -482,8 +484,8 @@ will set the data value to:
 
         (reset! last-params params)
 
-        (let [base-path     (apply conj [:containers (h/path->keyword container-id)]
-                              (map h/path->keyword value-path))]
+        (let [base-path (apply conj [:containers (h/path->keyword container-id)]
+                          (map h/path->keyword value-path))]
 
           ; NOTE: this "default" processing could be overridden (using an optional keyword)
           ; to perform more custom functions (like incremental updates to a collection)
@@ -501,8 +503,8 @@ will set the data value to:
 
           (h/source-local-> db base-path (next params)))))))
 
-          ; TODO: can we make this more flexible that always doing "assoc-in"?
-          ;(assoc-in db complete-path new-val))))))
+; TODO: can we make this more flexible that always doing "assoc-in"?
+;(assoc-in db complete-path new-val))))))
 
 
 ; work out how to pass a number of assoc, assoc-in, etc. as params to a :source/local
