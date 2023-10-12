@@ -9,6 +9,7 @@
             [demo.catalog.atom.example.experimental.internationalization :as inter]
             [re-frame.core :as re-frame]
             [demo.catalog.atom.example.experimental.full-calender :as calender]
+            [demo.catalog.atom.example.experimental.popover :as popover]
             [demo.subs :as sub]))
 
 
@@ -29,6 +30,7 @@
    ;[react-table/example-table]
    [inter/internationalization (re-frame/subscribe[::sub/i18n])]
    [calender/example]
+   [popover/example]
    ])
 
    ;[ui-element/selectable-table]])
