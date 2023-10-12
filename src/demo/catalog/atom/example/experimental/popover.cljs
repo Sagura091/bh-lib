@@ -6,7 +6,7 @@
 
 (defn example []
   (acu/demo
-    "Full Calender"
+    "Popover messages"
    [:div
     [popover/popover-wrapper
      :data {:component [:button "Press me"]}
