@@ -53,6 +53,7 @@
             [bh-ui.atom.experimental.ui-element :as experimental-ui-element]
             [bh-ui.atom.experimental.react-table :as react-table]
             [bh-ui.atom.experimental.tab-set :as tabset]
+            [bh-ui.atom.experimental.popover :as popover]
 
             [bh-ui.atom.fast-chart.canvas-js-chart :as fast-chart]
 
@@ -78,7 +79,6 @@
             [bh-ui.atom.re-com.table :as table]
             [bh-ui.atom.re-com.tabs :as tabs]
             [bh-ui.atom.re-com.v-scroller :as v-scroll]
-            [bh-ui.atom.re-com.popover :as popover]
 
             [bh-ui.atom.resium.globe :as res-globe]
             [bh-ui.atom.resium.shape :as res-shape]
@@ -399,8 +399,7 @@
 (def recom-v-bar-tabs                       tabs/v-bar-tabs)
 (def recom-v-pill-tabs                      tabs/v-pill-tabs)
 (def recom-v-scroll                         v-scroll/v-scroller)
-(def clickable-popover                      popover/clickable-popover)
-(def hover-popover                          popover/hover-popover)
+(def popover-wrapper                        popover/popover-wrapper)
 
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 
