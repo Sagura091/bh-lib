@@ -20,30 +20,32 @@
            {:color "white !important"})
 
 (defn popover-wrapper
-
   "Creates a popover attached to the passed in component.
 
- Parameters:
- - & {:keys [data config]}: A map of configuration options.
-   - :data (required): A map containing the component to be wrapped in the popover.
-   - :config (optional): A map of additional configuration options, including:
-     - :position (optional): The placement of the popover relative to the anchor element.
-                           (default: 'top')
-     - :clickable (optional): A boolean indicating whether the popover is clickable to open/close.
-                            If true, it opens on click; if false, it opens on hover.
-     - :theme (optional): The theme of the popover, which may affect its appearance. Possible values are 'light',
-     'light-border', 'material', 'translucent', or 'dark'.
+  Parameters:
+  - & {:keys [data config]}: A map of configuration options.
+    - :data (required): A map containing the component to be wrapped in the popover.
+    - :config (optional): A map of additional configuration options, including:
+      - :position (optional): The placement of the popover relative to the anchor element.
+                            (default: 'top')
+      - :clickable (optional): A boolean indicating whether the popover is clickable to open/close.
+                             If true, it opens on click; if false, it opens on hover.
+      - :theme (optional): The theme of the popover, which may affect its appearance. Possible values are 'light',
+       'light-border', 'material', 'translucent', or 'dark'.
+      - :popover-title (optional): The title of the popover.
+      - :popover-body-text (optional): The body text content of the popover.
 
  Returns:
  - The original hiccup-style component with a popover attached to it.
 
- Example Usage:
- (popover-wrapper
-   {:component [:div \"Hover or Click Me\"]}
+  Example Usage:
+  (popover-wrapper
+    {:component [:div \"Hover or Click Me\"]}
     {:clickable true
+     :theme \"dark\"
+     :position \":bottom\"
      :popover-title \"Popover Title\"
-     :popover-body-text \"This is the popover content.\"
-     :theme \"dark\"})
+     :popover-body-text \"This is the popover content.\"})
 
   Notes:
   - The `data` parameter is required and should be a map containing the component to be wrapped in the popover.

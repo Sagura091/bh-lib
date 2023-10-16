@@ -11,15 +11,11 @@
     [popover/popover-wrapper
      :data {:component [:button "Press me"]}
      :config {:clickable true
-              :popover-title "Flippable Card"
-              :popover-body-text  "A simple 'flippable' Card, using [react-ui-cards](). This card has
-                            `.flip-card-front` and `.flip-card-back` using CSS, and flips between them when the user moves the mouse
-                            over the card."}]
+              :popover-title "Light-theme Clickable Popover"
+              :popover-body-text  "A simple 'popover' message, using [Tippy.js](). In the body of the popover, you can embed Markdown such as `this`"}]
     [popover/popover-wrapper
      :data  {:component [:button "Hover over me"]}
      :config {:clickable false
-              :popover-title "Flippable Card"
-              :popover-body-text  "A simple 'flippable' Card, using [react-ui-cards](). This card has
-                           `.flip-card-front` and `.flip-card-back` using CSS, and flips between them when the user moves the mouse
-                           over the card."
+              :popover-title "Translucent-theme Clickable Popover"
+              :popover-body-text   "A simple 'popover' message, using [Tippy.js](). In the body of the popover, you can embed Markdown such as `this`"
               :theme "translucent"}]]))
