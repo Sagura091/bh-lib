@@ -21,6 +21,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
             [bh-ui.molecule.composite.util.digraph :as dig]
             [bh-ui.molecule.composite.util.signals :as sig]
             [bh-ui.molecule.composite.util.ui :as ui]
+            [bh-ui.utils.locals :as locals]
+            [bh-ui.utils.helpers :as h]
             [bh-ui.utils :as ui-utils]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [loom.graph :as lg]
@@ -83,6 +85,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
       (let [position ((.-project @flowInstance) (clj->js {:x (- x (.-left reactFlowBounds))
                                                           :y (- y (.-top reactFlowBounds))}))
 
+            ; this uses a multimethod defined in bh-ui.molecule.composite.dsl-support.dsl-nodes
             new-node ((get node-data node-type)
                       node-id
                       node-type
@@ -97,16 +100,42 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         (swap! full-configuration update :mol/flow-nodes conj new-node)))))
 
 
-(defn- add-dsl-node [configuration node-id event]
-  (log/info "add-dsl-node" (type configuration))
+(defn- add-dsl-node [configuration component-id container-id
+                     node-id event]
+  ;(log/info "add-dsl-node" (type configuration))
 
-  (let [node-type (.getData (.-dataTransfer event) "editable-flow")]
-    (swap! configuration update-in [:mol/components node-id]
-      conj {:atm/role node-type :atm/kind node-type})))
+  (let [node-type (.getData (.-dataTransfer event) "editable-flow")
+        layout {:i node-id :x 0 :y 0 :w 10 :h 5}]
+
+    ; 1) add ui component to the :containers/container/component/blackboard/layout
+
+    (locals/apply-local
+      [container-id component-id]
+      [:layout]
+      #(conj (or % []) layout))
+
+    ; 2) add to the DSL
+    (swap! configuration
+      #(-> %
+         (assoc-in [:mol/components node-id]
+           {:atm/role (h/string->keyword node-type)
+            :atm/kind :stunt/text-block
+            :atm/label node-id})
+         (update-in [:mol/grid-layout]
+           conj layout)))))
 
 
 
 ; TODO: how does the user set up the :mol/grid-layout?
+
+
+(defn- on-resize [node resize-event resize-params])
+  ;#(do
+  ;   (reset! current-size
+  ;     (js->clj %2 :keywordize-keys true))
+  ;   (log/info "container-node (c)" %1 "//" %2
+  ;     "//" (js->clj %2 :keywordize-keys true)
+  ;     "//" @current-size)))
 
 
 (defn- on-drop
@@ -118,8 +147,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   will come in as the first param. the flow-diagram component itself will partial
   in the hash-map of additional information, and the JS callback will pop on the drop EVENT."
 
-  [full-configuration {:keys [component-id node-data node-kind-fn orig-data
-                              flowInstance set-nodes-fn wrapper] :as inputs} event]
+  [full-configuration component-id container-id
+   {:keys [component-id node-data node-kind-fn orig-data
+           flowInstance set-nodes-fn wrapper] :as inputs} event]
 
   (.preventDefault event)
 
@@ -133,7 +163,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     (add-flow-node full-configuration inputs node-id event)
 
     ; now, add a new dsl-node to the full-configuration (that was passed in form the outside world)
-    (add-dsl-node full-configuration node-id event)))
+    (add-dsl-node full-configuration component-id container-id
+      node-id event)))
 
 
 (defn- add-flow-edge [full-configuration
@@ -267,8 +298,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                         :node-data      dsl/bootstrap-node-data
                         :node-kind-fn   dsl/default-node-kind
                         :minimap-styles dsl/minimap-styles
-                        :on-drop        (partial on-drop configuration)
-                        :on-connect     (partial on-connect configuration)
+                        :on-drop        (partial on-drop configuration component-id container-id)
+                        :on-connect     (partial on-connect configuration component-id container-id)
                         :style          {:width "1200px" :height "700px"}}
                :tool-types dag-support/default-tool-types
                :minimap-styles minimap-styles]]])

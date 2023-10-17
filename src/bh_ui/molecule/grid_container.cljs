@@ -26,6 +26,9 @@
 (defonce last-component-lookup (atom nil))
 
 
+(defonce leaving-the-dag (atom nil))
+
+
 (defn- config
   "set up the local config keys, specifically we want the :mol/layout key, so we can
   track updates to the layout should the user drag/resize any of the internal
@@ -236,47 +239,50 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout           (locals/subscribe-local component-id [:layout])
-        component-lookup (into {}
-                           (sig/process-components-stateful
-                             @configuration #{:ui/component :ui/container}
-                             @(re-frame/subscribe [:meta-data-registry]) component-id))
+  (let [layout           (locals/subscribe-local component-id [:layout])]
 
-        ; build UI components (with subscription/event signals against the blackboard or remotes)
-        visual-layout    (->> @configuration
-                           :mol/grid-layout
-                           (map (fn [{:keys [i]}] i)))
-        composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
-        open?            (r/atom false)]
 
-    (reset! last-component-lookup {:component-id component-id
-                                   :config       @configuration
-                                   :lookup       component-lookup
-                                   :viz          visual-layout
-                                   :keys         (select-keys component-lookup visual-layout)
-                                   :wrappers     composed-ui})
 
     (fn []
-      ;(log/info "component-panel INNER" component-id
-      ;  "//" @layout)
-      ;  "//" composed-ui)
+      (let [component-lookup (into {}
+                               (sig/process-components-stateful
+                                 @configuration #{:ui/component :ui/container}
+                                 @(re-frame/subscribe [:meta-data-registry]) component-id))
 
-      ; 5. return the composed component layout!
-      [rc/v-box :src (rc/at)
-       :gap "2px"
-       :children [(when resizable [ct/configure-toggle open? #(locals/apply-local component-id
-                                                                [:layout] toggle-editable)])
-                  [:div.grid-container.h-w-100pc
-                   [grid/grid
-                    :id component-id
-                    :class "layout"
-                    :children composed-ui
-                    :layout @layout
-                    :cols 20
-                    :width 1200
-                    :rowHeight 25
-                    :layoutFn #(on-layout-change component-id %1 %2)
-                    :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
+            ; build UI components (with subscription/event signals against the blackboard or remotes)
+            visual-layout    (->> @configuration
+                               :mol/grid-layout
+                               (map (fn [{:keys [i]}] i)))
+            composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
+            open?            (r/atom false)]
+
+        (reset! last-component-lookup {:component-id component-id
+                                       :config       configuration
+                                       :lookup       component-lookup
+                                       :viz          visual-layout
+                                       :keys         (select-keys component-lookup visual-layout)
+                                       :wrappers     composed-ui})
+
+        (log/info "component-panel INNER" component-id
+          "//" @layout
+          "//" composed-ui)
+
+        ; return the composed component layout!
+        [rc/v-box :src (rc/at)
+         :gap "2px"
+         :children [(when resizable [ct/configure-toggle open? #(locals/apply-local component-id
+                                                                  [:layout] toggle-editable)])
+                    [:div.grid-container.h-w-100pc
+                     [grid/grid
+                      :id component-id
+                      :class "layout"
+                      :children composed-ui
+                      :layout @layout
+                      :cols 20
+                      :width 1200
+                      :rowHeight 25
+                      :layoutFn #(on-layout-change component-id %1 %2)
+                      :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
 
 
 (defn component
@@ -355,7 +361,14 @@
                                   :children [[rc/horizontal-bar-tabs
                                               :model comp-or-dag?
                                               :tabs buttons
-                                              :on-change #(reset! comp-or-dag? %)]]])
+                                              :on-change #(do
+                                                            (condp = @comp-or-dag?
+                                                              :dag (do
+                                                                     (reset! leaving-the-dag data)
+                                                                     (log/info "Save the DAG!!!!"))
+                                                              :definition (log/info "Save the DSL TEXT!!!!")
+                                                              (log/info "switching away from widget UI"))
+                                                            (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
                              :configuration data
@@ -1426,3 +1439,35 @@
   ())
 
 ; endregion
+
+
+
+(comment
+  (-> @re-frame.db/app-db
+    :containers
+    :dsl-example-2.molecule)
+
+  (re-frame/subscribe [:dsl-example-2.molecule])
+
+
+  (bh-ui.utils.locals/apply-local
+    [:dsl-example-2.molecule]
+    [:layout]
+    #(conj (or % []) {:i "dummy" :x 0 :y 0 :w 10 :h 5}))
+
+  @last-full-config
+
+
+  (do
+    (def configuration (:config @last-component-lookup))
+    (def component-id (:component-id @last-component-lookup))
+    (def      composed-ui (:wrappers @last-component-lookup)))
+
+
+  (into {}
+    (sig/process-components-stateful
+      @configuration #{:ui/component :ui/container}
+      @(re-frame/subscribe [:meta-data-registry]) component-id))
+
+
+  ())

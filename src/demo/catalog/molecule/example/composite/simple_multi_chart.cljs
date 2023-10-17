@@ -11,6 +11,9 @@
 (log/info "demo.catalog.molecule.example.composite.simple-multi-chart")
 
 
+(def atom-wrapped-dsl (r/atom bh/simple-multi-chart1-ui-def))
+
+
 (defn- data-tools [data]
   (let [old-data (bh/utils-subscribe-local data [])]
 
@@ -43,7 +46,6 @@
                                                                                           (assoc x :new-item (rand-int 7000)))
                                                                                      (:data @old-data)))])
                    :label "Add :new-item"]]])))
-
 
 
 (defn- data-config-update-example [& {:keys [widget component-id] :as params}]
@@ -83,7 +85,7 @@
          [:div.molecule-content
           [data-config-update-example
            :widget [bh/grid-container
-                    :data (r/atom bh/simple-multi-chart1-ui-def)
+                    :data atom-wrapped-dsl
                     :component-id component-id
                     :resizable true
                     :tools true]
@@ -127,7 +129,7 @@
     (assoc-in @old-data [0 :uv] 10000))
 
 
-  :simple-multi-chart.widget.blackboard.topic.data.data
+  ;:simple-multi-chart.widget.blackboard.topic.data.data
 
   (:event @re-frame.registrar/kind->id->handler)
 
@@ -137,3 +139,10 @@
 
   ())
 
+
+
+(comment
+  @atom-wrapped-dsl
+
+
+  ())
