@@ -121,6 +121,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (defmethod create-dsl-node :default [node-id node-type]
   {:atm/role node-type :atm/kind node-type})
 
+
 (defn- add-dsl-node [configuration component-id container-id
                      node-id event]
   ;(log/info "add-dsl-node" (type configuration))

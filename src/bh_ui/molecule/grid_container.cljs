@@ -25,6 +25,11 @@
 (defonce last-full-config (atom nil))
 (defonce last-component-lookup (atom nil))
 
+; some atoms to assist in debugging at the repl...
+;(def last-params (atom nil))
+;(def last-component-lookup (atom nil))
+;(def last-data (atom nil))
+
 
 (defonce leaving-the-dag (atom nil))
 
@@ -111,6 +116,9 @@
       (let [cooked (map #(zipmap '(:i :x :y :w :h :static) %)
                      (map (juxt :i :x :y :w :h :static) new-layout*))]
         ;(log/info "on-layout-change (cooked)" cooked)
+
+        ; TODO: we also need to update :mol/grid-layout in the DSL
+
         (locals/dispatch-local component-id [:layout] cooked)))))
 
 
@@ -122,12 +130,6 @@
   [layout]
 
   (map #(assoc % :static (-> % :static not)) layout))
-
-
-; some atoms to assist in debugging at the repl...
-;(def last-params (atom nil))
-;(def last-component-lookup (atom nil))
-;(def last-data (atom nil))
 
 
 (defn- compute-containership [configuration]
@@ -151,17 +153,6 @@
     (into {})))
 
 
-;(defn- compute-flow-nodes [parent-graph nodes]
-;  (reduce (fn [layout node]
-;            (let [parent (get parent-graph node)]
-;              (ui/set-position layout (or parent :diagram) node)))
-;    {:diagram {:children {}
-;               :parent   nil
-;               :size     {:width 0 :height 0}
-;               :next     {:x ui/x-offset :y ui/y-offset}}}
-;    nodes))
-;
-;
 (defn- compute-flow-layout [parent-graph nodes]
   (reduce (fn [layout node]
             (let [parent (get parent-graph node)]
@@ -221,8 +212,8 @@
     :graph :container))
 
 
-(defn- default-save-fn [data]
-  (log/info "SAVING +++++++++" data))
+(defn- default-save-fn [component-id data]
+  (log/info "SAVING +++++++++" component-id "//" data))
 
 
 (defn- component-panel
@@ -308,6 +299,9 @@
                       to isolate this component's data from all others
   - resizable : (boolean) can the user resize or rearrange the elements of this component
   - tools : (boolean) should the overall widget provide editing tools for the Mol-DSL itself.
+  - save-fn : (function) [optional] function that takes an identifier, typically the component-id, and the DSL data to save 'somewhere'
+                 this function is responsible for 'doing the right thing'. If not function is provided (i.e., nil)
+                 the (default-save-fn) defined above will be used.
 
   "
 
@@ -377,7 +371,7 @@
                                               :tabs buttons
                                               :on-change #(do
                                                             ((or save-fn default-save-fn)
-                                                             (prep-dsl @data))
+                                                             component-id (prep-dsl @data))
                                                             (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
@@ -1451,7 +1445,6 @@
 ; endregion
 
 
-
 (comment
   (-> @re-frame.db/app-db
     :containers
@@ -1489,3 +1482,21 @@
    (prep-dsl data))
 
   ())
+
+
+;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
+; TODAY:
+;
+; 2. update the DSL in on-layout-change
+;
+; 3. init-container-locals when the dsl changes
+;
+; 4. modal to change node's label & kind on double-click
+;        NOTE: consider making the :id/:i "permanent" (makes the following steps unnecessary)
+;     a. update :mol/flow-nodes and :mol/flow-edges
+;     b. update :mol/components, :mol/links, and :mol/grid-layout
+;
+;
+
+
