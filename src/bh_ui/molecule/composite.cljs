@@ -204,7 +204,13 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         target-id     (:target event-map)
         target-handle (:targetHandle event-map)]
 
-    (log/info "add-dsl-edge" (-> configuration :mol/links keys))
+    (log/info "add-dsl-edge"
+      ;configuration
+      "//" event
+      "//" event-map
+      "//" (-> configuration :mol/links keys)
+      "//" source-handle
+      "//" target-handle)
 
     (swap! configuration update-in [:mol/links source-id]
       #(merge-with merge %
@@ -218,9 +224,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   also, having access to the 'full-configuration' will allow us to look up the :kind (or :kind-js)
   of the source node which we can use to determine the color of the connection line."
 
-  [full-configuration inputs event]
+  [full-configuration component-id container-id inputs event]
 
-  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
+  (log/info "on-connect" (js->clj event :keywordize-keys true))
 
   ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
   (add-dsl-edge full-configuration event)

@@ -214,6 +214,17 @@
     nodes))
 
 
+(defn- prep-dsl [data]
+  (dissoc data
+    :flow-nodes :parent-graph :containership-graph
+    :denorm :nodes :edges
+    :graph :container))
+
+
+(defn- default-save-fn [data]
+  (log/info "SAVING +++++++++" data))
+
+
 (defn- component-panel
   "Takes a 'configuration' in Mol-DSL and compiles it into a visual representation encoded in
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
@@ -239,7 +250,7 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout           (locals/subscribe-local component-id [:layout])]
+  (let [layout (locals/subscribe-local component-id [:layout])]
 
 
 
@@ -300,7 +311,7 @@
 
   "
 
-  [& {:keys [data component-id container-id resizable tools] :as params}]
+  [& {:keys [data component-id container-id resizable tools save-fn] :as params}]
 
   (reset! last-config data)
 
@@ -362,12 +373,8 @@
                                               :model comp-or-dag?
                                               :tabs buttons
                                               :on-change #(do
-                                                            (condp = @comp-or-dag?
-                                                              :dag (do
-                                                                     (reset! leaving-the-dag data)
-                                                                     (log/info "Save the DAG!!!!"))
-                                                              :definition (log/info "Save the DSL TEXT!!!!")
-                                                              (log/info "switching away from widget UI"))
+                                                            ((or save-fn default-save-fn)
+                                                             (prep-dsl @data))
                                                             (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
@@ -1461,7 +1468,7 @@
   (do
     (def configuration (:config @last-component-lookup))
     (def component-id (:component-id @last-component-lookup))
-    (def      composed-ui (:wrappers @last-component-lookup)))
+    (def composed-ui (:wrappers @last-component-lookup)))
 
 
   (into {}
@@ -1469,5 +1476,13 @@
       @configuration #{:ui/component :ui/container}
       @(re-frame/subscribe [:meta-data-registry]) component-id))
 
+
+
+  (do
+    (def save-fn nil)
+    (def data (:config @last-full-config)))
+
+  ((or save-fn #(log/info "TESTING Save" %))
+   (prep-dsl data))
 
   ())
