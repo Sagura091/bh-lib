@@ -352,7 +352,10 @@
     (fn []
       (when (nil? @id)
         (reset! id component-id)
+
+        ; TODO: how do we run this again if the user has made changes to the DSL?
         (ui-utils/init-container-locals @id (config @data))
+
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
         (ui/prep-environment @data @id @(re-frame/subscribe [:meta-data-registry])))

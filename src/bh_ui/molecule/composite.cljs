@@ -100,12 +100,38 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         (swap! full-configuration update :mol/flow-nodes conj new-node)))))
 
 
+
+(defmulti create-dsl-node (fn [node-id node-type] node-type))
+
+
+(defmethod create-dsl-node :ui/component [node-id node-type]
+  {:atm/role node-type
+   :atm/kind :stunt/text-block
+   :atm/label node-id})
+
+
+(defmethod create-dsl-node :source/local [node-id node-type]
+  {:atm/role node-type
+   :atm/kind :source/local
+   :atm/default-data [{:id 0 :x 0 :y 0}
+                      {:id 1 :x 10 :y 10}
+                      {:id 2 :x 20 :y 20}]})
+
+
+(defmethod create-dsl-node :default [node-id node-type]
+  {:atm/role node-type :atm/kind node-type})
+
 (defn- add-dsl-node [configuration component-id container-id
                      node-id event]
   ;(log/info "add-dsl-node" (type configuration))
 
-  (let [node-type (.getData (.-dataTransfer event) "editable-flow")
-        layout {:i node-id :x 0 :y 0 :w 10 :h 5}]
+  (let [node-type (h/string->keyword (.getData (.-dataTransfer event) "editable-flow"))
+        layout {:i node-id :x 0 :y 0 :w 10 :h 5}
+        ; we should only add :ui/components to :mol/grid-layout
+        add-ui-component (fn [m node-type]
+                           (if (= :ui/component node-type)
+                             (update-in m [:mol/grid-layout] conj layout)
+                             m))]
 
     ; 1) add ui component to the :containers/container/component/blackboard/layout
 
@@ -116,17 +142,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
     ; 2) add to the DSL
     (swap! configuration
-      #(-> %
-         (assoc-in [:mol/components node-id]
-           {:atm/role (h/string->keyword node-type)
-            :atm/kind :stunt/text-block
-            :atm/label node-id})
-         (update-in [:mol/grid-layout]
-           conj layout)))))
-
-
-
-; TODO: how does the user set up the :mol/grid-layout?
+      #(some-> %
+         (assoc-in [:mol/components node-id] (create-dsl-node node-id node-type))
+         (add-ui-component node-type)))))
 
 
 (defn- on-resize [node resize-event resize-params])
