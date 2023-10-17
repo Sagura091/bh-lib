@@ -96,11 +96,12 @@
   can rearrange the elements of the content?)
 
   - component-id : the components 'name' within the system, so we can update the re-frame/app-db
+  - dsl-atom : atom wrapped around the DSL, used to update teh DSL when the layout changes
   - new-layout : the new arrangement of elements (a vector of hash-maps, one for each visible element)
   - all-layouts : (I think this is now OBE in the JS library... we don't use it anyway)
   "
 
-  [component-id new-layout all-layouts]
+  [component-id dsl-atom new-layout all-layouts]
   (let [new-layout*  (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
@@ -118,6 +119,7 @@
         ;(log/info "on-layout-change (cooked)" cooked)
 
         ; TODO: we also need to update :mol/grid-layout in the DSL
+        (swap! dsl-atom assoc :mol/grid-layout cooked)
 
         (locals/dispatch-local component-id [:layout] cooked)))))
 
@@ -227,7 +229,7 @@
   - resizable : (boolean) is this widget resizable (the user can change its size, or not?
   "
 
-  [& {:keys [configuration component-id resizable] :as params}]
+  [& {:keys [configuration save-fn component-id resizable] :as params}]
 
   ;(reset! last-params params)
   ;(log/info "component-panel (params)" params)
@@ -272,8 +274,11 @@
         ; return the composed component layout!
         [rc/v-box :src (rc/at)
          :gap "2px"
-         :children [(when resizable [ct/configure-toggle open? #(locals/apply-local component-id
-                                                                  [:layout] toggle-editable)])
+         :children [(when resizable [ct/configure-toggle open? #(do
+                                                                  (locals/apply-local component-id
+                                                                    [:layout] toggle-editable)
+                                                                  ((or save-fn default-save-fn)
+                                                                   component-id (prep-dsl @configuration)))])
                     [:div.grid-container.h-w-100pc
                      [grid/grid
                       :id component-id
@@ -283,7 +288,7 @@
                       :cols 20
                       :width 1200
                       :rowHeight 25
-                      :layoutFn #(on-layout-change component-id %1 %2)
+                      :layoutFn #(on-layout-change component-id configuration %1 %2)
                       :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
 
 
@@ -382,6 +387,7 @@
                                    :configuration data
                                    :component-id @id
                                    :container-id container-id
+                                   :save-fn save-fn
                                    :resizable resizable]
                        :definition [composite/definition-panel
                                     :configuration data]
@@ -1487,8 +1493,6 @@
 ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;
 ; TODAY:
-;
-; 2. update the DSL in on-layout-change
 ;
 ; 3. init-container-locals when the dsl changes
 ;

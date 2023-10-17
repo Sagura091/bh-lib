@@ -127,7 +127,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   ;(log/info "add-dsl-node" (type configuration))
 
   (let [node-type (h/string->keyword (.getData (.-dataTransfer event) "editable-flow"))
-        layout {:i node-id :x 0 :y 0 :w 10 :h 5}
+        layout {:i node-id :x 0 :y 0 :w 10 :h 5 :static true}
         ; we should only add :ui/components to :mol/grid-layout
         add-ui-component (fn [m node-type]
                            (if (= :ui/component node-type)
