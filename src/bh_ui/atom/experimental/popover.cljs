@@ -21,7 +21,7 @@
 
 (defn popover-wrapper
   "Creates a popover attached to the passed in component that supports the use of Markdown
-  See: https://www.markdownguide.org/cheat-sheet/.
+  See: https://commonmark.org/help/
 
   Parameters:
   - & {:keys [data config]}: A map of configuration options.
@@ -66,7 +66,7 @@
                :trigger (if (:clickable @cfg) "click" "mouseenter")
                :interactive true
                :theme (or (:theme @cfg) "light")}
-     [:div
+     [:div {:style {:display "inline-block"}}
       (:component @d)]]))
 
 (def element-def {:rc/popover-wrapper {:component popover-wrapper :child :keyword}})
