@@ -40,7 +40,7 @@
                                                  :sha     "83dbd1fba42e868783a93c1e58b2a4d3c2a5055b"}}
                        :main-opts  ["-m" "metav.spit"
                                     "--output-dir" "./src/"
-                                    "--namespace" "demo.version"
+                                    "--namespace" "bh-ui.version"
                                     "--formats" "cljs"]}
 
              ;; build an uberjar (application) with AOT compilation by default:

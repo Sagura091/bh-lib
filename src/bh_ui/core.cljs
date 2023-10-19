@@ -123,7 +123,12 @@
             [bh-ui.utils.container :as container]
             [bh-ui.utils.example-data :as example-data]
             [bh-ui.utils.helpers :as helpers]
-            [bh-ui.utils.locals :as locals]))
+            [bh-ui.utils.locals :as locals]
+
+            [taoensso.timbre :as log]
+            [bh-ui.version :as version]))
+
+(log/info "BH-Lib - UI CORE: " version/version)
 
 ;;;;;;;;;;;;;;;;;;;
 ;;
@@ -132,6 +137,7 @@
 ;;;;;;;;;;;;;;;;;;;
 ;; region
 
+(def version                                version/version)
 (def csrf                                   csrf/?csrf-token)
 (def data-source-msg-handler                source-handler/data-source-msg-handler)
 (def default-event-header                   events/default-header)
