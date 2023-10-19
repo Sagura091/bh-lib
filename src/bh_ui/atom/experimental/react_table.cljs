@@ -134,26 +134,30 @@
       [:thead {:style {:backgroundColor (or (:header-bg-color @config) "lightgray")
                        :position        "sticky" :top 0}}
        (let [hgs (.-headerGroups table)]
+         (log/info ":table (b) " hgs)
          (doall
            (for [hg hgs]
              [:r> "tr" (.getHeaderGroupProps hg)
               (doall
+                (log/info ":table (c) " hg)
                 (for [col (.-headers hg)]
 
-                  [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
+                  (doall
+                    (log/info ":table (d) " col)
+                    [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
 
-                   (.render col "Header")
+                     (.render col "Header")
 
-                   (if (.-canSort col)
-                     [:span
-                      (let [up-arrow      (:sort-up-arrow-icon @config)
-                            down-arrow    (:sort-down-arrow-icon @config)
-                            neutral-arrow (:sort-not-selected-icon @config)]
-                        (if (.-isSorted col)
-                          (if (.-isSortedDesc col)
-                            (str " " down-arrow)
-                            (str " " up-arrow))
-                          (str " " neutral-arrow)))])]))])))]
+                     (if (.-canSort col)
+                       [:span
+                        (let [up-arrow      (:sort-up-arrow-icon @config)
+                              down-arrow    (:sort-down-arrow-icon @config)
+                              neutral-arrow (:sort-not-selected-icon @config)]
+                          (if (.-isSorted col)
+                            (if (.-isSortedDesc col)
+                              (str " " down-arrow)
+                              (str " " up-arrow))
+                            (str " " neutral-arrow)))])])))])))]
 
       [:r> "tbody" (.getTableBodyProps table (clj->js {:style {:backgroundColor (or (:body-bg-color @config) "white")}}))
        (doall
