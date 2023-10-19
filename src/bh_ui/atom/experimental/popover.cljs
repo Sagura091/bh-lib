@@ -20,7 +20,8 @@
            {:color "white !important"})
 
 (defn popover-wrapper
-  "Creates a popover attached to the passed in component.
+  "Creates a popover attached to the passed in component that supports the use of Markdown
+  See: https://commonmark.org/help/
 
   Parameters:
   - & {:keys [data config]}: A map of configuration options.
@@ -54,7 +55,7 @@
   [& {:keys [data config]}]
   (let [cfg           (h/resolve-value config)
         d             (h/resolve-value data)
-        properties (if (and (not (= nil (:theme @cfg))) (not (= "light" (:theme @cfg)))) #js{:class (white-text)} #js{})]
+        properties (if (and (not (= nil (:theme @cfg))) (and (not (= "light" (:theme @cfg))) (not (= "light-border" (:theme @cfg)))) ) #js{:class (white-text)} #js{})]
 
     [:> Tippy {:content (r/create-element "div" #js{} ""
                                           (r/create-element "h3" properties (:popover-title @cfg))
@@ -65,7 +66,7 @@
                :trigger (if (:clickable @cfg) "click" "mouseenter")
                :interactive true
                :theme (or (:theme @cfg) "light")}
-     [:div
+     [:div {:style {:display "inline-block"}}
       (:component @d)]]))
 
 (def element-def {:rc/popover-wrapper {:component popover-wrapper :child :keyword}})
