@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.dsl-example
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -85,15 +86,12 @@
                                                :atm/default-config {:showIndicators true :showThumbs true}}}
 
 
-              :mol/links       {"data/one" {:data {"table-one" :data
+              :mol/links       {"data/one" {:data {"table-one"  :data
                                                    "table-four" :data}}
                                 "data/two" {:data {"table-three" :data
-                                                   "table-two"  :data}}}
+                                                   "table-two"   :data}}}
 
               :mol/grid-layout [{:i "carousel" :x 0 :y 0 :w 10 :h 10}]})
-
-              ;:mol/flow-nodes  (:nodes demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)
-              ;:mol/flow-edges  (:edges demo.catalog.atom.example.diagram.flow-diagram/dsl-layout-gold)})
 
 
 (defn example []
@@ -116,6 +114,20 @@ can be used to together to build complex UIs"
 
 
 
+
+(defn save-to-local-storage
+  "NOTE: we LOSE the qualifiers on the keys here!!!"
+  [id dsl-data]
+  (log/info "save-to-local-storage" id "//" (keys dsl-data))
+  (storage/set-item! id dsl-data))
+
+
+(defn load-from-local-storage [id]
+  (let [ret (storage/get-item! id)]
+    (log/info "load-from-local-storage" id "//" (keys ret))
+    ret))
+
+
 (def mol-def-2 {})
 
 
@@ -129,10 +141,27 @@ can be used to together to build complex UIs"
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom mol-def-2)
+           :data (r/atom (or (load-from-local-storage component-id) mol-def-2)
+                   mol-def-2)
            :component-id component-id
+           :save-fn save-to-local-storage
            :resizable true
            :tools true]]]
 
         '[]))))
 
+
+
+
+
+(comment
+  (def id (bh/utils-path->keyword "dsl-example-2" "molecule"))
+
+  (save-to-local-storage id "")
+  (load-from-local-storage id)
+
+  (storage/remove-items! [id])
+
+
+
+  ())

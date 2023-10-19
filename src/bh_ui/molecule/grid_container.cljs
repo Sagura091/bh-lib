@@ -25,6 +25,14 @@
 (defonce last-full-config (atom nil))
 (defonce last-component-lookup (atom nil))
 
+; some atoms to assist in debugging at the repl...
+;(def last-params (atom nil))
+;(def last-component-lookup (atom nil))
+;(def last-data (atom nil))
+
+
+(defonce leaving-the-dag (atom nil))
+
 
 (defn- config
   "set up the local config keys, specifically we want the :mol/layout key, so we can
@@ -88,11 +96,12 @@
   can rearrange the elements of the content?)
 
   - component-id : the components 'name' within the system, so we can update the re-frame/app-db
+  - dsl-atom : atom wrapped around the DSL, used to update teh DSL when the layout changes
   - new-layout : the new arrangement of elements (a vector of hash-maps, one for each visible element)
   - all-layouts : (I think this is now OBE in the JS library... we don't use it anyway)
   "
 
-  [component-id new-layout all-layouts]
+  [component-id dsl-atom new-layout all-layouts]
   (let [new-layout*  (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
@@ -108,6 +117,10 @@
       (let [cooked (map #(zipmap '(:i :x :y :w :h :static) %)
                      (map (juxt :i :x :y :w :h :static) new-layout*))]
         ;(log/info "on-layout-change (cooked)" cooked)
+
+        ; TODO: we also need to update :mol/grid-layout in the DSL
+        (swap! dsl-atom assoc :mol/grid-layout cooked)
+
         (locals/dispatch-local component-id [:layout] cooked)))))
 
 
@@ -119,12 +132,6 @@
   [layout]
 
   (map #(assoc % :static (-> % :static not)) layout))
-
-
-; some atoms to assist in debugging at the repl...
-;(def last-params (atom nil))
-;(def last-component-lookup (atom nil))
-;(def last-data (atom nil))
 
 
 (defn- compute-containership [configuration]
@@ -148,17 +155,6 @@
     (into {})))
 
 
-;(defn- compute-flow-nodes [parent-graph nodes]
-;  (reduce (fn [layout node]
-;            (let [parent (get parent-graph node)]
-;              (ui/set-position layout (or parent :diagram) node)))
-;    {:diagram {:children {}
-;               :parent   nil
-;               :size     {:width 0 :height 0}
-;               :next     {:x ui/x-offset :y ui/y-offset}}}
-;    nodes))
-;
-;
 (defn- compute-flow-layout [parent-graph nodes]
   (reduce (fn [layout node]
             (let [parent (get parent-graph node)]
@@ -211,6 +207,17 @@
     nodes))
 
 
+(defn- prep-dsl [data]
+  (dissoc data
+    :flow-nodes :parent-graph :containership-graph
+    :denorm :nodes :edges
+    :graph :container))
+
+
+(defn- default-save-fn [component-id data]
+  (log/info "SAVING +++++++++" component-id "//" data))
+
+
 (defn- component-panel
   "Takes a 'configuration' in Mol-DSL and compiles it into a visual representation encoded in
   Hiccup for just the _content_ part of the widget (there are some additional hiccup elements that
@@ -222,7 +229,7 @@
   - resizable : (boolean) is this widget resizable (the user can change its size, or not?
   "
 
-  [& {:keys [configuration component-id resizable] :as params}]
+  [& {:keys [configuration save-fn component-id resizable] :as params}]
 
   ;(reset! last-params params)
   ;(log/info "component-panel (params)" params)
@@ -236,47 +243,52 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout           (locals/subscribe-local component-id [:layout])
-        component-lookup (into {}
-                           (sig/process-components-stateful
-                             @configuration #{:ui/component :ui/container}
-                             @(re-frame/subscribe [:meta-data-registry]) component-id))
-
-        ; build UI components (with subscription/event signals against the blackboard or remotes)
-        visual-layout    (->> @configuration
-                           :mol/grid-layout
-                           (map (fn [{:keys [i]}] i)))
-        composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
-        open?            (r/atom false)]
-
-    (reset! last-component-lookup {:component-id component-id
-                                   :config       @configuration
-                                   :lookup       component-lookup
-                                   :viz          visual-layout
-                                   :keys         (select-keys component-lookup visual-layout)
-                                   :wrappers     composed-ui})
+  (let [layout (locals/subscribe-local component-id [:layout])
+        open?  (r/atom false)]
 
     (fn []
-      ;(log/info "component-panel INNER" component-id
-      ;  "//" @layout)
-      ;  "//" composed-ui)
+      (let [component-lookup (into {}
+                               (sig/process-components-stateful
+                                 @configuration #{:ui/component :ui/container}
+                                 @(re-frame/subscribe [:meta-data-registry]) component-id))
 
-      ; 5. return the composed component layout!
-      [rc/v-box :src (rc/at)
-       :gap "2px"
-       :children [(when resizable [ct/configure-toggle open? #(locals/apply-local component-id
-                                                                [:layout] toggle-editable)])
-                  [:div.grid-container.h-w-100pc
-                   [grid/grid
-                    :id component-id
-                    :class "layout"
-                    :children composed-ui
-                    :layout @layout
-                    :cols 20
-                    :width 1200
-                    :rowHeight 25
-                    :layoutFn #(on-layout-change component-id %1 %2)
-                    :widthFn #(on-width-update %1 %2 %3 %4)]]]])))
+            ; build UI components (with subscription/event signals against the blackboard or remotes)
+            visual-layout    (->> @configuration
+                               :mol/grid-layout
+                               (map (fn [{:keys [i]}] i)))
+            composed-ui      (map wrap-component (select-keys component-lookup visual-layout))]
+
+
+        (reset! last-component-lookup {:component-id component-id
+                                       :config       configuration
+                                       :lookup       component-lookup
+                                       :viz          visual-layout
+                                       :keys         (select-keys component-lookup visual-layout)
+                                       :wrappers     composed-ui})
+
+        (log/info "component-panel INNER" component-id
+          "//" @layout
+          "//" composed-ui)
+
+        ; return the composed component layout!
+        [rc/v-box :src (rc/at)
+         :gap "2px"
+         :children [(when resizable [ct/configure-toggle open? #(do
+                                                                  (locals/apply-local component-id
+                                                                    [:layout] toggle-editable)
+                                                                  ((or save-fn default-save-fn)
+                                                                   component-id (prep-dsl @configuration)))])
+                    [:div.grid-container.h-w-100pc
+                     [grid/grid
+                      :id component-id
+                      :class "layout"
+                      :children composed-ui
+                      :layout @layout
+                      :cols 20
+                      :width 1200
+                      :rowHeight 25
+                      :layoutFn #(on-layout-change component-id configuration %1 %2)
+                      :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
 
 
 (defn component
@@ -291,10 +303,13 @@
                       to isolate this component's data from all others
   - resizable : (boolean) can the user resize or rearrange the elements of this component
   - tools : (boolean) should the overall widget provide editing tools for the Mol-DSL itself.
+  - save-fn : (function) [optional] function that takes an identifier, typically the component-id, and the DSL data to save 'somewhere'
+                 this function is responsible for 'doing the right thing'. If not function is provided (i.e., nil)
+                 the (default-save-fn) defined above will be used.
 
   "
 
-  [& {:keys [data component-id container-id resizable tools] :as params}]
+  [& {:keys [data component-id container-id resizable tools save-fn] :as params}]
 
   (reset! last-config data)
 
@@ -335,7 +350,10 @@
     (fn []
       (when (nil? @id)
         (reset! id component-id)
+
+        ; TODO: how do we run this again if the user has made changes to the DSL?
         (ui-utils/init-container-locals @id (config @data))
+
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local @id [:container] container-id)
         (ui/prep-environment @data @id @(re-frame/subscribe [:meta-data-registry])))
@@ -355,7 +373,10 @@
                                   :children [[rc/horizontal-bar-tabs
                                               :model comp-or-dag?
                                               :tabs buttons
-                                              :on-change #(reset! comp-or-dag? %)]]])
+                                              :on-change #(do
+                                                            ((or save-fn default-save-fn)
+                                                             component-id (prep-dsl @data))
+                                                            (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
                              :configuration data
@@ -365,6 +386,7 @@
                                    :configuration data
                                    :component-id @id
                                    :container-id container-id
+                                   :save-fn save-fn
                                    :resizable resizable]
                        :definition [composite/definition-panel
                                     :configuration data]
@@ -1426,3 +1448,58 @@
   ())
 
 ; endregion
+
+
+(comment
+  (-> @re-frame.db/app-db
+    :containers
+    :dsl-example-2.molecule)
+
+  (re-frame/subscribe [:dsl-example-2.molecule])
+
+
+  (bh-ui.utils.locals/apply-local
+    [:dsl-example-2.molecule]
+    [:layout]
+    #(conj (or % []) {:i "dummy" :x 0 :y 0 :w 10 :h 5}))
+
+  @last-full-config
+
+
+  (do
+    (def configuration (:config @last-component-lookup))
+    (def component-id (:component-id @last-component-lookup))
+    (def composed-ui (:wrappers @last-component-lookup)))
+
+
+  (into {}
+    (sig/process-components-stateful
+      @configuration #{:ui/component :ui/container}
+      @(re-frame/subscribe [:meta-data-registry]) component-id))
+
+
+
+  (do
+    (def save-fn nil)
+    (def data (:config @last-full-config)))
+
+  ((or save-fn #(log/info "TESTING Save" %))
+   (prep-dsl data))
+
+  ())
+
+
+;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;
+; TODAY:
+;
+; 3. init-container-locals when the dsl changes
+;
+; 4. modal to change node's label & kind on double-click
+;        NOTE: consider making the :id/:i "permanent" (makes the following steps unnecessary)
+;     a. update :mol/flow-nodes and :mol/flow-edges
+;     b. update :mol/components, :mol/links, and :mol/grid-layout
+;
+;
+
+

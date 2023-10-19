@@ -1131,7 +1131,8 @@ h3,
 
 p {
   margin: 0 0 1rem 0;
-  color: var(--defaultText); }
+  /* color: var(--defaultText); */
+  }
 
 a {
   color: var(--fontLinkColor);

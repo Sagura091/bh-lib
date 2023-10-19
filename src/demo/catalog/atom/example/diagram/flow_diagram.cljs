@@ -172,9 +172,9 @@
                    :markerEnd    (or markerEnd {})
                    :animated     false}))]
 
-    (reset! last-dsl {:nodes nodes :edges edges})
+    (reset! last-dsl {:mol/flow-nodes nodes :mol/flow-edges edges})
 
-    (r/atom {:nodes nodes :edges edges})))
+    (r/atom {:mol/flow-nodes nodes :mol/flow-edges edges})))
 
 
 (defn example []
