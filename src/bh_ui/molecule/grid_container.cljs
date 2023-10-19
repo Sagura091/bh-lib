@@ -243,9 +243,8 @@
   ;                              configuration :ui/component
   ;                              @(re-frame/subscribe [:meta-data-registry]) component-id)))
 
-  (let [layout (locals/subscribe-local component-id [:layout])]
-
-
+  (let [layout (locals/subscribe-local component-id [:layout])
+        open?  (r/atom false)]
 
     (fn []
       (let [component-lookup (into {}
@@ -257,8 +256,8 @@
             visual-layout    (->> @configuration
                                :mol/grid-layout
                                (map (fn [{:keys [i]}] i)))
-            composed-ui      (map wrap-component (select-keys component-lookup visual-layout))
-            open?            (r/atom false)]
+            composed-ui      (map wrap-component (select-keys component-lookup visual-layout))]
+
 
         (reset! last-component-lookup {:component-id component-id
                                        :config       configuration
