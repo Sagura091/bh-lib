@@ -268,7 +268,9 @@
 
         (log/info "component-panel INNER" component-id
           "//" @layout
-          "//" composed-ui)
+          "&&&&&&&&&&" configuration
+          "++++++++++" component-lookup
+          "__________" composed-ui)
 
         ; return the composed component layout!
         [rc/v-box :src (rc/at)
@@ -287,7 +289,7 @@
                       :cols 20
                       :width 1200
                       :rowHeight 25
-                      :layoutFn #(on-layout-change component-id (or configuration (r/atom {})) %1 %2)
+                      :layoutFn #(on-layout-change component-id configuration %1 %2)
                       :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
 
 
