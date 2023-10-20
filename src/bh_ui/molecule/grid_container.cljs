@@ -256,8 +256,8 @@
             visual-layout    (->> @configuration
                                :mol/grid-layout
                                (map (fn [{:keys [i]}] i)))
-            composed-ui      (map wrap-component (select-keys component-lookup visual-layout))]
-
+            composed-ui      (doall
+                               (map wrap-component (select-keys component-lookup visual-layout)))]
 
         (reset! last-component-lookup {:component-id component-id
                                        :config       configuration
@@ -270,7 +270,8 @@
           "//" @layout
           ;"&&&&&&&&&&" configuration
           ;"++++++++++" component-lookup
-          "__________" visual-layout
+          ;"__________" visual-layout
+          "__________" (select-keys component-lookup visual-layout)
           "__________" composed-ui)
 
         ; return the composed component layout!
