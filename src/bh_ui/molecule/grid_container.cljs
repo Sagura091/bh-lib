@@ -270,7 +270,7 @@
           "//" @layout
           ;"&&&&&&&&&&" configuration
           ;"++++++++++" component-lookup
-          "__________" (keys visual-layout)
+          "__________" visual-layout
           "__________" (keys component-lookup)
           "__________" composed-ui)
 
