@@ -232,7 +232,7 @@
   [& {:keys [configuration save-fn component-id resizable] :as params}]
 
   ;(reset! last-params params)
-  ;(log/info "component-panel (params)" params)
+  (log/info "component-panel (params)" params)
 
   ;(log/info "component-panel" component-id
   ;  "//" (keys configuration)
@@ -287,7 +287,7 @@
                       :cols 20
                       :width 1200
                       :rowHeight 25
-                      :layoutFn #(on-layout-change component-id configuration %1 %2)
+                      :layoutFn #(on-layout-change component-id (or configuration (r/atom {})) %1 %2)
                       :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
 
 
