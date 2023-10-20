@@ -147,3 +147,14 @@ To lint everything, library and demo:
 1.	Start the localhost website using the command: shadow-cljs watch test
 2.	Simply press the green arrow next to a deftest to run the test, click the green arrow next to namespace to run all tests in the namespace
 
+### Containerizing BH-Lib for Deployment
+
+All commands are executed in the project root unless otherwise specified
+
+1.  `npx shadow-cljs compile app`
+2.  `npx webpack -c webpack-prod-config.js`
+3.  `docker build --no-cache -t bh-lib .`
+4.  `docker run -d -p 8043:8043 --name bh-static bh-lib`
+
+Now you should be able to access `localhost:8043` and see BH-Lib hosted from a docker container
+
