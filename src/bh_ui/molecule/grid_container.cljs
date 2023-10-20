@@ -268,8 +268,9 @@
 
         (log/info "component-panel INNER" component-id
           "//" @layout
-          "&&&&&&&&&&" configuration
-          "++++++++++" component-lookup
+          ;"&&&&&&&&&&" configuration
+          ;"++++++++++" component-lookup
+          "__________" visual-layout
           "__________" composed-ui)
 
         ; return the composed component layout!
