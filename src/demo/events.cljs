@@ -3,7 +3,7 @@
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [demo.db :as db]
             [re-frame.core :as re-frame]
-            [demo.version :as version]
+            [bh-ui.version :as version]
             [taoensso.timbre :as log]))
 
 
