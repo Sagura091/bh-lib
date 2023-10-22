@@ -152,7 +152,7 @@ To lint everything, library and demo:
 All commands are executed in the project root unless otherwise specified
 
 1.  `npx shadow-cljs release app`
-2.  `npx webpack -c webpack-prod-config.js`
+2.  `npx webpack --env production -c webpack-prod-config.js`
 3.  `docker build --no-cache -t bh-lib .`
 4.  `docker run -d -p 8043:8043 --name bh-static bh-lib`
 
