@@ -119,30 +119,25 @@ can be used to together to build complex UIs"
 (def mol-def-2 {})
 
 
-(def dsl (r/atom                                            ;(or (storage/load-from-local-storage component-id) mol-def-2)
-           mol-def-2))
-
-
 (defn- dsl-entry [item label]
   [rc/h-box :src (rc/at)
    :gap "5px"
    :children [[rc/label :label label]
-              [:div {:style {:border "solid gray 1px"
+              [:div {:style {:border    "solid gray 1px"
                              :min-width "300px"}}
                (str item)]]])
 
 
 (defn- dsl-display-panel [{:keys [:mol/components :mol/links :mol/grid-layout
                                   :mol/flow-nodes :mol/flow-edges] :as the-dsl}]
-  (log/info "dsl-display-panel" the-dsl
-    "______" (or flow-nodes "empty")
-    "______" (or flow-edges "empty"))
+  ;(log/info "dsl-display-panel" the-dsl
+  ;  "______" (or flow-nodes "empty")
+  ;  "______" (or flow-edges "empty"))
 
   (if (and the-dsl (seq the-dsl))
     [rc/v-box :src (rc/at)
      :gap "2px"
-     :children [[:p "DSL"]
-                [dsl-entry components ":mol/components"]
+     :children [[dsl-entry components ":mol/components"]
                 [dsl-entry links ":mol/links"]
                 [dsl-entry grid-layout ":mol/grid-layout"]
                 [dsl-entry flow-nodes ":mol/flow-nodes"]
@@ -152,7 +147,9 @@ can be used to together to build complex UIs"
 
 (defn example-2 []
   (let [container-id "dsl-example-2"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-def-2)
+                       mol-def-2)]
 
     (fn []
       (acu/demo "DSL Example (Blank)"

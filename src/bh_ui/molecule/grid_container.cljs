@@ -402,6 +402,12 @@
                                  :body "There is a problem with this component."])]]]))))
 
 
+
+
+
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1500,9 +1506,11 @@
 ;;;;;;;;;;;;;;;;;;;;
 ; TODAY:
 ;
-; 3. init-container-locals when the dsl changes
+; 1. init-container-locals when the dsl changes
 ;
-; 4. modal to change node's label & kind on double-click
+; 2. update node positions when dragged on the flow-diagram
+;
+; 3. modal to change node's label & kind on double-click
 ;        NOTE: consider making the :id/:i "permanent" (makes the following steps unnecessary)
 ;     a. update :mol/flow-nodes and :mol/flow-edges
 ;     b. update :mol/components, :mol/links, and :mol/grid-layout
