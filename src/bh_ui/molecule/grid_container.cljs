@@ -266,13 +266,13 @@
                                        :keys         (select-keys component-lookup visual-layout)
                                        :wrappers     composed-ui})
 
-        (log/info "component-panel INNER" component-id
-          "//" @layout
-          ;"&&&&&&&&&&" configuration
-          ;"++++++++++" component-lookup
-          "__________" visual-layout
-          "__________" (keys component-lookup)
-          "__________" composed-ui)
+        ;(log/info "component-panel INNER" component-id)
+        ;  "//" @layout
+         ;"&&&&&&&&&&" configuration
+         ;"++++++++++" component-lookup
+         ;"__________" visual-layout
+         ;"__________" (keys component-lookup)
+         ;"__________" composed-ui)
 
         ; return the composed component layout!
         [rc/v-box :src (rc/at)
@@ -362,6 +362,9 @@
         (ui-utils/dispatch-local @id [:container] container-id)
         (ui/prep-environment @data @id @(re-frame/subscribe [:meta-data-registry])))
 
+
+      (log/info "component" @data)
+
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
                      {:id :definition :tooltip "Text view" :label [:i {:class "zmdi zmdi-format-subject"}]}]]
@@ -373,7 +376,7 @@
           :height "100%"
           :gap "5px"
           :children [(when tools [rc/h-box :src (rc/at)
-                                  :justify :end
+                                  :justify :start
                                   :children [[rc/horizontal-bar-tabs
                                               :model comp-or-dag?
                                               :tabs buttons

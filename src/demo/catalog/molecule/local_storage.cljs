@@ -1,4 +1,7 @@
-(ns demo.catalog.molecule.local-storage)
+(ns demo.catalog.molecule.local-storage
+  (:require [taoensso.timbre :as log]))
+
+
 
 ; from https://github.com/ghivert/cljs-blob/master/src/local_storage/core.cljs
 ; MIT license
@@ -83,6 +86,19 @@
   (let [all (get-all!)]
     (.clear js/localStorage)
     all))
+
+
+(defn save-to-local-storage
+  "NOTE: we LOSE the qualifiers on the keys here!!!"
+  [id dsl-data]
+  (log/info "save-to-local-storage" id "//" (keys dsl-data))
+  (set-item! id dsl-data))
+
+
+(defn load-from-local-storage [id]
+  (let [ret (get-item! id)]
+    (log/info "load-from-local-storage" id "//" (keys ret))
+    ret))
 
 
 

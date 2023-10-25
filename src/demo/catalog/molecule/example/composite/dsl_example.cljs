@@ -3,6 +3,7 @@
             [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
+            [re-com.core :as rc]
             [reagent.core :as r]
             [taoensso.timbre :as log]
             [woolybear.ad.catalog.utils :as acu]
@@ -115,25 +116,44 @@ can be used to together to build complex UIs"
 
 
 
-(defn save-to-local-storage
-  "NOTE: we LOSE the qualifiers on the keys here!!!"
-  [id dsl-data]
-  (log/info "save-to-local-storage" id "//" (keys dsl-data))
-  (storage/set-item! id dsl-data))
-
-
-(defn load-from-local-storage [id]
-  (let [ret (storage/get-item! id)]
-    (log/info "load-from-local-storage" id "//" (keys ret))
-    ret))
-
-
 (def mol-def-2 {})
+
+
+(def dsl (r/atom                                            ;(or (storage/load-from-local-storage component-id) mol-def-2)
+           mol-def-2))
+
+
+(defn- dsl-entry [item label]
+  [rc/h-box :src (rc/at)
+   :gap "5px"
+   :children [[rc/label :label label]
+              [:div {:style {:border "solid gray 1px"
+                             :min-width "300px"}}
+               (str item)]]])
+
+
+(defn- dsl-display-panel [{:keys [:mol/components :mol/links :mol/grid-layout
+                                  :mol/flow-nodes :mol/flow-edges] :as the-dsl}]
+  (log/info "dsl-display-panel" the-dsl
+    "______" (or flow-nodes "empty")
+    "______" (or flow-edges "empty"))
+
+  (if (and the-dsl (seq the-dsl))
+    [rc/v-box :src (rc/at)
+     :gap "2px"
+     :children [[:p "DSL"]
+                [dsl-entry components ":mol/components"]
+                [dsl-entry links ":mol/links"]
+                [dsl-entry grid-layout ":mol/grid-layout"]
+                [dsl-entry flow-nodes ":mol/flow-nodes"]
+                [dsl-entry flow-edges ":mol/flow-edges"]]]
+    [:p "DSL not ready"]))
 
 
 (defn example-2 []
   (let [container-id "dsl-example-2"
         component-id (bh/utils-path->keyword container-id "molecule")]
+
     (fn []
       (acu/demo "DSL Example (Blank)"
         "The example molecule is intended to show how all the various elements of the DSL
@@ -141,16 +161,24 @@ can be used to together to build complex UIs"
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom (or (load-from-local-storage component-id) mol-def-2)
-                   mol-def-2)
+           :data dsl
            :component-id component-id
-           :save-fn save-to-local-storage
+           :save-fn storage/save-to-local-storage
            :resizable true
-           :tools true]]]
+           :tools true]
+          [dsl-display-panel @dsl]]]
 
         '[]))))
 
 
+
+
+
+(comment
+  @dsl
+
+
+  ())
 
 
 
