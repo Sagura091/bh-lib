@@ -24,6 +24,8 @@
 (defonce last-params (atom nil))
 (defonce last-full-config (atom nil))
 (defonce last-component-lookup (atom nil))
+(defonce last-added-stuff (atom nil))
+(defonce last-cached-stuff (atom nil))
 
 ; some atoms to assist in debugging at the repl...
 ;(def last-params (atom nil))
@@ -43,9 +45,9 @@
   dispatch updates (via on-layout-update) using (locals/dispatch-local ...)
   "
   [full-config]
-  {:blackboard {}                                           ;:defs {:source full-config
-   ;       :dag    {:open-details ""}}
+  {:blackboard {}
    :container  ""
+   ; TODO: removing this value causes :layout to revert to {:x 0 :y 0 :w 1 :h 1}. WHY?
    :layout     (:mol/grid-layout full-config)})
 
 
@@ -101,14 +103,13 @@
   - all-layouts : (I think this is now OBE in the JS library... we don't use it anyway)
   "
 
-  [component-id dsl-atom new-layout all-layouts]
+  [component-id dsl-atom new-layout all-layouts & others]
   (let [new-layout*  (js->clj new-layout :keywordize-keys true)
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
 
-    ;(log/info "on-layout-change" new-layout*
-    ;  "//" all-layouts*
-    ;  "//" (keys all-layouts*))
+    (log/info "on-layout-change" new-layout*
+      "_____" all-layouts*)
 
     (when (and
             (not (empty? new-layout*))
@@ -214,8 +215,34 @@
     :graph :container))
 
 
+(defn- default-node-dblclick [dsl node]
+  (log/info "default-node-dblclick" node "//" @dsl "_______" (:mol/flow-nodes @dsl))
+
+  (js/alert (str "default-node-dblclick: " node)))
+
+
 (defn- default-save-fn [component-id data]
   (log/info "SAVING +++++++++" component-id "//" data))
+
+
+(defn- dsl-only [dsl]
+  (select-keys dsl [:mol/components :mol/links]))
+
+
+(defn- diff-dsl [old-dsl new-dsl]
+  (log/info "diff-dsl" (empty? old-dsl) "//" (set (:mol/grid-layout new-dsl)) "_____" (set (:mol/grid-layout new-dsl)))
+  (if (seq old-dsl)
+    {:mol/components  (into {}
+                        (clojure.set/difference
+                          (set (:mol/components new-dsl))
+                          (set (get old-dsl :mol/components))))
+
+     :mol/links       (into {}
+                        (clojure.set/difference
+                          (set (:mol/links new-dsl))
+                          (set (get old-dsl :mol/links))))}
+
+    (select-keys new-dsl [:mol/components :mol/links])))
 
 
 (defn- component-panel
@@ -232,9 +259,9 @@
   [& {:keys [configuration save-fn component-id resizable] :as params}]
 
   ;(reset! last-params params)
-  (log/info "component-panel (params)" params)
+  ;(log/info "component-panel (params)" params)
 
-  ;(log/info "component-panel" component-id
+  ;(log/info "component-panel" component-id)
   ;  "//" (keys configuration)
   ;  "// dummy-layout" dummy-layout
   ;  "// :components" (:components configuration)
@@ -291,8 +318,33 @@
                       :cols 20
                       :width 1200
                       :rowHeight 25
-                      :layoutFn #(on-layout-change component-id configuration %1 %2)
-                      :widthFn #(on-width-update %1 %2 %3 %4)]]]]))))
+                      :layoutFn (partial on-layout-change component-id configuration)
+                      :widthFn on-width-update]]]]))))
+
+
+(defn- setup-dsl [data container-id]
+  (log/info "setup-dsl" container-id "//" (:mol/grid-layout @data))
+
+  (let [graph               (apply lg/digraph (ui/compute-edges @data))
+        nodes               (-> @data :mol/components keys set)
+        edges               (into [] (lg/edges graph))
+        containership-graph (compute-containership @data)
+        parent-graph        (compute-parents containership-graph)
+        flow-layout         (compute-flow-layout parent-graph nodes)
+        sized-nodes         (compute-node-sizes flow-layout)
+        node-cases          (compute-node-cases sized-nodes)
+        case-nodes          (add-cases-to-nodes sized-nodes node-cases)]
+
+    (swap! data assoc
+      :flow-nodes case-nodes
+      :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
+                graph (:mol/links @data) (loom.graph/nodes graph))
+      :nodes nodes
+      :edges edges
+      :graph graph
+      :containership-graph containership-graph
+      :parent-graph parent-graph
+      :container container-id)))
 
 
 (defn component
@@ -320,48 +372,53 @@
   ;(log/info "component" data "//" component-id "//" container-id)
   ;(log/info "component (params)" params)
 
-  (let [id                  (r/atom nil)
-        graph               (apply lg/digraph (ui/compute-edges @data))
-        comp-or-dag?        (r/atom :component)
-        nodes               (-> @data :mol/components keys set)
-        edges               (into [] (lg/edges graph))
+  (let [id           (r/atom nil)
+        last-dsl     (r/atom nil)
+        comp-or-dag? (r/atom :component)]
 
-        ; new stuff to support the :mol/flow-components and :mol/flow-edges parts of the Mol-DSL
-        ; (see bh-ui.molecule.composite.util.ui)
-        containership-graph (compute-containership @data)
-        parent-graph        (compute-parents containership-graph)
-        ;flow-nodes          (compute-flow-nodes parent-graph nodes)
-        prep-config         (swap! data assoc
-                              :denorm (bh-ui.molecule.composite.util.digraph/denorm-components
-                                        graph (:mol/links @data) (loom.graph/nodes graph))
-                              :nodes nodes
-                              :edges edges
-                              :graph graph
-                              :containership-graph containership-graph
-                              :parent-graph parent-graph
-                              :container container-id)
-        flow-layout         (compute-flow-layout parent-graph nodes)
-        sized-nodes         (compute-node-sizes flow-layout)
-        node-cases          (compute-node-cases sized-nodes)
-        case-nodes          (add-cases-to-nodes sized-nodes node-cases)
-        case-config         (swap! data assoc               ; wrap in a r/atom so the dag-panel can make updates
-                              :flow-nodes case-nodes)]
-
-    (ui/make-flow data)                                     ; update the r/atom with the nodes and edges for the flow-diagram
-
-    (reset! last-full-config data)
+    ; these two steps both manipulate the "stateful" data input (holding the Mol-DSL for the UI)
+    ; they "should" be moved inside the form-2 because we need to regen the :ui/components
+    (setup-dsl data container-id)
 
     (fn []
+      (when (diff-dsl @last-dsl @data)
+        (ui/make-flow data)
+        (reset! last-dsl @data))
+                                          ; update the r/atom with the nodes and edges for the flow-diagram
+      (reset! last-full-config @data)
+
       (when (nil? @id)
         (reset! id component-id)
+        ;(ui-utils/init-container-defaults component-id (config {}))
+        ;(ui-utils/dispatch-local component-id [:container] container-id))
 
-        ; TODO: how do we run this again if the user has made changes to the DSL?
-        (ui-utils/init-container-locals @id (config @data))
+        ;TODO: how do we run this again if the user has made changes to the DSL?
+        (ui-utils/init-container-locals component-id (config @data))
 
-        ;(log/info "component (b)" @id "//" container-id)
-        (ui-utils/dispatch-local @id [:container] container-id)
-        (ui/prep-environment @data @id @(re-frame/subscribe [:meta-data-registry])))
+        (log/info "component (b)" @id "//" container-id)
+        (ui-utils/dispatch-local component-id [:container] container-id))
 
+      (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
+
+      ;(when (not= @last-dsl (dsl-only @data))
+      ;  (let [added-stuff (diff-dsl @last-dsl @data)]
+      ;    ;remove-stuff (diff-dsl @data @last-dsl)]
+      ;
+      ;    (reset! last-added-stuff added-stuff)
+      ;
+      ;    (log/info "component (c)" @last-dsl
+      ;      "_____" added-stuff
+      ;      "_____" (= @data added-stuff))
+      ;
+      ;    ; we need to se tup any 'new' components, i.e., 'added-stuff'
+      ;    ;
+      ;    ;   buuuuut, we also need to regen any :ui/components that might be linked to
+      ;    ;            the new stuff...
+      ;
+      ;    (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry])))
+      ;
+      ;  (reset! last-dsl (dsl-only @data))
+      ;  (reset! last-cached-stuff @last-dsl))
 
       (log/info "component" @data)
 
@@ -381,14 +438,17 @@
                                               :model comp-or-dag?
                                               :tabs buttons
                                               :on-change #(do
+                                                            (log/info "save (before prep)" (:mol/grid-layout @data))
                                                             ((or save-fn default-save-fn)
                                                              component-id (prep-dsl @data))
+                                                            (log/info "save (after prep)" (:mol/grid-layout @data))
                                                             (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel
                              :configuration data
                              :component-id @id
-                             :container-id container-id]
+                             :container-id container-id
+                             :node-dblclick-fn (partial default-node-dblclick data)]
                        :component [component-panel
                                    :configuration data
                                    :component-id @id
@@ -403,6 +463,13 @@
 
 
 
+
+(comment
+  (= @last-cached-stuff @last-added-stuff)
+
+
+
+  ())
 
 
 
@@ -473,6 +540,7 @@
   ())
 
 
+; compute node size
 (comment
   (do
     (def container-id "repl")
@@ -628,6 +696,7 @@
           (if (-> @layout first :static) make-editable-style save-editable-style)))))
 
   ())
+
 
 ; figure out how to use Loom to organize the atoms, so we can build and wire together the nodes
 (comment
@@ -1460,9 +1529,8 @@
 
   ())
 
-; endregion
 
-
+; saving to local-storage
 (comment
   (-> @re-frame.db/app-db
     :containers
@@ -1499,7 +1567,137 @@
   ((or save-fn #(log/info "TESTING Save" %))
    (prep-dsl data))
 
+
+  (= (keys @last-full-config)
+    (keys @last-added-stuff))
+
+  (= @last-full-config
+    @last-added-stuff)
+
   ())
+
+
+; caching the mol-dsl and finding differences
+(comment
+  (set {"dummy-ui" {} "dummy-local" {}})
+
+  (into {}
+    (clojure.set/difference
+      (set {"dummy-ui" {:atm/role :ui/component} "dummy-local" {:arm/role :source/local}})
+      (set {"dummy-ui" {} "dummy-local" {}})))
+
+
+
+  (do
+    (def data (r/atom {:mol/components  {":ui/component-8" {:atm/role :ui/component, :atm/kind :stunt/text-block, :atm/label ":ui/component-8"}}
+                       :mol/grid-layout [{:i ":ui/component-8", :x 0, :y 0, :w 10, :h 5, :static true}]}))
+    (def data-2 (r/atom {:mol/components  {":ui/component-8"  {:atm/role :ui/component, :atm/kind :stunt/text-block, :atm/label ":ui/component-8"},
+                                           ":source/local-10" {:atm/role         :source/local,
+                                                               :atm/kind         :source/local,
+                                                               :atm/default-data [{:id 0, :x 0, :y 0}
+                                                                                  {:id 1, :x 10, :y 10}
+                                                                                  {:id 2, :x 20, :y 20}]}}
+                         :mol/links       {":source/local-10" {:data {":ui/component-8" :data}}}
+                         :mol/grid-layout [{:i ":ui/component-8", :x 0, :y 0, :w 10, :h 5, :static true}]}))
+
+    (def data-3 (r/atom {}))
+    (def last-dsl (r/atom nil))
+    (def component-id :dummy.component))
+
+
+  {:mol/components  (into {}
+                      (clojure.set/difference
+                        (set (:mol/components @data))
+                        (set (get @last-dsl :mol/components))))
+
+   :mol/links       (into {}
+                      (clojure.set/difference
+                        (set (:mol/links @data))
+                        (set (get @last-dsl :mol/links))))
+
+   :mol/grid-layout (into []
+                      (clojure.set/difference
+                        (set (:mol/grid-layout @data))
+                        (set (get @last-dsl :mol/grid-layout))))}
+
+
+  (diff-dsl @last-dsl @data)
+  (reset! last-dsl @data)
+  (diff-dsl @last-dsl @data-2)
+
+
+  (if (seq @last-dsl)
+    (->> {"dummy-ui" {:atm/role :dummy-role} "dummy-local" {:arm/role :dummy-role}}
+      (map (fn [[k v]] {k (into {}
+                            (clojure.set/difference
+                              (set v)
+                              (set (get @last-dsl k))))}))
+      (into {}))
+    "dummy")
+
+  ())
+
+
+; init app-db with partial updates (as the user changes the Mol-DSL)
+(comment
+  (do
+    (def data (r/atom {:mol/components  {"source/local-1" {:atm/role :source/local :atm/kind :source/local :atm/default-data [{:id "George" :age 55}
+                                                                                                                              {:id "Betty" :age 32}
+                                                                                                                              {:id "Steve" :age 18}]}
+                                         "ui/component-1" {:atm/role :ui/component :atm/kind :stunt/text-block}}
+                       :mol/links       {"source/local-1" {:data {"ui/component-1" :data}}}
+
+
+                       :mol/grid-layout [{:i "ui/component-1" :x 0 :y 0 :w 10 :h 10 :static true}]}))
+    (def last-dsl (atom nil))
+    (def component-id :dummy.dummy)
+    (def container-id :dummy)
+
+    (setup-dsl data container-id))
+
+
+  ; original implementation (one time only)
+  (ui-utils/init-container-locals component-id (config @data))
+  (ui-utils/dispatch-local component-id [:container] container-id)
+  (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
+
+
+  ; what "should" happen
+  (do
+    (def added (-> (diff-dsl @last-dsl @data)
+                 (select-keys [:mol/components :mol/links :mol/grid-layout])))
+
+    (ui-utils/init-container-defaults component-id {:blackboard {} :container nil :layout []})
+    (ui-utils/dispatch-local component-id [:layout] (:mol/grid-layout added))
+    (ui/prep-environment added component-id @(re-frame/subscribe [:meta-data-registry])))
+
+
+  (do
+    (def data (r/atom {:mol/components  {"source/local-1" {:atm/role :source/local :atm/kind :source/local :atm/default-data [{:id "George" :age 55}
+                                                                                                                              {:id "Betty" :age 32}
+                                                                                                                              {:id "Steve" :age 18}]}
+                                         "ui/component-1" {:atm/role :ui/component :atm/kind :stunt/text-block}
+                                         "ui/component-2" {:atm/role :ui/component :atm/kind :stunt/text-block}}
+                       :mol/links       {"source/local-1" {:data {"ui/component-1" :data}}}
+
+
+                       :mol/grid-layout [{:i "ui/component-1" :x 0 :y 0 :w 10 :h 10 :static true}
+                                         {:i "ui/component-1" :x 0 :y 0 :w 10 :h 10 :static true}]}))
+    (def added (-> (diff-dsl @last-dsl @data)
+                 (select-keys [:mol/components :mol/links :mol/grid-layout]))))
+
+  (ui-utils/dispatch-local component-id [:layout] (:mol/grid-layout added))
+  (ui/prep-environment added component-id @(re-frame/subscribe [:meta-data-registry]))
+
+
+  ())
+
+
+
+
+; endregion
+
+
 
 
 ;;;;;;;;;;;;;;;;;;;;
@@ -1507,6 +1705,9 @@
 ; TODAY:
 ;
 ; 1. init-container-locals when the dsl changes
+;     a. need to regen any :ui/components that interface with a newly
+;        added component (:source/local is a good example). MAYBE we just
+;        rebuild *all* the :ui/components?
 ;
 ; 2. update node positions when dragged on the flow-diagram
 ;

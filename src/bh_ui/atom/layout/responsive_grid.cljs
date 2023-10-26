@@ -35,7 +35,10 @@
              draggableHandle draggableCancel
              isDraggable isResizable] :as args}]
 
-  ;(log/info "grid" id children layout layoutFn)
+  ;(log/info "grid" id
+  ;  "_____" children
+  ;  "_____" layout
+  ;  "_____" layoutFn)
 
   (let [l {:lg layout :md layout :sm layout}]
     (into [:> ResponsiveGridLayout {:className       "layout"

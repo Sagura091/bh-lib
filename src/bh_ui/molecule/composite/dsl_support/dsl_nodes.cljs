@@ -185,9 +185,9 @@
   "build a custom node for the flow diagram, with one Handle for each input (along the top)
   and output (along the bottom)
   "
-  [node-type two node & params]
+  [node-type node-dblclick-fn extra-param node & params]
 
-  (log/info "custom-node (a)" node-type "//" two "//" node "//" params)
+  (log/info "custom-node (a)" node-type "//" extra-param "//" node "//" params)
 
   (if node
     (let [data            (js->clj node)
@@ -221,7 +221,7 @@
 
            [:div {:style           style
                   :on-click        #(set-visibility (not isVisible))
-                  :on-double-click #(js/alert (str "Double-Clicked on Node: " text))}
+                  :on-double-click #(node-dblclick-fn data)}
             [rc/v-box
              :gap "1px"
              :children [[label/label :style (merge {:textAlign :center} style)
@@ -243,11 +243,12 @@
 
 
 
-(def node-types {":ui/component"  (partial custom-node :ui/component)
-                 ":ui/container"  (partial custom-node :ui/container)
-                 ":source/remote" (partial custom-node :source/remote)
-                 ":source/local"  (partial custom-node :source/local)
-                 ":source/fn"     (partial custom-node :source/fn)})
+(defn node-types [node-dblclick-fn]
+  {":ui/component"  (partial custom-node :ui/component node-dblclick-fn)
+   ":ui/container"  (partial custom-node :ui/container node-dblclick-fn)
+   ":source/remote" (partial custom-node :source/remote node-dblclick-fn)
+   ":source/local"  (partial custom-node :source/local node-dblclick-fn)
+   ":source/fn"     (partial custom-node :source/fn node-dblclick-fn)})
 
 
 (def bootstrap-node-data {":ui/component"  (partial node-data :ui/component)

@@ -17,6 +17,12 @@
 (declare create-local-path-event)
 
 
+(def last-params (atom nil))
+(def last-defaults (atom nil))
+
+
+; region ; collection manipulation functions
+
 (defn conj-in [d path value]
   (let [start (get-in d path)
         c     (if (vector? start)
@@ -67,6 +73,10 @@
       (assoc-in d path value))
     value))
 
+; endregion
+
+
+; region ; event handlers
 
 (re-frame/reg-event-db
   :events/init-container-locals
@@ -92,6 +102,8 @@
       (do
         ;(log/info "::init-local-path // adding")
         (assoc-in db local-path values)))))
+
+; endregion
 
 
 (defn init-local-values
@@ -304,8 +316,6 @@
         (get containers id)))))
 
 
-(def last-defaults (atom nil))
-
 (defn create-container-local-sub
   "create and registers a re-frame [subscription handler](https://day8.github.io/re-frame/subscriptions/)
   for the value at the path inside the [`:containers` `container-id as a keyword`] key in the `app-db`.
@@ -412,7 +422,6 @@
         (assoc-in db [:containers id] new-val)))))
 
 
-(def last-params (atom nil))
 (defn create-container-local-event
   "create and registers a re-frame [event handler](https://day8.github.io/re-frame/dominoes-30k/#domino-2-event-handling)
   for the value at the path inside the [`:containers` `container-id as a keyword`] key in the `app-db`.
@@ -507,88 +516,6 @@ will set the data value to:
 ;(assoc-in db complete-path new-val))))))
 
 
-; work out how to pass a number of assoc, assoc-in, etc. as params to a :source/local
-(comment
-  (-> {}
-    (assoc :title "title")
-    (assoc :data [])
-    (update-in [:data] conj {:x 0 :y 0})
-    (update-in [:data] conj {:x 1 :y 1}))
-
-  ; now to make the steps come from a collection... (remember '->' is a MACRO)
-
-  (def steps [:some.widget.blackboard.topic
-              [assoc :title "title"]
-              [update-in [:data] conj {:x 10 :y 10}]
-              [update-in [:data] conj {:x 20 :y 20}]])
-  (def db {:title "old title" :data [{:x 0 :y 0}]})
-
-  ; this is what the -> macros does (more or less)
-  (loop [x db, forms (next steps)]
-    (if forms
-      (let [form     (first forms)
-            threaded (if (or (seq? form) (vector? form))
-                       (apply (first form) x (next form))
-                       (list form x))]
-        (recur threaded (next forms)))
-      x))
-
-
-  (apply assoc {} '(:title "title"))
-  (seq? (ffirst steps))
-  (apply (ffirst steps) {} (->> steps first next))
-
-
-  ())
-
-; work out revised pathing to assoc-in a new value to a :source/local
-(comment
-  (def db @re-frame.db/app-db)
-
-  (apply conj
-    (apply conj [:containers :chart-with-fn.widget]
-      (map h/path->keyword [:blackboard :topic/data]))
-    [:data 0 :uv 9999999])
-
-  (get-in db
-    (apply conj
-      (apply conj [:containers :chart-with-fn.widget]
-        (map h/path->keyword [:blackboard :topic/data]))
-      [:data]))
-
-  (get-in db
-    (apply conj
-      (apply conj [:containers :chart-with-fn.widget]
-        (map h/path->keyword [:blackboard :topic/data]))
-      []))
-
-  (get-in db
-    (apply conj
-      (apply conj [:containers :chart-with-fn.widget]
-        (map h/path->keyword [:blackboard :topic/data]))
-      nil))
-
-  (assoc-in db
-    (apply conj
-      (apply conj [:containers :chart-with-fn.widget]
-        (map h/path->keyword [:blackboard :topic/data]))
-      [:data 0 :uv])
-    99999999)
-
-  (do
-    (def container-id :chart-with-fn.widget)
-    (def value-path [:blackboard :topic/data])
-    (def detailed-path nil))
-
-  (apply conj
-    (apply conj [container-id (h/path->keyword value-path)]
-      (map h/path->keyword value-path))
-    detailed-path)
-
-
-  ())
-
-
 (defn create-local-path-event [value-path]
   (let [p (h/path->keyword value-path)]                     ;a more)]
 
@@ -611,6 +538,38 @@ will set the data value to:
           new-val)))))
 
 
+;(defn init-container-defaults [container-id defaults]
+;  (let [paths (process-locals [] nil defaults)]
+;    (init-local-values container-id defaults)
+;    (create-container-sub container-id)
+;    (doall
+;      (map #(create-container-local-sub container-id % nil) paths))
+;
+;    (create-container-event container-id)
+;    (doall
+;      (map #(create-container-local-event container-id %) paths))))
+;
+;
+;(defn init-container-locals-2 [container-id locals]
+;  (let [paths (process-locals [] nil locals)]
+;
+;    ;(log/info "init-container-locals-2" container-id
+;    ;  "//" paths
+;    ;  "//" locals)
+;
+;    ; load the app-db with the default values
+;    (init-local-values container-id locals)
+;
+;    ; create subscriptions
+;    (doall
+;      (map #(create-container-local-sub container-id % nil) paths))
+;
+;    ; create event handlers
+;    (doall
+;      (map #(create-container-local-event container-id %) paths))))
+
+
+; TODO: break this into "init-container-defaults" and "init-container-locals"
 (defn init-container-locals
   "1. adds the `locals-and-defaults` into the `app-db` in the correct location
   2. creates and registers a subscription to `:containers/<container-id>`
@@ -628,15 +587,15 @@ will set the data value to:
 
 > TODO: need to build the reg-event-db handlers so users/ui can change the locals
   "
-  [container-id locals-and-defaults]
-  (let [paths (process-locals [] nil locals-and-defaults)]
+  [container-id locals]
+  (let [paths (process-locals [] nil locals)]
 
     ;(log/info "init-container-locals" container-id
     ;  "//" paths
-    ;  "//" locals-and-defaults)
+    ;  "//" locals)
 
     ; load the app-db with the default values
-    (init-local-values container-id locals-and-defaults)
+    (init-local-values container-id locals)
 
     ; create subscriptions
     (create-container-sub container-id)
@@ -764,25 +723,6 @@ will set the data value to:
     (re-frame/dispatch [p [[set-val [] new-val]]])))
 
 
-
-(comment
-  (assoc-in {:dummy {:one []}} [] "new-value")
-
-
-  (h/path->keyword [:blackboard ":topic/data"])
-  (h/path->keyword (last [:blackboard ":topic/data"]))
-  (h/path->keyword (last [:container-id]))
-  (h/path->keyword (last nil))
-
-  (when (last [:blackboard ":topic/data"])
-    true)
-  (when (last [:container-id])
-    true)
-  (when (last nil)
-    true)
-
-  ())
-
 (defn apply-local
   "applies the given function (fn-to-apply) to the value found in the app-db and then
   dispatches that new value to replace the old value using dispatch-local with the
@@ -837,6 +777,13 @@ will set the data value to:
       ret)))
 
 
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; RICH COMMENTS
+;
 (comment
   (re-frame/subscribe [:chart-remote-data-demo.widget])
   (re-frame/subscribe [:chart-remote-data-demo.widget.ui.bar-chart])
@@ -930,3 +877,106 @@ will set the data value to:
   ())
 
 
+
+(comment
+  (assoc-in {:dummy {:one []}} [] "new-value")
+
+
+  (h/path->keyword [:blackboard ":topic/data"])
+  (h/path->keyword (last [:blackboard ":topic/data"]))
+  (h/path->keyword (last [:container-id]))
+  (h/path->keyword (last nil))
+
+  (when (last [:blackboard ":topic/data"])
+    true)
+  (when (last [:container-id])
+    true)
+  (when (last nil)
+    true)
+
+  ())
+
+
+; work out how to pass a number of assoc, assoc-in, etc. as params to a :source/local
+(comment
+  (-> {}
+    (assoc :title "title")
+    (assoc :data [])
+    (update-in [:data] conj {:x 0 :y 0})
+    (update-in [:data] conj {:x 1 :y 1}))
+
+  ; now to make the steps come from a collection... (remember '->' is a MACRO)
+
+  (def steps [:some.widget.blackboard.topic
+              [assoc :title "title"]
+              [update-in [:data] conj {:x 10 :y 10}]
+              [update-in [:data] conj {:x 20 :y 20}]])
+  (def db {:title "old title" :data [{:x 0 :y 0}]})
+
+  ; this is what the -> macros does (more or less)
+  (loop [x db, forms (next steps)]
+    (if forms
+      (let [form     (first forms)
+            threaded (if (or (seq? form) (vector? form))
+                       (apply (first form) x (next form))
+                       (list form x))]
+        (recur threaded (next forms)))
+      x))
+
+
+  (apply assoc {} '(:title "title"))
+  (seq? (ffirst steps))
+  (apply (ffirst steps) {} (->> steps first next))
+
+
+  ())
+
+; work out revised pathing to assoc-in a new value to a :source/local
+(comment
+  (def db @re-frame.db/app-db)
+
+  (apply conj
+    (apply conj [:containers :chart-with-fn.widget]
+      (map h/path->keyword [:blackboard :topic/data]))
+    [:data 0 :uv 9999999])
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      [:data]))
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      []))
+
+  (get-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      nil))
+
+  (assoc-in db
+    (apply conj
+      (apply conj [:containers :chart-with-fn.widget]
+        (map h/path->keyword [:blackboard :topic/data]))
+      [:data 0 :uv])
+    99999999)
+
+  (do
+    (def container-id :chart-with-fn.widget)
+    (def value-path [:blackboard :topic/data])
+    (def detailed-path nil))
+
+  (apply conj
+    (apply conj [container-id (h/path->keyword value-path)]
+      (map h/path->keyword value-path))
+    detailed-path)
+
+
+  ())
+
+
+; endregion

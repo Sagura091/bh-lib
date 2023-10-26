@@ -9,15 +9,12 @@
 
 
 
-
-;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; helpers
+; region ; helpers
 ;
 
 (def default-pub-sub {:pub [] :sub [] :container ""})
-
-
 
 
 (def h-wrap {:-webkit-flex-flow "row wrap"
@@ -48,13 +45,24 @@
   (apply h/path->keyword path))
 
 
-;;;;;;;;;;;;;
+;endregion
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; container locals
+; region ; container locals
 ;
 
-(defn init-container-locals [container-id locals-and-defaults]
-  (l/init-container-locals container-id locals-and-defaults))
+;(defn init-container-defaults [container-id defaults]
+;  (l/init-container-defaults container-id defaults))
+;
+;
+;(defn init-container-locals-2 [container-id locals]
+;  (l/init-container-locals-2 container-id locals))
+;
+;
+(defn init-container-locals [container-id locals]
+  (l/init-container-locals container-id locals))
 
 
 (defn subscribe-local [container-id value-path]
@@ -92,15 +100,15 @@
 (defn override-subs [container-id local-subs subs]
   (ctnr/override-subs container-id local-subs subs))
 
+; endregion
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Remote DataSource Support
+; region ; Remote DataSource Support
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; region
 
 (re-frame/reg-event-db
   :events/init-remote-data-source
@@ -125,12 +133,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Rich Comments
+; region ; Rich Comments
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; region
+;
 
 ; how well does relative-luminance work?
 (comment

@@ -39,7 +39,7 @@
 
   [rc/input-textarea
    :src (rc/at)
-   :model data
+   :model (r/atom (str @data))
    :on-change #()])
 
 

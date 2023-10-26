@@ -213,7 +213,10 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defn- prep-handle [handle]
-  handle)
+  (-> handle
+    (clojure.string/split "-")
+    first
+    keyword))
 
 
 (defn- add-dsl-edge [configuration event]
@@ -228,8 +231,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
       "//" event
       "//" event-map
       "//" (-> configuration :mol/links keys)
-      "//" source-handle
-      "//" target-handle)
+      "_____" source-handle "//" (prep-handle source-handle)
+      "_____" target-handle "//" (prep-handle target-handle))
 
     (swap! configuration update-in [:mol/links source-id]
       #(merge-with merge %
@@ -301,7 +304,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   - configuration : *r/atom* around a (hash-map
   "
 
-  [& {:keys [configuration component-id container-id ui]}]
+  [& {:keys [configuration component-id container-id ui node-dblclick-fn]}]
 
 
   (reset! last-config configuration)
@@ -319,7 +322,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
               [diagram/component
                :component-id component-id
                :data configuration
-               :config {:node-types     dsl/node-types
+               :config {:node-types     (dsl/node-types node-dblclick-fn)
                         :node-data      dsl/bootstrap-node-data
                         :node-kind-fn   dsl/default-node-kind
                         :minimap-styles dsl/minimap-styles

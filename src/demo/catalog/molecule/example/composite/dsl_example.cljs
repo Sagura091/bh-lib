@@ -148,8 +148,7 @@ can be used to together to build complex UIs"
 (defn example-2 []
   (let [container-id "dsl-example-2"
         component-id (bh/utils-path->keyword container-id "molecule")
-        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-def-2)
-                       mol-def-2)]
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-def-2))]
 
     (fn []
       (acu/demo "DSL Example (Blank)"
@@ -163,7 +162,10 @@ can be used to together to build complex UIs"
            :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]
-          [dsl-display-panel @dsl]]]
+          [dsl-display-panel @dsl]
+          [rc/button :src (rc/at)
+           :on-click #(reset! dsl mol-def-2)
+           :label "Reset"]]]
 
         '[]))))
 
