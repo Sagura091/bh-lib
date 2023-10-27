@@ -134,16 +134,16 @@
       [:thead {:style {:backgroundColor (or (:header-bg-color @config) "lightgray")
                        :position        "sticky" :top 0}}
        (let [hgs (.-headerGroups table)]
-         (log/info ":table (b) " hgs)
+         ;(log/info ":table (b) " hgs)
          (doall
            (for [hg hgs]
              [:r> "tr" (.getHeaderGroupProps hg)
               (doall
-                (log/info ":table (c) " hg)
+                ;(log/info ":table (c) " hg)
                 (for [col (.-headers hg)]
 
                   (doall
-                    (log/info ":table (d) " col)
+                    ;(log/info ":table (d) " col)
                     [:r> "th" (.getHeaderProps col (.getSortByToggleProps col))
 
                      (.render col "Header")
@@ -400,12 +400,12 @@
                                  (configure-expandable-columns d data react-data cfg s)
                                  (configure-standard-columns d data react-data cfg)))]
 
-    (log/info "table-component" data "//" config "//" style)
+    ;(log/info "table-component" data "//" config "//" style)
 
     (reset! last-params {:data d :config cfg :style s})
 
     (fn []
-      (log/info "table-component (render)" data)
+      ;(log/info "table-component (render)" data)
       (let [react-data (r/atom (configure-data d cfg))]
         [:f> table
          column-config

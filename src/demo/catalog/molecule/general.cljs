@@ -39,10 +39,10 @@
 
    [single-chart/example]
    [v-scroll/example]
-   ;[v-scroll/example-2]])
+   [v-scroll/example-2]
    [tabbed/example]
    [tabbed/example-2]
-   ;[signal/example]
+   [signal/example]
    ;
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
