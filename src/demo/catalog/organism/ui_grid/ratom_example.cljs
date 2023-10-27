@@ -67,42 +67,10 @@
 ;(def layout (r/atom default-layout))
 
 
-(defn- grid-reset [widgets layout widget-val layout-val]
-  (reset! widgets widget-val)
-  (reset! layout layout-val))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; region ; load & save of widget data
 
-
-(defn- toggle-val [s val]
-  (if (contains? s val)
-    (disj s val)
-    (conj s val)))
-
-
-(defn- grid-update [widgets layout widget-val layout-val]
-  (reset! widgets (toggle-val @widgets widget-val))
-  (reset! layout (toggle-val @layout layout-val)))
-
-
-(defn- widget-tools [widgets layout default-widgets]
-  [rc/h-box :src (rc/at)
-   :gap "10px"
-   :class "tools-panel"
-   :children [[:label.h5 "Widgets:"]
-              [rc/button :on-click #(grid-reset widgets layout empty-widgets empty-layout)
-               :label "Empty"]
-              [rc/button :on-click #(grid-reset widgets layout default-widgets default-layout)
-               :label "Default"]
-              ;[rc/button :on-click #(grid-update widgets layout bar-chart-widget bar-chart-layout)
-              ; :label "! Bar Chart"]
-              [rc/button :on-click #(grid-update widgets layout multi-chart-widget multi-chart-layout)
-               :label "! Multi Chart"]
-              [rc/button :on-click #(grid-update widgets layout multi-chart-2-widget multi-chart-2-layout)
-               :label "! Multi Chart 2"]]])
-              ;[rc/button :on-click #(grid-update widgets layout coverage-plan-widget coverage-plan-layout)
-              ; :label "! Coverage Plan"]]])
-
-
-; TODO: move this to Pistachio when we are ready...
 (defn- prep-widgets-save [widget]
   (let [[id title [_ & {:keys [data component-id resizable]}]
          bar-color text-color] widget
@@ -156,6 +124,48 @@
 
   (storage/save-to-local-storage container-id
     (marshall-widget-save widgets layout)))
+
+
+; endregion
+
+
+
+
+(defn- grid-reset [widgets layout widget-val layout-val]
+  (reset! widgets widget-val)
+  (reset! layout layout-val))
+
+
+(defn- toggle-val [s val]
+  (if (contains? s val)
+    (disj s val)
+    (conj s val)))
+
+
+(defn- grid-update [widgets layout widget-val layout-val]
+  (reset! widgets (toggle-val @widgets widget-val))
+  (reset! layout (toggle-val @layout layout-val)))
+
+
+(defn- widget-tools [widgets layout default-widgets]
+  [rc/h-box :src (rc/at)
+   :gap "10px"
+   :class "tools-panel"
+   :children [[:label.h5 "Widgets:"]
+              [rc/button :on-click #(grid-reset widgets layout empty-widgets empty-layout)
+               :label "Empty"]
+              [rc/button :on-click #(grid-reset widgets layout
+                                      (marshal-widgets-load default-widgets)
+                                      (marshal-layout-load default-layout))
+               :label "Default"]
+              ;[rc/button :on-click #(grid-update widgets layout bar-chart-widget bar-chart-layout)
+              ; :label "! Bar Chart"]
+              [rc/button :on-click #(grid-update widgets layout multi-chart-widget multi-chart-layout)
+               :label "! Multi Chart"]
+              [rc/button :on-click #(grid-update widgets layout multi-chart-2-widget multi-chart-2-layout)
+               :label "! Multi Chart 2"]]])
+              ;[rc/button :on-click #(grid-update widgets layout coverage-plan-widget coverage-plan-layout)
+              ; :label "! Coverage Plan"]]])
 
 
 (defn example []
