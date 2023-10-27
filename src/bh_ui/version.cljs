@@ -3,6 +3,6 @@
 
 (def module-name "bh-lib")
 (def path ".")
-(def version "3.1.0-0x1786")
-(def tag "v3.1.0-0x1786")
-(def generated-at "2023-10-22T21:02:30Z")
+(def version "3.1.0-0x64a9")
+(def tag "v3.1.0-0x64a9")
+(def generated-at "2023-10-27T22:27:26Z")
