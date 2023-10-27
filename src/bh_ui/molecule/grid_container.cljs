@@ -108,8 +108,8 @@
         all-layouts* (js->clj all-layouts :keywordize-keys true)
         fst          (first new-layout*)]
 
-    (log/info "on-layout-change" new-layout*
-      "_____" all-layouts*)
+    ;(log/info "on-layout-change" new-layout*
+    ;  "_____" all-layouts*)
 
     (when (and
             (not (empty? new-layout*))
@@ -230,7 +230,7 @@
 
 
 (defn- diff-dsl [old-dsl new-dsl]
-  (log/info "diff-dsl" (empty? old-dsl) "//" (set (:mol/grid-layout new-dsl)) "_____" (set (:mol/grid-layout new-dsl)))
+  ;(log/info "diff-dsl" (empty? old-dsl) "//" (set (:mol/grid-layout new-dsl)) "_____" (set (:mol/grid-layout new-dsl)))
   (if (seq old-dsl)
     {:mol/components  (into {}
                         (clojure.set/difference
@@ -323,7 +323,7 @@
 
 
 (defn- setup-dsl [data container-id]
-  (log/info "setup-dsl" container-id "//" (:mol/grid-layout @data))
+  ;(log/info "setup-dsl" container-id "//" (:mol/grid-layout @data))
 
   (let [graph               (apply lg/digraph (ui/compute-edges @data))
         nodes               (-> @data :mol/components keys set)
@@ -389,38 +389,13 @@
 
       (when (nil? @id)
         (reset! id component-id)
-        ;(ui-utils/init-container-defaults component-id (config {}))
-        ;(ui-utils/dispatch-local component-id [:container] container-id))
-
-        ;TODO: how do we run this again if the user has made changes to the DSL?
         (ui-utils/init-container-locals component-id (config @data))
-
-        (log/info "component (b)" @id "//" container-id)
+        ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local component-id [:container] container-id))
 
       (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
 
-      ;(when (not= @last-dsl (dsl-only @data))
-      ;  (let [added-stuff (diff-dsl @last-dsl @data)]
-      ;    ;remove-stuff (diff-dsl @data @last-dsl)]
-      ;
-      ;    (reset! last-added-stuff added-stuff)
-      ;
-      ;    (log/info "component (c)" @last-dsl
-      ;      "_____" added-stuff
-      ;      "_____" (= @data added-stuff))
-      ;
-      ;    ; we need to se tup any 'new' components, i.e., 'added-stuff'
-      ;    ;
-      ;    ;   buuuuut, we also need to regen any :ui/components that might be linked to
-      ;    ;            the new stuff...
-      ;
-      ;    (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry])))
-      ;
-      ;  (reset! last-dsl (dsl-only @data))
-      ;  (reset! last-cached-stuff @last-dsl))
-
-      (log/info "component" @data)
+      ;(log/info "component" @data)
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
@@ -438,10 +413,8 @@
                                               :model comp-or-dag?
                                               :tabs buttons
                                               :on-change #(do
-                                                            (log/info "save (before prep)" (:mol/grid-layout @data))
                                                             ((or save-fn default-save-fn)
                                                              component-id (prep-dsl @data))
-                                                            (log/info "save (after prep)" (:mol/grid-layout @data))
                                                             (reset! comp-or-dag? %))]]])
                      (condp = @comp-or-dag?
                        :dag [composite/dag-panel

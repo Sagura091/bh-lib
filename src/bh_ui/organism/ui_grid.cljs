@@ -12,7 +12,7 @@
 (defn- make-widget [[id title content bk-color txt-color]]
   ;(log/info "make-widget" id "//" title)
 
-  [:div.widget-parent.h-w-100pc {:key   id}
+  [:div.widget-parent.h-w-100pc {:key id}
    [:div.grid-toolbar.title-wrapper.move-cursor
     [:div {:style {:background-color bk-color
                    :color            txt-color
@@ -59,12 +59,12 @@
     :else ()))
 
 
-(defn on-layout-change [layout new-layout]
+(defn on-layout-change [layout container-id widgets save-fn new-layout]
+  ;(log/info "on-layout-change" @widgets "_____" new-layout "_____" container-id "_____" save-fn)
+
   ;; note the need to convert the callbacks from js objects
   (let [n-l (js->clj new-layout :keywordize-keys true)
         fst (first n-l)]
-
-    ;(log/info "on-layout-change" @widgets "//" new-layout)
 
     (when (and
             (seq n-l)
@@ -74,15 +74,17 @@
                      (map (juxt :i :x :y :w :h) n-l))]
         ;(log/info "on-layout-change (cooked)" cooked
         ;  "//" (zipmap (map :i cooked) cooked))
+        (save-fn container-id @widgets cooked)
         (update-layout layout cooked)))))
 
 
-(defn component [& {:keys [widgets layout container-id]}]
+(defn component [& {:keys [widgets layout container-id save-fn]}]
 
   (let [r-widgets (h/resolve-value widgets)
         r-layout  (h/resolve-value layout)]
 
     ;(log/info "component (resolve)" container-id
+    ;  "//" save-fn)
     ;  "//" widgets "/////" @r-widgets
     ;  "//" layout "/////" @r-layout)
 
@@ -91,6 +93,64 @@
        :id container-id
        :children (doall (map make-widget @r-widgets))
        :cols 20
-       :layoutFn (partial on-layout-change layout)
+       :layoutFn (partial on-layout-change layout container-id r-widgets (or save-fn #()))
        :layout @r-layout])))
 
+
+
+
+
+(comment
+  ; example dsl data for a single widget:
+  {:widgets #{{:id           "comms-plan"
+               :title        "Comms Coverage Plan"
+               :data         {:mol/components  {:topic/data   {:atm/role :source/remote :atm/kind :source/measurements}
+                                                :ui/bar-chart {:atm/role :ui/component :atm/kind :rechart/bar}}
+                              :mol/links       {:topic/data {:data {:ui/bar-chart :data}}}
+                              :mol/grid-layout [{:i :ui/bar-chart :x 0 :y 0 :w 20 :h 11 :static true}]
+                              :mol/flow-nodes  []
+                              :mol/flow-edges  []}
+               :component-id "comms-plan"
+               :resizable    true
+               :bar-color    :green
+               :text-color   :white}}
+   :layout  #{{:i "comms-plan" :x 0 :y 0 :w 20 :h 27}}}
+
+
+  ; what is in the runtime:
+
+  ; widgets
+  (def live-widgets #{["multi-chart"
+                       "Multi-Chart"
+                       [;"#object[bh_ui$molecule$grid_container$component]"
+                        :data
+                        ;#object[reagent.ratom.RAtom {:val
+                        {:flow-nodes          {}
+                         :parent-graph        {}
+                         :containership-graph {}
+                         :mol/flow-nodes      []
+                         :mol/flow-edges      []
+                         :mol/links           {}
+                         :mol/components      {}
+                         :mol/grid-layout     '({})}
+                        :component-id :ui-grid-ratom-demo.multi-chart
+                        :resizable true]
+                       :blue
+                       :white]})
+
+  (let [[id title data bar-color text-color] (first live-widgets)]
+    {:id           id :title title
+     :data         (select-keys (second data) [:mol/components :mol/links
+                                               :mol/grid-layout :mol/flow-nodes
+                                               :mol/flow-edges])
+     :component-id (nth data 3)
+     :resizable    (nth data 5)
+     :bar-color    bar-color
+     :text-color   text-color})
+
+
+
+
+
+
+  ())

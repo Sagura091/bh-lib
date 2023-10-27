@@ -1,5 +1,6 @@
 (ns demo.catalog.organism.ui-grid.ratom-example
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -19,12 +20,24 @@
 ;                        :component-id (bh/utils-path->keyword container-id "bar-chart")
 ;                        :resizable true]
 ;                       :green :white])
-(def multi-chart-widget ["multi-chart" "Multi-Chart"
-                         [bh/grid-container
-                          :data (r/atom bh/simple-multi-chart1-ui-def)
-                          :component-id (bh/utils-path->keyword container-id "multi-chart")
-                          :resizable true]
-                         :blue :white])
+
+
+; TODO: this needs to be converted to a sutrtcure that does NOT contain any code
+;       (such as [bh/grid-container ...])
+;
+(def multi-chart-widget {:id "multi-chart"
+                         :title "Multi-Chart"
+                         :data bh/simple-multi-chart1-ui-def
+                         :component-id (bh/utils-path->keyword container-id "multi-chart")
+                         :resizeable true
+                         :bar-color :blue
+                         :text-color :white})
+(def multi-chart-widget-old ["multi-chart" "Multi-Chart"
+                             [bh/grid-container
+                              :data (r/atom bh/simple-multi-chart1-ui-def)
+                              :component-id (bh/utils-path->keyword container-id "multi-chart")
+                              :resizable true]
+                             :blue :white])
 (def multi-chart-2-widget ["multi-chart-2" "Multi-Chart-2"
                            [bh/grid-container
                             :data (r/atom bh/simple-multi-chart2-ui-def)
@@ -50,8 +63,8 @@
 (def empty-layout #{})
 
 
-(def widgets (r/atom default-widgets))
-(def layout (r/atom default-layout))
+;(def widgets (r/atom default-widgets))
+;(def layout (r/atom default-layout))
 
 
 (defn- grid-reset [widgets layout widget-val layout-val]
@@ -89,21 +102,100 @@
               ; :label "! Coverage Plan"]]])
 
 
+; TODO: move this to Pistachio when we are ready...
+(defn- prep-widgets-save [widget]
+  (let [[id title [_ & {:keys [data component-id resizable]}]
+         bar-color text-color] widget
+        ;_   (log/info "prep-widget (a)" widget "_____" data)
+        ret {:id           id
+             :title title
+             :data         (select-keys @data [:mol/components :mol/links
+                                               :mol/grid-layout :mol/flow-nodes
+                                               :mol/flow-edges])
+             :component-id component-id
+             :resizable    resizable
+             :bar-color    bar-color
+             :text-color   text-color}]
+
+    ;(log/info "prep-widget (b)" ret)
+
+    ret))
+
+
+(defn- prep-layout-save [layout]
+  (js->clj layout :keywordize true))
+
+
+(defn- marshall-widget-save [widgets layout]
+  {:widgets (set (map prep-widgets-save widgets))
+   :layout  (set (prep-layout-save layout))})
+
+
+(defn marshal-widgets-load [widgets]
+  (->> widgets
+    (map (fn [{:keys [id title data component-id
+                      resizeable
+                      bar-color text-color]}]
+           [id
+            title
+            [bh/grid-container
+             :data (r/atom data)
+             :component-id component-id
+             :resizable resizeable]
+            bar-color
+            text-color]))
+    set))
+
+
+(defn marshal-layout-load [layout]
+  layout)
+
+
+(defn save-widgets [container-id widgets layout]
+  ;(log/info "save-widgets" container-id "____" widgets "____" layout)
+
+  (storage/save-to-local-storage container-id
+    (marshall-widget-save widgets layout)))
+
+
 (defn example []
-  (acu/demo "Widget Grid (ratom-based)"
-    "A grid of widget, which are composed of UI Components using a data structure that defines a directed graph."
+  (let [widgets (r/atom (marshal-widgets-load
+                          (or (:widgets (storage/load-from-local-storage container-id))
+                           default-widgets)))
+        layout (r/atom (marshal-layout-load
+                         (or (:layout (storage/load-from-local-storage container-id))
+                          default-layout)))]
+   (acu/demo "Widget Grid (ratom-based)"
+     "A grid of widget, which are composed of UI Components using a data structure that defines a directed graph."
 
-    [layout/page {:extra-classes :is-fluid}
+     [layout/page {:extra-classes :is-fluid}
 
-     [rc/v-box :src (rc/at)
-      :gap "5px"
-      :children [[bh/ui-grid
-                  :widgets widgets
-                  :layout layout
-                  :container-id container-id]
-                 [widget-tools widgets layout default-widgets default-layout]]]]
+      [rc/v-box :src (rc/at)
+       :gap "5px"
+       :children [[bh/ui-grid
+                   :widgets widgets
+                   :layout layout
+                   :save-fn save-widgets
+                   :container-id container-id]
+                  [widget-tools widgets layout default-widgets default-layout]]]]
 
-    '[bh/ui-grid
-      :widgets widgets
-      :layout layout
-      :container-id container-id]))
+     '[bh/ui-grid
+       :widgets widgets
+       :layout layout
+       :container-id container-id])))
+
+
+
+
+(comment
+  (= multi-chart-widget-old
+    (first (marshal-widgets-load default-widgets)))
+
+
+
+  (storage/load-from-local-storage "ui-grid-ratom-demo")
+
+
+
+
+  ())

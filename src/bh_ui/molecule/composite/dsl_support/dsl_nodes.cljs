@@ -187,7 +187,7 @@
   "
   [node-type node-dblclick-fn extra-param node & params]
 
-  (log/info "custom-node (a)" node-type "//" extra-param "//" node "//" params)
+  ;(log/info "custom-node (a)" node-type "//" extra-param "//" node "//" params)
 
   (if node
     (let [data            (js->clj node)
