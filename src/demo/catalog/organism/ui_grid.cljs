@@ -5,6 +5,6 @@
 
 (defn page []
   [:div
-   [ratom-example/example]])
-   ;[sub-example/example]])
+   [ratom-example/example]
+   [sub-example/example]])
 

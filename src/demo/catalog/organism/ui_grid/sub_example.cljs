@@ -1,5 +1,6 @@
 (ns demo.catalog.organism.ui-grid.sub-example
   (:require [bh-ui.core :as bh]
+            [demo.catalog.organism.ui-grid.data :as data]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -13,65 +14,51 @@
 
 (def container-id :ui-grid-sub-demo)
 
-;(def bar-chart-widget ["bar-chart" "Bar Chart"
-;                       [bh/grid-container
-;                        :data (r/atom chart-remote-data/ui-definition)
-;                        :component-id (bh/utils-path->keyword container-id "bar-chart")
-;                        :resizable true]
-;                       :green :white])
-(def multi-chart-widget ["multi-chart" "Multi-Chart"
-                         [bh/grid-container
-                          :data (r/atom bh/simple-multi-chart1-ui-def)
-                          :component-id (bh/utils-path->keyword container-id "multi-chart")
-                          :resizable true]
-                         :blue :white])
-(def multi-chart-2-widget ["multi-chart-2" "Multi-Chart-2"
-                           [bh/grid-container
-                            :data (r/atom bh/simple-multi-chart2-ui-def)
-                            :component-id (bh/utils-path->keyword container-id "multi-chart-2")
-                            :resizable true]
-                           :rebeccapurple :white])
-;(def coverage-plan-widget ["coverage-plan" "Coverage Plan"
-;                           [bh/grid-container
-;                            :data (r/atom coverage-plan/ui-definition)
-;                            :component-id (bh/utils-path->keyword container-id "coverage-plan")
-;                            :resizable true]
-;                           :yellow :black])
+(def multi-chart-widget (data/prep-widget-load
+                          {:id           "multi-chart"
+                           :title        "Multi-Chart"
+                           :data         bh/simple-multi-chart1-ui-def
+                           :component-id (bh/utils-path->keyword container-id "multi-chart")
+                           :resizeable   true
+                           :bar-color    :blue
+                           :text-color   :white}))
+(def multi-chart-2-widget (data/prep-widget-load
+                            {:id           "multi-chart-2"
+                             :title        "Multi-Chart-2"
+                             :data         bh/simple-multi-chart2-ui-def
+                             :component-id (bh/utils-path->keyword container-id "multi-chart-2")
+                             :resizable    true
+                             :bar-color    :rebeccapurple
+                             :text-color   :white}))
 (def default-widgets #{multi-chart-widget})
 
-;(def bar-chart-layout {:i "bar-chart" :x 0 :y 0 :w 8 :h 15})
-(def multi-chart-layout {:i "multi-chart" :x 0 :y 10 :w 8 :h 15})
-(def multi-chart-2-layout {:i "multi-chart-2" :x 8 :y 21 :w 12 :h 15})
-;(def coverage-plan-layout {:i "coverage-plan" :x 8 :y 0 :w 12 :h 21})
+(def multi-chart-layout (data/prep-layout-load {:i "multi-chart" :x 0 :y 10 :w 8 :h 15}))
+(def multi-chart-2-layout (data/prep-layout-load {:i "multi-chart-2" :x 8 :y 21 :w 12 :h 15}))
 (def default-layout #{multi-chart-layout})
 
 (def empty-widgets #{})
 (def empty-layout #{})
 
 
-(def config
-  {:widgets   default-widgets
-   :layout    default-layout
-   :container ""})
+(defn- grid-reset
+  "we need to override this implementation, because the one provided
+  by demo.catalog.organism.ui-grid.data doesn't know about re-frame"
 
-
-(defn- grid-reset [container-id widget-val layout-val]
+  [container-id widget-val layout-val]
   (bh/utils-handle-change [container-id] {:widgets widget-val :layout layout-val}))
 
 
-(defn- toggle-val [s val]
-  (if (contains? s val)
-    (disj s val)
-    (conj s val)))
+(defn- grid-update
+  "we need to override this implementation, because the one provided
+  by demo.catalog.organism.ui-grid.data doesn't know about re-frame"
 
-
-(defn- grid-update [container-id widgets layout widget-val layout-val]
+  [container-id widgets layout widget-val layout-val]
   (bh/utils-handle-change [container-id]
-    {:widgets (toggle-val @(bh/utils-resolve-value widgets) widget-val)
-     :layout  (toggle-val @(bh/utils-resolve-value layout) layout-val)}))
+    {:widgets (data/toggle-widgets @(bh/utils-resolve-value widgets) widget-val)
+     :layout  (data/toggle-layout @(bh/utils-resolve-value layout) layout-val)}))
 
 
-(defn- widget-tools [container-id widgets layout default-widgets]
+(defn- widget-tools [container-id widgets layout default-widgets default-layout]
   [rc/h-box :src (rc/at)
    :gap "10px"
    :class "tools-panel"
@@ -82,18 +69,12 @@
               [rc/button :on-click #(grid-reset container-id
                                       default-widgets default-layout)
                :label "Default"]
-              ;[rc/button :on-click #(grid-update container-id widgets layout
-              ;                        bar-chart-widget bar-chart-layout)
-              ; :label "! Bar Chart"]
               [rc/button :on-click #(grid-update container-id widgets layout
                                       multi-chart-widget multi-chart-layout)
                :label "! Multi Chart"]
               [rc/button :on-click #(grid-update container-id widgets layout
                                       multi-chart-2-widget multi-chart-2-layout)
                :label "! Multi Chart 2"]]])
-;[rc/button :on-click #(grid-update container-id widgets layout
-;                        coverage-plan-widget coverage-plan-layout)
-; :label "! Coverage Plan"]]])
 
 
 (defn- ui-grid-container [& {:keys [widgets layout container-id] :as params}]
@@ -103,14 +84,19 @@
 
     (fn []
       (when (nil? @id)
-        (reset! id container-id)
-        (bh/utils-init-container-locals @id config)
-        (bh/utils-dispatch-local @id [:container] container-id)
-        (bh/utils-build-subs container-id config))
+        (let [config (let [loaded-dsl (data/load-widgets container-id)]
+                       {:widgets   (or (:widgets loaded-dsl) default-widgets)
+                        :layout    (or (:layout loaded-dsl) default-layout)
+                        :container ""})]
+          (reset! id container-id)
+          (bh/utils-init-container-locals @id config)
+          (bh/utils-dispatch-local @id [:container] container-id)
+          (bh/utils-build-subs container-id config)))
 
       [bh/ui-grid
        :widgets widgets
        :layout layout
+       :save-fn data/save-widgets
        :container-id container-id])))
 
 
@@ -136,3 +122,12 @@
         :layout layout
         :container-id container-id])))
 
+
+
+(comment
+
+  (demo.catalog.molecule.local-storage/load-from-local-storage
+    "ui-grid-sub-demo")
+
+
+  ())
