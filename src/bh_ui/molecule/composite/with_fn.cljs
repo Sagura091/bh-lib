@@ -55,7 +55,7 @@
 (re-frame/dispatch-sync
   [:register-meta
    {:with-fn/compute-new-data {:function compute-new-data
-                               :ports    {:data :port/sink}}}])
+                               :ports    {:data :port/source-sink}}}])
 
 
 (def ui-definition

@@ -54,8 +54,8 @@
                                  :ports     {:data :port/sink}}
                 :fn/filter-fn {:function filter-fn
                                :ports    {:data         :port/sink
-                                          :filter-value :port/sink
-                                          :data-key     :port/sink}}})
+                                          :filter-value :port/source-sink
+                                          :data-key     :port/source-sink}}})
 
 
 (re-frame/dispatch-sync [:register-meta meta-data])

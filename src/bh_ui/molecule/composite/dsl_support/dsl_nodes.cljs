@@ -201,13 +201,12 @@
 
       (reset! last-node data)
 
-      ;(log/info "custom-node (b)" data
+      ;(log/info "custom-node (b)" ;data
       ;  "//" text
       ;  "//" node-type
-      ;  "//" @kind-of-element)
-      ;  "//" (type node-type)
-      ;  "///" handles)
-      ;  "//" extras?)
+      ;  "//" @kind-of-element
+      ;  "///" handles
+      ;  "//" extra-param)
 
       (if (= node-type :ui/container)
         (container-node node)

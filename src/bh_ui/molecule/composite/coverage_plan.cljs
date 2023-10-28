@@ -395,22 +395,23 @@
                                                                           :ports    {:value        :port/sink
                                                                                      :current-time :port/source}}
                           :bigger-coverage-plan/fn-color-targets         {:function fn-color-targets
-                                                                          :ports    {:data :port/sink}}
+                                                                          :ports    {:data :port/source-sink}}
                           :bigger-coverage-plan/fn-color-satellites      {:function fn-color-satellites
                                                                           :ports    {:data    :port/sink
                                                                                      :colored :port/source}}
                           :bigger-coverage-plan/fn-filtered-targets      {:function fn-filtered-targets
                                                                           :ports    {:targets      :port/sink
-                                                                                     :filter-value :port/sink}}
+                                                                                     :filter-value :port/sink
+                                                                                     :data         :port/source}}
                           :bigger-coverage-plan/fn-format-target-data    {:function fn-format-target-data
                                                                           :ports    {:targets   :port/sink
-                                                                                     :selection :port/sink}}
+                                                                                     :selection :port/source-sink}}
                           :bigger-coverage-plan/fn-format-satellite-data {:function fn-format-satellite-data
                                                                           :ports    {:satellites :port/sink
-                                                                                     :selection  :port/sink}}
+                                                                                     :selection  :port/source-sink}}
                           :bigger-coverage-plan/fn-format-imagery-data   {:function fn-format-imagery-data
                                                                           :ports    {:all-imagery :port/sink
-                                                                                     :selection   :port/sink}}
+                                                                                     :selection   :port/source-sink}}
 
 
                           :bigger-coverage-plan/fn-all-imagery           {:function fn-all-imagery

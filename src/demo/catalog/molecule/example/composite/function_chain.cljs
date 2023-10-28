@@ -82,9 +82,9 @@
 (re-frame/dispatch-sync
   [:register-meta
    {:fn/add-b {:function add-b
-               :ports    {:data :port/sink}}
+               :ports    {:data :port/source-sink}}
     :fn/add-c {:function add-c
-               :ports    {:data :port/sink}}}])
+               :ports    {:data :port/source-sink}}}])
 
 
 (defn- data-tools [data source-data]
