@@ -1677,18 +1677,20 @@
 ;;;;;;;;;;;;;;;;;;;;
 ; TODAY:
 ;
-; 1. init-container-locals when the dsl changes
-;     a. need to regen any :ui/components that interface with a newly
-;        added component (:source/local is a good example). MAYBE we just
-;        rebuild *all* the :ui/components?
+; (DONE?) 1. update node positions when dragged on the flow-diagram
 ;
-; 2. update node positions when dragged on the flow-diagram
+; 2. resize components
 ;
 ; 3. modal to change node's label & kind on double-click
 ;        NOTE: consider making the :id/:i "permanent" (makes the following steps unnecessary)
 ;     a. update :mol/flow-nodes and :mol/flow-edges
 ;     b. update :mol/components, :mol/links, and :mol/grid-layout
 ;
+; 4. gestures
+;     a. drop :ui/container
+;     b. drag :ui/component over/into :ui/container
+;     c. remove component
+;     d. remove link (what is the gesture? rt-click? dbl-click?)
 ;
 
 

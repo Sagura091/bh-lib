@@ -215,7 +215,7 @@
                       (node-kind-fn node-type)
                       position)]
 
-        ;(log/info "default-on-drop (b) @orig-data)
+        ;(log/info "default-on-drop (b)" @orig-data)
 
         ; TODO: update :mol/components AND :mol/flow-nodes
         (swap! orig-data assoc :nodes (conj (:nodes @orig-data) new-node))
@@ -261,6 +261,40 @@
 ;; endregion
 
 
+(defonce last-orig-data (atom nil))
+
+
+(defn- assoc-flow-node [nodes-atom id update-key update-value]
+  (let [flow-nodes (:mol/flow-nodes nodes-atom)
+        the-node (first (filter #(= id (:id %)) flow-nodes))
+        the-rest (remove #(= id (:id %)) flow-nodes)]
+    (assoc nodes-atom :mol/flow-nodes
+                    (conj the-rest (assoc the-node update-key update-value)))))
+
+
+(defn- change-nodes [on-change-nodes-fn orig-data nodes]
+  (let [clj-nodes (js->clj nodes :keywordize-keys true)
+        node-ids (map (juxt :id :position) clj-nodes)]
+
+    (log/info "change-nodes" (keys @orig-data) "_____" clj-nodes)
+
+    (reset! last-orig-data {:orig-data @orig-data :nodes clj-nodes})
+
+    (when (:dragging (first clj-nodes))
+      ; TODO: how do we update multiple nodes?
+
+      ;(log/info "change-nodes (b)" node-ids)
+      (swap! orig-data
+        #(-> %
+           ; :flow-nodes is easy, just assoc-in...
+           (assoc-in [:flow-nodes (ffirst node-ids) :position] (-> node-ids first second))
+
+           ; :mol/flow-nodes is more complicated; we have a vector of entities (hash-maps)
+           (assoc-flow-node (ffirst node-ids) :position (-> node-ids first second)))))
+
+    (on-change-nodes-fn nodes)))
+
+
 (defn- diagram* [& {:keys [nodes edges
                            node-types edge-types
                            minimap-styles
@@ -303,7 +337,7 @@
                           minimap-styles                    ;on-drop on-drag-over
                           zoom-on-scroll preventScrolling
                           flowInstance
-                          on-drop on-connect
+                          on-drop on-connect on-node-change
                           force-layout?] :as params}]
 
   ;(log/info "diagram" (first nodes))
@@ -325,7 +359,7 @@
        :component-id component-id
        :orig-data orig-data
        :nodes ns :edges es
-       :on-change-nodes on-change-nodes
+       :on-change-nodes (partial on-node-change on-change-nodes orig-data)
        :on-change-edges on-change-edges
        :node-types node-types
        :edge-types edge-types
@@ -333,14 +367,14 @@
        :on-connect (partial (or on-connect default-on-connect)
                      {:orig-data    orig-data :flowInstance flowInstance
                       :set-edges-fn set-edges :wrapper wrapper})
-       :zoom-on-scroll zoom-on-scroll
-       :preventScrolling preventScrolling
        :on-drop (partial (or on-drop default-on-drop)
                   {:component-id component-id :node-data node-data
                    :node-kind-fn node-kind-fn :orig-data orig-data
                    :flowInstance flowInstance :set-nodes-fn set-nodes
                    :wrapper      wrapper})
        :on-drag-over on-drag-over
+       :zoom-on-scroll zoom-on-scroll
+       :preventScrolling preventScrolling
        :flowInstance flowInstance]]]))
 
 
@@ -389,6 +423,7 @@
        :style style
        :on-drop on-drop
        :on-connect on-connect
+       :on-node-change change-nodes
        :minimap-styles (or minimap-styles {})
        :zoom-on-scroll zoom-on-scroll
        :preventScrolling preventScrolling
@@ -429,7 +464,6 @@
   ())
 
 
-
 (comment
   (do
     (def data @@last-data)
@@ -441,3 +475,46 @@
 
 
   ())
+
+
+; when a node changes position, we need to update :flow-nodes and :mol/flow-nodes
+;      what else?!?!?
+(comment
+  (do
+    (def orig-data (r/atom (:orig-data @last-orig-data)))
+    (def nodes [{:id ":source/local-2", :type "position", :dragging true,
+                 :positionAbsolute {:x 220.33333333333331, :y 40},
+                 :position {:x 220.33333333333331, :y 40}}])
+    (def node-ids (map (juxt :id :position) nodes)))
+
+  (:nodes @last-orig-data)
+
+
+  (defn- assoc-flow-node [nodes-atom id update-key update-value]
+    (let [flow-nodes (:mol/flow-nodes nodes-atom)
+          the-node (first (filter #(= id (:id %)) flow-nodes))
+          the-rest (remove #(= id (:id %)) flow-nodes)]
+      (assoc nodes-atom :mol/flow-nodes
+                        (conj the-rest (assoc the-node update-key update-value)))))
+
+  (do
+    (def nodes-atom @orig-data)
+    (def id ":source/local-2")
+    (def flow-nodes (:mol/flow-nodes nodes-atom))
+    (def the-node (first (filter #(= id (:id %)) flow-nodes)))
+    (def the-rest (remove #(= id (:id %)) flow-nodes)))
+
+  (assoc-flow-node @orig-data (ffirst node-ids)
+    :position (-> node-ids first second))
+
+  (swap! orig-data
+    #(-> %
+       ; :flow-nodes is easy, just assoc-in...
+       (assoc-in [:flow-nodes (ffirst node-ids) :position] (-> node-ids first second))
+
+       ; :mol/flow-nodes is more complicated;
+       (assoc-flow-node (ffirst node-ids) :position (-> node-ids first second))))
+
+  ())
+
+

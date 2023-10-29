@@ -148,15 +148,6 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
          (add-ui-component node-type)))))
 
 
-(defn- on-resize [node resize-event resize-params])
-  ;#(do
-  ;   (reset! current-size
-  ;     (js->clj %2 :keywordize-keys true))
-  ;   (log/info "container-node (c)" %1 "//" %2
-  ;     "//" (js->clj %2 :keywordize-keys true)
-  ;     "//" @current-size)))
-
-
 (defn- on-drop
   "we need a custom (on-drop) as part of the DAG panel because we need to manipulate
   the Mol-DSL configuration itself, as well as the flow-layout (nodes & edges) that
