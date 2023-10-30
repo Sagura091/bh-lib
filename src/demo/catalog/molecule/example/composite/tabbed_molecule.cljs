@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.tabbed-molecule
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [woolybear.ad.icons :as icons]
             [reagent.core :as r]
             [re-com.core :as rc]
@@ -88,7 +89,8 @@
 
 (defn example []
   (let [container-id "tabbed-molecule"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) molecule-def))]
     (fn []
       (acu/demo "Tabbed Molecule"
         "This example provides a 'widget' (collection of UI Components) with multiple 'pages,'
@@ -96,8 +98,9 @@
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom molecule-def)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 
@@ -129,7 +132,8 @@
 
 (defn example-2 []
   (let [container-id "tabbed-molecule-2"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) molecule2))]
     (fn []
       (acu/demo "Tabbed Molecule"
         "This example provides a 'widget' (collection of UI Components) with multiple 'pages,'
@@ -137,8 +141,9 @@
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom molecule2)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 

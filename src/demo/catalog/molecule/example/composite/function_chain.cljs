@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.function-chain
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -131,7 +132,9 @@
 
 (defn example []
   (let [container-id "function-chain"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-def))]
+
     (fn []
       (acu/demo "Widget with multiple functions chained together"
         "The chart will draw data from the end of a chain of function"
@@ -144,8 +147,9 @@
          [:div.molecule-content
           [data-config-update-example
            :widget [bh/grid-container
-                    :data (r/atom mol-def)
+                    :data dsl
                     :component-id component-id
+                    :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
            :component-id component-id]]]

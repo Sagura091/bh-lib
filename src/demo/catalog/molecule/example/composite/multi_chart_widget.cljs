@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.multi-chart-widget
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -62,7 +63,8 @@
 
 (defn example []
   (let [container-id "multi-chart-widget"
-        component-id (bh/utils-path->keyword container-id "widget")]
+        component-id (bh/utils-path->keyword container-id "widget")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/multi-chart-ui-def))]
 
     (fn []
       (acu/demo "Multiple Charts in a Widget"
@@ -80,8 +82,9 @@
          [:div.molecule-content
           [data-update-example
            :widget [bh/grid-container
-                    :data (r/atom bh/multi-chart-ui-def)
+                    :data dsl
                     :component-id component-id
+                    :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
            :component-id component-id]]]

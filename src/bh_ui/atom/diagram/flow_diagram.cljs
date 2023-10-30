@@ -21,9 +21,10 @@
 (log/info "bh-ui.atom.diagram.flow-diagram")
 
 
-(def last-data (atom nil))
-(def last-types (atom nil))
-(def last-inputs (atom nil))
+(defonce last-data (atom nil))
+(defonce last-types (atom nil))
+(defonce last-inputs (atom nil))
+(defonce last-orig-data (atom nil))
 
 
 (declare node)
@@ -261,9 +262,6 @@
 ;; endregion
 
 
-(defonce last-orig-data (atom nil))
-
-
 (defn- assoc-flow-node [nodes-atom id update-key update-value]
   (let [flow-nodes (:mol/flow-nodes nodes-atom)
         the-node (first (filter #(= id (:id %)) flow-nodes))
@@ -291,6 +289,7 @@
 
            ; :mol/flow-nodes is more complicated; we have a vector of entities (hash-maps)
            (assoc-flow-node (ffirst node-ids) :position (-> node-ids first second)))))
+
 
     (on-change-nodes-fn nodes)))
 

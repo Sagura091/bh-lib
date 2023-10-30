@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.simple-multi-chart-2
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -134,6 +135,7 @@
            :widget [bh/grid-container
                     :data (r/atom bh/simple-multi-chart2-ui-def)
                     :component-id component-id
+                    :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
            :component-id component-id]]]

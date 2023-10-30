@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.with-fn-example
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -64,7 +65,8 @@
 
 (defn example []
   (let [container-id "chart-with-fn"
-        component-id (bh/utils-path->keyword container-id "widget")]
+        component-id (bh/utils-path->keyword container-id "widget")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/with-fn-ui-def))]
     (fn []
       (acu/demo "A Multiple Charts in a Widget (with 'computed' data)"
         "This example provides a 'widget' (collection of UI Components) organized into a digraph (Event Model) that
@@ -85,8 +87,9 @@ Here, we show the original data in the line chart while the pie chart shows the 
          [:div.molecule-content
           [data-config-update-example
            :widget [bh/grid-container
-                    :data (r/atom bh/with-fn-ui-def)
+                    :data dsl
                     :component-id component-id
+                    :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
            :component-id component-id]]]

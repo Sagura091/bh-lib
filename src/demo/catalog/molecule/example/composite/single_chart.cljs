@@ -1,6 +1,7 @@
 (ns demo.catalog.molecule.example.composite.single-chart
   (:require [woolybear.ad.catalog.utils :as acu]
             [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [reagent.core :as r]
             [woolybear.ad.layout :as layout]))
 
@@ -53,7 +54,8 @@
 
 (defn example []
   (let [container-id "single-chart-molecule"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol))]
     (fn []
       (acu/demo "Molecule with a Single Chart"
         "A means to experiment putting chart atoms into a very simple molecule as a means to
@@ -62,8 +64,9 @@
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom mol)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 

@@ -1,5 +1,6 @@
 (ns demo.catalog.molecule.example.composite.v-scroll-pane-children
   (:require [bh-ui.core :as bh]
+            [demo.catalog.molecule.local-storage :as storage]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -35,7 +36,8 @@
 
 (defn example []
   (let [container-id "v-scroll-with-children"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) ui-definition))]
     (fn []
       (acu/demo "Containers (Vertical Scroll & Carousel) with Child Charts"
         "The goal is to support atoms which can have 'children', i.e., other atoms
@@ -44,8 +46,9 @@ the carousel (based upon react-responsive-carousel)."
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom ui-definition)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 
@@ -108,7 +111,8 @@ the carousel (based upon react-responsive-carousel)."
 
 (defn example-2 []
   (let [container-id "v-scroll-with-table-children"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) def-2))]
     (fn []
       (acu/demo "Vertical Scroll with Child Tables"
         "This example is ***IN PROGRESS***, and may not be working yet.
@@ -118,8 +122,9 @@ that are visually contained _within_ the outer atom. In this example, we use the
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom def-2)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 

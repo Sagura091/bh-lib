@@ -395,7 +395,7 @@
 
       (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
 
-      ;(log/info "component" @data)
+      ;(log/info "component (after prep)" @data)
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
@@ -403,7 +403,7 @@
 
         [:div.box.widget-content-container
          [rc/v-box :src (rc/at)
-          ;:justify :start
+          ; :justify :start
           :width "100%"
           :height "100%"
           :gap "5px"

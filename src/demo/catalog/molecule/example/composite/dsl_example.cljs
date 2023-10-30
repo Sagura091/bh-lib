@@ -97,7 +97,8 @@
 
 (defn example []
   (let [container-id "dsl-example"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-def))]
     (fn []
       (acu/demo "DSL Example"
         "The example molecule is intended to show how all the various elements of the DSL
@@ -105,8 +106,9 @@ can be used to together to build complex UIs"
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom mol-def)
+           :data dsl
            :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
 

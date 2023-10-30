@@ -1,6 +1,7 @@
 (ns demo.catalog.molecule.example.composite.signal-analysis
   (:require [bh-ui.core :as bh]
             [demo.catalog.molecule.example.composite.data.signals :as d]
+            [demo.catalog.molecule.local-storage :as storage]
             [woolybear.ad.icons :as icons]
             [reagent.core :as r]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
@@ -152,7 +153,8 @@
 
 (defn example []
   (let [container-id "signal-analysis"
-        component-id (bh/utils-path->keyword container-id "molecule")]
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) mol-2))]
     (fn []
       (acu/demo "Signal Analysis"
         "This example provides a 'widget' (collection of UI Components) to show signal analysis traces
@@ -162,7 +164,8 @@ alongside a table-panel of tables, allowing the user to switch traces and see re
         [layout/frame
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom mol-2)
+           :data dsl
+           :save-fn storage/save-to-local-storage
            :component-id component-id
            :resizable true
            :tools true]]]
