@@ -43,11 +43,11 @@
    [tabbed/example]
    [tabbed/example-2]
    [signal/example]
-   ;
+
    [simple-multi-chart/example]
    [simple-multi-chart-2/example]
    [multi-chart-widget/example]
-   ;
+
    [with-fn/example]
    [fc/example]])
 

@@ -230,19 +230,18 @@
 
 
 (defn- diff-dsl [old-dsl new-dsl]
-  ;(log/info "diff-dsl" (empty? old-dsl) "//" (set (:mol/grid-layout new-dsl)) "_____" (set (:mol/grid-layout new-dsl)))
-  (if (seq old-dsl)
-    {:mol/components  (into {}
-                        (clojure.set/difference
-                          (set (:mol/components new-dsl))
-                          (set (get old-dsl :mol/components))))
+  (let [nw (select-keys new-dsl [:mol/components :mol/links])
+        old (select-keys old-dsl [:mol/components :mol/links])
+        df (if (seq old-dsl)
+             (clojure.data/diff old nw)
+             [nil nw nil])
+        ret (match df
+              [nil nil _] false
+              :else true)]
 
-     :mol/links       (into {}
-                        (clojure.set/difference
-                          (set (:mol/links new-dsl))
-                          (set (get old-dsl :mol/links))))}
+    (log/info "diff-dsl" ret)
 
-    (select-keys new-dsl [:mol/components :mol/links])))
+    ret))
 
 
 (defn- component-panel
@@ -376,24 +375,28 @@
         last-dsl     (r/atom nil)
         comp-or-dag? (r/atom :component)]
 
-    ; these two steps both manipulate the "stateful" data input (holding the Mol-DSL for the UI)
-    ; they "should" be moved inside the form-2 because we need to regen the :ui/components
     (setup-dsl data container-id)
 
     (fn []
-      (when (diff-dsl @last-dsl @data)
-        (ui/make-flow data)
-        (reset! last-dsl @data))
-                                          ; update the r/atom with the nodes and edges for the flow-diagram
-      (reset! last-full-config @data)
-
       (when (nil? @id)
+        (log/info "component (a)")
         (reset! id component-id)
         (ui-utils/init-container-locals component-id (config @data))
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local component-id [:container] container-id))
 
-      (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
+      (when (diff-dsl @last-dsl @data)
+        (log/info "component (b)" (diff-dsl @last-dsl @data))
+
+        (ui/make-flow data)
+        (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
+
+        (reset! last-dsl @data))
+
+      ; update the r/atom with the nodes and edges for the flow-diagram
+      (reset! last-full-config @data)
+
+
 
       ;(log/info "component (after prep)" @data)
 

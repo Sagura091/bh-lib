@@ -43,6 +43,30 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (def next-id (atom 0))
 
 
+(defn fn-default [{:keys [data sub-name]}]
+  ;(log/info "fn-default" data "____" sub-name)
+
+  (rf/reg-sub
+    (first sub-name)
+    :<- data
+    (fn [d _]
+      (log/info sub-name "fn-default (does nothing)")
+      d))
+
+  (rf/reg-event-fx
+    (first sub-name)
+    (fn-traced [_ updates]
+      (log/info sub-name "fn-default (does nothing)" updates)
+      {})))
+
+
+
+(rf/dispatch-sync
+  [:register-meta
+   {:fn/fn-default {:function fn-default
+                    :ports    {:data :port/source-sink}}}])
+
+
 (def source-code '[composite
                    :data component/ui-definition
                    :component-id :container.component
@@ -74,7 +98,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                               flowInstance set-nodes-fn wrapper] :as inputs}
                       node-id event]
 
-  (log/info "add-flow-node (a)" (:mol/flow-nodes @full-configuration))
+  ;(log/info "add-flow-node (a)" (:mol/flow-nodes @full-configuration))
 
   (let [node-type       (.getData (.-dataTransfer event) "editable-flow")
         x               (.-clientX event)
@@ -92,7 +116,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                       (node-kind-fn node-type)
                       position)]
 
-        (log/info "add-flow-node (b)" new-node "//" (-> @full-configuration :mol/flow-nodes))
+        ;(log/info "add-flow-node (b)" new-node "//" (-> @full-configuration :mol/flow-nodes))
 
         ; TODO: update diagram nodes - should use handle-change-path
         (swap! orig-data update :nodes conj new-node)
@@ -118,7 +142,14 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                       {:id 2 :x 20 :y 20}]})
 
 
+(defmethod create-dsl-node :source/fn [node-id node-type]
+  ;(log/info "create-dsl-node :source/fn" node-id node-type)
+  {:atm/role node-type
+   :atm/kind :fn/fn-default})
+
+
 (defmethod create-dsl-node :default [node-id node-type]
+  ;(log/info "create-dsl-node :default" node-id node-type)
   {:atm/role node-type :atm/kind node-type})
 
 
@@ -217,13 +248,13 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         target-id     (:target event-map)
         target-handle (:targetHandle event-map)]
 
-    (log/info "add-dsl-edge"
-      ;configuration
-      "//" event
-      "//" event-map
-      "//" (-> configuration :mol/links keys)
-      "_____" source-handle "//" (prep-handle source-handle)
-      "_____" target-handle "//" (prep-handle target-handle))
+    ;(log/info "add-dsl-edge"
+    ;  ;configuration
+    ;  "//" event
+    ;  "//" event-map
+    ;  "//" (-> configuration :mol/links keys)
+    ;  "_____" source-handle "//" (prep-handle source-handle)
+    ;  "_____" target-handle "//" (prep-handle target-handle))
 
     (swap! configuration update-in [:mol/links source-id]
       #(merge-with merge %
@@ -239,7 +270,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   [full-configuration component-id container-id inputs event]
 
-  (log/info "on-connect" (js->clj event :keywordize-keys true))
+  ;(log/info "on-connect" (js->clj event :keywordize-keys true))
 
   ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
   (add-dsl-edge full-configuration event)

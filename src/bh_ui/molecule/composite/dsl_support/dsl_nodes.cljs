@@ -107,7 +107,7 @@
 (defn node-data
   [node-type node-id node-kind children position]
 
-  (log/info "node-data" node-type node-id node-kind)
+  ;(log/info "node-data" node-type node-id node-kind)
 
   (let [handles           (-> (string->keyword node-type)
                             bh-ui.atom.component-registry/lookup-component
@@ -115,6 +115,7 @@
         node-kind-prepped (condp = node-type
                             :ui/component :stunt/text-block
                             :ui/container :rc/box
+                            :source/fn :fn/fn-default
                             node-type)]
     {:id       node-id
      :type     (str node-type)
@@ -143,17 +144,17 @@
         [isVisible set-visibility on-change-visibility] (useState false)
         resize-fn       #(do
                            (reset! current-size
-                             (js->clj %2 :keywordize-keys true))
-                           (log/info "container-node (c)" %1 "//" %2
-                             "//" (js->clj %2 :keywordize-keys true)
-                             "//" @current-size))]
+                             (js->clj %2 :keywordize-keys true)))]
+                           ;(log/info "container-node (c)" %1 "//" %2
+                           ;  "//" (js->clj %2 :keywordize-keys true)
+                           ;  "//" @current-size))]
 
-    (log/info "container-node (b)"
-      ;data
-      "//" text
-      ;"//" children
-      "//" size
-      "//" @current-size)
+    ;(log/info "container-node (b)"
+    ;  ;data
+    ;  "//" text
+    ;  ;"//" children
+    ;  "//" size
+    ;  "//" @current-size)
     ;"//" (into {} (map (fn [[k v]] {(keyword k) v}) size))
     ;"//" node-type
     ;"//" node-styling
@@ -204,9 +205,9 @@
       ;(log/info "custom-node (b)" ;data
       ;  "//" text
       ;  "//" node-type
-      ;  "//" @kind-of-element
-      ;  "///" handles
-      ;  "//" extra-param)
+      ;  ;"//" @kind-of-element
+      ;  "///" handles)
+        ;"//" extra-param)
 
       (if (= node-type :ui/container)
         (container-node node)
