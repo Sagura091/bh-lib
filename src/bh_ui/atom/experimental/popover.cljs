@@ -66,7 +66,7 @@
                :trigger (if (:clickable @cfg) "click" "mouseenter")
                :interactive true
                :theme (or (:theme @cfg) "light")}
-     [:div {:style {:display "inline-block"}}
+     [:div {:style {:display "inline-block"}} ; We set it to inline-block so the component and popover attaches correctly (moves component to top left of div)
       (:component @d)]]))
 
 (def element-def {:rc/popover-wrapper {:component popover-wrapper :child :keyword}})

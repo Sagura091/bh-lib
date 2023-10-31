@@ -25,6 +25,7 @@
              io.github.noahtheduke/splint         {:mvn/version "1.9.0"}
              com.github.seancorfield/depstar      {:mvn/version "2.1.303"}
              com.taoensso/tempura                 {:mvn/version "1.5.3"}
+             rokt/check-deps                      {:mvn/version "0.1.2"}
 
              ; required by wollybear...
              clj-commons/secretary                {:mvn/version "1.2.4"}}
