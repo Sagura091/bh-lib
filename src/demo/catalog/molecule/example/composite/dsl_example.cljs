@@ -84,7 +84,7 @@
 
                                 "carousel"    {:atm/role           :ui/container :atm/kind :bhui/carousel
                                                :atm/children       ["v-scroll-1" "v-scroll-2"]
-                                               :atm/default-config {:showIndicators true :showThumbs true}}}
+                                               :atm/default-config {:showIndicators true :showThumbs false}}}
 
 
               :mol/links       {"data/one" {:data {"table-one"  :data

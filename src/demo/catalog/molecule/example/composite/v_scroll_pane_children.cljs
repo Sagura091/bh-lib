@@ -25,7 +25,7 @@
                                                     :atm/default-data bh/area-chart-sample-data}
                                       "carousel"   {:atm/role           :ui/container :atm/kind :bhui/carousel
                                                     :atm/label          "Carousel" :atm/children ["bar" "line"]
-                                                    :atm/default-config {:showIndicators true :showThumbs true
+                                                    :atm/default-config {:showIndicators true :showThumbs false
                                                                          :auto-play      true :interval 2000
                                                                          :infiniteLoop   true}}}
                     :mol/links       {"topic/data" {:data {"bar-chart"  :data

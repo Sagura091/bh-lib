@@ -46,12 +46,19 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (defn fn-default [{:keys [data sub-name]}]
   ;(log/info "fn-default" data "____" sub-name)
 
-  (rf/reg-sub
-    (first sub-name)
-    :<- data
-    (fn [d _]
-      (log/info sub-name "fn-default (does nothing)")
-      d))
+  (if data
+    (rf/reg-sub
+      (first sub-name)
+      :<- data
+      (fn [d _]
+        (log/info sub-name "fn-default (:data pass through)")
+        d))
+
+    (rf/reg-sub
+      (first sub-name)
+      (fn [_ _]
+        (log/info sub-name "fn-default (no :data case)")
+        "")))
 
   (rf/reg-event-fx
     (first sub-name)
