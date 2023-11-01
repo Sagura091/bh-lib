@@ -44,3 +44,12 @@ components/metaversion/src/rocky_road/metaversion/rocky_road.clj
 /src/demo/resources/public/js/
 /package-lock.json
 /demo/resources/public/js/
+
+
+/*.key
+/*.pptx
+/*.pdf
+/*.numbers
+/*.xlsx
+/*.json
+
