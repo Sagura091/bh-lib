@@ -239,7 +239,7 @@
               [nil nil _] false
               :else true)]
 
-    (log/info "diff-dsl" ret)
+    ;(log/info "diff-dsl" ret)
 
     ret))
 
@@ -375,18 +375,18 @@
         last-dsl     (r/atom nil)
         comp-or-dag? (r/atom :component)]
 
-    (setup-dsl data container-id)
-
     (fn []
       (when (nil? @id)
-        (log/info "component (a)")
+        ;(log/info "component (a)")
         (reset! id component-id)
         (ui-utils/init-container-locals component-id (config @data))
         ;(log/info "component (b)" @id "//" container-id)
         (ui-utils/dispatch-local component-id [:container] container-id))
 
       (when (diff-dsl @last-dsl @data)
-        (log/info "component (b)" (diff-dsl @last-dsl @data))
+        ;(log/info "component (b)" (diff-dsl @last-dsl @data))
+
+        (setup-dsl data container-id)
 
         (ui/make-flow data)
         (ui/prep-environment @data component-id @(re-frame/subscribe [:meta-data-registry]))
@@ -396,9 +396,7 @@
       ; update the r/atom with the nodes and edges for the flow-diagram
       (reset! last-full-config @data)
 
-
-
-      ;(log/info "component (after prep)" @data)
+      ;(log/info "component (c)" @data)
 
       (let [buttons [{:id :component :tooltip "Widget view" :label [:i {:class "zmdi zmdi-view-compact"}]}
                      {:id :dag :tooltip "Event model view" :label [:i {:class "zmdi zmdi-share"}]}
