@@ -15,7 +15,9 @@
 
 
 (defn text-block [& {:keys [data config style component-id container-id] :as params}]
-  ;(log/info "text-block (a)" params)
+  ;(log/info "text-block (a)" params
+  ;  "____" data
+  ;  "____" (bh/utils-resolve-value data))
 
   (let [id (r/atom nil)
         d  (bh/utils-resolve-value data)]

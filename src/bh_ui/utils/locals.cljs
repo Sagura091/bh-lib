@@ -355,8 +355,10 @@
         item (h/path->keyword (if more (last more) a))
         l    (first layer-2)]
 
-    ;(log/info "create-container-local-sub" ;container-id "//"
-    ;  p)
+    ;(log/info "create-container-local-sub"
+    ;  container-id
+    ;  "//" p
+    ;  "_____" item)
 
     ;(when layer-2
     ;  (log/info "create-container-local-sub" p
