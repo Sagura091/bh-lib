@@ -22,20 +22,17 @@
 
 (defn catalog []
 
-  ; TODO: need to fix a bug in react-table : failing with the new load/save DSL logic
-
   [:div
    ; depend on :source/remote
+
+   [chart-remote-data/example]
 
    ;[dsl/example]
    [dsl/example-2]
 
    ;[coverage-plan/ww-example]
-
-   ;[chart-remote-data/example]
    ;[coverage-plan/r-example]
    ;[coverage-plan/twoD-example]
-   ;[two-d-three-d-globe/example]
 
    [single-chart/example]
    [v-scroll/example]

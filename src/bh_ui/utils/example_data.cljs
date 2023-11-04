@@ -322,6 +322,33 @@
   ())
 
 
+(defn random-entity-data [names]
+  (let [row-gen (fn []
+                  {:uv (mg/generate [:and int? [:> 10] [:< 1000]])
+                   :tv (mg/generate [:and int? [:> 10] [:< 1000]])
+                   :pv (mg/generate [:and int? [:> 10] [:< 1000]])
+                   :amt (mg/generate [:and int? [:> 10] [:< 1000]])})]
+    (->> names
+      (map (fn [n]
+             (merge {:name n} (row-gen))))
+      vec)))
+
+
+(comment
+  (def names ["Alpha" "Bravo" "Charlie" "Delta"])
+  (let [row-gen (fn []
+                  {:uv (mg/generate number?) :tv (mg/generate number?)
+                   :pv (mg/generate number?) :amt (mg/generate number?)})]
+    (->> names
+      (map (fn [n]
+             (merge {:name n} (row-gen))))
+      vec))
+
+
+
+  ())
+
+
 (defn random-tabular-data []
   (mg/generate example-tabular-data-data))
 
