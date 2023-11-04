@@ -1678,16 +1678,14 @@
 ;;;;;;;;;;;;;;;;;;;;
 ; TODAY:
 ;
-; (DONE?) 1. update node positions when dragged on the flow-diagram
+; 1. resize components
 ;
-; 2. resize components
-;
-; 3. modal to change node's label & kind on double-click
+; 2. modal to change node's label & kind on double-click
 ;        NOTE: consider making the :id/:i "permanent" (makes the following steps unnecessary)
 ;     a. update :mol/flow-nodes and :mol/flow-edges
 ;     b. update :mol/components, :mol/links, and :mol/grid-layout
 ;
-; 4. gestures
+; 3. gestures
 ;     a. drop :ui/container
 ;     b. drag :ui/component over/into :ui/container
 ;     c. remove component

@@ -55,7 +55,11 @@
   [& {:keys [data config]}]
   (let [cfg           (h/resolve-value config)
         d             (h/resolve-value data)
-        properties (if (and (not (= nil (:theme @cfg))) (and (not (= "light" (:theme @cfg))) (not (= "light-border" (:theme @cfg)))) ) #js{:class (white-text)} #js{})]
+        properties (if (and (not (= nil (:theme @cfg)))
+                         (not (= "light" (:theme @cfg)))
+                         (not (= "light-border" (:theme @cfg))))
+                     #js{:class (white-text)}
+                     #js{})]
 
     [:> Tippy {:content (r/create-element "div" #js{} ""
                                           (r/create-element "h3" properties (:popover-title @cfg))

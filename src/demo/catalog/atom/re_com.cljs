@@ -22,12 +22,16 @@
             [demo.catalog.atom.example.re-com.v-scroller :as v-scroller]
             [demo.catalog.atom.example.re-com.tabs :as tabs]
             [demo.catalog.atom.example.re-com.input-field :as input]
-            [demo.catalog.atom.example.re-com.dropdown :as dropdown]))
+            [demo.catalog.atom.example.re-com.dropdown :as dropdown]
+            [demo.catalog.atom.example.re-com.modal :as modal]))
+
 
 
 (defn examples
   []
   [:div
+   [modal/example]
+
    [tabs/example]
    [tabs/example-2]
    [tabs/example-3]
