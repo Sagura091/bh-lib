@@ -14,16 +14,11 @@
 
   (log/info "modal-dialog (a)")
 
-  [rc/v-box :src (rc/at)
-   :children [[rc/button :src (rc/at)
-               :label "Modal Dialog"
-               :class "btn-info"
-               :on-click #(reset! show? true)]
-              (when @show? [rc/modal-panel :src (rc/at)
-                            :backdrop-color "grey"
-                            :backdrop-opacity 0.4
-                            :style {:font-family "Consolas"}
-                            :child [content show?]])]])
+  [rc/modal-panel :src (rc/at)
+   :backdrop-color "grey"
+   :backdrop-opacity 0.4
+   :style {:font-family "Consolas"}
+   :child [content show?]])
 
 
 

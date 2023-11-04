@@ -75,6 +75,7 @@
             [bh-ui.atom.re-com.label :as label]
             [bh-ui.atom.re-com.labeled-field :as labeled-field]
             [bh-ui.atom.re-com.login :as login]
+            [bh-ui.atom.re-com.modal :as modal]
             [bh-ui.atom.re-com.slider :as slider]
             [bh-ui.atom.re-com.table :as table]
             [bh-ui.atom.re-com.tabs :as tabs]
@@ -393,6 +394,7 @@
 (def recom-labeled-field                    labeled-field/labeled-field)
 (def recom-labeled-area                     labeled-field/labeled-area)
 (def recom-login                            login/login)
+(def recom-modal                            modal/modal)
 (def recom-slider                           slider/slider)
 (def recom-table-column-headers             table/table-column-headers)
 (def recom-meta-table                       table/meta-table)
