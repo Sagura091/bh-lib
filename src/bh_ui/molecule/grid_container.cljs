@@ -19,6 +19,7 @@
 (log/info "bh-ui.molecule.grid-container")
 
 
+; some atoms to assist in debugging at the repl...
 (defonce last-config (atom nil))
 (defonce last-data (atom nil))
 (defonce last-params (atom nil))
@@ -26,18 +27,11 @@
 (defonce last-component-lookup (atom nil))
 (defonce last-added-stuff (atom nil))
 (defonce last-cached-stuff (atom nil))
-
-; some atoms to assist in debugging at the repl...
-;(def last-params (atom nil))
-;(def last-component-lookup (atom nil))
-;(def last-data (atom nil))
-
-
 (defonce leaving-the-dag (atom nil))
 
 
 (defn- config
-  "set up the local config keys, specifically we want the :mol/layout key, so we can
+  "set up the local config keys, specifically we want the :mol/grid-layout key, so we can
   track updates to the layout should the user drag/resize any of the internal
   components.
 
@@ -77,7 +71,7 @@
 
 
 (defn- on-width-update
-  "Called when the conatinig element gets wider. (Currently does nothing. Not sure what it
+  "Called when the containing element gets wider. (Currently does nothing. Not sure what it
   *should* do...)
   ---
 
@@ -135,7 +129,25 @@
   (map #(assoc % :static (-> % :static not)) layout))
 
 
-(defn- compute-containership [configuration]
+; region ; build up internal datastructures form the Mol-DSL (see setup-dsl)
+
+; these next few functions work together do build a number intermediate data structures
+; that support various parts of the 'compilation' of the Mol-DSL into both the flow-diagram
+; (used for editing the DSL) and the visual representation itself (the 'widgets')
+
+(defn- compute-containership
+  "figures out what components 'contain' (visually in the flow-diagram, and ith the widget hiccup)
+  other components so the various runtime data structures can be constructed correctly.
+
+  - configuration (hash-map) : the DSL, specifically on with a `:mol/components` key
+
+  returns: map of node ids to the ids of their children
+
+  > Note: nodes without children are suppressed
+
+  See also `(compute-parents)`"
+
+  [configuration]
   (->> configuration
     :mol/components
     keys
@@ -148,7 +160,17 @@
     (into {})))
 
 
-(defn- compute-parents [configuration]
+(defn- compute-parents
+  "kind of the opposite of compute-containership, this function looks for the 'parents', i.e.,
+  components which have a `:child` or `:children`
+
+  - configuration (hash-map) : the output of `(compute-containership)`
+
+  returns: map of child node to parent node
+
+  See also `(compute-containership)`"
+
+  [configuration]
   (->> configuration
     (mapcat (fn [[parent children]]
               (map (fn [child]
@@ -156,7 +178,20 @@
     (into {})))
 
 
-(defn- compute-flow-layout [parent-graph nodes]
+(defn- compute-flow-layout
+  "build the  data structure needed for the JS `react-flow` library to draw the nodes
+  of the DSL. It builds all the nodes into a 'diagram' so we can work with a rooted tree when
+  editing the node on the flow-diagram
+
+  - parent-graph : output from `(compute-parents)`
+  - nodes : (vector) the component ID, specially the hash-map keys form the `:mol/component` part of the DSL
+
+  returns: map of node layouts with updated positions, merges with the :diagram pseudo-node
+
+  See also ???
+  "
+
+  [parent-graph nodes]
   (reduce (fn [layout node]
             (let [parent (get parent-graph node)]
               (ui/set-position layout (or parent :diagram) node)))
@@ -167,7 +202,17 @@
     nodes))
 
 
-(defn- compute-node-sizes [flow-layout]
+(defn- compute-node-sizes
+  "computes the sizes of the nodes, especially the 'container' nodes, making sure they are large
+  enough for fit all their children.
+
+  - flow-layout : output from `(compute-flow-layout)`
+
+  returns: map of node ids to their attributes with :size included
+
+  See also `(bh-ui.molecule.composite.util.ui/compute-size)`"
+
+  [flow-layout]
   (->> flow-layout
     (map (fn [[id {children :children :as v}]]
            (if children
@@ -176,7 +221,22 @@
     (into {})))
 
 
-(defn- compute-node-cases [nodes]
+(defn- compute-node-cases
+  "tags nodes into one of several categories:
+
+    case 0: the :diagram (pseudo-node) itself
+    case 1: root nodes, i.e., nodes that belong to the :diagram
+    case 2: root containers, i.e., nodes that belong to the :diagram AND also have children
+    case 3: interior containers, i.e., node that are children of other containers
+    case 4: leaf nodes, i.e., all other nodes parented by a container
+
+  - nodes - output from `(compute-node-sizes)`
+
+  returns: seq of maps from node ids to the 'case'
+
+  See also ????"
+
+  [nodes]
   (->> nodes
     (map (fn [[k v :as m]]
            {k ((juxt :parent :children) v)}))
@@ -200,38 +260,71 @@
                 :else {:case 4})}))))
 
 
-(defn- add-cases-to-nodes [layout nodes]
+(defn- add-cases-to-nodes
+  "updates the `:case` attribute of each node with the assigned case. this may change over time (hence, using `update`)
+  as the user edits the Mol-DSL on the flow-diagram
+
+  - layout: output from `(compute-node-sizes)`
+  - nodes: output from `(compute-node-cases)`
+
+  returns: seq of maps from node id to node attributes"
+
+  [layout nodes]
   (reduce (fn [config node]
             (let [[[id {case :case}]] (seq node)]
               (update config id assoc :case case)))
     layout
     nodes))
 
-
-(defn- prep-dsl [data]
-  (dissoc data
-    :flow-nodes :parent-graph :containership-graph
-    :denorm :nodes :edges
-    :graph :container))
+; endregion
 
 
-(defn- node-dblclick [form-data show?]
+(defn- prep-dsl
+  " prepares the Mol-DSL for saving (wherever the outside world deems to save the data)
+
+  strips off all the computed data structured.
+
+  data: a Mol-DSL
+
+  returns: map (Mol-DSL) with only the 'required' keys"
+
+  [data]
+
+  (select-keys data
+    [:mol/components :mol/links :mol/grid-layout
+     :mol/flow-nodes :mol/flow-edges]))
+
+
+(defn- node-dblclick
+  "mouse double-click handler, setting the "
+
+  [form-data show?]
+
   (reset! show? true)
-
   (log/info "node-dblclick" @form-data "____" show?))
 
-;(js/alert (str "default-node-dblclick: " node)))
 
+(defn- default-save-fn
+  "default implementation of a save function, it does nothing but report activation in the LOG
 
-(defn- default-save-fn [component-id data]
+  used only when the 'outside word' does NOT provide an implementation. this protects the internal workings
+  from needing `nil` protection"
+
+  [component-id data]
+
   (log/info "SAVING +++++++++" component-id "//" data))
 
 
-(defn- dsl-only [dsl]
-  (select-keys dsl [:mol/components :mol/links]))
+(defn- diff-dsl
+  "compares 2 DSL to each other to determine if they are different in any relevant way
 
+  - old-dsl: the older DSL, the 'original'
+  - new-dsl: the newer DSL, assumed to have changed (added, moved, renamed, etc.)
 
-(defn- diff-dsl [old-dsl new-dsl]
+  returns: (boolean) `true` if they are *different*, `false` if they are the same
+  "
+
+  [old-dsl new-dsl]
   (let [nw  (select-keys new-dsl [:mol/components :mol/links])
         old (select-keys old-dsl [:mol/components :mol/links])
         df  (if (seq old-dsl)
@@ -361,7 +454,7 @@
   - resizable : (boolean) can the user resize or rearrange the elements of this component
   - tools : (boolean) should the overall widget provide editing tools for the Mol-DSL itself.
   - save-fn : (function) [optional] function that takes an identifier, typically the component-id, and the DSL data to save 'somewhere'
-                 this function is responsible for 'doing the right thing'. If not function is provided (i.e., nil)
+                 this function is responsible for 'doing the right thing'. If no function is provided (i.e., nil)
                  the (default-save-fn) defined above will be used.
 
   "
