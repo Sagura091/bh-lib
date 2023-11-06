@@ -7,7 +7,7 @@ of all different kinds of components.
 Additionally, the repo provides a standalone Demonstration of all the UI components 
 available. This provides 2 benefits:
 
-1. If you want to use Bh-Lib in your own projects, you can use the Demo to see all the components avaialble
+1. If you want to use Bh-Lib in your own projects, you can use the Demo to see all the components available
 2. You can use the Demo as a hosting application for developing completely _new_ components.
 
 ## Atomic Design
@@ -53,6 +53,45 @@ Bh-lib uses the typical Clojurescript/Shadow-cljs workflow, with [hot-reloading]
 and [repl-driven development]()
 
 
+### Releasing a New Version Of the Library
+
+We've added `deps.edn` aliases to make use fo the [MetaV tool](https://github.com/jgrodziski/metav).
+
+
+> NOTE: Metav only works if you have committed all your outstanding changes AND have *no* un-versioned files either.
+> You'll want to commit everything you can *and* add any support files/file-types to `.gitignore` to make it happy. 
+
+#### :version
+
+The simpler of the pair, the `:version` alias just takes the existing git tags and commit shas and creates
+Clojure (specifically ClojureScript) data definition, so they can be used within the Catalog. 
+
+      clj -M:version
+
+That's all you need. When you next refresh the Catalog in the browser, you will see the updated version number in the page
+footer on the right.
+
+
+### :release
+
+when you are ready to mark the library as a *new release*, uopdating the version number and resetting sha tracking, you'll
+want to use
+
+      clj -M:release <type>
+
+Since it is more powerful, it has a parameter (`<type>`), namely what kind of release you want to demote. Ther are 3 options
+
+1) major - this is for the *BIG* stuff, breaking changes, etc. for example moving from `v1.1.5` to `v2.0.0`
+2) minor - typical enhancements (non-breaking) `v1.1.5` to `v1.2.0`
+3) patch - typically for bug-fixes, documentation updates, etc. `v1.1.5` to `v1.1.6`
+
+So making a patch release:
+
+      clj -M:release patch
+
+`:release` is configured to update the version.cljs file (so the UI will show the new number correctly), commit *that* change, tag 
+repo, *and* commit everything to the repo. This way library consumers can move to the new version using just `:git/tag`.
+
 ### [API Documentation](docs/api/index.html)
 
 
@@ -69,15 +108,15 @@ Visit `https://github.com/Sagura091/bh-lib` and checkout the latest tags. If one
 of these meets your needs, then add the following to your `deps.edn` file:
 
 ```
-{:deps [bh-lib/bh-lib {:git     "https://github.com/Sagura091/bh-lib"
+{:deps [bh-lib/bh-lib {:git/url "https://github.com/Sagura091/bh-lib"
                        :git/tag [the-tag-from-guthub-as-a-string]
 ```
 
 If you prefer to use the most recent commit (or any other commit, really), add:
 
 ```
-{:deps [bh-lib/bh-lib {:git     "https://github.com/Sagura091/bh-lib"
-                       :git/sha [the-sha-from-guthub-as-a-string]
+{:deps [bh-lib/bh-lib {:git/url "https://github.com/Sagura091/bh-lib"
+                       :sha     [the-sha-from-guthub-as-a-string]
 ```
 
 > NOTE: you can find the most recent commit at the terminal using 
