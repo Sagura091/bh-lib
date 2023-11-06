@@ -1,11 +1,12 @@
 (ns bh-ui.molecule.composite.dsl-support.dsl-nodes
-  (:require [reagent.core :as r]
-            [re-frame.core :as rf]
+  (:require [bh-ui.atom.bhui.bulma-modal :as modal]
+            [bh-ui.atom.re-com.label :as label]
             ["reactflow" :refer (Handle Position NodeToolbar NodeResizer)]
-            [taoensso.timbre :as log]
-            ["react" :refer (useState)]
             [re-com.core :as rc]
-            [bh-ui.atom.re-com.label :as label]))
+            ["react" :refer (useState)]
+            [re-frame.core :as rf]
+            [reagent.core :as r]
+            [taoensso.timbre :as log]))
 
 
 (log/info "demo.catalog.atom.example.diagram.node-types.custom-node")
@@ -129,7 +130,7 @@
      :position position}))
 
 
-(defn- container-node [node]
+(defn- container-node [node form-data show?]
   (let [data            (js->clj node)
         node-id         (get data "id")
         size            (get-in data ["data" "size"])
@@ -137,6 +138,9 @@
         children        (get-in data ["data" "children"])
         parent          (get-in data "parentNode")
         kind-of-element (r/atom (get-in data ["data" "kind-js"]))
+        form-data       (r/atom {:email       "bh-lib@black-hammer.org"
+                                 :password    "abc123"
+                                 :remember-me true})
         current-size    (r/atom {:x      0 :y 0
                                  :width  (or (get size "width") "100%")
                                  :height (or (get size "height") "100%")})
@@ -145,9 +149,9 @@
         resize-fn       #(do
                            (reset! current-size
                              (js->clj %2 :keywordize-keys true)))]
-                           ;(log/info "container-node (c)" %1 "//" %2
-                           ;  "//" (js->clj %2 :keywordize-keys true)
-                           ;  "//" @current-size))]
+    ;(log/info "container-node (c)" %1 "//" %2
+    ;  "//" (js->clj %2 :keywordize-keys true)
+    ;  "//" @current-size))]
 
     ;(log/info "container-node (b)"
     ;  ;data
@@ -186,9 +190,9 @@
   "build a custom node for the flow diagram, with one Handle for each input (along the top)
   and output (along the bottom)
   "
-  [node-type node-dblclick-fn extra-param node & params]
+  [node-type node-dblclick-fn form-data show? extra node & params]
 
-  ;(log/info "custom-node (a)" node-type "//" extra-param "//" node "//" params)
+  (log/info "custom-node (a)" node-type "//" @form-data "____" node "//" extra)
 
   (if node
     (let [data            (js->clj node)
@@ -202,34 +206,40 @@
 
       (reset! last-node data)
 
+      (reset! form-data {:id node-id :text text :kind @kind-of-element})
+
       ;(log/info "custom-node (b)" ;data
       ;  "//" text
       ;  "//" node-type
       ;  ;"//" @kind-of-element
       ;  "///" handles)
-        ;"//" extra-param)
+      ;"//" extra-param)
 
       (if (= node-type :ui/container)
-        (container-node node)
+        (container-node node form-data show?)
 
         (r/as-element
+          [:div
+           (r/as-element
 
-          [:<>
-           [:> NodeResizer {:color "#000000" :isVisible isVisible}]
+             [:<>
+              [:> NodeResizer {:color "#000000" :isVisible isVisible}]
 
-           (map #(make-handle "target" %) (:inputs handles))
+              (map #(make-handle "target" %) (:inputs handles))
 
-           [:div {:style           style
-                  :on-click        #(set-visibility (not isVisible))
-                  :on-double-click #(node-dblclick-fn data)}
-            [rc/v-box
-             :gap "1px"
-             :children [[label/label :style (merge {:textAlign :center} style)
-                         :value text]
-                        [label/label-sm :style (merge {:textAlign :center} style)
-                         :value @kind-of-element]]]]
+              [:div {:style           style
+                     :on-click        #(set-visibility (not isVisible))
+                     :on-double-click #(do
+                                         (log/info ":on-double-click" show?)
+                                         (node-dblclick-fn form-data show?))}
+               [rc/v-box
+                :gap "1px"
+                :children [[label/label :style (merge {:textAlign :center} style)
+                            :value text]
+                           [label/label-sm :style (merge {:textAlign :center} style)
+                            :value @kind-of-element]]]]
 
-           (map #(make-handle "source" %) (:outputs handles))])))
+              (map #(make-handle "source" %) (:outputs handles))])])))
 
     (r/as-element [:div])))
 
@@ -243,12 +253,12 @@
 
 
 
-(defn node-types [node-dblclick-fn]
-  {":ui/component"  (partial custom-node :ui/component node-dblclick-fn)
-   ":ui/container"  (partial custom-node :ui/container node-dblclick-fn)
-   ":source/remote" (partial custom-node :source/remote node-dblclick-fn)
-   ":source/local"  (partial custom-node :source/local node-dblclick-fn)
-   ":source/fn"     (partial custom-node :source/fn node-dblclick-fn)})
+(defn node-types [node-dblclick-fn form-data show?]
+  {":ui/component"  (partial custom-node :ui/component node-dblclick-fn form-data show?)
+   ":ui/container"  (partial custom-node :ui/container node-dblclick-fn form-data show?)
+   ":source/remote" (partial custom-node :source/remote node-dblclick-fn form-data show?)
+   ":source/local"  (partial custom-node :source/local node-dblclick-fn form-data show?)
+   ":source/fn"     (partial custom-node :source/fn node-dblclick-fn form-data show?)})
 
 
 (def bootstrap-node-data {":ui/component"  (partial node-data :ui/component)

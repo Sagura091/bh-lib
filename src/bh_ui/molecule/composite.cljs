@@ -15,15 +15,17 @@ need to make a distinction (in fact the code is a bit cleaner if we don't) and w
 needs to implement the correct usage anyway). The flow-diagram, on the other hand, is easier if we DO make the
 distinction, so we can quickly build all the Nodes and Handles used for the diagram...
 "
-  (:require [bh-ui.atom.diagram.flow-diagram :as diagram]
+  (:require [bh-ui.atom.re-com.modal :as modal]
             [bh-ui.atom.diagram.diagram.composite-dag-support :as dag-support]
+            [bh-ui.atom.diagram.flow-diagram :as diagram]
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
+            [bh-ui.molecule.composite.dsl-support.edit-modal :as edit-dialog]
             [bh-ui.molecule.composite.util.digraph :as dig]
             [bh-ui.molecule.composite.util.signals :as sig]
             [bh-ui.molecule.composite.util.ui :as ui]
-            [bh-ui.utils.locals :as locals]
-            [bh-ui.utils.helpers :as h]
             [bh-ui.utils :as ui-utils]
+            [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.locals :as locals]
             [day8.re-frame.tracing :refer-macros [fn-traced]]
             [loom.graph :as lg]
             [re-com.core :as rc]
@@ -136,14 +138,14 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 (defmethod create-dsl-node :ui/component [node-id node-type]
-  {:atm/role node-type
-   :atm/kind :stunt/text-block
+  {:atm/role  node-type
+   :atm/kind  :stunt/text-block
    :atm/label node-id})
 
 
 (defmethod create-dsl-node :source/local [node-id node-type]
-  {:atm/role node-type
-   :atm/kind :source/local
+  {:atm/role         node-type
+   :atm/kind         :source/local
    :atm/default-data [{:id 0 :x 0 :y 0}
                       {:id 1 :x 10 :y 10}
                       {:id 2 :x 20 :y 20}]})
@@ -164,8 +166,8 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                      node-id event]
   ;(log/info "add-dsl-node" (type configuration))
 
-  (let [node-type (h/string->keyword (.getData (.-dataTransfer event) "editable-flow"))
-        layout {:i node-id :x 0 :y 0 :w 10 :h 5 :static true}
+  (let [node-type        (h/string->keyword (.getData (.-dataTransfer event) "editable-flow"))
+        layout           {:i node-id :x 0 :y 0 :w 10 :h 5 :static true}
         ; we should only add :ui/components to :mol/grid-layout
         add-ui-component (fn [m node-type]
                            (if (= :ui/component node-type)
@@ -338,28 +340,39 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (reset! last-config configuration)
 
-  ;(log/info "dag-panel" diagram/component)
+  (let [show?     (r/atom false)
+        form-data (r/atom {})]
+    (fn []
 
-  [rc/h-box :src (rc/at)
-   :gap "10px"
-   :children [[rc/v-box :src (rc/at)
-               :gap "5px"
-               :padding "5px"
-               :height "100%"
-               :style {:border "1px solid gray" :border-radius "4px"}
-               :children (make-drag-tools default-tool-types)]
-              [diagram/component
-               :component-id component-id
-               :data configuration
-               :config {:node-types     (dsl/node-types node-dblclick-fn)
-                        :node-data      dsl/bootstrap-node-data
-                        :node-kind-fn   dsl/default-node-kind
-                        :minimap-styles dsl/minimap-styles
-                        :on-drop        (partial on-drop configuration component-id container-id)
-                        :on-connect     (partial on-connect configuration component-id container-id)
-                        :style          {:width "1200px" :height "700px"}}
-               :tool-types dag-support/default-tool-types
-               :minimap-styles minimap-styles]]])
+      ;(log/info "dag-panel" diagram/component)
+
+      [rc/h-box :src (rc/at)
+       :gap "10px"
+       :children [[rc/v-box :src (rc/at)
+                   :gap "5px"
+                   :padding "5px"
+                   :height "100%"
+                   :style {:border "1px solid gray" :border-radius "4px"}
+                   :children (make-drag-tools default-tool-types)]
+                  [diagram/component
+                   :component-id component-id
+                   :data configuration
+                   :config {:node-types     (dsl/node-types node-dblclick-fn form-data show?)
+                            :node-data      dsl/bootstrap-node-data
+                            :node-kind-fn   dsl/default-node-kind
+                            :minimap-styles dsl/minimap-styles
+                            :on-drop        (partial on-drop configuration component-id container-id)
+                            :on-connect     (partial on-connect configuration component-id container-id)
+                            :style          {:width "1200px" :height "700px"}}
+                   :tool-types dag-support/default-tool-types
+                   :minimap-styles minimap-styles]
+                  (when @show?
+                    (do
+                      (log/info "if @show?" show?)
+                      (r/as-element [modal/modal
+                                     [edit-dialog/edit-modal configuration
+                                      form-data show?]
+                                     show?])))]])))
 
 
 

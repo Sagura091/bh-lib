@@ -10,7 +10,7 @@
 
 (defn modal
   "Create a button to test the modal component for modal dialogs"
-  [content show?]
+  [content]
 
   (log/info "modal-dialog (a)")
 
@@ -18,7 +18,7 @@
    :backdrop-color "grey"
    :backdrop-opacity 0.4
    :style {:font-family "Consolas"}
-   :child [content show?]])
+   :child content])
 
 
 

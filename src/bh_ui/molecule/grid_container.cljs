@@ -1,15 +1,15 @@
 (ns bh-ui.molecule.grid-container
-  (:require [cljs.core.match :refer-macros [match]])
   (:require [bh-ui.atom.layout.responsive-grid :as grid]
+            [bh-ui.atom.re-com.configure-toggle :as ct]
             [bh-ui.molecule.composite :as composite]
             [bh-ui.molecule.composite.util.digraph :as dig]
             [bh-ui.molecule.composite.util.signals :as sig]
             [bh-ui.molecule.composite.util.ui :as ui]
             [bh-ui.utils :as ui-utils]
             [bh-ui.utils.locals :as locals]
-            [bh-ui.atom.re-com.configure-toggle :as ct]
-            [loom.graph :as lg]
+            [cljs.core.match :refer-macros [match]]
             [loom.alg :as lalg]
+            [loom.graph :as lg]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -215,10 +215,12 @@
     :graph :container))
 
 
-(defn- default-node-dblclick [dsl node]
-  (log/info "default-node-dblclick" node "//" @dsl "_______" (:mol/flow-nodes @dsl))
+(defn- node-dblclick [form-data show?]
+  (reset! show? true)
 
-  (js/alert (str "default-node-dblclick: " node)))
+  (log/info "node-dblclick" @form-data "____" show?))
+
+;(js/alert (str "default-node-dblclick: " node)))
 
 
 (defn- default-save-fn [component-id data]
@@ -230,11 +232,11 @@
 
 
 (defn- diff-dsl [old-dsl new-dsl]
-  (let [nw (select-keys new-dsl [:mol/components :mol/links])
+  (let [nw  (select-keys new-dsl [:mol/components :mol/links])
         old (select-keys old-dsl [:mol/components :mol/links])
-        df (if (seq old-dsl)
-             (clojure.data/diff old nw)
-             [nil nw nil])
+        df  (if (seq old-dsl)
+              (clojure.data/diff old nw)
+              [nil nw nil])
         ret (match df
               [nil nil _] false
               :else true)]
@@ -294,11 +296,11 @@
 
         ;(log/info "component-panel INNER" component-id)
         ;  "//" @layout
-         ;"&&&&&&&&&&" configuration
-         ;"++++++++++" component-lookup
-         ;"__________" visual-layout
-         ;"__________" (keys component-lookup)
-         ;"__________" composed-ui)
+        ;"&&&&&&&&&&" configuration
+        ;"++++++++++" component-lookup
+        ;"__________" visual-layout
+        ;"__________" (keys component-lookup)
+        ;"__________" composed-ui)
 
         ; return the composed component layout!
         [rc/v-box :src (rc/at)
@@ -422,7 +424,7 @@
                              :configuration data
                              :component-id @id
                              :container-id container-id
-                             :node-dblclick-fn (partial default-node-dblclick data)]
+                             :node-dblclick-fn node-dblclick]
                        :component [component-panel
                                    :configuration data
                                    :component-id @id
