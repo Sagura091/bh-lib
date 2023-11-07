@@ -1,14 +1,13 @@
 (ns bh-ui.atom.experimental.react-table
   (:require
-    [reagent.core :as r]
-    [reagent.dom :as rdom]
-    [re-frame.core :as re-frame]
-    ["react-table" :as rt]
-    [re-com.core :as rc]
-    [bh-ui.utils.color :as c]
     [bh-ui.atom.bhui.color-picker :as picker]
+    [bh-ui.utils.color :as c]
     [bh-ui.utils.helpers :as h]
+    ["react-table" :as rt]
     [bh-ui.utils.locals :as l]
+    [re-com.core :as rc]
+    [re-frame.core :as re-frame]
+    [reagent.core :as r]
     [taoensso.timbre :as log]))
 
 
@@ -328,6 +327,17 @@
       d)))
 
 
+(defn- build-config [data]
+  (atom {:table-type :standard
+         :columns    (->> @data
+                       :metadata
+                       :fields
+                       (map (fn [[field-id field-type]]
+                              {:colHeader (str (name field-id))
+                               :colId     field-id}))
+                       vec)}))
+
+
 (def last-params (atom nil))
 
 
@@ -392,13 +402,19 @@
      :sort-not-selected-icon \"\u25BC\"
      :row-bg-color           \"white\"}"
   [& {:keys [data config style]}]
-  (let [cfg           (h/resolve-value config)
-        d             (h/resolve-value data)
+  (let [d             (h/resolve-value data)
+        cfg           (h/resolve-value config)
+        corrected-cfg (if (and
+                            (not (seq @cfg))
+                            (:metadata @d))
+                        (build-config d)
+                        cfg)
+        _ (log/info "table-component (cfg)" @corrected-cfg)
         s             (h/resolve-value style)
         react-data    (r/atom (configure-data d cfg))
-        column-config (clj->js (if (= :expandable (:table-type @cfg))
-                                 (configure-expandable-columns d data react-data cfg s)
-                                 (configure-standard-columns d data react-data cfg)))]
+        column-config (clj->js (if (= :expandable (:table-type @corrected-cfg))
+                                 (configure-expandable-columns d data react-data corrected-cfg s)
+                                 (configure-standard-columns d data react-data corrected-cfg)))]
 
     ;(log/info "table-component" data "//" config "//" style)
 
@@ -406,11 +422,11 @@
 
     (fn []
       ;(log/info "table-component (render)" data)
-      (let [react-data (r/atom (configure-data d cfg))]
+      (let [react-data (r/atom (configure-data d corrected-cfg))]
         [:f> table
          column-config
          (clj->js @react-data)
-         (:table-type @cfg)
+         (:table-type @corrected-cfg)
          s]))))
 
 
@@ -443,3 +459,28 @@
   ())
 
 
+
+
+(comment
+  (do
+    (def cfg (atom nil))
+    (def data (atom {:metadata {:fields {:name :string :uv :number}}
+                     :data [{:name "alpha" :uv 1000}
+                            {:name "bravo" :uv 1000}]})))
+
+  (if (and
+        (not (seq @cfg))
+        (:metadata @data))
+    true
+    false)
+
+  (if (and
+        (not (seq @cfg))
+        (:metadata @data))
+    (build-config data)
+    cfg)
+
+
+
+
+  ())
