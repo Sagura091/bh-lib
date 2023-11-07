@@ -94,15 +94,19 @@
   ^{:key label} [handle label direction style position true])
 
 
-(defn look-up-ui-component [node-type]
+(defn look-up-ui-component [node-type node-kind]
   ;(log/info "look-up-ui-component (a)" node-type)
   ;(log/info "look-up-ui-component (b)" (-> (string->keyword node-type)
   ;                                       bh-ui.atom.component-registry/lookup-component
   ;                                       :handles))
 
-  (-> (string->keyword node-type)
-    bh-ui.atom.component-registry/lookup-component
-    :handles))
+  (if (= :source/remote node-type)
+    {:outputs {:data {:label "data-out",
+                      :style {:left 10, :background "#555"},
+                      :position "bottom"}}}
+    (-> (string->keyword node-kind)
+      bh-ui.atom.component-registry/lookup-component
+      :handles)))
 
 
 (defn node-data
@@ -200,7 +204,7 @@
           text            (get-in data ["data" "label"])
           kind-of-element (r/atom (get-in data ["data" "kind-js"]))
           style           (merge default-node-style (node-type node-style))
-          handles         (look-up-ui-component @kind-of-element)
+          handles         (look-up-ui-component node-type @kind-of-element)
           current-size    (atom {:x 0 :y 0 :width 0 :height 0})
           [isVisible set-visibility on-change-visibility] (useState false)]
 
