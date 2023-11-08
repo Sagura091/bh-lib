@@ -30,7 +30,7 @@ often called the 'back-end', but we have determined that this approach is perfec
   [layout/frame {:extra-classes :is-fluid}
    [:h2.has-text-info "How we got here"]
    [layout/markdown-block "The breakthrough came when we recognized that 'molecules', as introduced by Brad Frost as
-   part of his [Atomic Design](),
+   part of his [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/),
 in chemistry classes are physically modeled using balls and sticks, as show in Figure 1.
 
 ![Figure 1. Molecule Modeling Kit](/imgs/data-flow/chemical-modeling-kit.jpeg)
@@ -52,7 +52,7 @@ just one more collection of transformations of data within the boundary of the '
 the results of a transformation into a database or a channel, queue, or topic, in the case of the UI, the results are converted into
 HTML and 'deposited' on the User's display!
 
-> ***Note:*** Although we've developed this sophisticated graph-based capability, ad we encourage you to use it,
+> ***Note:*** Although we've developed this sophisticated graph-based capability, and we encourage you to use it,
 > all the UI components are still available for use in developing more 'typical' ad-hoc UIs. The Data-flow approach
 > is build _on top_ of the basic components. Developers get the best of both worlds!"]])
 
@@ -63,7 +63,7 @@ HTML and 'deposited' on the User's display!
    [layout/markdown-block "Sticking with our chemistry analogy, chemical processes also perform transformations on the molecules, as
 shown in Figure 2.
 
-![Figure 2. Chemical outputs from the combustion of Ethanol_](/imgs/data-flow/combustion-reaction-model.jpeg)
+![Figure 2. Chemical outputs from the combustion of Ethanol](/imgs/data-flow/combustion-reaction-model.jpeg)
 
 _Figure 2. Chemical outputs from the combustion of Ethanol._
 
@@ -75,7 +75,8 @@ Note the arrow! Even in this simple example we can see the flow.
 - filter : select only certain items or just parts of items, based upon some criterion.
 - transform : convert the physical format; e.g., vector of hash-maps to vector of vectors, etc.
 - augment : add data
-- reduce : materialize a view over a collection of items (summation, group-by, etc.)
+- merge : combining two or more data items into a single item
+- reduce : materialize a data item from a collection of items (summation, group-by, etc.)
 
 The flow can be defined and visualized as a directed graph (digraph)
 
@@ -104,7 +105,7 @@ of a microservice)"]])
 One way to think of this is as a _directed graph_, with the sources at the top and the UI at the bottom;
 the data flows _down hill_.
 
-![Figure 3. A simplified directed graph of a UI.]()
+![Figure 3. A simplified directed graph of a UI.](/imgs/data-flow/figure/atwiad/atwiad.012.png)
 
 _Figure 3. A simplified directed graph of a UI._"]])
 
@@ -134,15 +135,52 @@ Our toolkit provides dozens of pre-built data and UI components, and you can alw
 
 In Our system, UI element are described like this:
 
-```
+``` clojure
 (def ui-definition
-  {:mol/components   {\"measurements\" {:atm/role :source/remote :atm/kind :source/measurements}
-                      \"bar-chart\"    {:atm/role :ui/component :atm/kind :rechart/bar}}
+  {:mol/components   {\"data\"  {:atm/role :source/remote :atm/kind :source/measurements}
+                      \"chart\" {:atm/role :ui/component :atm/kind :rechart/bar}}
 
-   :mol/links        {\"measurements\" {:data {:ui/bar-chart :data}}}
+   :mol/links        {\"data\" {:data {\"chart\" :data}}}
 
-   :mol/grid-layout  [{:i \"bar-chart\" :x 0 :y 0 :w 20 :h 11 :static true}]})
-```"]])
+   :mol/grid-layout  [{:i \"chart\" :x 0 :y 0 :w 10 :h 10 :static true}]})
+```
+
+Additionally, this data structure can also be used to track the visualization affordance we provide
+to developer, designer, and even users to create and edit the DSL defining a User Interface. Since the
+visualization is also built upon these same principles (do you expect anything else?), we track the
+_nodes_ and _edges_ of this alternate visualization:
+
+``` clojure
+   :mol/flow-nodes [{:id \"bar-chart\"
+                     :type \":ui/component\"
+                     :data {:label \"bar-chart\"
+                            :kind :rechart/bar
+                            :kind-js \":rechart/bar\"
+                            :children [nil nil]
+                            :inputs {:data {:label \"data-in\" :style {:left 10 :background \"#555\"} :position \"top\"}
+                                     :config {:label \"config-in\" :style {:left 20 :background \"#555\"} :position \"top\"}}
+                            :outputs {}}
+                     :position {:x 25.5, :y 69.5}}
+                    {:id \"data\"
+                     :type \":source/remote\"
+                     :data {:label \"data\"
+                            :kind :source/measurements
+                         :kind-js \":source/measurements\"
+                         :children [nil nil]
+                         :inputs {}
+                         :outputs {:data {:label \"data-out\" :style {:left 10 :background \"#555\"} :position \"bottom\"}}
+                  :position {:x -13.5, :y -43.5}}}]
+
+   :mol/flow-edges [{:targetHandle \"data-in\",
+                     :animated false,
+                     :source \"data\",
+                     :style {:strokeWidth 1, :stroke :black},
+                     :markerEnd {:type \"arrowclosed\", :width 10, :height 10, :color :black},
+                     :label \"\",
+                     :id \"edge-0\",
+                     :sourceHandle \"\",
+                     :target \"chart\"}]
+"]])
 
 
 (defn- components []
@@ -202,6 +240,18 @@ etc. are to be arranged visually on the display. We use a user-customizable grap
 the actual presentation on the display."]])
 
 
+(defn- putting-it-together []
+  [layout/frame {:extra-classes :is-fluid}
+   [:h3 "Putting it Together"]
+   [layout/markdown-block "Figure 5 shows how the different parts of the textual DSL are mapped to the 2 visual representations
+*visual* and *DSL (flow).
+
+![Figure 5. Mapping the DSL to the visual representations.](/imgs/data-flow/figure/atwiad/atwiad.011.png)
+
+_Figure 5. Mapping the DSL to the visual representations._
+   "]])
+
+
 (defn- more-details []
   [layout/frame {:extra-classes :is-fluid}
    [:h3 "More Details"]
@@ -211,9 +261,9 @@ for example :rechart/bar."]])
 
 (defn- data-flow-ui []
   [layout/frame {:extra-classes :is-fluid}
-   [:h2.has-text-info "Designing a UI with Data-flow"]
-   [layout/markdown-block "Since we are working in Clojure, and, on the UI side, using Re-frame, we take advantage of the Signal Graph
-and take advantage of the [Layer 2 'Extractors' and Layer 3 'Materialized Views'](https://day8.github.io/re-frame/subscriptions/#the-four-layers)
+   [:h2.has-text-info "Designing a UI with Black Hammer"]
+   [layout/markdown-block "Since we are working in Clojure, and using Re-frame in the UI, we take advantage of the Signal Graph,
+using the [Layer 2 'Extractors' and Layer 3 'Materialized Views'](https://day8.github.io/re-frame/subscriptions/#the-four-layers)
 as the primary mechanisms for the various data transformations needed to support the UI.
 
 Layer 2 extractors are used for remote sources (`:source/remote`), while Layer 3 materialized views provide
@@ -235,6 +285,8 @@ even Layer 4 subscriptions, depending upon how you wire everything together in t
    [components]
 
    [links]
+
+   [putting-it-together]
 
    [more-details]])
 
@@ -284,29 +336,84 @@ It's easy to see the relative similarities between these two description. Let's 
 - [Re-frame](https://day8.github.io/re-frame/re-frame/)"]])
 
 
-(defn- differences []
-  [layout/frame {:extra-classes :is-fluid}
-   [:h2.has-text-info "Differences from Dataflow programming"]
-   [layout/markdown-block
-    "Dataflow programming (see [here](https://en.wikipedia.org/wiki/Dataflow_programming)), is often implemented (defined?)
-such that the processing steps
-execute as soon as their inputs all become available. In contrast, in our implementation, there are
-circumstances where the process will trigger when _any_ of the inputs are available (the other inputs are
-assumed to have default values). Our approach assures that transformation updates will be computed whenever
-any of the inputs change.
-
-> Is this really true? Need to do some investigation/experimentation to determine.
-"]])
-
-
 (defn- additional-links []
   [layout/frame {:extra-classes :is-fluid}
-   [:h2.has-text-info "Additional Links"]
+   [:h2.has-text-info "Additional Concepts"]
    [layout/markdown-block
     "
-- [Data Flow (Wikipedia)](https://en.wikipedia.org/wiki/Dataflow)
-- [Dataflow programming (Wikipedia)](https://en.wikipedia.org/wiki/Dataflow_programming)
-- [Kahn process network (Wikipedia)](https://en.wikipedia.org/wiki/Kahn_process_networks)
+### [Dataflow (Wikipedia)](https://en.wikipedia.org/wiki/Dataflow)
+
+Per [Wikipedia](https://en.wikipedia.org/wiki/Dataflow), Dataflow is defined as
+
+  > _\"Dataflow computing is a software paradigm based on the idea of representing computations as
+  > a directed graph, where nodes are computations and data flow along the edges.\"_
+
+This precisely matches out conception at all level of Black Hammer's design; system, service, and user
+interface composition.
+
+Related concepts include [Dataflow programming](https://en.wikipedia.org/wiki/Dataflow_programming) and
+[Flow-based programming](https://en.wikipedia.org/wiki/Flow-based_programming),
+which have specific relevance to our Black Hammer concept.
+
+
+### [Dataflow programming (Wikipedia)](https://en.wikipedia.org/wiki/Dataflow_programming)
+
+
+
+### [Kahn process network (Wikipedia)](https://en.wikipedia.org/wiki/Kahn_process_networks)
+
+
+### [Structure and Interpretation of Computer Programs (SICP)](https://mitp-content-server.mit.edu/books/content/sectbyfn/books_pres_0/6515/sicp.zip/index.html)
+SICP begins ([Lecture 1A](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PL8FE88AA54363BC46&index=2))
+with the notion of a programming language or paradigm, as defined by
+
+1) The Primitive Elements
+2) Means of Combination
+3) Means of Abstraction
+
+Let's look at how Black Hammer could be defined in these terms.
+
+
+#### Primitive Elements of Black Hammer
+
+Black Hammer is built upon, and best conceptually understood using, a functional programming model. This means that the
+**primitive elements** are _functions_. It is
+
+
+
+#### Means of Combination in Black Hammer
+
+Again, since Black Hammer is build on a function basis, the **means of combination** is the function calling interface, which
+in Black Hammer is represented graphically as the the interconnections between the nodes (primative elements), i.e., the _links_.
+
+
+
+#### Means of Abstraction in Black Hammer
+
+If we extend our notion of functional programming to a combination of function applications:
+
+  h :: g(f(x))       (_h is defined as g(f(x))_)
+
+which we can represent graphically as
+
+![Figure 3. Graphical representation of h :: g(f(x))](/imgs/data-flow/figure/atwiad/atwiad.010.png)
+
+_Figure 3. Graphical representation of h :: g(f(x))._
+
+This means we can consider a directed graph, or any subgraph of a larger directed graph, as a single function.
+This is just another application of _[Referential Transparency](https://en.wikipedia.org/wiki/Referential_transparency)
+
+Using this technique we can condense large, complex graphs into a graph of a smaller collection of function nodes,
+where each node represents a compete directed subgraph. This works both visually and within any textual representation
+of the directed graph, at any level. In mathematical terms, we can [decompose](https://www.youtube.com/watch?v=BiLjdZYj_RI)
+a graph into many subgraphs.
+
+It also works in the other direction; multiple graphs can be composed into a single graph mathematically. This
+afford this abstraction/approach a tremendous amount of power.
+
+
+
+
 
 "]])
 
@@ -350,8 +457,6 @@ See also
     [microservices]
 
     [other-approaches]
-
-    [differences]
 
     [additional-links]
 
