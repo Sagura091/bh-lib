@@ -1,6 +1,7 @@
 (ns demo.catalog.molecule.example.composite.chart-remote-data
   (:require [bh-ui.core :as bh]
             [demo.catalog.molecule.remote-source :as rs]
+            [demo.catalog.molecule.local-storage :as storage]
             [bh-ui.subs :as subs]
             [cljs-uuid-utils.core :as uuid]
             [bh-ui.version :as version]
@@ -36,7 +37,9 @@
 
 
 (defn example []
-  (let [container-id "chart-remote-data-demo"]
+  (let [container-id "chart-remote-data-demo"
+        component-id (bh/utils-path->keyword container-id "molecule")
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/chart-remote-data-ui-def))]
 
     (fn []
       (acu/demo "Bar chart of remote data"
@@ -49,8 +52,9 @@
          ;;
          [:div.molecule-content
           [bh/grid-container
-           :data (r/atom bh/chart-remote-data-ui-def)
-           :component-id (bh/utils-path->keyword container-id "widget")
+           :data dsl
+           :component-id component-id
+           :save-fn storage/save-to-local-storage
            :resizable true
            :tools true]]]
         bh/chart-remote-data-src-code))))
