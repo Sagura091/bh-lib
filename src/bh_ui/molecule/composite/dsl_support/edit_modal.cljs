@@ -8,6 +8,8 @@
 (log/info "bh-ui.molecule.composite.dsl-support.edit-modal")
 
 
+; region ; helpers
+
 (defn- assoc-flow-node [nodes-atom id update-path update-value]
   (log/info "assoc-flow-node" (:mol/flow-nodes nodes-atom) "_____" id "____" update-path "____" update-value)
 
@@ -34,10 +36,36 @@
       (get-in @dsl [:mol/components id])
       (get-in @dsl [:mol/flow-nodes id]))))
 
+; endregion
 
 
-(defn edit-modal [dsl node-data show?]
-  (log/info "edit-modal" @dsl "_____" @node-data)
+; region ; edit :ui/component
+
+; endregion
+
+
+; region ; edit :ui/container
+
+; endregion
+
+
+; region ; edit :source/remote
+
+; endregion
+
+
+; region ; edit :source/local
+
+; endregion
+
+
+; region ; edit :source/fn
+
+; endregion
+
+
+(defn edit-modal* [dsl node-data show?]
+  (log/info "edit-modal*" @dsl "_____" @node-data)
 
   (let [save-form-data (r/atom @node-data)
         process-ok     (fn [event]
@@ -85,5 +113,9 @@
                                       [rc/button :src (rc/at)
                                        :label "Cancel"
                                        :on-click process-cancel]]]]]])))
+
+
+(defn edit-modal [dsl node-data show?]
+  (edit-modal* dsl node-data show?))
 
 

@@ -58,12 +58,6 @@
            :resizable true
            :tools true]]]
         bh/chart-remote-data-src-code))))
-;(acu/demo
-;  "Bar chart of remote data"
-;  [rc/alert-box :src (rc/at)
-;   :alert-type :info
-;   :heading "Waiting for (demo) Log-in"]
-;  bh/chart-remote-data-src-code))))
 
 
 
