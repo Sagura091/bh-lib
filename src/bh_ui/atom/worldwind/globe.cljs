@@ -91,11 +91,11 @@
                               {:shape        :shape/image
                                :id           (h/component-id)
                                :url          "images/lightning/Lightning3png.png"
-                               :bounding-box (bound/make-bounding-box 45.0987 -106.09 0.5)}
+                               :bounding-box (bound/make-bounding-box -25.0987 -86.09 0.5)}
                               {:shape        :shape/image
                                :id           (h/component-id)
                                :url          "images/lightning/Lightning3png.png"
-                               :bounding-box (bound/make-bounding-box 46 -105 0.5)}]}])
+                               :bounding-box (bound/make-bounding-box -26 -85 0.5)}]}])
 
 ;:url    "https://worldwind.arc.nasa.gov/web/examples/data/black_sea_rgb.tif"
 ;:url    "data/GOES18-ABI-FD-GEOCOLOR-10848x10848.tif"
@@ -145,7 +145,7 @@
          (let [cursor          (if (:isDropArmed @state) "crosshair" "default")
                backgroundColor (or (:backgroundColor @state) DEFAULT_BACKGROUND_COLOR)]
 
-           [:canvas (merge props {:id (:canvasId @state)
+           [:canvas (merge props {:id  (:canvasId @state)
                                   :ref (fn [el] (reset! dom-node el))})
 
             "Your browser does not support HTML5 Canvas."]))})))
@@ -194,7 +194,7 @@
   (concat
     (base-layers component-id)
     layer-layers)
-    ;shape-layers)
+  ;shape-layers)
 
   ())
 
