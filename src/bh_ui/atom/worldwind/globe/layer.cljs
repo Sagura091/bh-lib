@@ -10,7 +10,7 @@
     (set! (.-displayName layer) layer-name)
     (doall
       (map (fn [child]
-             ;(log/info "renderable-layer adding" layer-name child)
+             ;(log/info "renderable-layer adding" layer-name (.-displayName child))
              (.addRenderable layer child))
         children))
     {:id layer-name :layer layer :z (or z 1)}))

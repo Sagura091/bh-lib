@@ -2,23 +2,23 @@
   (:require ["worldwindjs" :as WorldWind]
             [bh-ui.atom.worldwind.globe.geo-tiff]
             [bh-ui.atom.worldwind.globe.image]
+            [bh-ui.atom.worldwind.globe.layer :as layer]
             [bh-ui.atom.worldwind.globe.layer.blue-marble :as blue-marble]
-            [bh-ui.atom.worldwind.globe.layer.night :as night]
             [bh-ui.atom.worldwind.globe.layer.compass :as compass]
+            [bh-ui.atom.worldwind.globe.layer.night :as night]
             [bh-ui.atom.worldwind.globe.layer.star-field :as star-field]
+            [bh-ui.atom.worldwind.globe.models]
+            [bh-ui.atom.worldwind.globe.path]
             [bh-ui.atom.worldwind.globe.projection :as proj]
             [bh-ui.atom.worldwind.globe.react-support :as rs]
-            [bh-ui.atom.worldwind.globe.layer :as layer]
+            [bh-ui.atom.worldwind.globe.sector]
             [bh-ui.atom.worldwind.globe.shape :as shape]
             [bh-ui.atom.worldwind.globe.volume]
-            [bh-ui.atom.worldwind.globe.path]
-            [bh-ui.atom.worldwind.globe.sector]
-            [bh-ui.atom.worldwind.globe.models]
             [bh-ui.utils.bounding-box :as bound]
             [bh-ui.utils.helpers :as h]
-            [re-frame.core :as rf]
             [cljs-time.coerce :as coerce]
             [cljs-time.core :as cljs-time]
+            [re-frame.core :as rf]
             [reagent.core :as r]
             [taoensso.timbre :as log]))
 
@@ -34,21 +34,21 @@
                   {:layer-id "misc"
                    :z        10
                    :shapes   [{:shape      :shape/polygon :id "square"
-                               :locations [[30.0 -130.0] [30.0 -100.0]
-                                           [0.0 -100.0] [0.0 -130.0]]
+                               :locations  [[30.0 -130.0] [30.0 -100.0]
+                                            [0.0 -100.0] [0.0 -130.0]]
                                :fill-color [1 0 0 0.3] :outline-color [1 0 0 1] :width 2}
                               {:shape      :shape/polygon :id "5-sided"
-                               :locations [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
-                                           [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
+                               :locations  [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
+                                            [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
                                :fill-color [1 0 0 0.6] :outline-color [1 0 0 1] :width 2}
-                              {:shape :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
+                              {:shape         :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
                                :outline-color [1 1 0 1.0] :width 5}
                               {:shape      :shape/circle :id "circle"
-                               :location [28.538336 -81.379234] :radius 1000000
+                               :location   [28.538336 -81.379234] :radius 1000000
                                :fill-color [0 1 0 0.5] :outline-color [1 1 1 1] :width 2 :height 2}
-                              {:shape :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
+                              {:shape         :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
                                :outline-color [1 0.5 0.78 1.0] :width 5}
-                              {:shape :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
+                              {:shape      :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
                                :fill-color [1 0.9 0.0 1.0] :outline-color [1 0.9 0.0 1.0] :width 1}]}
 
                   {:layer-id "polar-sat-1"
@@ -67,7 +67,8 @@
                                :id           "dataduck"
                                :model-folder "data/models"
                                :position     [40 -90 1000e3]
-                               :url          "duck"}]}
+                               :url          "duck"
+                               :scale        2000}]}
 
                   {:layer-id "images"
                    :z        0
