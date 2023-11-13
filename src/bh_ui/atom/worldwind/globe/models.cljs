@@ -42,6 +42,7 @@
       "//" @model)))
 
 
+; shape/make-shape :shape/model
 (defmethod shape/make-shape :shape/model [{:keys [id model-folder url position scale]}]
   (let [label      (WorldWind/GeographicText. (location/position position) id)
         attributes (attributes/text-attributes
@@ -68,7 +69,7 @@
     (def scale 5000))
 
 
-  (def model (make-collada id model-folder url position scale))
+  (def model (make-collada model id model-folder url position scale))
 
 
 

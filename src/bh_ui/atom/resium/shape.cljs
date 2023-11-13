@@ -109,7 +109,6 @@
                                       :extrude   (nth positions 2)}]]))
 
 
-
 ; :shape/circle
 (defmethod make-shape :shape/circle [{:keys [id location radius fill-color outline-color width height]}]
   (let [[f-r f-g f-b f-a] fill-color
@@ -137,8 +136,8 @@
                                    :show         true}]]))
 
 
-; :shape/label
-(defmethod make-shape :shape/model [{:keys [id position model-folder url]}]
+; :shape/model
+(defmethod make-shape :shape/model [{:keys [id position model-folder url scale]}]
   (log/info "make-shape :shape/model" id (str model-folder "/" model-format "/"
                                            url "." model-format))
   (let [p      (cartesian3 position)
@@ -147,10 +146,10 @@
                                               url "." model-format)
                           :modelMatrix      matrix
                           :minimumPixelSize 128
-                          :maximumScale     200000}]))
+                          :maximumScale     (* scale 100)}]))
 
 
-
+; make-shape :default
 (defmethod make-shape :default [_]
   [:> Entity])
 

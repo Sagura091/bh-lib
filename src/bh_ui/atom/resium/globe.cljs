@@ -53,7 +53,8 @@
                                :id           "dataduck"
                                :model-folder "data/models"
                                :position     [40 -90 1000e3]
-                               :url          "duck"}]}
+                               :url          "duck"
+                               :scale        2000}]}
 
                   {:layer-id "images"
                    :z        0
