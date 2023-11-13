@@ -10,6 +10,9 @@
 (log/info "bh-ui.atom.resium.shape")
 
 
+(def model-format "glb")
+
+
 (defn- correct-locations
   "Cesium/Resium locations are [lon lat] while Worldwind locations are [lat lon], so we need this
   function to do the conversion (easier to go in this direction)
@@ -135,8 +138,9 @@
 
 
 ; :shape/label
-(defmethod make-shape :shape/model [{:keys [id position model-format model-folder url]}]
-  (log/info "make-shape :shape/model" id model-format url)
+(defmethod make-shape :shape/model [{:keys [id position model-folder url]}]
+  (log/info "make-shape :shape/model" id (str model-folder "/" model-format "/"
+                                           url "." model-format))
   (let [p      (cartesian3 position)
         matrix (.eastNorthUpToFixedFrame Transforms p)]
     ^{:key id} [:> Model {:url              (str model-folder "/" model-format "/"

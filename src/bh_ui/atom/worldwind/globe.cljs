@@ -10,9 +10,10 @@
             [bh-ui.atom.worldwind.globe.react-support :as rs]
             [bh-ui.atom.worldwind.globe.layer :as layer]
             [bh-ui.atom.worldwind.globe.shape :as shape]
-            [bh-ui.atom.worldwind.globe.volume :as volume]
-            [bh-ui.atom.worldwind.globe.path :as path]
-            [bh-ui.atom.worldwind.globe.sector :as sector]
+            [bh-ui.atom.worldwind.globe.volume]
+            [bh-ui.atom.worldwind.globe.path]
+            [bh-ui.atom.worldwind.globe.sector]
+            [bh-ui.atom.worldwind.globe.models]
             [bh-ui.utils.bounding-box :as bound]
             [bh-ui.utils.helpers :as h]
             [re-frame.core :as rf]
@@ -28,58 +29,54 @@
 (def DEFAULT_BACKGROUND_COLOR "rgb(36,74,101)")
 (def alt 1000000)
 
+
 (def sample-data [
-                  {:layer-id "swath"
-                   :z        150
-                   :shapes   [{:shape          :shape/volume :id "polar-sat-1-coverage"
+                  {:layer-id "misc"
+                   :z        10
+                   :shapes   [{:shape      :shape/polygon :id "square"
+                               :locations [[30.0 -130.0] [30.0 -100.0]
+                                           [0.0 -100.0] [0.0 -130.0]]
+                               :fill-color [1 0 0 0.3] :outline-color [1 0 0 1] :width 2}
+                              {:shape      :shape/polygon :id "5-sided"
+                               :locations [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
+                                           [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
+                               :fill-color [1 0 0 0.6] :outline-color [1 0 0 1] :width 2}
+                              {:shape :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
+                               :outline-color [1 1 0 1.0] :width 5}
+                              {:shape      :shape/circle :id "circle"
+                               :location [28.538336 -81.379234] :radius 1000000
+                               :fill-color [0 1 0 0.5] :outline-color [1 1 1 1] :width 2 :height 2}
+                              {:shape :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
+                               :outline-color [1 0.5 0.78 1.0] :width 5}
+                              {:shape :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
+                               :fill-color [1 0.9 0.0 1.0] :outline-color [1 0.9 0.0 1.0] :width 1}]}
+
+                  {:layer-id "polar-sat-1"
+                   :z        100
+                   :shapes   [{:shape     :shape/path :id "polar-sat-1-orbit"
+                               :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
+                               :color     [1 1 0 1.0] :width 1 :extrude true}
+                              {:shape          :shape/volume :id "polar-sat-1-coverage"
                                :positions      [[40 -90 alt] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]]
                                :faces          [[0 1 2], [0 2 3], [0 3 4], [0 1 4]]
                                :outline        [0, 1, 2, 3, 4, 0, 3, 2, 0, 1, 4]
                                :interior-color [1 1 1 0.5]
                                :outline-color  [0 0 1 1.0]
-                               :width          1 :extrude true}]}
-
-                  {:layer-id "polygons"
-                   :z        10
-                   :shapes   [{:shape      :shape/polygon :id "square"
-                               :locations  [[30.0 -130.0] [30.0 -100.0]
-                                            [0.0 -100.0] [0.0 -130.0]]
-                               :fill-color [1 0 0 0.3] :outline-color [1 0 0 1] :width 2}
-                              {:shape      :shape/polygon :id "5-sided"
-                               :locations  [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
-                                            [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
-                               :fill-color [1 0 0 0.6] :outline-color [1 0 0 1] :width 2}]}
-
-                  {:layer-id "polylines"
-                   :z        10
-                   :shapes   [{:shape         :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
-                               :outline-color [1 1 0 1.0] :width 5}
-                              {:shape         :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
-                               :outline-color [1 0.5 0.78 1.0] :width 5}]}
-
-                  {:layer-id "circles"
-                   :z        10
-                   :shapes   [{:shape      :shape/circle :id "circle"
-                               :location   [28.538336 -81.379234] :radius 1000000
-                               :fill-color [0 1 0 0.5] :outline-color [1 1 1 1] :width 2 :height 2}]}
-
-                  {:layer-id "locations"
-                   :z        10
-                   :shapes   [{:shape      :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
-                               :fill-color [1 0.9 0.0 1.0] :outline-color [1 0.9 0.0 1.0] :width 1}]}
-
-                  {:layer-id "orbits"
-                   :z        100
-                   :shapes   [{:shape     :shape/path :id "polar-sat-1"
-                               :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
-                               :color     [1 1 0 1.0] :width 1 :extrude true}]}
+                               :width          1 :extrude true}
+                              {:shape        :shape/model
+                               :id           "dataduck"
+                               :model-folder "data/models"
+                               :position     [40 -90 1000e3]
+                               :url          "duck"}]}
 
                   {:layer-id "images"
-                   :z        10
-                   :shapes   [{:shape        :shape/image, :id "image-15",
-                               :url          "data/a.png",
-                               :bounding-box [22.074653 33.344622 -95.433292 -82.723547]}
-
+                   :z        0
+                   :shapes   [{:shape     :shape/image, :id "image-15",
+                               :url       "data/a.png",
+                               :locations [[22.229767 -93.016231]
+                                           [33.344622 -95.433292]
+                                           [33.082839 -83.694864]
+                                           [22.074653 -82.723547]]}
                               {:shape        :shape/image
                                :id           (h/component-id)
                                :url          "images/lightning/Lightning3png.png"

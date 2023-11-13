@@ -23,6 +23,17 @@
                        ;(log/info "make-shape" shape)
                        shape))
 
+
+(defmethod make-shape :default [{:keys [shape]}]
+  (let [label      (WorldWind/GeographicText. (location/position [0 0]) (str "missing  " shape))
+        attributes (attributes/text-attributes
+                     {:fill-color    [1 0.9 0.0 1.0]
+                      :outline-color [1 0.9 0.0 1.0]
+                      :width         1})]
+    (set! (.-attributes label) attributes)
+    label))
+
+
 ; :shape/polygon
 (defmethod make-shape :shape/polygon [{:keys [id locations
                                               fill-color outline-color
