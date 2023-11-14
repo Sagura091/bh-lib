@@ -71,7 +71,7 @@
                                :scale        2000}]}
 
                   {:layer-id "images"
-                   :z        1
+                   :z        10
                    :shapes   [{:shape     :shape/image,
                                :id        "image-15",
                                :url       "data/a.png",

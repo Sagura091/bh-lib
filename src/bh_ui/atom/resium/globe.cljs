@@ -39,13 +39,14 @@
 
                   {:layer-id "polar-sat-1"
                    :z        100
-                   :shapes   [{:shape     :shape/path :id "polar-sat-1-orbit"
+                   :shapes   [
+                              {:shape     :shape/path :id "polar-sat-1-orbit"
                                :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
                                :color     [1 1 0 1.0] :width 1 :extrude true}
+
                               {:shape          :shape/volume :id "polar-sat-1-coverage"
                                :positions      [[40 -90 alt] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]]
-                               :faces          [[0 1 2], [0 2 3], [0 3 4], [0 1 4]]
-                               :outline        [0, 1, 2, 3, 4, 0, 3, 2, 0, 1, 4]
+                               :faces          [[0 1 2] [0 2 3], [0 3 4], [0 4 1]]
                                :interior-color [1 1 1 0.5]
                                :outline-color  [0 0 1 1.0]
                                :width          1 :extrude true}

@@ -76,6 +76,27 @@
                                      :material     (Color. f-r f-g f-b f-a)}]]))
 
 
+(defmethod make-shape :shape/volume [{:keys [id positions faces
+                                             interior-color outline-color
+                                             width]}]
+  (let [[f-r f-g f-b f-a] interior-color
+        [o-r o-g o-b o-a] outline-color]
+    [:<>
+     (map-indexed (fn [idx face]
+                    ^{:key (str id "-" idx)}
+                    [:> Entity
+                     [:> PolygonGraphics {:hierarchy         (.fromDegreesArrayHeights Cartesian3
+                                                               (clj->js
+                                                                 (flatten (map (fn [vertex]
+                                                                                 (correct-position (nth positions vertex)))
+                                                                            face))))
+                                          :outlineColor      (Color. o-r o-g o-b o-a)
+                                          :outlineWidth      width
+                                          :outline           true
+                                          :perPositionHeight true
+                                          :material          (Color. f-r f-g f-b f-a)}]])
+       faces)]))
+
 ; :shape/image
 (defmethod make-shape :shape/image [{:keys [id bounding-box locations url]}]
   / (log/info "make-shape :shape/image" id bounding-box locations url)
@@ -174,6 +195,44 @@
                                           "/" url "." model-format)
                       :minimumPixelSize 128
                       :maximumScale     20000}]]
+
+
+  ())
+
+
+; logic for :shape/volume
+(comment
+  ; let's try building separate polygons for each face
+
+  (do
+    (def positions [[40 -90 1000e3] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]])
+    (def faces [[0 1 2], [0 2 3], [0 3 4], [0 4 1]])
+    (def normals []))
+
+  (flatten (map correct-position positions))
+
+
+  (.fromDegreesArrayHeights Cartesian3
+    (clj->js (flatten (map (fn [vertex]
+                             (correct-position (nth positions vertex)))
+                        (first faces)))))
+
+  (into ^{:key "dummy"} [:> Entity]
+    (map (fn [vertex]
+           (flatten (correct-position (nth positions vertex))))
+      (first faces)))
+
+
+  (into ^{:key "dummy"} [:> Entity]
+    (map (fn [face]
+           [:> PolygonGraphics {:hierarchy         (.fromDegreesArrayHeights Cartesian3
+                                                     (clj->js
+                                                       (flatten (map (fn [vertex]
+                                                                       (correct-position (nth positions vertex)))
+                                                                  face))))
+                                :outline           true
+                                :perPositionHeight true}])
+      faces))
 
 
   ())
