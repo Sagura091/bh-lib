@@ -76,9 +76,11 @@
                                      :material     (Color. f-r f-g f-b f-a)}]]))
 
 
-(defmethod make-shape :shape/volume [{:keys [id positions faces
+(defmethod make-shape :shape/volume [{:keys [id positions faces outline
                                              interior-color outline-color
-                                             width]}]
+                                             width] :as params}]
+  (log/info "make-shape :shape/volume" params)
+
   (let [[f-r f-g f-b f-a] interior-color
         [o-r o-g o-b o-a] outline-color]
     [:<>
@@ -91,8 +93,8 @@
                                                                                  (correct-position (nth positions vertex)))
                                                                             face))))
                                           :outlineColor      (Color. o-r o-g o-b o-a)
-                                          :outlineWidth      width
-                                          :outline           true
+                                          :outlineWidth      (if outline width 0)
+                                          :outline           (if outline true false)
                                           :perPositionHeight true
                                           :material          (Color. f-r f-g f-b f-a)}]])
        faces)]))

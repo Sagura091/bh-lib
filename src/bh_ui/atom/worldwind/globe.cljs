@@ -58,8 +58,8 @@
                                :color     [1 1 0 1.0] :width 1 :extrude true}
                               {:shape          :shape/volume :id "polar-sat-1-coverage"
                                :positions      [[40 -90 alt] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]]
-                               :faces          [[0 1 2], [0 2 3], [0 3 4], [0 1 4]]
-                               :outline        [0, 1, 2, 3, 4, 0, 3, 2, 0, 1, 4]
+                               :faces          [[0 1 2] [0 2 3] [0 3 4] [0 1 4]]
+                               :outline        [0 1 2 3 4 0 3 2 0 1 4]
                                :interior-color [1 1 1 0.5]
                                :outline-color  [0 0 1 1.0]
                                :width          1 :extrude true}
@@ -72,9 +72,9 @@
 
                   {:layer-id "images"
                    :z        10
-                   :shapes   [{:shape     :shape/image,
-                               :id        "image-15",
-                               :url       "data/a.png",
+                   :shapes   [{:shape     :shape/image
+                               :id        "image-15"
+                               :url       "data/a.png"
                                :locations [[22.229767 -93.016231]
                                            [33.344622 -95.433292]
                                            [33.082839 -83.694864]
