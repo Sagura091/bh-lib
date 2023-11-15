@@ -1,10 +1,10 @@
 (ns demo.catalog.atom.example.diagram.flow-diagram
   (:require ["reactflow" :refer (Position MarkerType)]
-            [demo.catalog.atom.utils :as example]
             [bh-ui.core :as bh]
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
-            [reagent.core :as r]
+            [demo.catalog.atom.utils :as example]
             [re-frame.core :as rf]
+            [reagent.core :as r]
             [taoensso.timbre :as log]))
 
 
@@ -113,21 +113,21 @@
             :target    "table-three" :targetHandle "data-in"
             :label     "data"
             :style     {:strokeWidth 2 :stroke :green}
-            :markerEnd {:type (.-ArrowClosed MarkerType)
+            :markerEnd {:type  (.-ArrowClosed MarkerType)
                         :width 10, :height 10, :color :green}}
            {:id        "data/two->table-two",
             :source    "data/two", :sourceHandle "data"
             :target    "table-two" :targetHandle "data-in"
             :label     "data"
             :style     {:strokeWidth 2 :stroke :green}
-            :markerEnd {:type (.-ArrowClosed MarkerType)
+            :markerEnd {:type  (.-ArrowClosed MarkerType)
                         :width 10, :height 10, :color :green}}
            {:id        "data/two->table-four",
             :source    "data/two", :sourceHandle "data"
             :target    "table-four" :targetHandle "data-in"
             :label     "data"
             :style     {:strokeWidth 2 :stroke :green}
-            :markerEnd {:type (.-ArrowClosed MarkerType)
+            :markerEnd {:type  (.-ArrowClosed MarkerType)
                         :width 10, :height 10, :color :green}}]})
 
 
@@ -201,6 +201,7 @@
   (register-dummys)
 
   (let [container-id "flow-diagram-demo-2"
+        show?        (r/atom false)
         data         (dsl->react-flow (:nodes dsl-layout-gold) (:edges dsl-layout-gold))]
 
     [example/component-example
@@ -208,7 +209,7 @@
      :title "Flow Diagram (more complex)"
      :description "A simple Flow Diagram built using [react-flow](https://reactflow.dev)"
      :data data
-     :config {:node-types     dsl/node-types
+     :config {:node-types     (dsl/node-types #() (r/atom data) show?)
               :node-data      dsl/bootstrap-node-data
               :node-kind-fn   dsl/default-node-kind
               :minimap-styles dsl/minimap-styles}
