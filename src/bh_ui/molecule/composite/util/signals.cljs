@@ -73,7 +73,7 @@ from the implementation of the subscription or handler function, which is manage
                      (let [[source-port target-port] ports
                            target-type (get-in configuration [:mol/components target :atm/role])
                            remote      (get-in configuration [:mol/components target :atm/kind])]
-                       (log/info "make-params (a)" target "//" target-type "//" remote)
+                       ;(log/info "make-params (a)" target "//" target-type "//" remote)
                        (if (= direction :outputs)
                          {source-port (condp = target-type
                                         :source/local [(ui-utils/path->keyword container-id :blackboard target)]
@@ -84,7 +84,7 @@ from the implementation of the subscription or handler function, which is manage
                                         :source/fn [(ui-utils/path->keyword container-id :blackboard target)]
                                         [::subs/source remote])}))))
               (into {}))]
-    (log/info "make-params (b)" node "//" container-id "//" ret)
+    ;(log/info "make-params (b)" node "//" container-id "//" ret)
     ret))
 
 
@@ -250,7 +250,7 @@ The function takes a hash-map with the following keys defined:
 
                                   [nil nil]
                                   (do
-                                    (log/info "NO Children!" node)
+                                    ;(log/info "NO Children!" node)
                                     (reduce into [(or bh-ui error-ui)
                                                   :component-id component-id :container-id container-id
                                                   :style (or styl {:height "100%" :width "100%"})
