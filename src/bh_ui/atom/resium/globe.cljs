@@ -37,6 +37,15 @@
                               {:shape      :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
                                :fill-color [1 0.9 0.0 1.0] :outline-color [1 0.9 0.0 1.0] :width 1}]}
 
+                  {:layer-id "satellite?"
+                   :z 100
+                   :shapes [{:shape        :shape/model
+                             :id           "satellite"
+                             :model-folder "data/models"
+                             :position     [20 -90 2000e3]
+                             :url          "satellite"
+                             :scale        7000}]}
+
                   {:layer-id "polar-sat-1"
                    :z        100
                    :shapes   [

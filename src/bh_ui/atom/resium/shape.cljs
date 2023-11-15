@@ -10,7 +10,7 @@
 (log/info "bh-ui.atom.resium.shape")
 
 
-(def model-format "glb")
+(def model-format "gltf")
 
 
 (defn- correct-locations
@@ -101,7 +101,7 @@
 
 ; :shape/image
 (defmethod make-shape :shape/image [{:keys [id bounding-box locations url]}]
-  / (log/info "make-shape :shape/image" id bounding-box locations url)
+   ;(log/info "make-shape :shape/image" id bounding-box locations url)
   ^{:key id} [:> Entity
               [:> PolygonGraphics {:hierarchy (.fromDegreesArray Cartesian3
                                                 (clj->js (correct-locations (cond
