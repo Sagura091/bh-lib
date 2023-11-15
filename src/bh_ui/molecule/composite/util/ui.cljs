@@ -1,4 +1,9 @@
 (ns bh-ui.molecule.composite.util.ui
+  "This namespace provide a number of function to support molecule/grid-container and related
+  namespaces, mostly related to the nodes and edges of both the visual (UI) representation
+  (`:mol/components` and `:mol/grid-layout`) and editing representation via [react-flow](https://reactflow.dev/)
+  (`:mol/flow-nodes` and `:mol/flow-edges`)"
+
   (:require [cljs.core.match :refer-macros [match]])
   (:require [bh-ui.atom.diagram.diagram.dagre-support :as dagre]
             [bh-ui.molecule.composite.util.signals :as sig]
@@ -21,10 +26,11 @@
 (log/info "bh-ui.molecule.composite.util.ui")
 
 
-(def last-params (atom nil))
-(def last-flow-edge (atom nil))
-(def last-flow (atom nil))
-(def last-nodes (atom nil))
+; some atoms to help with debugging (this namespace supports all sorts of stateful stuff)
+(defonce last-params (atom nil))
+(defonce last-flow-edge (atom nil))
+(defonce last-flow (atom nil))
+(defonce last-nodes (atom nil))
 
 
 (def x-offset 25)
@@ -47,7 +53,17 @@
                  :source/fn     {:background :pink :color :black}})
 
 
-(defn sub-layout [layout parent]
+(defn sub-layout
+  "returns the diagram's layout, making sure the `parent` node has data. If the node is new and doesn't yet have any
+  internal layout, we create one with  keys for `:children`, the nodes `:size` (which will vary to accommodate all its
+  children when they are added), and the position offset for the `:next` child
+
+  - layout : (hash-map) hold the visual properties of each node on the diagram
+  - parent : (string) ID of the relevant node, specifically a `:ui/container` node as they are the only ones that can have children
+
+  Returns the entire diagram's layout, possibly with new entries for the `parent` node."
+
+  [layout parent]
   (if (nil? (get-in layout [parent :children]))
     (update layout parent
       #(assoc % :children {}
@@ -57,7 +73,7 @@
 
 
 (defn set-position
-  "need to worry about the order so that react-flow sets up the parent/child stuff
+  "need to worry about the order of nodes, so that react-flow sets up the parent/child stuff
   correctly. 5 cases, in order:
 
          parent    children
@@ -86,7 +102,16 @@
                                     {:x new-x :y new-y}))))))
 
 
-(defn compute-size [node]
+(defn compute-size
+  "compute the size (width/height) of a node
+
+  - node : (hash-map)
+
+  Returns hash-map of the computed width and height
+
+  > Note: width and height are both -1 when no `node` is provided"
+
+  [node]
   (if node
     (let [min-x (->> node
                   (map (fn [[_ {{:keys [x]} :position}]] x))
@@ -106,19 +131,41 @@
     {:width -1 :height -1}))
 
 
-(defn- open-details [open-details? node]
+(defn- open-details
+  "open-details is only used by the flow-diagram examples as a placeholder for a function that actually
+  does something appropriate"
+
+  [open-details? node]
   (reset! open-details? (js->clj node)))
 ;(log/info "open-details" @open-details?))
 
 
-(defn- get-handle-in [config id port]
+(defn- get-handle-in
+  "get the input handle for the node given by `id`
+
+  - config : (hash-map) the DSL
+  - id : (string) id of the node in question
+  - port : (keyword) id of the port in question
+
+  Returns the id, a string since we are talking about data needed for the JS react-flow diagram, of the respective port"
+
+  [config id port]
   ;(log/info "get-handle-in" id port)
   (let [kind (get-in config [:mol/components id :atm/kind])]
     (get-in (bh-ui.atom.component-registry/lookup-component kind)
       [:handles :inputs port])))
 
 
-(defn- get-handle-out [config id port]
+(defn- get-handle-out
+  "get the output handle for the node given by `id`
+
+  - config : (hash-map) the DSL
+  - id : (string) id of the node in question
+  - port : (keyword) id of the port in question
+
+  Returns the id, a string since we are talking about data needed for the JS react-flow diagram, of the respective port"
+
+  [config id port]
   ;(log/info "get-handle-out" id port)
   (let [kind (get-in config [:mol/components id :atm/kind])]
     (get-in (bh-ui.atom.component-registry/lookup-component kind)
@@ -126,9 +173,14 @@
 
 
 (defn create-flow-node
-  "convert the nodes, currently organized by Loom (https://github.com/aysylu/loom), into
-  the format needed by react-flow (https://reactflow.dev)
+  "build the node data structure we need to draw the node in the flow-diagram
+
+  - configuration : (hash-map) the 'augmented' DSL, because it includes `:flow-nodes` which is more JS-like than the `:mol/*` attributes
+  - node-id : (string) id of the node we want to build the data structure of
+
+  Returns hash-map of the data describing the node and it's properties in a format compatible with the flow-diagram
   "
+
   [configuration node-id]
 
   (reset! last-params {:config configuration :id node-id})
@@ -174,9 +226,17 @@
 
 
 (defn create-flow-edge
-  "convert the edges, currently organized by Loom (https://github.com/aysylu/loom), into
-  the format needed by react-flow (https://reactflow.dev)
-  "
+  "build the edge data structure we need to draw the edge in the flow-diagram
+
+  - configuration : (hash-map) the 'augmented' DSL, because it includes `:denorm` which is more JS-like than the `:mol/links`
+  - idx : (integer) number to assist in generating a unique id for the edge within the flow-diagram
+  - edge : (vector) pair of:
+
+  > - source-id : (string) id of the source node the edge starts at
+  > - edge-id : (string) if of the node the edge ends at
+
+  Returns hash-map of the data describing the edge and it's properties in a format compatible with the flow-diagram"
+
   [configuration idx [source-id target-id :as edge]]
 
   (reset! last-flow-edge {:config configuration :source-id source-id :target-id target-id :edge edge})
@@ -201,9 +261,14 @@
 
 
 (defn compute-edges
-  "pull out just the relevant information from the configuration, so it can be passed into Loom and
+  "pull out just the relevant edge information from the configuration, so it can be passed into Loom and
   the interconnected digraph can be built
+
+  - configuration : (hash-map) the DSL
+
+  Returns vector of `[source-id target-id]` pairs, one for each link in the DSL
   "
+
   [configuration]
   (->> configuration
     :mol/links
@@ -217,9 +282,15 @@
 
 
 (defn make-flow
-  "take the Loom graph and turn it into what react-flow needs to draw it onto the display
+  "take the DSL and augment it with what react-flow needs to draw it onto the display
 
-  - configuration - r/atom wrapped hash-map
+  - configuration : (r/atom hash-map) the DSL
+
+  Returns 2 things:
+
+  1. a stateful update to the DSL (`configuration`) by adding or updating `:mol/flow-nodes` and `:mol/flow-edges`
+  2. hash-map with `:nodes` and `:edges` as well as some configuration parameters for the flow-diagram
+
   "
   [configuration]
 
@@ -261,10 +332,18 @@
 
     flow))
 
-;(dagre/build-layout flow)))
 
+(defn prep-environment
+  "prepares the 'environment' (i.e., the various app-db entries, re-frame subscriptions and event handlers), necessary
+  to support the UI build from the DSL
 
-(defn prep-environment [configuration component-id registry]
+  - configuration : (hash-map) the DSL
+  - component-id : (string or keyword) id of the UI component being built (used for locating things in re-frame)
+  - registry : (atom of hash-map) lookup table of all the UI components compiled into the app (esp. :ui/component and :source/fn)
+
+  Returns nil. Everything here is a side-effect on re-frame"
+
+  [configuration component-id registry]
   ;(log/info "prep-environment" component-id)
 
   ; 1. remote subscriptions (including the remote call)
@@ -293,11 +372,7 @@
 
 
 
-; TODO: 1) need to build a tree/digraph of the nodes for the flow-diagram, including parent/child stuff
-; TODO: 2) Drag new nodes
-; TODO: 3) update attributes of nodes (:atm/kind, etc.)
 ; TODO: 4) need a way to setup parent/child relationship using d&d
-; TODO: 5) connect nodes (working??? mostly working???)
 
 
 
