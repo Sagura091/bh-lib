@@ -38,7 +38,12 @@
 
 
 (defn get-predecessor-name
-  "
+  "Returns the name of the 'source' node that precedes the 'target' node
+
+  - links : (hash-map) the :mol/links value from the original Mol-DSL definition
+  - graph : (Loom graph) representation of the entire definition (nodes & edges)
+  - source : (keyword/string) the unique identifier of the node at the _start_ of the link, as defined in :mol/components
+  - target : (keyword/string) the unique identifier of the node at the _end_ of the link, as defined in :mol/components
   "
 
   [links graph source target]

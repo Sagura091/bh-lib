@@ -1,4 +1,5 @@
 (ns bh-ui.molecule.composite.util.node-config-ui
+  "This namespace my be OBE"
   (:require [taoensso.timbre :as log]
             [bh-ui.utils.helpers :as h]
             [bh-ui.utils.locals :as l]))
