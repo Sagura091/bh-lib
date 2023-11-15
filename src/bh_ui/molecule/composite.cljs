@@ -15,9 +15,9 @@ need to make a distinction (in fact the code is a bit cleaner if we don't) and w
 needs to implement the correct usage anyway). The flow-diagram, on the other hand, is easier if we DO make the
 distinction, so we can quickly build all the Nodes and Handles used for the diagram...
 "
-  (:require [bh-ui.atom.re-com.modal :as modal]
-            [bh-ui.atom.diagram.diagram.composite-dag-support :as dag-support]
+  (:require [bh-ui.atom.diagram.diagram.composite-dag-support :as dag-support]
             [bh-ui.atom.diagram.flow-diagram :as diagram]
+            [bh-ui.atom.re-com.modal :as modal]
             [bh-ui.molecule.composite.dsl-support.dsl-nodes :as dsl]
             [bh-ui.molecule.composite.dsl-support.edit-modal :as edit-dialog]
             [bh-ui.molecule.composite.util.digraph :as dig]
@@ -45,7 +45,45 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (def next-id (atom 0))
 
 
-(defn fn-default [{:keys [data sub-name]}]
+(defn fn-default
+  "this is a 'default' implementation of a `:source/fn`. We need this so that when a user adds
+  a `:source/fn` node to the flow-diagram we have all the internal elements in place to actually
+  'compile' the DSL into a working UI (see `molecule/grid-container`)
+
+  This follows the standard format for implementing a :source/fn, it has just one input parameter,
+  `data` and produces a single output, like all functions (or in this case actually a re-frame
+  subscription, specifically at [Layer 3](https://day8.github.io/re-frame/subscriptions/#the-four-layers)
+  since it build upon those additional input signals at Layer 2, such as our `:data` input.
+
+  Remember, we've taken the tack (draw from Re-com) of using keyword identified parameters, so this
+  work if you use Re-com-like format:
+
+  `[component :data {}]`
+
+  or a complete hash-map:
+
+  `[component {:data {}}]`
+
+  - data  : keyword that identifies the input subscription.
+
+  > Note: In the 'real world,' a function might need multiple inputs. These would each be defined when creating
+  > the function implementation. In our case, we are implementing a bare minimum function: one in, one out.
+
+  - sub-name : keyword that defines the global name for this subscription. This is used by components
+  'downstream' so that they can treat this `:source/fn` as an input to themselves.
+
+
+  Returns: in this special case, we just return in input value unchanged
+
+  > Note: We also discovered that when users can update the DSL using the flow-diagram we *could* find
+  > ourselves in the situation where we've got a `:source/fn` looking for `:data` but with nothing wired into
+  > that handle yet (users don't always do thing in a specific order that we've coded for) so we need to
+  > provide ***TWO** `reg-sub` implementations, one for when we know the name of the input, and one for when
+  > we *don't*. This problem only gets worse when a `:source/fn` needs many parameters, since any combination of them
+  > could be 'missing'."
+
+  [{:keys [data sub-name]}]
+
   ;(log/info "fn-default" data "____" sub-name)
 
   (if data
@@ -70,6 +108,12 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
 
 
+; register the fn-default as an available :source/fn so the 'compiler' can find it
+; when building the UI
+
+; NOTE: it is vital that any :source/fn include AT LEAST 1 :port/source or :port/source-sink
+; so that the flow-diagram knows how many input and output handles to draw for the User to
+; use for interconnection between components in the DSL
 (rf/dispatch-sync
   [:register-meta
    {:fn/fn-default {:function fn-default
@@ -96,16 +140,50 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                      :nodeBorderRadius 5})
 
 
-(defn config [full-config]
+(defn config
+  "used during initial setup of a new DSL for construction/editing purposes
+
+  - full-config : (hash-map)
+
+  Returns: hash-map for use in the app-db as part of the component's data flow configuration
+
+  > Note: this function does NOT see ot be used, but removing it causes problems"
+
+  [full-config]
+
+  (log/info "config (debug)" full-config)
   {:blackboard {:defs {:source full-config
                        :dag    {:open-details ""}}}
    :container  ""})
 
 
-(defn- add-flow-node [full-configuration
-                      {:keys [node-data node-kind-fn orig-data
-                              flowInstance set-nodes-fn wrapper] :as inputs}
-                      node-id event]
+(defn- add-flow-node
+  "this function add a newly dropped node into the DSL data structure in the appropriate
+  locations, namely :mol/components and :mol/flow-nodes, as well as the internal javascript
+  data structures used by react-flow (that nasty stateful thing)
+
+  - full-configuration : (r/atom of hash-map) the Mol-DSL before adding the node
+  - inputs : (hash-map) this is data provided by the 'dropped' node (see also `dsl-nodes/node-types`)
+
+  > - node-data    : (hash-map) details about the node dragged from the tool panel (see also `dsl-nodes/node-types`)
+  > - node-kind-fn : (fn)
+  > - orig-data    : (js collection) the nodes currently draw on the flow-diagram
+  > - flowInstance : (js object) reference to the specific flow-diagram, in case there are multiple diagrams active
+  > - set-nodes-fn : (js callback) function to manipulate the collection of nodes inside the react-flow (stateful JS)
+  > - wrapper      : (js object) reference to the parent or wrapping UI object, so we can compute the correct relative position of the new node
+
+  - node-id : (string) unique id of this node within the current Mol-DSL
+  - event : (mouse event) the JS event triggering the call, denotes the user's action to add a node to the flow-diagram
+
+  Returns: nil.
+
+  > Note: this function is all about (horrible, nasty, stateful) sid-effect, specifically updating the stateful
+  > `full-configuration`, the `orig-data`, and the js nodes themselves (via `set-nodes-fn`)"
+
+  [full-configuration
+   {:keys [node-data node-kind-fn orig-data
+           flowInstance set-nodes-fn wrapper] :as inputs}
+   node-id event]
 
   ;(log/info "add-flow-node (a)" (:mol/flow-nodes @full-configuration))
 
@@ -133,16 +211,25 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
         (swap! full-configuration update :mol/flow-nodes conj new-node)))))
 
 
+(defmulti create-dsl-node
+  "multi-method to construct the correct data for each type of node that can be dropped
+  onto a DSL editing flow-diagram, categorizes by `node-type`, i.e.: `:ui/component`,
+  :source/local`, etc.
 
-(defmulti create-dsl-node (fn [node-id node-type] node-type))
+  - node-id (string, ignored) identified the newly dropped node with a 'unique' id
+  - node-type : (keyword) identifies the category of node"
+
+  (fn [node-id node-type] node-type))
 
 
+; create-dsl-node :ui/component
 (defmethod create-dsl-node :ui/component [node-id node-type]
   {:atm/role  node-type
    :atm/kind  :stunt/text-block
    :atm/label node-id})
 
 
+; create-dsl-node :source/local
 (defmethod create-dsl-node :source/local [node-id node-type]
   {:atm/role         node-type
    :atm/kind         :source/local
@@ -151,25 +238,48 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
                       {:id 2 :x 20 :y 20}]})
 
 
+; create-dsl-node :source/fn
 (defmethod create-dsl-node :source/fn [node-id node-type]
   ;(log/info "create-dsl-node :source/fn" node-id node-type)
   {:atm/role node-type
    :atm/kind :fn/fn-default})
 
 
+; create-dsl-node :default
 (defmethod create-dsl-node :default [node-id node-type]
   ;(log/info "create-dsl-node :default" node-id node-type)
   {:atm/role node-type :atm/kind node-type})
 
 
-(defn- add-dsl-node [configuration component-id container-id
-                     node-id event]
+(defn- add-dsl-node
+  "added appropriate information about a new node the user dropped onto the flow-diagram into the
+  correct parts of the Mol-DSL (passed as `configuration`)
+
+  - configuration : (r/atom of hash-map) the Mol-DSL, plus additional okaying data
+  - component-id : (string/keyword) unique id of this component
+  - container-id : (string/keyword) unique id of the parent container, the one that holds *this* component
+  - node-id : (string) unique id of this node within the current Mol-DSL
+  - event : (mouse event) the JS event triggering the call, denotes the user's action to add a node to the flow-diagram
+
+  > Note: `configuration` carries more data than just the 5 Mol-DSL keys (`:mol/*`). These are
+  > used internally as part of the 'compilation' and visual dsl editing. All we are only concerned with updating
+  > the required keys.
+
+  Returns nil. Again, this function is only about making the appropriate stateful side-effects. This function
+  manipulates the `:layout` attribute of the container/component in the app-db, `:mol/components`, and `:mol/grid-layout`
+  (only if the new node is a :ui/component`)
+  "
+
+  [configuration component-id container-id
+   node-id event]
   ;(log/info "add-dsl-node" (type configuration))
 
   (let [node-type        (h/string->keyword (.getData (.-dataTransfer event) "editable-flow"))
         layout           {:i node-id :x 0 :y 0 :w 10 :h 5 :static true}
         ; we should only add :ui/components to :mol/grid-layout
         add-ui-component (fn [m node-type]
+                           ; TODO: we also need to update on :ui/containers, but also, what if this new node is *inside* an existing
+                           ;   :ui/container?
                            (if (= :ui/component node-type)
                              (update-in m [:mol/grid-layout] conj layout)
                              m))]
@@ -191,11 +301,26 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (defn- on-drop
   "we need a custom (on-drop) as part of the DAG panel because we need to manipulate
   the Mol-DSL configuration itself, as well as the flow-layout (nodes & edges) that
-  are shown in flow.
+  are shown in react-flow.
 
   In th case of the Mol-DSL UI, we need to tack on the :mol/components and such, so that
   will come in as the first param. the flow-diagram component itself will partial
-  in the hash-map of additional information, and the JS callback will pop on the drop EVENT."
+  in the hash-map of additional information, and the JS callback will pop on the drop EVENT.
+
+  - full-configuration : (r/atom of hash-map) the Mol-DSL before adding the node
+
+  - container-id : (string/keyword) unique id of the parent container, the one that holds *this* component
+  - inputs : (hash-map) this is data provided by the 'dropped' node (see also `dsl-nodes/node-types`)
+
+  > - component-id : (string/keyword) unique id of this component
+  >
+  > the rest are not used in this function, but are passed along to the 'working' functions; `add-flow-node` and `add-dsl-node`
+
+  - node-id : (string) unique id of this node within the current Mol-DSL
+  - event : (mouse event) the JS event triggering the call, denotes the user's action to add a node to the flow-diagram
+
+  Returns nil. Purpose is the side-effects performed by `add-flow-node` and `add-dsl-node`
+  "
 
   [full-configuration component-id container-id
    {:keys [component-id node-data node-kind-fn orig-data
@@ -212,14 +337,30 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     ; stored inside the diagram
     (add-flow-node full-configuration inputs node-id event)
 
-    ; now, add a new dsl-node to the full-configuration (that was passed in form the outside world)
+    ; now, add a new dsl-node to the full-configuration (that was passed in from the outside world)
     (add-dsl-node full-configuration component-id container-id
       node-id event)))
 
 
-(defn- add-flow-edge [full-configuration
-                      {:keys [orig-data flowInstance set-edges-fn wrapper]}
-                      event]
+(defn- add-flow-edge
+  "Turn a mouse event, used when the user links 2 nodes on a flow-diagram together, into the
+  necessary dat structure updates.
+
+  - full-configuration : (r/atom of hash-map) the Mol-DSL before adding the node
+  - inputs : (hash-map) this is data provided by the 'dropped' node (see also `dsl-nodes/node-types`)
+
+  > - orig-data    : (js collection) the nodes currently draw on the flow-diagram
+  > - set-edges-fn : (js callback) function to manipulate the collection of edges inside the react-flow (stateful JS)
+
+  - event : (mouse event) the JS event triggering the call, denotes the user's action to link 2 nodes in the flow-diagram
+
+  Returns nil. Again, this is all about the side-effects, specifically those to the orig-data (atom)
+  full-configuration (r/atom) and the internal react-flow data structure via set-edges-fn.
+  "
+
+  [full-configuration
+   {:keys [orig-data flowInstance set-edges-fn wrapper] :as inputs}
+   event]
 
   (let [event-map     (js->clj event :keywordize-keys true)
         source-id     (:source event-map)
@@ -243,14 +384,43 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
     (set-edges-fn (fn [e] (.concat e (clj->js new-edge))))))
 
 
-(defn- prep-handle [handle]
+(defn- prep-handle
+  "turns the id of a react-flow 'Handle' into the keywords used by the meta-daa registry of
+  component implementations. Since the flow-diagram needs to support separate inputs and outputs, and
+  the meta-data has the notion of bidirections ':ports', we need this translation.
+
+  For example, the :data input for :fn/fn-default must become both input ('data-in') and output
+  ('data-out'). Since those strings get passed around inside the react-flow JS stuff, we need to
+  turn them back when we want to manipulate the DSL.
+
+  This function find the suffix, strips it, and turns the resulting string into a keyword.
+
+  > Note: the caller understands if the 'unadorned' keyword mean input or output.
+
+  Returns: (keyword) the stripped down identifier of the component link port."
+
+  [handle]
   (-> handle
     (clojure.string/split "-")
     first
     keyword))
 
 
-(defn- add-dsl-edge [configuration event]
+(defn- add-dsl-edge
+  "updated the edge data in the `:mol/links` key in the `configuration` (r/atom).
+
+  We pull out the source and target node and handle information, format the data structure, and
+  put it into the DSL.
+
+  - configuration : (r/atom of hash-map) the DSL
+  - event : (mouse event) the event of the user's intent to connect 2 nodes on the react-flow diagram
+
+
+  Returns nil. As usual for this namespace, this is all about the side-effects
+  "
+
+  [configuration event]
+
   (let [event-map     (js->clj event :keywordize-keys true)
         source-id     (:source event-map)
         source-handle (:sourceHandle event-map)
@@ -274,8 +444,18 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
   "we need the full-configuration to add the new edge into the original dat passed into
   the diagram from the 'outside world'
 
-  also, having access to the 'full-configuration' will allow us to look up the :kind (or :kind-js)
-  of the source node which we can use to determine the color of the connection line."
+  also, having access to the `full-configuration` will allow us to look up the `:kind` (or `:kind-js`)
+  of the source node which we can use to determine the color of the connection line.
+
+  - full-configuration : (r/atom of hash-map) the Mol-DSL before adding the node
+  - inputs : (hash-map) this is data provided by the 'dropped' node (see also `dsl-nodes/node-types`)
+  - component-id : (string/keyword) unique id of this component
+  - container-id : (string/keyword) unique id of the parent container, the one that holds *this* component
+  - event : (mouse event) the JS event triggering the call, denotes the user's action to add a node to the flow-diagram
+
+  Returns nil. As expected in this namespace, this function is all about side-effects on the stateful DSL
+  attributes via `add-dsl-edge` and `add-flow-edge`
+  "
 
   [full-configuration component-id container-id inputs event]
 
@@ -297,7 +477,9 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
   (let [components (:mol/components @configuration)
         links      (:mol/links @configuration)
-        layout     (:mol/grid-layout @configuration)]
+        layout     (:mol/grid-layout @configuration)
+        nodes      (:mol/flow-nodes @configuration)
+        edges      (:mol/flow-edges @configuration)]
 
     ;(log/info "definition-panel" components)
     ;(log/info "definition-panel" links)
@@ -318,21 +500,43 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 
                   [:h3 "Layout"]
                   [containers/v-scroll-pane {:height "10em"}
-                   [layout/text-block (str layout)]]]])))
+                   [layout/text-block (str layout)]]
+
+                  [:h3 "Node for the Editor"]
+                  [containers/v-scroll-pane {:height "10em"}
+                   [layout/text-block (str nodes)]]
+
+                  [:h3 "Edges for the Editor"]
+                  [containers/v-scroll-pane {:height "10em"}
+                   [layout/text-block (str edges)]]]])))
 
 
-(defn- make-drag-tools [tools]
+(defn- make-drag-tools
+  "turns the descriptions of the needed 'tools' (the UI elements a user can drag from the
+  toolbar onto the DSL flow-diagram
+
+  - tools : (hash-map)
+
+  Returns vector of [Hiccup](https://reagent-project.github.io) components, one for each
+  specification in `tools`"
+
+  [tools]
+
   (->> tools
     (map diagram/make-draggable-node)
     (into [])))
 
 
 (defn dag-panel
-  "show the DAG, built from the configuration in [Mol-DSL](docs/mol-dsl.md) passed into the component, in a panel
-  (alongside the actual UI)
+  "show the Mol-DSL (a directed acyclic graph, or DAG), built from the configuration in [Mol-DSL](docs/mol-dsl.md)
+  passed into the component, in a panel (alongside the actual UI)
 
+  - configuration : (r/atom of hash-map) the Mol-DSL before adding the node
+  - component-id : (string/keyword) unique id of this component
+  - container-id : (string/keyword) unique id of the parent container, the one that holds *this* component
+  - node-dblclick-fn : (function) callback to do the Mol-DSL specifics of editing a node on the flow-diagram that the User double-clicks on, indication that they want to edit the properties
 
-  - configuration : *r/atom* around a (hash-map
+  Returns Hiccup (using [Re-com](https://github.com/Day8/re-com)) for he DSL editor panel of the overall molecule UI
   "
 
   [& {:keys [configuration component-id container-id ui node-dblclick-fn]}]
