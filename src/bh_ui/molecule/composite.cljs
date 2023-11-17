@@ -129,7 +129,7 @@ distinction, so we can quickly build all the Nodes and Handles used for the diag
 (def default-tool-types {:ui/component  {:label ":ui/component" :type :ui/component :color "green" :text-color :white :border-color "green"}
                          :ui/container  {:label ":ui/container" :type :ui/container :color "transparent" :text-color :gray :border-color "gray"}
                          :source/remote {:label ":source/remote" :type :source/remote :color "orange" :text-color :black :border-color "orange"}
-                         :source/local  {:label ":source/local" :type :source/local :color "blue" :text-color :white :border-color "blue"}
+                         :source/local  {:label ":source/local" :type :source/local :color "#ffc966" :text-color :black :border-color "#ffc966"}
                          :source/fn     {:label ":source/fn" :type :source/fn :color "pink" :text-color :black :border-color "pink"}})
 
 

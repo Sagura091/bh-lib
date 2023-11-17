@@ -18,7 +18,7 @@
 (def node-style {:ui/component  {:background :green :color :white}
                  :ui/container  {:color :gray}
                  :source/remote {:background :orange :color :black}
-                 :source/local  {:background :blue :color :white}
+                 :source/local  {:background "#ffdb99" :color :black}
                  :source/fn     {:background :pink :color :black}})
 (def default-node-style {:minHeight    "20px"
                          :minWidth     "100px"
