@@ -19,7 +19,7 @@
         :height "100%"
         :gap "5px"
         :children [[rc/h-box :src (rc/at)
-                    :justify :end
+                    :justify :start
                     :children [[rc/horizontal-bar-tabs
                                 :model selected?
                                 :tabs buttons
