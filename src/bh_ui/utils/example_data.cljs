@@ -185,8 +185,11 @@
 (def tabular-data-data [:sequential tabular-data-entry])
 
 (def example-tabular-data-entry [:map
-                                 [:name string?] [:uv number?]
-                                 [:pv number?] [:tv number?] [:amt number?]])
+                                 [:name string?]
+                                 [:uv [:and int? [:> 10] [:< 1000]]]
+                                 [:pv [:and int? [:> 10] [:< 1000]]]
+                                 [:tv [:and int? [:> 10] [:< 1000]]]
+                                 [:amt [:and int? [:> 10] [:< 1000]]]])
 (def example-tabular-data-data [:sequential example-tabular-data-entry])
 
 (comment
@@ -324,10 +327,10 @@
 
 (defn random-entity-data [names]
   (let [row-gen (fn []
-                  {:uv (mg/generate [:and int? [:> 10] [:< 1000]])
-                   :tv (mg/generate [:and int? [:> 10] [:< 1000]])
-                   :pv (mg/generate [:and int? [:> 10] [:< 1000]])
-                   :amt (mg/generate [:and int? [:> 10] [:< 1000]])})]
+                  {:uv (mg/generate [:and int? [:> -500] [:< 10000]])
+                   :tv (mg/generate [:and int? [:> -500] [:< 10000]])
+                   :pv (mg/generate [:and int? [:> -500] [:< 10000]])
+                   :amt (mg/generate [:and int? [:> -500] [:< 10000]])})]
     (->> names
       (map (fn [n]
              (merge {:name n} (row-gen))))

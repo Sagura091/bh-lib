@@ -18,9 +18,15 @@
                                  "#0000ff" "#009999" "#d7e62b"])
 
 
-(defn get-color [idx]
-  (let [i (mod idx (count default-stroke-fill-colors))]
-    (get default-stroke-fill-colors i)))
+(defn get-color
+  ([idx source] (let [i (mod idx (count source))]
+                  (get source i)))
+  ([idx] (get-color idx default-stroke-fill-colors)))
+
+
+(defn next-color
+  ([idx-atom source] (get-color (swap! idx-atom inc) source))
+  ([idx-atom] (get-color (swap! idx-atom inc))))
 
 
 (defn hex->rgba
