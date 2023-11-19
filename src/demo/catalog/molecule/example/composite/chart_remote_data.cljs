@@ -5,7 +5,6 @@
             [bh-ui.subs :as subs]
             [cljs-uuid-utils.core :as uuid]
             [bh-ui.version :as version]
-            [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
             [taoensso.timbre :as log]
@@ -20,12 +19,12 @@
   ;(log/info "measurements-source GENERATING")
 
   {:title    "Measurements"
-   :c-o-c    [{:step      :generated
-               :by        "bh-lib.demo.remote-data-source.measurements"
-               :version   version/version
-               :at        (str (js/Date.))
-               :signature (str (uuid/make-random-uuid))}]
-   :metadata {:type   :tabular
+   :c-o-c    [{:coc/step      :generated
+               :coc/by        "bh-lib.demo.remote-data-source.measurements"
+               :coc/version   version/version
+               :coc/at        (str (js/Date.))
+               :coc/signature (str (uuid/make-random-uuid))}]
+   :metadata {:type   :data/tabular
               :id     :name
               :title  "Tabular Measurement Data with Metadata"
               :fields {:name :string :uv :number :pv :number :tv :number :amt :number}}
@@ -36,14 +35,23 @@
 (re-frame/dispatch-sync [::rs/register-source :source/measurements measurements-source])
 
 
+(def ui-definition
+  {:mol/components  {"measurements" {:atm/role :source/remote :atm/kind :source/measurements}
+                     "chart"        {:atm/role :ui/component :atm/kind :rechart/area-2}}
+
+   :mol/links       {"measurements" {:data {"chart" :data}}}
+
+   :mol/grid-layout [{:i "chart" :x 0 :y 0 :w 20 :h 11 :static true}]})
+
+
 (defn example []
   (let [container-id "chart-remote-data-demo"
         component-id (bh/utils-path->keyword container-id "molecule")
-        dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/chart-remote-data-ui-def))]
+        dsl          (r/atom (or (storage/load-from-local-storage component-id) ui-definition))] ;bh/chart-remote-data-ui-def))]
 
     (fn []
       (acu/demo "Bar chart of remote data"
-        "This example shows a Bar Chart displaying data via a subscription to the Server"
+        "This example shows a (Recharts) Chart displaying data via a subscription to the Server"
         [layout/frame
          ;;
          ;; NOTE: the :height MUST be specified here since the ResponsiveContainer down in bowels of the chart needs a height

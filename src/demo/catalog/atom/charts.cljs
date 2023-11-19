@@ -1,5 +1,6 @@
 (ns demo.catalog.atom.charts
   (:require [demo.catalog.atom.example.chart.area-chart :as area-chart]
+            [demo.catalog.atom.example.chart.area-chart-2 :as area-chart-2]
             [demo.catalog.atom.example.chart.bar-chart :as bar-chart]
             [demo.catalog.atom.example.chart.colored-pie-chart :as colored-pie-chart]
             [demo.catalog.atom.example.chart.funnel-chart :as funnel-chart]
@@ -17,6 +18,8 @@
   []
 
   [:div
+   [area-chart-2/examples]
+
    [area-chart/examples]
    [bar-chart/examples]
    [colored-pie-chart/examples]

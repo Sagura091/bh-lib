@@ -50,7 +50,7 @@
     :short-name "atoms"
     :description ""
     :children atom-navbar
-    :start-panel :atoms/layouts]])
+    :start-panel :atoms/charts]])
 
 
 

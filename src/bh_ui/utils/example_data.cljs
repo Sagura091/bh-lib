@@ -1,6 +1,5 @@
 (ns bh-ui.utils.example-data
-  (:require [bh-ui.subs :as subs]
-            [cljs-uuid-utils.core :as uuid]
+  (:require [cljs-uuid-utils.core :as uuid]
             [cljs.spec.alpha :as spec]
             [clojure.test.check.generators :as gen]
             [expound.alpha :as expound]
@@ -8,7 +7,6 @@
             [malli.error :as me]
             [malli.generator :as mg]
             [malli.provider :as mp]
-            [re-frame.core :as re-frame]
             [taoensso.timbre :as log]))
 
 
@@ -327,9 +325,9 @@
 
 (defn random-entity-data [names]
   (let [row-gen (fn []
-                  {:uv (mg/generate [:and int? [:> -500] [:< 10000]])
-                   :tv (mg/generate [:and int? [:> -500] [:< 10000]])
-                   :pv (mg/generate [:and int? [:> -500] [:< 10000]])
+                  {:uv  (mg/generate [:and int? [:> -500] [:< 10000]])
+                   :tv  (mg/generate [:and int? [:> -500] [:< 10000]])
+                   :pv  (mg/generate [:and int? [:> -500] [:< 10000]])
                    :amt (mg/generate [:and int? [:> -500] [:< 10000]])})]
     (->> names
       (map (fn [n]
@@ -365,6 +363,60 @@
 
 ;; endregion
 
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Remote data "header"
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; region
+
+(spec/def :remote/title string?)
+(spec/def :remote/c-o-c :coc/coc)
+(spec/def :remote-data/meta-data (spec/keys :req-un [:remote/title :remote/c-o-c
+                                                     :data/metadata :data/data]))
+
+
+
+(def remote-meta-tabular-data
+  {:title    "Remote Tabular Data with Metadata"
+   :c-o-c    [{:coc/step      :generated
+               :coc/by        "bh-ui.atom.bhui.table"
+               :coc/version   "no version"
+               :coc/at        (str (js/Date.))
+               :coc/signature (uuid/uuid-string (uuid/make-random-uuid))}]
+   :metadata {:type   :data/tabular
+              :id     :name
+              :title  "Tabular Data with Metadata"
+              :fields {:name :string :uv :number :pv :number :tv :number :amt :number}}
+   :data     tabular-data})
+
+(def remote-measurements
+  {:title    "Measurements"
+   :c-o-c    [{:coc/step      :generated
+               :coc/by        "bh-lib.demo.remote-data-source.measurements"
+               :coc/version   bh-ui.version/version
+               :coc/at        (str (js/Date.))
+               :coc/signature (str (uuid/make-random-uuid))}]
+   :metadata {:type   :data/tabular
+              :id     :name
+              :title  "Tabular Measurement Data with Metadata"
+              :fields {:name :string :uv :number :pv :number :tv :number :amt :number}}
+   :data     (random-entity-data
+               ["Page A" "Page B" "Page C" "Page D" "Page E" "Page F"])})
+
+(comment
+  (spec/valid? :remote-data/meta-data remote-meta-tabular-data)
+  (spec/valid? :remote-data/meta-data remote-measurements)
+
+  (spec/explain :remote-data/meta-data remote-measurements)
+
+  ())
+
+
+  ;; endregion
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

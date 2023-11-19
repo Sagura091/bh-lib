@@ -1,7 +1,11 @@
 (ns bh-ui.atom.chart.area-chart-2
   (:require [bh-ui.atom.chart.utils :as utils]
             [bh-ui.utils.helpers :as h]
+            [bh-ui.utils.color :as color]
+            [reagent.core :as r]
             [re-com.core :as rc]
+            [re-frame.core :as rf]
+            [cljs.spec.alpha :as spec]
             [taoensso.timbre :as log]
             ["recharts" :refer [ResponsiveContainer AreaChart Area Brush
                                 XAxis YAxis CartesianGrid Tooltip Legend]]))
@@ -11,6 +15,40 @@
 
 
 (def source-code '[])
+
+
+(defn data->config [data next-color]
+  (log/info "data->config" (spec/valid? :tabular-data/meta-data data)
+    "_____" (spec/valid? :remote-data/meta-data data)
+    "_____" data)
+  (cond
+    (or (spec/valid? :tabular-data/meta-data data)
+      (spec/valid? :remote-data/meta-data data))
+    (merge {:isAnimationActive true
+            :grid              {:include         true
+                                :strokeDasharray {:dash 3 :space 3}
+                                :stroke          :gray}
+            :x-axis            {:include     true
+                                :dataKey     (get-in data [:metadata :id])
+                                :orientation :bottom
+                                :scale       "auto"}
+            :y-axis            {:include     true
+                                :dataKey     ""
+                                :orientation :left
+                                :scale       "auto"
+                                :interval    "preserveStartEnd"}
+            :tooltip           {:include true}
+            :legend            {:include       true
+                                :layout        :horizontal
+                                :align         :center
+                                :verticalAlign :bottom}}
+      (->> (get-in data [:metadata :fields])
+        keys
+        (map (fn [val]
+               (let [color (color/next-color next-color)]
+                 {val {:include true :animate true
+                       :stroke  color :fill color}})))
+        (into {})))))
 
 
 (defn standard-chart-components [component-id config]
@@ -67,31 +105,43 @@
     ret))
 
 
-(defn component [& {:keys [data config style help
-                           component-id container-id]}]
-
+(defn component [& {:keys [data config style help component-id container-id]}]
   (let [d    (h/resolve-value data)
-        cfg  (h/resolve-value config)
+        c    (h/resolve-value config)
+        _    (log/info "component (a)" c "_____" (empty? @c))
         styl (h/resolve-value style)
         hlp  (h/resolve-value help)]
 
-    (log/info "component" d "_____" cfg)
+    (log/info "component (b)" d "_____" c)
 
     (fn []
-      (if (empty? @d)
-        [rc/alert-box :src (rc/at)
-         :alert-type :info
-         :class "h-w-100pc"
-         :heading "Waiting for data"]
+      (let [next-color (atom -2)
+            cfg        (if (empty? @c) (r/atom (data->config @d next-color)) c)]
 
-        [:> ResponsiveContainer
-         [:> AreaChart {:data (:data @d)}
+        (log/info "component (c)" d "_____" cfg)
 
-          (standard-chart-components component-id @cfg)
+        (if (empty? @d)
+          [rc/alert-box :src (rc/at)
+           :alert-type :info
+           :class "h-w-100pc"
+           :heading "Waiting for data"]
 
-          (when (:brush @cfg) [:> Brush])
+          [:> ResponsiveContainer
+           [:> AreaChart {:data (:data @d)}
 
-          (make-area-display @d @cfg)]]))))
+            (standard-chart-components component-id @cfg)
+
+            (when (:brush @cfg) [:> Brush])
+
+            (make-area-display @d @cfg)]])))))
+
+
+
+(rf/dispatch-sync [:register-meta
+                   {:rechart/area-2 {:component component
+                                     :atm/role  :ui/component
+                                     :ports     {:data   :port/sink
+                                                 :config :port/sink}}}])
 
 
 
