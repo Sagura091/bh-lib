@@ -60,18 +60,18 @@
 
                   [rc/button :label "Add 'Q'"
                    :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
-                                                           {:name "Page Q" :uv (rand-int 5000)
-                                                            :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])]
+                                                                  {:name "Page Q" :uv (rand-int 5000)
+                                                                   :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])]
 
                   [rc/button :label "Drop Last 2"
                    :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])]
 
                   [rc/button :label "Add :new-item"
                    :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
-                                                          [assoc :data (into []
-                                                                         (map (fn [x]
-                                                                                (assoc x :new-item (rand-int 7000)))
-                                                                           @old-data))]])]]])))
+                                                                 [assoc :data (into []
+                                                                                (map (fn [x]
+                                                                                       (assoc x :new-item (rand-int 7000)))
+                                                                                  @old-data))]])]]])))
 
 
 (defn- add-node [data new-node]
@@ -153,22 +153,22 @@
    :class "tools-panel"
    :children [[:label.h5 "Input Data:"]]])
 
-              ;[rc/button :label "Empty" :on-click #(bh/utils-handle-change-path data [] [])]
-              ;
-              ;[rc/button :label "Default" :on-click #(bh/utils-handle-change-path data [] default-data)]
-              ;
-              ;[rc/button :label "+ Redirect (1)"
-              ; :on-click #(bh/utils-handle-change-path data [] (add-node data :Redirect))]
-              ;
-              ;[rc/button :label "+ Visit->Redirect (2)"
-              ; :on-click #(bh/utils-handle-change-path data [] (add-link data :Visit :Redirect 24987))]
-              ;
-              ;[rc/button :label "Redirect = 50000 (3)"
-              ; :on-click #(bh/utils-handle-change-path data [] (update-link data :Visit :Redirect 50000))]
-              ;
-              ;[rc/button :label "+ Dummy->New-thing"
-              ; :on-click #(bh/utils-handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
-              ;
+;[rc/button :label "Empty" :on-click #(bh/utils-handle-change-path data [] [])]
+;
+;[rc/button :label "Default" :on-click #(bh/utils-handle-change-path data [] default-data)]
+;
+;[rc/button :label "+ Redirect (1)"
+; :on-click #(bh/utils-handle-change-path data [] (add-node data :Redirect))]
+;
+;[rc/button :label "+ Visit->Redirect (2)"
+; :on-click #(bh/utils-handle-change-path data [] (add-link data :Visit :Redirect 24987))]
+;
+;[rc/button :label "Redirect = 50000 (3)"
+; :on-click #(bh/utils-handle-change-path data [] (update-link data :Visit :Redirect 50000))]
+;
+;[rc/button :label "+ Dummy->New-thing"
+; :on-click #(bh/utils-handle-change-path data [] (add-nodes-and-link data :Dummy :New-thing 124987))]]])
+;
 
 
 
