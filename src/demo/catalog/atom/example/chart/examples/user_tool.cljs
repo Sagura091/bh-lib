@@ -8,6 +8,37 @@
             [taoensso.timbre :as log]))
 
 
+(defn example-config [next-color]
+  (merge {:isAnimationActive true
+          :grid              {:include         true
+                              :strokeDasharray {:dash 3 :space 3}
+                              :stroke          :gray}
+          :x-axis            {:include     true
+                              :dataKey     :name
+                              :orientation :bottom
+                              :scale       "auto"}
+          :y-axis            {:include     true
+                              :dataKey     ""
+                              :orientation :left
+                              :scale       "auto"
+                              :interval    "preserveStartEnd"}
+          :tooltip           {:include true}
+          :legend            {:include       true
+                              :layout        :horizontal
+                              :align         :center
+                              :verticalAlign :bottom}}
+    (->> [:uv :pv :tv :amt]
+      (map (fn [val]
+             (let [color (color/next-color next-color)]
+               {val {:include true :animate true
+                     :stroke  color :fill color}})))
+      (into {}))))
+
+
+(defn chart-container [chart]
+  [:div.component-example {:style {:width "100%" :height "450px"}}
+   chart])
+
 
 (defn categorize-item [item]
   (cond
@@ -111,7 +142,6 @@
                                                                              {:include true :animate true
                                                                               :stroke  color :fill color})))
                                               :else ())))]]]]]))
-
 
 
 (defn config-tools [data config reset-config]

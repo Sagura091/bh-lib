@@ -3,9 +3,9 @@
             [bh-ui.atom.chart.area-chart-2 :as area-chart]
             [bh-ui.utils.color :as color]
             [bh-ui.utils.example-data :as data]
+            [demo.catalog.atom.example.chart.examples.data-ratom :as data-ratom]
             [demo.catalog.atom.example.multi-example :as me]
             [demo.catalog.atom.example.chart.examples.user-tool :as tools]
-    ;[demo.catalog.atom.example.chart.alt.show-data :as sd]
             [reagent.core :as r]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]
@@ -141,31 +141,19 @@
 
 
 (defn data-ratom-example []
-  (let [next-color   (atom -1)
-        component-id "area-chart-2"
-        container-id ""
-        data         (r/atom example-data)]
+  [data-ratom/example
+   :container-id :area-chart-2-data-ratom-demo
+   :title "Area Chart (#2) (Live Data - ratom)"
+   :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+  charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the data changes.
 
-    (acu/demo "Area Chart 2"
-      "Trying to fix Recharts implementation (data is a `(r)atom`)"
-      [rc/box :src (rc/at)
-       :justify :center
-       :width "100%"
-       :height "100%"
-       :child [rc/v-box :src (rc/at)
-               :gap "3px"
-               :width "100%"
-               :height "100%"
-               :children [[chart-container
-                           [area-chart/component
-                            :data data
-                            :component-id component-id
-                            :container-id container-id]]
-                          [tools/data-tools data (example-config next-color)
-                           data/meta-tabular-data
-                           data/random-meta-tabular-data
-                           next-color]]]]
-      area-chart/source-code)))
+  > In _this_ case, we are using a ratom for the data.
+  >
+  > You can use the buttons below to change some of the data and see how the chart responds."
+   :example-data example-data
+   :random-data-fn data/random-meta-tabular-data
+   :source-code area-chart/source-code
+   :chart area-chart/component])
 
 
 (defn data-struct-example []
