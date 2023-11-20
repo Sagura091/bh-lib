@@ -184,10 +184,10 @@
 
 (def example-tabular-data-entry [:map
                                  [:name string?]
-                                 [:uv [:and int? [:> 10] [:< 1000]]]
-                                 [:pv [:and int? [:> 10] [:< 1000]]]
-                                 [:tv [:and int? [:> 10] [:< 1000]]]
-                                 [:amt [:and int? [:> 10] [:< 1000]]]])
+                                 [:uv [:and int? [:> -1000] [:< 12000]]]
+                                 [:pv [:and int? [:> -1000] [:< 12000]]]
+                                 [:tv [:and int? [:> -1000] [:< 12000]]]
+                                 [:amt [:and int? [:> -1000] [:< 12000]]]])
 (def example-tabular-data-data [:sequential example-tabular-data-entry])
 
 (comment

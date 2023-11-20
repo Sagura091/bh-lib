@@ -46,7 +46,7 @@
 (defn categorize-item [item]
   (cond
     (or (coll? item)
-      (string? item)                                     ; need this in case the Mol-DSL only has a string for this
+      (string? item)                                        ; need this in case the Mol-DSL only has a string for this
       (keyword? item)) :subscription
     (or
       (instance? ra/RAtom item)
@@ -56,12 +56,17 @@
     :else :value))
 
 
-(defn- data-tools [data config-ratom default-data random-data-fn]
-  (let [cat-data (categorize-item data)
-        old-data (condp = cat-data
-                   :subscription (bh/utils-subscribe-local data [:data])
-                   :ratom @data
-                   :else data)]
+(defn- data-tools [data config default-data random-data-fn]
+  (let [cat-data   (categorize-item data)
+        old-data   (condp = cat-data
+                     :subscription (bh/utils-subscribe-local data [:data])
+                     :ratom @data
+                     :else data)
+        cat-config (categorize-item config)
+        old-config (condp = cat-config
+                     :subscription (bh/utils-subscribe-local config)
+                     :ratom @config
+                     :else config)]
 
     [rc/v-box :src (rc/at)
      :gap "3px"
@@ -97,15 +102,15 @@
                                                                                :else ()))]
                             [rc/button :label "Add 'Q'"
                              :on-click #(condp = (categorize-item data)
-                                           :subscription (bh/utils-handle-change-path data
-                                                           [[bh/utils-conj-in [:data]
-                                                                   {:name "Page Q" :uv (rand-int 5000)
-                                                                    :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])
-                                           :ratom (swap! data assoc :data
-                                                    (conj (-> @data :data)
-                                                      {:name "Page Q" :uv (rand-int 5000)
-                                                       :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}))
-                                           :else ())]
+                                          :subscription (bh/utils-handle-change-path data
+                                                          [[bh/utils-conj-in [:data]
+                                                           {:name "Page Q" :uv (rand-int 5000)
+                                                     :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])
+                                          :ratom (swap! data assoc :data
+                                                   (conj (-> @data :data)
+                                                     {:name "Page Q" :uv (rand-int 5000)
+                                                      :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}))
+                                          :else ())]
 
                             [rc/button :label "Drop Last 2"
                              :on-click #(condp = (categorize-item data)
@@ -119,20 +124,26 @@
                                             :subscription (bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
                                                                                              [assoc :data (into []
                                                                                                             (map (fn [x]
-                                                                                                                   (assoc x :new-item (rand-int 7000)))
+                                                                                                                   (assoc x :new-item
+                                                                                                                            (rand-int 7000)))
                                                                                                               @old-data))]])
                                             :ratom (reset! data (-> @data
                                                                   (assoc-in [:metadata :fields :new-item] :number)
                                                                   (assoc :data (into []
                                                                                  (map (fn [x]
-                                                                                        (assoc x :new-item (rand-int 7000)))
+                                                                                        (assoc x :new-item (- (rand-int 12000) 2000)))
                                                                                    (:data old-data))))))
                                             :else ())
                                           (let [color (color/next-color next-color)]
-                                            (reset! config-ratom (-> @config-ratom
-                                                                   (assoc :new-item
-                                                                          {:include true :animate true
-                                                                           :stroke  color :fill color})))))]]]]]))
+                                            (condp = cat-config
+                                              :subscription (bh/utils-handle-change-path config [[assoc :new-item
+                                                                                                  {:include true :animate true
+                                                                                                   :stroke  color :fill color}]])
+                                              :ratom (reset! config (-> @config
+                                                                      (assoc :new-item
+                                                                             {:include true :animate true
+                                                                              :stroke  color :fill color})))
+                                              :else ())))]]]]]))
 
 
 (defn- config-tools [config reset-config]
@@ -164,7 +175,7 @@
                           [data-tools example-data example-config
                            data/meta-tabular-data
                            data/random-meta-tabular-data]]]]
-                          ;[config-tools example-config default-config]]]]
+      ;[config-tools example-config default-config]]]]
       area-chart/source-code)))
 
 
