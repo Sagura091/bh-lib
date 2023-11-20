@@ -57,9 +57,11 @@
 
 
 (defn- data-tools [data config default-data random-data-fn]
+  (log/info "data-tools (a)" data)
+
   (let [cat-data   (categorize-item data)
         old-data   (condp = cat-data
-                     :subscription (bh/utils-subscribe-local data [:data])
+                     :subscription @(bh/utils-subscribe-local data [:data])
                      :ratom @data
                      :else data)
         cat-config (categorize-item config)
@@ -67,6 +69,9 @@
                      :subscription (bh/utils-subscribe-local config)
                      :ratom @config
                      :else config)]
+
+    (log/info "data-tools (b)" data
+      "_____" cat-data "_____" old-data)
 
     [rc/v-box :src (rc/at)
      :gap "3px"
@@ -104,8 +109,8 @@
                              :on-click #(condp = (categorize-item data)
                                           :subscription (bh/utils-handle-change-path data
                                                           [[bh/utils-conj-in [:data]
-                                                           {:name "Page Q" :uv (rand-int 5000)
-                                                     :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])
+                                                            {:name "Page Q" :uv (rand-int 5000)
+                                                             :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}]])
                                           :ratom (swap! data assoc :data
                                                    (conj (-> @data :data)
                                                      {:name "Page Q" :uv (rand-int 5000)
@@ -126,7 +131,7 @@
                                                                                                             (map (fn [x]
                                                                                                                    (assoc x :new-item
                                                                                                                             (rand-int 7000)))
-                                                                                                              @old-data))]])
+                                                                                                              old-data))]])
                                             :ratom (reset! data (-> @data
                                                                   (assoc-in [:metadata :fields :new-item] :number)
                                                                   (assoc :data (into []
@@ -150,14 +155,22 @@
   [:p "config-tools"])
 
 
-(def example-data (r/atom data/meta-tabular-data))
-(def example-config (r/atom default-config))
+(def example-data data/meta-tabular-data)
+(def example-config default-config)
+
+
+(defn chart-container [chart]
+  [:div.component-example {:style {:width "100%" :height "450px"}}
+   chart])
 
 
 (defn data-ratom-example []
-  (let []
+  (let [component-id "area-chart-2"
+        container-id ""
+        data         (r/atom example-data)]
+
     (acu/demo "Area Chart 2"
-      "Trying to fix Recharts implementation"
+      "Trying to fix Recharts implementation (data is a `(r)atom`)"
       [rc/box :src (rc/at)
        :justify :center
        :width "100%"
@@ -166,21 +179,57 @@
                :gap "3px"
                :width "100%"
                :height "100%"
-               :children [[:div {:style {:width 1200 :height 500}}
+               :children [[chart-container
                            [area-chart/component
-                            :data example-data
-                            ;:config example-config
-                            :component-id "area-chart-2"
-                            :container-id ""]]
-                          [data-tools example-data example-config
+                            :data data
+                            :component-id component-id
+                            :container-id container-id]]
+                          [data-tools data example-config
                            data/meta-tabular-data
                            data/random-meta-tabular-data]]]]
-      ;[config-tools example-config default-config]]]]
       area-chart/source-code)))
 
 
+(defn data-sub-example []
+  (let [component-id :area-chart-2-data-sub-demo
+        container-id ""
+        data         [component-id :blackboard :topic.sample-data]
+        id           (atom nil)]
+
+    (fn []
+      (when (nil? @id)
+        (reset! id component-id)
+        (bh/utils-init-container-locals @id {:blackboard {:topic.sample-data
+                                                          (assoc-in example-data
+                                                            [:metadata :title]
+                                                            "Tabular from a Subscription")}
+                                             :container  container-id})
+        (bh/utils-dispatch-local @id [:container] component-id))
+
+      (acu/demo "Area Chart 2"
+        "Trying to fix Recharts implementation (subscribing to `:data`)"
+        [rc/box :src (rc/at)
+         :justify :center
+         :width "100%"
+         :height "100%"
+         :child [rc/v-box :src (rc/at)
+                 :gap "3px"
+                 :width "100%"
+                 :height "100%"
+                 :children [[chart-container
+                             [area-chart/component
+                              :data data
+                              :component-id component-id
+                              :container-id container-id]]
+                            [data-tools data example-config
+                             data/meta-tabular-data
+                             data/random-meta-tabular-data]]]]
+        area-chart/source-code))))
+
+
 (defn examples []
-  [me/examples {"data-ratom" [data-ratom-example]}])
+  [me/examples {"data-ratom" [data-ratom-example]
+                "data-sub"   [data-sub-example]}])
 
 
 (comment
