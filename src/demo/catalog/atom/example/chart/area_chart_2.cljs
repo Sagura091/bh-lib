@@ -3,6 +3,7 @@
             [bh-ui.utils.color :as color]
             [bh-ui.utils.example-data :as data]
             [demo.catalog.atom.example.multi-example :as me]
+            [demo.catalog.atom.example.chart.alt.show-data :as sd]
             [reagent.core :as r]
             [re-com.core :as rc]
             [woolybear.ad.catalog.utils :as acu]
@@ -41,40 +42,45 @@
 
 
 (defn- data-ratom-tools [data-ratom config-ratom default-data random-data-fn]
-  [rc/h-box :src (rc/at)
-   :gap "10px"
+  [rc/v-box :src (rc/at)
+   :gap "3px"
+   :width "100%"
+   :height "30%"
+   :children [[sd/show-data data-ratom]
+              [rc/h-box :src (rc/at)
+               :gap "10px"
 
-   :class "tools-panel"
-   :children [[:label.h5 "Input Data:"]
-              [rc/button :label "Empty" :on-click #(reset! data-ratom []) :label "Empty"]
-              [rc/button :label "Default" :on-click #(reset! data-ratom default-data)]
-              ; TODO: need to pass a "meaningful" random-data-set builder function into the tools
-              [rc/button :label "Random" :on-click #(reset! data-ratom (random-data-fn))]
-              [rc/button :label "A(uv) -> 10,000" :on-click #(do
-                                                               ;(log/info "meta-tabular-data-ratom-tools (button)" data)
-                                                               (swap! data-ratom assoc-in [:data 0 :uv] 10000))]
-              [rc/button :label "Add 'Q'"
-               :on-click #(swap! data-ratom assoc :data
-                            (conj (-> @data-ratom :data)
-                              {:name "Page Q" :uv (rand-int 5000)
-                               :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}))]
+               :class "tools-panel"
+               :children [[:label.h5 "Input Data:"]
+                          [rc/button :label "Empty" :on-click #(reset! data-ratom []) :label "Empty"]
+                          [rc/button :label "Default" :on-click #(reset! data-ratom default-data)]
+                          ; TODO: need to pass a "meaningful" random-data-set builder function into the tools
+                          [rc/button :label "Random" :on-click #(reset! data-ratom (random-data-fn))]
+                          [rc/button :label "A(uv) -> 10,000" :on-click #(do
+                                                                           ;(log/info "meta-tabular-data-ratom-tools (button)" data)
+                                                                           (swap! data-ratom assoc-in [:data 0 :uv] 10000))]
+                          [rc/button :label "Add 'Q'"
+                           :on-click #(swap! data-ratom assoc :data
+                                        (conj (-> @data-ratom :data)
+                                          {:name "Page Q" :uv (rand-int 5000)
+                                           :pv   (rand-int 5000) :tv (rand-int 5000) :amt (rand-int 5000)}))]
 
-              [rc/button :label "Drop Last 2"
-               :on-click #(swap! data-ratom assoc :data (into [] (drop-last 2 (:data @data-ratom))))]
+                          [rc/button :label "Drop Last 2"
+                           :on-click #(swap! data-ratom assoc :data (into [] (drop-last 2 (:data @data-ratom))))]
 
-              [rc/button :label "Add :new-item"
-               :on-click #(do
-                            (reset! data-ratom (-> @data-ratom
-                                                 (assoc-in [:metadata :fields :new-item] :number)
-                                                 (assoc :data (into []
-                                                                (map (fn [x]
-                                                                       (assoc x :new-item (rand-int 7000)))
-                                                                  (:data @data-ratom))))))
-                            (let [color (color/next-color next-color)]
-                              (reset! config-ratom (-> @config-ratom
-                                                     (assoc :new-item
-                                                            {:include true :animate true
-                                                             :stroke  color :fill color})))))]]])
+                          [rc/button :label "Add :new-item"
+                           :on-click #(do
+                                        (reset! data-ratom (-> @data-ratom
+                                                             (assoc-in [:metadata :fields :new-item] :number)
+                                                             (assoc :data (into []
+                                                                            (map (fn [x]
+                                                                                   (assoc x :new-item (rand-int 7000)))
+                                                                              (:data @data-ratom))))))
+                                        (let [color (color/next-color next-color)]
+                                          (reset! config-ratom (-> @config-ratom
+                                                                 (assoc :new-item
+                                                                        {:include true :animate true
+                                                                         :stroke  color :fill color})))))]]]]])
 
 
 (defn- config-tools [config reset-config]
@@ -91,7 +97,12 @@
       "Trying to fix Recharts implementation"
       [rc/box :src (rc/at)
        :justify :center
+       :width "100%"
+       :height "100%"
        :child [rc/v-box :src (rc/at)
+               :gap "3px"
+               :width "100%"
+               :height "100%"
                :children [[:div {:style {:width 1200 :height 500}}
                            [area-chart/component
                             :data example-data
