@@ -1,4 +1,4 @@
-(ns demo.catalog.atom.example.chart.examples.data-subscription
+(ns demo.catalog.atom.example.chart.examples.config-subscription
   (:require [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [re-com.core :as rc]
@@ -8,16 +8,21 @@
 
 (defn example [& {:keys [container-id title description
                          chart source-code
-                         example-data reset-data random-data-fn]}]
-  (let [next-color   (atom -1)
-        component-id (bh/utils-path->keyword container-id)
-        data         example-data
+                         example-data example-config reset-config]}]
+
+  (log/info "config-sub example (a)")
+
+  (let [component-id (bh/utils-path->keyword container-id)
         id           (atom nil)]
+
+    (log/info "config-sub example (b)" container-id component-id
+      "_____" example-config
+      "_____" reset-config)
 
     (fn []
       (when (nil? @id)
         (reset! id component-id)
-        (bh/utils-init-container-locals @id {:blackboard {:topic.sample-data reset-data}
+        (bh/utils-init-container-locals @id {:blackboard {:config reset-config}
                                              :container  ""})
         (bh/utils-dispatch-local @id [:container] component-id))
 
@@ -33,11 +38,10 @@
                  :height "100%"
                  :children [[tools/chart-container
                              [chart
-                              :data data
+                              :data example-data
+                              :config example-config
                               :component-id component-id
                               :container-id container-id]]
-                            [tools/data-tools data (tools/example-config next-color)
-                             reset-data
-                             random-data-fn
-                             next-color]]]]
+                            [tools/config-tools example-data
+                             example-config reset-config]]]]
         source-code))))

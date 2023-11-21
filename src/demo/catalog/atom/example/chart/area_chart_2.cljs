@@ -3,14 +3,13 @@
             [bh-ui.atom.chart.area-chart-2 :as area-chart]
             [bh-ui.utils.color :as color]
             [bh-ui.utils.example-data :as data]
+            [demo.catalog.atom.example.chart.examples.config-ratom :as config-ratom]
+            [demo.catalog.atom.example.chart.examples.config-structure :as config-structure]
+            [demo.catalog.atom.example.chart.examples.config-subscription :as config-subscription]
             [demo.catalog.atom.example.chart.examples.data-ratom :as data-ratom]
             [demo.catalog.atom.example.chart.examples.data-structure :as data-structure]
             [demo.catalog.atom.example.chart.examples.data-subscription :as data-subscription]
             [demo.catalog.atom.example.multi-example :as me]
-            [demo.catalog.atom.example.chart.examples.user-tool :as tools]
-            [reagent.core :as r]
-            [re-com.core :as rc]
-            [woolybear.ad.catalog.utils :as acu]
             [taoensso.timbre :as log]))
 
 
@@ -48,95 +47,57 @@
 (def example-config default-config)
 
 
-(defn chart-container [chart]
-  [:div.component-example {:style {:width "100%" :height "450px"}}
-   chart])
-
-
 (defn config-ratom-example []
-  (let [next-color   (atom -1)
-        component-id "area-chart-2"
-        container-id ""
-        reset-config (example-config next-color)
-        config       (r/atom reset-config)]
+  [config-ratom/example
+   :container-id :area-chart-config-ratom-demo
+   :title "Area Chart (Live Configuration - ratom)"
+   :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the configuration changes.
 
-    (acu/demo "Area Chart 2"
-      "Trying to fix Recharts implementation (config is a `(r)atom`)"
-      [rc/box :src (rc/at)
-       :justify :center
-       :width "100%"
-       :height "100%"
-       :child [rc/v-box :src (rc/at)
-               :gap "3px"
-               :width "100%"
-               :height "100%"
-               :children [[chart-container
-                           [area-chart/component
-                            :data example-data
-                            :config config
-                            :component-id component-id
-                            :container-id container-id]]
-                          [tools/config-tools example-data config reset-config]]]]
-      area-chart/source-code)))
+> In _this_ case, we are using a ratom to hold the configuration for the chart.
+>
+> You can use the buttons in the bottom-most panel to change some of the chart configuration options and see
+> how that affects the data (shown in the gray panel) and how the chart responds."
+   :example-data example-data
+   :example-config example-config
+   :source-code bh/area-chart-source-code
+   :chart area-chart/component])
 
 
 (defn config-struct-example []
-  (let [next-color   (atom -1)
-        component-id "area-chart-2"
-        container-id ""]
+  (let [next-color (atom -1)]
+    [config-structure/example
+     :container-id :area-chart-config-structure-demo
+     :title "Area Chart (Live Configuration - structure)"
+     :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the configuration changes.
 
-    (acu/demo "Area Chart 2"
-      "Trying to fix Recharts implementation (config is a *plain* hash-map)"
-      [rc/box :src (rc/at)
-       :justify :center
-       :width "100%"
-       :height "100%"
-       :child [rc/v-box :src (rc/at)
-               :gap "3px"
-               :width "100%"
-               :height "100%"
-               :children [[chart-container
-                           [area-chart/component
-                            :data example-data
-                            :config (example-config next-color)
-                            :component-id component-id
-                            :container-id container-id]]]]]
-      area-chart/source-code)))
+> In _this_ case, we are using a plain data structure to hold the configuration for the chart.
+>
+> You can see the configuration data in the gray panel and how it how that affects the chart."
+     :example-data example-data
+     :example-config (example-config next-color)
+     :source-code bh/area-chart-source-code
+     :chart area-chart/component]))
 
 
 (defn config-sub-example []
-  (let [next-color   (atom -1)
-        component-id :area-chart-2-data-sub-demo
-        container-id ""
-        reset-config (example-config next-color)
-        config       [component-id :blackboard :config]
-        id           (atom nil)]
+  (let [container-id :area-chart-config-subscription-demo
+        next-color (atom -1)]
+    [config-subscription/example
+     :container-id container-id
+     :title "Area Chart (Live Configuration - structure)"
+     :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the configuration changes.
 
-    (fn []
-      (when (nil? @id)
-        (reset! id component-id)
-        (bh/utils-init-container-locals @id {:blackboard {:config reset-config}
-                                             :container  container-id})
-        (bh/utils-dispatch-local @id [:container] component-id))
-
-      (acu/demo "Area Chart 2"
-        "Trying to fix Recharts implementation (subscribing to `:config`)"
-        [rc/box :src (rc/at)
-         :justify :center
-         :width "100%"
-         :height "100%"
-         :child [rc/v-box :src (rc/at)
-                 :gap "3px"
-                 :width "100%"
-                 :height "100%"
-                 :children [[chart-container
-                             [area-chart/component
-                              :data example-data
-                              :config config
-                              :component-id component-id
-                              :container-id container-id]]
-                            [tools/config-tools example-data config reset-config]]]]
-        area-chart/source-code))))
+> In _this_ case, we are using a plain data structure to hold the configuration for the chart.
+>
+> You can see the configuration data in the gray panel and how it how that affects the chart."
+     :example-data example-data
+     :example-config [container-id :blackboard :config]
+     :reset-config (example-config next-color)
+     :source-code bh/area-chart-source-code
+     :chart area-chart/component]))
 
 
 (defn data-ratom-example []
@@ -171,7 +132,7 @@
 
 
 (defn data-subscription-example []
-  (let [container-id :area-chart-data-sub-demo]
+  (let [container-id :area-chart-data-subscription-demo]
     [data-subscription/example
      :container-id container-id
      :title "Area Chart (#2) (Live Data - subscription)"
@@ -194,6 +155,11 @@
                 "config-ratom"  [config-ratom-example]
                 "config-struct" [config-struct-example]
                 "config-sub"    [config-sub-example]}])
+
+
+
+
+
 
 
 (comment
