@@ -4,6 +4,8 @@
             [bh-ui.utils.color :as color]
             [bh-ui.utils.example-data :as data]
             [demo.catalog.atom.example.chart.examples.data-ratom :as data-ratom]
+            [demo.catalog.atom.example.chart.examples.data-structure :as data-structure]
+            [demo.catalog.atom.example.chart.examples.data-subscription :as data-subscription]
             [demo.catalog.atom.example.multi-example :as me]
             [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [reagent.core :as r]
@@ -13,9 +15,6 @@
 
 
 (log/info "demo.catalog.atom.example.chart.area-chart-2")
-
-
-;(def next-color (atom -1))
 
 
 (defn default-config [next-color]
@@ -156,72 +155,42 @@
    :chart area-chart/component])
 
 
-(defn data-struct-example []
-  (let [component-id "area-chart-2"
-        container-id ""
-        data         example-data]
+(defn data-structure-example []
+  [data-structure/example
+   :container-id :area-chart-data-structure-demo
+   :title "Area Chart (#2) (Live Data - structure)"
+   :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+  charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the data changes.
 
-    (acu/demo "Area Chart 2"
-      "Trying to fix Recharts implementation (data is a *plain* hash-map)"
-      [rc/box :src (rc/at)
-       :justify :center
-       :width "100%"
-       :height "100%"
-       :child [rc/v-box :src (rc/at)
-               :gap "3px"
-               :width "100%"
-               :height "100%"
-               :children [[chart-container
-                           [area-chart/component
-                            :data data
-                            :component-id component-id
-                            :container-id container-id]]]]]
-      area-chart/source-code)))
+  > In _this_ case, we are using a plain data structure for the data, so there is no way to update it (it lives
+  > only inside the chart, with no way to get at it from outside)."
+   :example-data example-data
+   :random-data-fn data/random-meta-tabular-data
+   :source-code bh/area-chart-source-code
+   :chart area-chart/component])
 
 
-(defn data-sub-example []
-  (let [next-color   (atom -1)
-        component-id :area-chart-2-data-sub-demo
-        container-id ""
-        data         [component-id :blackboard :topic.sample-data]
-        id           (atom nil)]
+(defn data-subscription-example []
+  (let [container-id :area-chart-data-sub-demo]
+    [data-subscription/example
+     :container-id container-id
+     :title "Area Chart (#2) (Live Data - subscription)"
+     :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [subscriptions](https://day8.github.io/re-frame/subscriptions/) as input and re-render as the configuration changes.
 
-    (fn []
-      (when (nil? @id)
-        (reset! id component-id)
-        (bh/utils-init-container-locals @id {:blackboard {:topic.sample-data
-                                                          (assoc-in example-data
-                                                            [:metadata :title]
-                                                            "Tabular from a Subscription")}
-                                             :container  container-id})
-        (bh/utils-dispatch-local @id [:container] component-id))
-
-      (acu/demo "Area Chart 2"
-        "Trying to fix Recharts implementation (subscribing to `:data`)"
-        [rc/box :src (rc/at)
-         :justify :center
-         :width "100%"
-         :height "100%"
-         :child [rc/v-box :src (rc/at)
-                 :gap "3px"
-                 :width "100%"
-                 :height "100%"
-                 :children [[chart-container
-                             [area-chart/component
-                              :data data
-                              :component-id component-id
-                              :container-id container-id]]
-                            [tools/data-tools data (example-config next-color)
-                             data/meta-tabular-data
-                             data/random-meta-tabular-data
-                             next-color]]]]
-        area-chart/source-code))))
+> In _this_ case, we are using a subscription to handle the data for the chart.
+"
+     :example-data [container-id :blackboard :topic.sample-data]
+     :reset-data example-data
+     :random-data-fn data/random-meta-tabular-data
+     :source-code bh/area-chart-source-code
+     :chart area-chart/component]))
 
 
 (defn examples []
   [me/examples {"data-ratom"    [data-ratom-example]
-                "data-struct"   [data-struct-example]
-                "data-sub"      [data-sub-example]
+                "data-struct"   [data-structure-example]
+                "data-sub"      [data-subscription-example]
                 "config-ratom"  [config-ratom-example]
                 "config-struct" [config-struct-example]
                 "config-sub"    [config-sub-example]}])

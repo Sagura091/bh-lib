@@ -118,10 +118,10 @@
 
 
 (defn examples []
-  [me/examples {"data-ratom" [data-ratom]
-                "data-struct"  [data-structure]
-                "data-sub"  [data-sub]
+  [me/examples {"data-ratom"    [data-ratom]
+                "data-struct"   [data-structure]
+                "data-sub"      [data-sub]
                 "config-ratom"  [config-ratom]
-                "config-struct"  [config-structure]
-                "config-sub"  [config-sub]}])
+                "config-struct" [config-structure]
+                "config-sub"    [config-sub]}])
 

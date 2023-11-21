@@ -1,21 +1,17 @@
-(ns demo.catalog.atom.example.chart.examples.data-ratom
+(ns demo.catalog.atom.example.chart.examples.data-structure
   (:require [bh-ui.core :as bh]
             [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [re-com.core :as rc]
-            [reagent.core :as r]
             [woolybear.ad.catalog.utils :as acu]))
 
 
 (defn example [& {:keys [container-id title description
                          chart source-code
-                         example-data random-data-fn]}]
+                         example-data]}]
+  (let [component-id (bh/utils-path->keyword container-id "chart")
+        data         example-data]
 
-  (let [next-color   (atom -1)
-        component-id (bh/utils-path->keyword container-id "chart")
-        data         (r/atom example-data)]
-
-    (acu/demo
-      title
+    (acu/demo title
       description
       [rc/box :src (rc/at)
        :justify :center
@@ -29,11 +25,5 @@
                            [chart
                             :data data
                             :component-id component-id
-                            :container-id container-id]]
-                          [tools/data-tools data
-                           (tools/example-config next-color)
-                           example-data
-                           random-data-fn
-                           next-color]]]]
+                            :container-id container-id]]]]]
       source-code)))
-
