@@ -3,6 +3,8 @@
             [bh-ui.atom.chart.area-chart-2 :as area-chart]
             [bh-ui.utils.color :as color]
             [bh-ui.utils.example-data :as data]
+            [demo.catalog.atom.example.chart.examples.both-ratom :as both-ratom]
+            [demo.catalog.atom.example.chart.examples.both-subscription :as both-subscription]
             [demo.catalog.atom.example.chart.examples.config-ratom :as config-ratom]
             [demo.catalog.atom.example.chart.examples.config-structure :as config-structure]
             [demo.catalog.atom.example.chart.examples.config-subscription :as config-subscription]
@@ -47,6 +49,51 @@
 (def example-config default-config)
 
 
+(defn both-ratom-example []
+  (let [next-color (atom -1)]
+    [both-ratom/example
+     :container-id :area-chart-both-ratom-demo
+     :title "Area Chart (Live Data AND Configuration - ratom)"
+     :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [ratoms](http://reagent-project.github.io/docs/master/reagent.ratom.html) as input and re-render as the configuration changes.
+
+> In _this_ case, we are using a ratom to hold both the data ***and*** the configuration for the chart.
+>
+> You can use the buttons in the bottom-most panel to change some of the chart configuration options and see
+> how that affects the configuration (shown in the gray panel) and how the chart responds."
+     :example-data example-data
+     :random-data-fn data/random-meta-tabular-data
+     :example-config (example-config next-color)
+     :source-code bh/area-chart-source-code
+     :chart area-chart/component
+     :next-color next-color]))
+
+
+(defn both-subscription-example []
+  (log/info "both-subscription-example (a)")
+
+  (let [container-id :area-chart-both-subscription-demo
+        next-color   (atom -1)]
+    (log/info "both-subscription-example (b)")
+
+    [both-subscription/example
+     :container-id container-id
+     :title "Area Chart (Live Data AND Configuration - subscription)"
+     :description "An Area Chart built using [Recharts](https://recharts.org/en-US/api/AreaChart). This example shows how
+     charts can take [subscriptions](https://day8.github.io/re-frame/subscriptions/) as input and re-render as the data
+     and/or the configuration changes.
+
+> In _this_ case, we are using a subscription to handle both the data _and_ configuration for the chart.
+"
+     :example-data [container-id :blackboard :topic.sample-data]
+     :reset-data example-data
+     :random-data-fn data/random-meta-tabular-data
+     :example-config [container-id :blackboard :config]
+     :reset-config (example-config next-color)
+     :source-code bh/area-chart-source-code
+     :chart area-chart/component]))
+
+
 (defn config-ratom-example []
   [config-ratom/example
    :container-id :area-chart-config-ratom-demo
@@ -81,9 +128,9 @@
      :chart area-chart/component]))
 
 
-(defn config-sub-example []
+(defn config-subscription-example []
   (let [container-id :area-chart-config-subscription-demo
-        next-color (atom -1)]
+        next-color   (atom -1)]
     [config-subscription/example
      :container-id container-id
      :title "Area Chart (Live Configuration - structure)"
@@ -149,12 +196,14 @@
 
 
 (defn examples []
-  [me/examples {"data-ratom"    [data-ratom-example]
-                "data-struct"   [data-structure-example]
-                "data-sub"      [data-subscription-example]
-                "config-ratom"  [config-ratom-example]
-                "config-struct" [config-struct-example]
-                "config-sub"    [config-sub-example]}])
+  [me/examples {;"data-ratom"    [data-ratom-example]
+                ;"data-struct"   [data-structure-example]
+                ;"data-sub"      [data-subscription-example]
+                ;"config-ratom"  [config-ratom-example]
+                ;"config-struct" [config-struct-example]
+                ;"config-sub"    [config-subscription-example]
+                "both-ratom" [both-ratom-example]}])
+;"both-sub"      [both-subscription-example]}])
 
 
 

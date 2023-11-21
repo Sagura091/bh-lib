@@ -54,7 +54,7 @@
 
 
 (defn data-tools [data config default-data random-data-fn next-color]
-  (log/info "data-tools (a)" data "_____" config)
+  (log/info "data-tools (a)" data "_____" config "_____" next-color)
 
   (let [cat-data   (categorize-item data)
         old-data   (condp = cat-data
@@ -64,7 +64,8 @@
         cat-config (categorize-item config)]
 
     (log/info "data-tools (b)" data
-      "_____" cat-data "_____" old-data)
+      "_____" cat-data "_____" old-data
+      "_____" cat-config "_____" config)
 
     [rc/v-box :src (rc/at)
      :gap "3px"
@@ -93,13 +94,13 @@
                                                                     :else ())]
                             [rc/button :label "A(uv) -> 10,000" :on-click #(do
                                                                              ;(log/info "meta-tabular-data-ratom-tools (button)" data)
-                                                                             (condp = (categorize-item data)
+                                                                             (condp = cat-data
                                                                                :subscription (bh/utils-handle-change-path data
                                                                                                [[assoc-in [:data 0 :uv] 10000]])
                                                                                :ratom (swap! data assoc-in [:data 0 :uv] 10000)
                                                                                :else ()))]
                             [rc/button :label "Add 'Q'"
-                             :on-click #(condp = (categorize-item data)
+                             :on-click #(condp = cat-data
                                           :subscription (bh/utils-handle-change-path data
                                                           [[bh/utils-conj-in [:data]
                                                             {:name "Page Q" :uv (rand-int 5000)
@@ -111,14 +112,14 @@
                                           :else ())]
 
                             [rc/button :label "Drop Last 2"
-                             :on-click #(condp = (categorize-item data)
+                             :on-click #(condp = cat-data
                                           :subscription (bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                                           :ratom (swap! data assoc :data (into [] (drop-last 2 (:data @data))))
                                           :else ())]
 
                             [rc/button :label "Add :new-item"
                              :on-click #(do
-                                          (condp = (categorize-item data)
+                                          (condp = cat-data
                                             :subscription (bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
                                                                                              [assoc :data (into []
                                                                                                             (map (fn [x]
@@ -131,7 +132,8 @@
                                                                                  (map (fn [x]
                                                                                         (assoc x :new-item (- (rand-int 12000) 2000)))
                                                                                    (:data old-data))))))
-                                            :else ())
+                                            :else (log/info "data-tools (e1)" cat-data))
+
                                           (let [color (color/next-color next-color)]
                                             (condp = cat-config
                                               :subscription (bh/utils-handle-change-path config [[assoc :new-item
@@ -141,7 +143,7 @@
                                                                       (assoc :new-item
                                                                              {:include true :animate true
                                                                               :stroke  color :fill color})))
-                                              :else ())))]]]]]))
+                                              :else (log/info "data-tools (e2)" cat-config "_____" config))))]]]]]))
 
 
 (defn config-tools [data config reset-config]
