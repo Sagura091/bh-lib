@@ -15,24 +15,22 @@
 
 
 (def default-config-data {:brush false
-                          :uv    {:include true, :fill (color/get-color 0), :stackId ""}
-                          :pv    {:include true, :fill (color/get-color 1), :stackId ""}
-                          :tv    {:include true, :fill (color/get-color 2), :stackId ""}
-                          :amt   {:include true, :fill (color/get-color 3), :stackId ""}})
+                          :uv    {:include true, :fill (color/get-color 0), :stackId "a"}
+                          :pv    {:include true, :fill (color/get-color 1), :stackId "a"}
+                          :tv    {:include true, :fill (color/get-color 2), :stackId "a"}
+                          :amt   {:include true, :fill (color/get-color 3), :stackId "a"}})
 
 (def ui-definition
-  {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
-                     ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
+  {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/area-2}
+                     ":ui/line-chart"  {:atm/role :ui/component :atm/kind :react-table/table}
                      ":topic/data"     {:atm/role :source/local :atm/kind :source/local :atm/default-data sample-data}
                      ":topic/config"   {:atm/role :source/local :atm/kind :source/local :atm/default-data default-config-data}}
-                    ; ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
 
    :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
                                                ":ui/line-chart"  :data}}
                                                ;":fn/make-config" :data}}
-                     ":topic/config"   {:data {":ui/line-chart" :config-data
-                                               ":ui/bar-chart"  :config-data}}}
-                     ;":fn/make-config" {:data {":topic/config" :data}}}
+                     ":topic/config"   {:data {":ui/line-chart" :config
+                                               ":ui/bar-chart"  :config}}}
 
    :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
                      {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]})
@@ -41,14 +39,11 @@
 (def source-code '(let [def {:mol/components  {":ui/bar-chart"   {:atm/role :ui/component :atm/kind :rechart/bar}
                                                ":ui/line-chart"  {:atm/role :ui/component :atm/kind :rechart/line}
                                                ":topic/data"     {:atm/role :source/local :atm/kind :topic/data :atm/default-data sample-data}
-                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data {}}
-                                               ":fn/make-config" {:atm/role :source/fn :atm/kind :simple-multi-chart-2/fn-make-config}}
+                                               ":topic/config"   {:atm/role :source/local :atm/kind :topic/config :atm/default-data {}}}
                              :mol/links       {":topic/data"     {:data {":ui/bar-chart"   :data
-                                                                         ":ui/line-chart"  :data
-                                                                         ":fn/make-config" :data}}
+                                                                         ":ui/line-chart"  :data}}
                                                ":topic/config"   {:data {":ui/line-chart" :config-data
-                                                                         ":ui/bar-chart"  :config-data}}
-                                               ":fn/make-config" {:config-data {":topic/config" :data}}}
+                                                                         ":ui/bar-chart"  :config-data}}}
 
                              :mol/grid-layout [{:i ":ui/line-chart" :x 0 :y 0 :w 10 :h 11 :static true}
                                                {:i ":ui/bar-chart" :x 10 :y 0 :w 10 :h 11 :static true}]}]
