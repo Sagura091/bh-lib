@@ -1,6 +1,8 @@
 (ns demo.catalog.molecule.example.composite.simple-multi-chart-2
   (:require [bh-ui.core :as bh]
             [demo.catalog.molecule.local-storage :as storage]
+            [demo.catalog.atom.example.chart.examples.user-tool :as tools]
+            [bh-ui.utils.example-data :as data]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -32,18 +34,19 @@
                    :label "A -> 10000"]
 
                   [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
-                                                                     {:name "Page Q" :uv 1100
-                                                                      :pv   1100 :tv 1100 :amt 1100}]])
+                                                                            {:name "Page Q" :uv 1100
+                                                                             :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
                   [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
+                  ; TODO: need to update any :ui/component configurations that depend on the data content (charts, react-table, etc.)
                   [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
-                                                                    [assoc :data (into []
-                                                                                   (map (fn [x]
-                                                                                          (assoc x :new-item (rand-int 7000)))
-                                                                                     (:data @old-data)))]])
+                                                                           [assoc :data (into []
+                                                                                          (map (fn [x]
+                                                                                                 (assoc x :new-item (rand-int 7000)))
+                                                                                            (:data @old-data)))]])
                    :label "Add :new-item"]]])))
 
 (def last-thing (atom nil))
@@ -75,16 +78,16 @@
                     [bh/chart-utils-color-config config-data ":amt :fill" [:amt :fill] :above-center]
 
                     [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] "b"]
-                                                                             [assoc-in [:pv :stackId] "b"]])
+                                                                                    [assoc-in [:pv :stackId] "b"]])
                      :label "stack uv/pv"]
                     [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] ""]
-                                                                             [assoc-in [:pv :stackId] ""]])
+                                                                                    [assoc-in [:pv :stackId] ""]])
                      :label "!stack uv/pv"]
                     [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] "a"]
-                                                                             [assoc-in [:amt :stackId] "a"]])
+                                                                                    [assoc-in [:amt :stackId] "a"]])
                      :label "stack tv/amt"]
                     [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] ""]
-                                                                             [assoc-in [:amt :stackId] ""]])
+                                                                                    [assoc-in [:amt :stackId] ""]])
                      :label "!stack tv/amt"]]]))))
 
 
@@ -95,7 +98,7 @@
   ())
 
 
-(defn- data-config-update-example [& {:keys [widget component-id] :as params}]
+(defn- data-config-update-example [& {:keys [widget component-id next-color] :as params}]
   ;(log/info "config-update-example (params)" params)
 
   [rc/v-box :src (rc/at)
@@ -107,12 +110,23 @@
 
               [rc/v-box :src (rc/at)
                :gap "8px"
-               :children [[data-tools [component-id :blackboard :topic.data]]
-                          [config-tools [component-id :blackboard :topic.config]]]]]])
+               :children [[tools/data-tools
+                           [component-id :blackboard :data]
+                           ; TODO: (data-tools) we need a second config for the react-table, this is olny for the area-charts
+                           [component-id :blackboard :config]
+                           bh/simple-multi-chart1-sample-data
+                           data/random-meta-tabular-data
+                           next-color]
+                          ; TODO: (config-tools) we need a second config for the react-table, this is olny for the area-charts
+                          [tools/config-tools
+                           [component-id :blackboard :data]
+                           [component-id :blackboard :config]
+                           bh/simple-multi-chart1-default-config]]]]])
 
 
 (defn example []
-  (let [container-id "simple-multi-chart-2"
+  (let [next-color (atom 3)
+        container-id "simple-multi-chart-2"
         component-id (bh/utils-path->keyword container-id "widget")]
     (fn []
       (acu/demo "(A simple) Multiple Charts in a Widget (adding configuration)"
@@ -138,7 +152,8 @@
                     :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
-           :component-id component-id]]]
+           :component-id component-id
+           :next-color next-color]]]
 
         bh/simple-multi-chart2-src-code))))
 

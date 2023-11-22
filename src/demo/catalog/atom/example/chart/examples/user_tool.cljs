@@ -58,7 +58,7 @@
 
   (let [cat-data   (categorize-item data)
         old-data   (condp = cat-data
-                     :subscription @(bh/utils-subscribe-local data [:data])
+                     :subscription @(bh/utils-subscribe-local data)
                      :ratom @data
                      :else data)
         cat-config (categorize-item config)]
@@ -125,7 +125,7 @@
                                                                                                             (map (fn [x]
                                                                                                                    (assoc x :new-item
                                                                                                                             (rand-int 7000)))
-                                                                                                              old-data))]])
+                                                                                                              (:data old-data)))]])
                                             :ratom (reset! data (-> @data
                                                                   (assoc-in [:metadata :fields :new-item] :number)
                                                                   (assoc :data (into []
@@ -135,6 +135,7 @@
                                             :else (log/info "data-tools (e1)" cat-data))
 
                                           (let [color (color/next-color next-color)]
+                                            (log/info "data-tools (c)" color "_____" config)
                                             (condp = cat-config
                                               :subscription (bh/utils-handle-change-path config [[assoc :new-item
                                                                                                   {:include true :animate true
@@ -241,3 +242,16 @@
                                                                                                     (assoc-in [:tv :stackId] "")
                                                                                                     (assoc-in [:amt :stackId] "")))
                                                                             :else ())]]]]]))
+
+
+
+
+(comment
+  (def data [:simple-multi-chart-2.widget :blackboard :data])
+  (bh/utils-subscribe-local data [:data])
+  (bh/utils-subscribe-local (drop-last data) [:data])
+  (bh/utils-subscribe-local data [])
+
+
+
+  ())
