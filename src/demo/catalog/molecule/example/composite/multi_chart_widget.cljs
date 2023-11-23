@@ -1,6 +1,7 @@
 (ns demo.catalog.molecule.example.composite.multi-chart-widget
   (:require [bh-ui.core :as bh]
             [bh-ui.utils.color :as color]
+            [bh-ui.utils.example-data :as data]
             [demo.catalog.molecule.local-storage :as storage]
             [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [reagent.core :as r]
@@ -13,50 +14,34 @@
 (log/info "demo.catalog.molecule.example.composite.multi-chart-widget")
 
 
-(defn- data-tools [data config next-color]
-  (let [old-data (bh/utils-subscribe-local data [])
-        old-config (bh/utils-subscribe-local config [])]
-
-    ;(log/info "data-tools" data "//" @old-data)
-
-    (fn []
-      [rc/h-box :src (rc/at)
-       :gap "10px"
-       :class "tools-panel"
-       :children [[:label.h5 "Input Data:"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/multi-chart-sample-data]])
-                   :label "Default"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
-                   :label "A -> 10000"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
-                                                                            {:name "Page Q" :uv 1100
-                                                                             :pv   1100 :tv 1100 :amt 1100}]])
-                   :label "Add 'Q'"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
-                   :label "Drop Last 2"]
-
-                  [rc/button :on-click #(let [color (color/get-color (-> @old-data
-                                                                       :data
-                                                                       count))]
-                                          (log/info "Add :new-item" color)
-                                          (bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
-                                                                             [assoc :data (into []
-                                                                                            (map (fn [x]
-                                                                                                   (assoc x :new-item (rand-int 7000)))
-                                                                                              (:data @old-data)))]])
-                                          (bh/utils-handle-change-path config [[assoc :new-item
-                                                                                {:include true :animate true
-                                                                                 :stroke color :fill color}]]))
-                   :label "Add :new-item"]]])))
+(defn default-config [next-color]
+  (merge {:isAnimationActive true
+          :grid              {:include         true
+                              :strokeDasharray {:dash 3 :space 3}
+                              :stroke          :gray}
+          :x-axis            {:include     true
+                              :dataKey     :name
+                              :orientation :bottom
+                              :scale       "auto"}
+          :y-axis            {:include     true
+                              :dataKey     ""
+                              :orientation :left
+                              :scale       "auto"
+                              :interval    "preserveStartEnd"}
+          :tooltip           {:include true}
+          :legend            {:include       true
+                              :layout        :horizontal
+                              :align         :center
+                              :verticalAlign :bottom}}
+    (->> [:uv :pv :tv :amt]
+      (map (fn [val]
+             (let [color (color/next-color next-color)]
+               {val {:include true :animate true
+                     :stroke  color :fill color}})))
+      (into {}))))
 
 
-(defn- data-update-example [& {:keys [widget component-id next-color] :as params}]
+(defn- data-update-example [& {:keys [widget component-id data config next-color] :as params}]
   ;(log/info "data-update-example (params)" params)
 
   [rc/v-box :src (rc/at)
@@ -69,13 +54,16 @@
               [rc/v-box :src (rc/at)
                :gap "8px"
                :children [[tools/data-tools
-                           [component-id :blackboard :data]
-                           [component-id :blackboard :config]
-                           [] #() next-color]]]]])
+                           data
+                           config
+                           bh/simple-multi-chart1-sample-data
+                           data/random-meta-tabular-data
+                           next-color]]]]])
 
 
 (defn example []
-  (let [next-color (atom -1)
+  (let [next-color   (atom -1)
+        config       (default-config next-color)
         container-id "multi-chart-widget"
         component-id (bh/utils-path->keyword container-id "widget")
         dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/multi-chart-ui-def))]
@@ -97,10 +85,13 @@
           [data-update-example
            :widget [bh/grid-container
                     :data dsl
+                    :config config
                     :component-id component-id
                     :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
            :component-id component-id
+           :data dsl
+           :config config
            :next-color next-color]]]
         bh/multi-chart-src-code))))
