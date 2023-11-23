@@ -196,14 +196,14 @@
 
 
 (defn examples []
-  [me/examples {;"data-ratom"    [data-ratom-example]
-                ;"data-struct"   [data-structure-example]
-                ;"data-sub"      [data-subscription-example]
-                ;"config-ratom"  [config-ratom-example]
-                ;"config-struct" [config-struct-example]
-                ;"config-sub"    [config-subscription-example]
-                "both-ratom" [both-ratom-example]}])
-;"both-sub"      [both-subscription-example]}])
+  [me/examples {"data-ratom"    [data-ratom-example]
+                "data-struct"   [data-structure-example]
+                "data-sub"      [data-subscription-example]
+                "config-ratom"  [config-ratom-example]
+                "config-struct" [config-struct-example]
+                "config-sub"    [config-subscription-example]
+                "both-ratom"    [both-ratom-example]
+                "both-sub"      [both-subscription-example]}])
 
 
 

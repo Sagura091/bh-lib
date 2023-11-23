@@ -18,19 +18,19 @@
             [woolybear.ad.layout :as layout]))
 
 
-(def atom-navbar [[:atoms/layouts "Layout" [layout-demo/examples]]
-                  [:atoms/containers "Containers" [containers-demo/examples]]
+(def atom-navbar [[:atoms/buttons "Buttons" [buttons-demo/examples]]
                   [:atoms/cards "Cards" [cards-demo/examples]]
                   [:atoms/charts "Charts" [charts-demo/page]]
-                  [:atoms/fast-charts "Fast Charts" [fast-charts-demo/page]]
+                  [:atoms/containers "Containers" [containers-demo/examples]]
                   [:atoms/diagrams "Diagrams" [diagrams-demo/examples]]
-                  [:atoms/icons "Icons / Images" [icons-demo/examples]]
-                  [:atoms/buttons "Buttons" [buttons-demo/examples]]
+                  [:atoms/fast-charts "Fast Charts" [fast-charts-demo/page]]
                   [:atoms/forms "Forms" [forms-demo/examples]]
+                  [:atoms/icons "Icons / Images" [icons-demo/examples]]
+                  [:atoms/layouts "Layout" [layout-demo/examples]]
                   [:atoms/re-com "Re-com" [re-com-demo/examples]]
-                  [:atoms/astro "AstroUXDS" [astro-demo/examples]]
                   [:atoms/misc "Misc." [misc/examples]]
                   [:atoms/experimental "Experimental" [experimental/examples]]
+                  [:atoms/astro "AstroUXDS" [astro-demo/examples]]
                   [:atoms/all "All" [all-demo/examples]]])
 
 
@@ -48,9 +48,9 @@
                     :height        "85vh"}
     :title ""
     :short-name "atoms"
-    :description ""
+    :description "Atoms are the fundamental building blocks in [Atomic Design](https://bradfrost.com/blog/post/atomic-web-design/)"
     :children atom-navbar
-    :start-panel :atoms/charts]])
+    :start-panel :atoms/buttons]])
 
 
 
