@@ -14,88 +14,7 @@
 (log/info "demo.catalog.molecule.example.composite.simple-multi-chart-2")
 
 
-(defn- data-tools [data]
-  (let [old-data (bh/subscribe-local data [])]
-
-    ;(log/info "data-tools" data "//" @old-data)
-
-    (fn []
-      [rc/h-box :src (rc/at)
-       :gap "10px"
-       :class "tools-panel"
-       :children [[:label.h5 "Input Data:"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/simple-multi-chart2-sample-data]])
-                   :label "Default"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
-                   :label "A -> 10000"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
-                                                                            {:name "Page Q" :uv 1100
-                                                                             :pv   1100 :tv 1100 :amt 1100}]])
-                   :label "Add 'Q'"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
-                   :label "Drop Last 2"]
-
-                  ; TODO: need to update any :ui/component configurations that depend on the data content (charts, react-table, etc.)
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
-                                                                           [assoc :data (into []
-                                                                                          (map (fn [x]
-                                                                                                 (assoc x :new-item (rand-int 7000)))
-                                                                                            (:data @old-data)))]])
-                   :label "Add :new-item"]]])))
-
 (def last-thing (atom nil))
-(defn- config-tools [config-data]
-  ;(log/info "config-tools (a)" config-data)
-
-  (reset! last-thing config-data)
-
-  (let [cfg (bh/subscribe-local config-data [])]
-    (fn []
-      (let [brush? (get-in @cfg [:brush])
-            uv?    (get-in @cfg [:uv :include])
-            tv?    (get-in @cfg [:tv :include])]
-
-        ;(log/info "config-tools (b)" config-data "//" cfg "//" brush? "//" uv?)
-
-        [rc/h-box :src (rc/at)
-         :gap "10px"
-         :class "tools-panel"
-         :children [[:label.h5 "Config:"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[bh/utils-set-local-values [] bh/simple-multi-chart2-default-config]]) :label "Default"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:brush] not]])
-                     :label "!Brush"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:uv :include] not]])
-                     :label "! uv data"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[update-in [:tv :include] not]])
-                     :label "! tv data"]
-
-                    [bh/chart-utils-color-config config-data ":amt :fill" [:amt :fill] :above-center]
-
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] "b"]
-                                                                                    [assoc-in [:pv :stackId] "b"]])
-                     :label "stack uv/pv"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:uv :stackId] ""]
-                                                                                    [assoc-in [:pv :stackId] ""]])
-                     :label "!stack uv/pv"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] "a"]
-                                                                                    [assoc-in [:amt :stackId] "a"]])
-                     :label "stack tv/amt"]
-                    [rc/button :on-click #(bh/utils-handle-change-path config-data [[assoc-in [:tv :stackId] ""]
-                                                                                    [assoc-in [:amt :stackId] ""]])
-                     :label "!stack tv/amt"]]]))))
-
-
-(comment
-  (def config-data @last-thing)
-  (def cfg (bh/subscribe-local config-data []))
-
-  ())
 
 
 (defn- data-config-update-example [& {:keys [widget component-id next-color] :as params}]
@@ -137,6 +56,9 @@
 > `atom/example/chart/bar-chart/data-sub-example`
 >
 > See also `molecule/example/simple-multi-chart-2`
+
+> Note: Currently, (sha: x962dea7) only the Chart will show the new item when the user click the `Add :new-item` button. This
+> is because the tools/data-tools only knows of one config param, and in this case we pass only the config for the Chart.
 "
         [layout/frame
          ;;

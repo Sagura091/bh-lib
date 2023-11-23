@@ -1,5 +1,8 @@
 (ns demo.catalog.molecule.example.composite.simple-multi-chart
   (:require [bh-ui.core :as bh]
+            [bh-ui.utils.color :as color]
+            [bh-ui.utils.example-data :as data]
+            [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [re-com.core :as rc]
             [re-frame.core :as re-frame]
             [reagent.core :as r]
@@ -14,41 +17,34 @@
 (def atom-wrapped-dsl (r/atom bh/simple-multi-chart1-ui-def))
 
 
-(defn- data-tools [data]
-  (let [old-data (bh/utils-subscribe-local data [])]
-
-    ;(log/info "data-tools" data "//" @old-data)
-
-    (fn []
-      [rc/h-box :src (rc/at)
-       :gap "10px"
-       :class "tools-panel"
-       :children [[:label.h5 "Input Data:"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) []]]) :label "Empty"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path (drop-last data) [[bh/utils-set-local-values (take-last 1 data) bh/simple-multi-chart1-sample-data]])
-                   :label "Default"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:data 0 :uv] 10000]])
-                   :label "A -> 10000"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data] {:name "Page Q" :uv 1100}
-                                                                                        :pv   1100 :tv 1100 :amt 1100]])
-                   :label "Add 'Q'"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
-                   :label "Drop Last 2"]
-
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]]
-                                                                    [assoc :data (into []
-                                                                                   (map (fn [x]
-                                                                                          (assoc x :new-item (rand-int 7000)))
-                                                                                     (:data @old-data)))])
-                   :label "Add :new-item"]]])))
+(defn default-config [next-color]
+  (merge {:isAnimationActive true
+          :grid              {:include         true
+                              :strokeDasharray {:dash 3 :space 3}
+                              :stroke          :gray}
+          :x-axis            {:include     true
+                              :dataKey     :name
+                              :orientation :bottom
+                              :scale       "auto"}
+          :y-axis            {:include     true
+                              :dataKey     ""
+                              :orientation :left
+                              :scale       "auto"
+                              :interval    "preserveStartEnd"}
+          :tooltip           {:include true}
+          :legend            {:include       true
+                              :layout        :horizontal
+                              :align         :center
+                              :verticalAlign :bottom}}
+    (->> [:uv :pv :tv :amt]
+      (map (fn [val]
+             (let [color (color/next-color next-color)]
+               {val {:include true :animate true
+                     :stroke  color :fill color}})))
+      (into {}))))
 
 
-(defn- data-config-update-example [& {:keys [widget component-id] :as params}]
+(defn- data-config-update-example [& {:keys [widget component-id config reset-config next-color] :as params}]
   ;(log/info "config-update-example (params)" params)
 
   [rc/v-box :src (rc/at)
@@ -60,11 +56,23 @@
 
               [rc/v-box :src (rc/at)
                :gap "8px"
-               :children [[data-tools [component-id :blackboard :topic.data]]]]]])
+               :children [[tools/data-tools
+                           [component-id :blackboard :topic.data]
+                           config
+                           bh/simple-multi-chart1-sample-data
+                           data/random-meta-tabular-data
+                           next-color]
+                          [tools/config-tools
+                           [component-id :blackboard :topic.data]
+                           config
+                           reset-config]]]]])
 
 
 (defn example []
-  (let [container-id "simple-multi-chart"
+  (let [next-color (atom -1)
+        reset-config (default-config next-color)
+        config (r/atom reset-config)
+        container-id "simple-multi-chart"
         component-id (bh/utils-path->keyword container-id "widget")]
     (fn []
       (acu/demo "(A simple) Multiple Charts in a Widget (shared data)"
@@ -75,6 +83,12 @@
 > `atom/example/chart/bar-chart/data-sub-example`
 >
 > See also `molecule/example/simple-multi-chart-2`
+
+> Note: we are using a `(r/atom config)` to hold the Chart config, so the `Add :new-item` button will show the correct results.
+
+> Note 2: this example is using the *older* implementation of Recharts, which do _NOT_ yet implement a `:config`
+> parameter, so any changes the user makes on the `Config Properties:` tool will _NOT_ be reflected
+> in the charts.
 "
         [layout/frame
          ;;
@@ -86,10 +100,13 @@
           [data-config-update-example
            :widget [bh/grid-container
                     :data atom-wrapped-dsl
+                    :config config
                     :component-id component-id
                     :resizable true
                     :tools true]
-           :component-id component-id]]]
+           :component-id component-id
+           :config config
+           :reset-config reset-config]]]
 
         bh/simple-multi-chart1-src-code))))
 

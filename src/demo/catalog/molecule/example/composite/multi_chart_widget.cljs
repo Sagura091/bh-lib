@@ -1,6 +1,8 @@
 (ns demo.catalog.molecule.example.composite.multi-chart-widget
   (:require [bh-ui.core :as bh]
+            [bh-ui.utils.color :as color]
             [demo.catalog.molecule.local-storage :as storage]
+            [demo.catalog.atom.example.chart.examples.user-tool :as tools]
             [reagent.core :as r]
             [re-com.core :as rc]
             [taoensso.timbre :as log]
@@ -11,8 +13,9 @@
 (log/info "demo.catalog.molecule.example.composite.multi-chart-widget")
 
 
-(defn- data-tools [data]
-  (let [old-data (bh/utils-subscribe-local data [])]
+(defn- data-tools [data config next-color]
+  (let [old-data (bh/utils-subscribe-local data [])
+        old-config (bh/utils-subscribe-local config [])]
 
     ;(log/info "data-tools" data "//" @old-data)
 
@@ -31,22 +34,29 @@
                    :label "A -> 10000"]
 
                   [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-conj-in [:data]
-                                                                     {:name "Page Q" :uv 1100
-                                                                      :pv   1100 :tv 1100 :amt 1100}]])
+                                                                            {:name "Page Q" :uv 1100
+                                                                             :pv   1100 :tv 1100 :amt 1100}]])
                    :label "Add 'Q'"]
 
                   [rc/button :on-click #(bh/utils-handle-change-path data [[bh/utils-drop-last-in [:data] 2]])
                    :label "Drop Last 2"]
 
-                  [rc/button :on-click #(bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
-                                                                    [assoc :data (into []
-                                                                                   (map (fn [x]
-                                                                                          (assoc x :new-item (rand-int 7000)))
-                                                                                     (:data @old-data)))]])
+                  [rc/button :on-click #(let [color (color/get-color (-> @old-data
+                                                                       :data
+                                                                       count))]
+                                          (log/info "Add :new-item" color)
+                                          (bh/utils-handle-change-path data [[assoc-in [:metadata :fields :new-item] :number]
+                                                                             [assoc :data (into []
+                                                                                            (map (fn [x]
+                                                                                                   (assoc x :new-item (rand-int 7000)))
+                                                                                              (:data @old-data)))]])
+                                          (bh/utils-handle-change-path config [[assoc :new-item
+                                                                                {:include true :animate true
+                                                                                 :stroke color :fill color}]]))
                    :label "Add :new-item"]]])))
 
 
-(defn- data-update-example [& {:keys [widget component-id] :as params}]
+(defn- data-update-example [& {:keys [widget component-id next-color] :as params}]
   ;(log/info "data-update-example (params)" params)
 
   [rc/v-box :src (rc/at)
@@ -58,11 +68,15 @@
 
               [rc/v-box :src (rc/at)
                :gap "8px"
-               :children [[data-tools [component-id :blackboard :topic.data]]]]]])
+               :children [[tools/data-tools
+                           [component-id :blackboard :data]
+                           [component-id :blackboard :config]
+                           [] #() next-color]]]]])
 
 
 (defn example []
-  (let [container-id "multi-chart-widget"
+  (let [next-color (atom -1)
+        container-id "multi-chart-widget"
         component-id (bh/utils-path->keyword container-id "widget")
         dsl          (r/atom (or (storage/load-from-local-storage component-id) bh/multi-chart-ui-def))]
 
@@ -87,5 +101,6 @@
                     :save-fn storage/save-to-local-storage
                     :resizable true
                     :tools true]
-           :component-id component-id]]]
+           :component-id component-id
+           :next-color next-color]]]
         bh/multi-chart-src-code))))
