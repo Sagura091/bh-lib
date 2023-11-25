@@ -105,7 +105,7 @@ of a microservice)"]])
 One way to think of this is as a _directed graph_, with the sources at the top and the UI at the bottom;
 the data flows _down hill_.
 
-![Figure 3. A simplified directed graph of a UI.](/imgs/data-flow/figure/atwiad/atwiad.012.png)
+![Figure 3. A simplified directed graph of a UI.](/imgs/data-flow/figure/atwiad/atwiad.020.png)
 
 _Figure 3. A simplified directed graph of a UI._"]])
 
@@ -243,8 +243,8 @@ the actual presentation on the display."]])
 (defn- putting-it-together []
   [layout/frame {:extra-classes :is-fluid}
    [:h3 "Putting it Together"]
-   [layout/markdown-block "Figure 5 shows how the different parts of the textual DSL are mapped to the 2 visual representations
-*visual* and *DSL (flow).
+   [layout/markdown-block "Figure 5 shows how the different parts of the textual DSL are mapped to the 2 visual representations:
+*visual* (i.e., a widget) and *DSL* (showing the data flow through the UI and allowing the user to edit that flow).
 
 ![Figure 5. Mapping the DSL to the visual representations.](/imgs/data-flow/figure/atwiad/atwiad.011.png)
 
