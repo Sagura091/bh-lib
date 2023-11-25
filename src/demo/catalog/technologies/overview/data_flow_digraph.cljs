@@ -105,7 +105,7 @@ of a microservice)"]])
 One way to think of this is as a _directed graph_, with the sources at the top and the UI at the bottom;
 the data flows _down hill_.
 
-![Figure 3. A simplified directed graph of a UI.](/imgs/data-flow/figure/atwiad/atwiad.020.png)
+![Figure 3. A simplified directed graph of a UI.](/imgs/data-flow/figure/atwiad/atwiad.023.png)
 
 _Figure 3. A simplified directed graph of a UI._"]])
 
@@ -261,8 +261,8 @@ for example :rechart/bar."]])
 
 (defn- data-flow-ui []
   [layout/frame {:extra-classes :is-fluid}
-   [:h2.has-text-info "Designing a UI with Black Hammer"]
-   [layout/markdown-block "Since we are working in Clojure, and using Re-frame in the UI, we take advantage of the Signal Graph,
+   [:h2.has-text-info "Visually designing a UI with Black Hammer"]
+   [layout/markdown-block "Since we are working in Clojure, and using Re-frame in the UI, we take advantage of the Re-frame Signal Graph,
 using the [Layer 2 'Extractors' and Layer 3 'Materialized Views'](https://day8.github.io/re-frame/subscriptions/#the-four-layers)
 as the primary mechanisms for the various data transformations needed to support the UI.
 
@@ -308,11 +308,13 @@ even Layer 4 subscriptions, depending upon how you wire everything together in t
               :stream/solve-puzzle   {::w/entity-type :kstream
                                       ::w/xform       sudoku-pipeline}
               :topic/answer-out      (assoc rpl-solution-topic ::w/entity-type :topic)}
+
    :workflow [[:topic/event-in :stream/solve-puzzle]
               [:stream/solve-puzzle :topic/answer-out]]})
 ```
 
-It's easy to see the relative similarities between these two description. Let's look at each part individually.
+It's easy to see the relative similarities between this notation and the one we use for developing UI \"widgets\" two description.
+Let's look at each part individually.
 
 "]])
 
