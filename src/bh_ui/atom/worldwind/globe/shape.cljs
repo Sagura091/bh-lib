@@ -41,9 +41,11 @@
 
   ;(log/info "polygon" locations "//" fill-color "//" outline-color "//" width)
 
-  (let [attributes (attributes/shape-attributes
-                     {:fill-color    fill-color
-                      :outline-color outline-color
+  (let [[_ _ _ fc _] fill-color
+        [_ _ _ oc _] outline-color
+        attributes (attributes/shape-attributes
+                     {:fill-color    fc
+                      :outline-color oc
                       :width         width})
         locs       (->> locations
                      (map location/location)
@@ -60,9 +62,11 @@
 
   ;(log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
 
-  (let [attributes (attributes/shape-attributes
-                     {:fill-color    fill-color
-                      :outline-color outline-color
+  (let [[_ _ _ fc _] fill-color
+        [_ _ _ oc _] outline-color
+        attributes (attributes/shape-attributes
+                     {:fill-color    fc
+                      :outline-color oc
                       :width         width})
         circle     (WorldWind/SurfaceCircle. (location/location location)
                      radius attributes)]
@@ -75,8 +79,9 @@
 
   ;(log/info "circle" locations "//" outline-color "//" width)
 
-  (let [attributes (attributes/shape-attributes
-                     {:outline-color outline-color
+  (let [[_ _ _ oc _] outline-color
+        attributes (attributes/shape-attributes
+                     {:outline-color oc
                       :width         width})
         locs       (->> locations
                      (map location/location)
@@ -91,91 +96,17 @@
 
   ;(log/info "label" location "//" label "//" fill-color "//" width)
 
-  (let [label      (WorldWind/GeographicText. (location/position location) label)
+  (let [[_ _ _ fc _] fill-color
+        [_ _ _ oc _] outline-color
+        label      (WorldWind/GeographicText. (location/position location) label)
         attributes (attributes/text-attributes
-                     {:fill-color    fill-color
-                      :outline-color outline-color
+                     {:fill-color    fc
+                      :outline-color oc
                       :width         width})]
     (set! (.-attributes label) attributes)
     label))
 
 
 
-(comment
-  (do
-    (def locations [[-115.0 37.0] [-115.0 32.0]
-                    [-107.0 33.0] [-102.0 31.0]
-                    [-102.0 35.0] [-115.0 37.0]])
-    (def fill-color [0.0 0.5 0.0 0.5])
-    (def outline-color [0.0 0.5 0.0 1.0])
-    (def width 5))
-
-  (def attributes (attributes/attributes
-                    {:fill-color    fill-color
-                     :outline-color outline-color
-                     :width         width}))
-  (def locs (->> locations
-              (map location/location)
-              (into-array)))
-  (def polygon (WorldWind/SurfacePolygon. locs attributes))
 
 
-  ())
-
-
-; refactor wrap-shape to work with collections, putting all the shapes on the same layer
-(comment
-  (do
-    (def id "dummy")
-    (def z 100)
-    (def fill-color [0.0 0.5 0.0 0.5])
-    (def outline-color [0.0 0.5 0.0 1.0])
-    (def width 5)
-    (def locations [[-115.0 37.0] [-115.0 32.0]
-                    [-107.0 33.0] [-102.0 31.0]
-                    [-102.0 35.0] [-115.0 37.0]])
-
-    (def attr (attributes/shape-attributes
-                {:fill-color    fill-color
-                 :outline-color outline-color
-                 :width         width}))
-    (def locs (->> locations
-                (map location/location)
-                (into-array)))
-    (def polygon (WorldWind/SurfacePolygon. locs attr))
-
-    (set! (.-displayName polygon) id)
-    (def shapes [polygon]))
-
-
-  (def layer (WorldWind/RenderableLayer.))
-
-  (map (fn [shape] {:shape shape}) shapes)
-
-  (dorun
-    (map #(.addRenderable layer %) shapes))
-  (.-renderables layer)
-
-
-  (let [attributes (attributes/shape-attributes
-                     {:fill-color    fill-color
-                      :outline-color outline-color
-                      :width         width})
-        locs       (->> locations
-                     (map location/location)
-                     (into-array))
-        polygon    (WorldWind/SurfacePolygon. locs attributes)]
-    (set! (.-displayName polygon) id))
-
-
-  (let [layer (WorldWind/RenderableLayer.)]
-    (set! (.-displayName layer) id)
-
-    (dorun
-      (map #(.addRenderable layer %) shapes))
-
-    {:id id :layer layer :z z})
-
-
-
-  ())

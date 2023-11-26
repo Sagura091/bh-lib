@@ -16,7 +16,8 @@
 
   ;(log/info "make-shape :shape/path" positions "//" color "//" width "//" extrude)
 
-  (let [attributes (attributes/shape-attributes
+  (let [[_ _ _ color _] color
+        attributes (attributes/shape-attributes
                      {:outline-color color
                       :width width})
         pos        (->> positions

@@ -15,6 +15,7 @@
             [bh-ui.atom.worldwind.globe.shape :as shape]
             [bh-ui.atom.worldwind.globe.volume]
             [bh-ui.utils.bounding-box :as bound]
+            [bh-ui.atom.bhui.color-pallet :as pallet]
             [bh-ui.utils.helpers :as h]
             [cljs-time.coerce :as coerce]
             [cljs-time.core :as cljs-time]
@@ -33,36 +34,80 @@
 (def sample-data [
                   {:layer-id "misc"
                    :z        10
-                   :shapes   [{:shape      :shape/polygon :id "square"
-                               :locations  [[30.0 -130.0] [30.0 -100.0]
-                                            [0.0 -100.0] [0.0 -130.0]]
-                               :fill-color [1 0 0 0.3] :outline-color [1 0 0 1] :width 2}
-                              {:shape      :shape/polygon :id "5-sided"
-                               :locations  [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
-                                            [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
-                               :fill-color [1 0 0 0.6] :outline-color [1 0 0 1] :width 2}
+                   :shapes   [{:shape         :shape/polygon :id "square"
+                               :locations     [[30.0 -130.0] [30.0 -100.0]
+                                               [0.0 -100.0] [0.0 -130.0]]
+                               :fill-color    (pallet/get-color-name pallet/html-color-names :red 0.6)
+                               :outline-color (pallet/get-color-name pallet/html-color-names :red 1.0)
+                               :width         2}
+                              {:shape         :shape/polygon :id "5-sided"
+                               :locations     [[37 -115.0] [32.0 -115.0] [33.0 -107.0]
+                                               [31.0 -102.0] [35.0 -102.0] [37.0 -115.0]]
+                               :fill-color    (pallet/get-color-name pallet/html-color-names :red 0.6)
+                               :outline-color (pallet/get-color-name pallet/html-color-names :red 1.0)
+                               :width         2}
                               {:shape         :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
-                               :outline-color [1 1 0 1.0] :width 5}
-                              {:shape      :shape/circle :id "circle"
-                               :location   [28.538336 -81.379234] :radius 1000000
-                               :fill-color [0 1 0 0.5] :outline-color [1 1 1 1] :width 2 :height 2}
+                               :outline-color (pallet/get-color-name pallet/html-color-names :yellow)
+                               :width         5}
+                              {:shape         :shape/circle :id "circle"
+                               :location      [28.538336 -81.379234] :radius 1000000
+                               :fill-color    (pallet/get-color-name pallet/html-color-names :green 0.5) ; [0 1 0 0.5]
+                               :outline-color (pallet/get-color-name pallet/html-color-names :white) ;[1 1 1 1]
+                               :width         2 :height 2}
                               {:shape         :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
-                               :outline-color [1 0.5 0.78 1.0] :width 5}
-                              {:shape      :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
-                               :fill-color [1 0.9 0.0 1.0] :outline-color [1 0.9 0.0 1.0] :width 1}]}
+                               :outline-color (pallet/get-color-name pallet/html-color-names :pink)
+                               :width         5}
+                              {:shape         :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
+                               :fill-color    (pallet/get-color-name pallet/html-color-names :yellowgreen)
+                               :outline-color (pallet/get-color-name pallet/html-color-names :yellowgreen)
+                               :width         1}]}
+
+                  {:layer-id "fake-wgs-1"
+                   :z        100
+                   :shapes   [{:shape        :shape/model
+                               :id           "fake-wgs-1"
+                               :model-folder "data/models"
+                               :position     [0 -75 30000000]
+                               :url          "satellite"
+                               :scale        5000}
+                              {:shape     :shape/path,
+                               :id        "fake-wgs-1-orbit",
+                               :positions [[0 -75 30000000] [0 15 30000000] [0 105 30000000] [0 -165 30000000] [0 -75 30000000]],
+                               :color     (pallet/get-color-name pallet/html-color-names :yellow),
+                               :width     1,
+                               :extrude   false}]}
+
+                  {:layer-id "fake-wgs-1"
+                   :z        100
+                   :shapes   [{:shape        :shape/model
+                               :id           "fake-wgs-2"
+                               :model-folder "data/models"
+                               :position     [0 -135 30000000]
+                               :url          "satellite"
+                               :scale        5000}
+                              {:shape     :shape/path,
+                               :id        "fake-wgs-2-orbit",
+                               :positions [[0 -135 30000000] [0 -45 30000000] [0 45 30000000] [0 135 30000000] [0 -135 30000000]],
+                               :color     (pallet/get-color-name pallet/html-color-names :cyan),
+                               :width     1,
+                               :extrude   false}]}
 
                   {:layer-id "polar-sat-1"
                    :z        100
-                   :shapes   [{:shape     :shape/path :id "polar-sat-1-orbit"
+                   :shapes   [
+                              {:shape     :shape/path :id "polar-sat-1-orbit"
                                :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
-                               :color     [1 1 0 1.0] :width 1 :extrude true}
+                               :color     (pallet/get-color-name pallet/html-color-names :lemonchiffon)
+                               :width     1 :extrude false}
+
                               {:shape          :shape/volume :id "polar-sat-1-coverage"
                                :positions      [[40 -90 alt] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]]
-                               :faces          [[0 1 2] [0 2 3] [0 3 4] [0 1 4]]
+                               :faces          [[0 1 2] [0 2 3] [0 3 4] [0 4 1]]
                                :outline        [0 1 2 3 4 0 3 2 0 1 4]
-                               :interior-color [1 1 1 0.5]
-                               :outline-color  [0 0 1 1.0]
-                               :width          1 :extrude true}
+                               :interior-color (pallet/get-color-name pallet/html-color-names :white 0.3)
+                               :outline-color  (pallet/get-color-name pallet/html-color-names :cyan)
+                               :width          1
+                               :extrude        false}
                               {:shape        :shape/model
                                :id           "dataduck"
                                :model-folder "data/models"
@@ -71,9 +116,8 @@
                                :scale        2000}]}
 
                   {:layer-id "images"
-                   :z        10
-                   :shapes   [{:shape     :shape/image
-                               :id        "image-15"
+                   :z        0
+                   :shapes   [{:shape     :shape/image :id "image-15"
                                :url       "data/a.png"
                                :locations [[22.229767 -93.016231]
                                            [33.344622 -95.433292]
