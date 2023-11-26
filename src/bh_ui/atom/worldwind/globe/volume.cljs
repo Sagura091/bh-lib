@@ -18,8 +18,10 @@
 
   ;(log/info "triangular-mesh")
 
-  (let [f              (flatten faces)
-        meshAttributes (attributes/shape-attributes {:fill-color interior-color :outline-color outline-color})
+  (let [[_ _ _ ic _] interior-color
+        [_ _ _ oc _] outline-color
+        f              (flatten faces)
+        meshAttributes (attributes/shape-attributes {:fill-color ic :outline-color oc})
         pos            (into [] (map location/position positions))
         mesh           (WorldWind/TriangleMesh. (clj->js pos)
                          (clj->js f)
