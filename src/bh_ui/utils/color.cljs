@@ -35,6 +35,7 @@
   ---
 
   - hex-color : (string) hex encoded color, such as \"#ff0000\" (red) or \"#00CED1\" (dark turquoise)
+  - alpha (optional) : float, if provided this is used as the alpha value, if not we use 1.0 (full)
 
   returns hash-map containing:
 
@@ -45,14 +46,16 @@
   | `:b` | integer | 0-255   | blue value     |
   | `:a` | float   | 1.0     | alpha channel value, always returned as 1.0 |
   "
-  [hex-color]
+  ([hex-color]
+   (hex->rgba hex-color 1.0))
 
-  (let [stripped (apply str (rest hex-color))
-        [r g b] (re-seq #"\w\w" stripped)]
-    {:r (js/parseInt r 16)
-     :g (js/parseInt g 16)
-     :b (js/parseInt b 16)
-     :a 1.0}))
+  ([hex-color alpha]
+   (let [stripped (apply str (rest hex-color))
+         [r g b] (re-seq #"\w\w" stripped)]
+     {:r (js/parseInt r 16)
+      :g (js/parseInt g 16)
+      :b (js/parseInt b 16)
+      :a alpha})))
 
 
 (defn rgba-normal

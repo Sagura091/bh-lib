@@ -66,8 +66,8 @@
 
 ; :shape/polygon
 (defmethod make-shape :shape/polygon [{:keys [id locations fill-color outline-color width]}]
-  (let [[f-r f-g f-b f-a] fill-color
-        [o-r o-g o-b o-a] outline-color]
+  (let [[_ _ _ [f-r f-g f-b f-a] _] fill-color
+        [_ _ _ [o-r o-g o-b o-a] _] outline-color]
     ^{:key id} [:> Entity
                 [:> PolygonGraphics {:hierarchy    (.fromDegreesArray Cartesian3 (clj->js (correct-locations locations)))
                                      :outlineColor (Color. o-r o-g o-b o-a)
@@ -76,13 +76,11 @@
                                      :material     (Color. f-r f-g f-b f-a)}]]))
 
 
-(defmethod make-shape :shape/volume [{:keys [id positions faces outline
-                                             interior-color outline-color
-                                             width] :as params}]
+(defmethod make-shape :shape/volume [{:keys [id positions faces outline interior-color outline-color width] :as params}]
   (log/info "make-shape :shape/volume" params)
 
-  (let [[f-r f-g f-b f-a] interior-color
-        [o-r o-g o-b o-a] outline-color]
+  (let [[_ _ _ [f-r f-g f-b f-a] _] interior-color
+        [_ _ _ [o-r o-g o-b o-a] _] outline-color]
     [:<>
      (map-indexed (fn [idx face]
                     ^{:key (str id "-" idx)}
@@ -113,7 +111,7 @@
 
 ; :shape/polyline
 (defmethod make-shape :shape/polyline [{:keys [id locations width outline-color]}]
-  (let [[r g b a] outline-color]
+  (let [[_ _ _ [r g b a] _] outline-color]
     ^{:key id} [:> Entity
                 [:> PolylineGraphics {:positions (.fromDegreesArray Cartesian3 (clj->js (correct-locations locations)))
                                       :width     width
@@ -122,7 +120,7 @@
 
 ; :shape/path
 (defmethod make-shape :shape/path [{:keys [id positions width color extrude]}]
-  (let [[r g b a] color
+  (let [[_ _ _ [r g b a] _] color
         pos (correct-positions positions)]
     (log/info "make-shape :shape/path" positions "_____" pos)
     ^{:key id} [:> Entity
@@ -134,8 +132,8 @@
 
 ; :shape/circle
 (defmethod make-shape :shape/circle [{:keys [id location radius fill-color outline-color width height]}]
-  (let [[f-r f-g f-b f-a] fill-color
-        [o-r o-g o-b o-a] outline-color]
+  (let [[_ _ _ [f-r f-g f-b f-a] _] fill-color
+        [_ _ _ [o-r o-g o-b o-a] _] outline-color]
     ^{:key id} [:> Entity {:position (cartesian3 location)}
                 [:> EllipseGraphics {:semiMajorAxis radius
                                      :semiMinorAxis radius
@@ -147,9 +145,9 @@
 
 
 ; :shape/label
-(defmethod make-shape :shape/label [{:keys [id location label font fill-color outline-color width]}]
-  (let [[f-r f-g f-b f-a] fill-color
-        [o-r o-g o-b o-a] outline-color]
+(defmethod make-shape :shape/label [{:keys [id location label font width fill-color outline-color]}]
+  (let [[_ _ _ [f-r f-g f-b f-a] _] fill-color
+        [_ _ _ [o-r o-g o-b o-a] _] outline-color]
     ^{:key id} [:> Entity {:position (cartesian3 location)}
                 [:> LabelGraphics {:text         label
                                    :font         (or font "24px Helvetica")

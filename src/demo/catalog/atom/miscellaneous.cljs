@@ -15,15 +15,15 @@
   []
 
   [:div
-   [ww-globe/example]
-   [r-globe/example]
-   [two-d-globe/example]
-
-   [data-table/example]
-   [bh-table/example]
-   [meta-bh-table/example]
-   [meta-coc-bh-table/example]
-
-   [hex-picker/example]
-   [rgba-picker/example]])
+   ;[ww-globe/example]
+   [r-globe/example]])
+   ;[two-d-globe/example]
+   ;
+   ;[data-table/example]
+   ;[bh-table/example]
+   ;[meta-bh-table/example]
+   ;[meta-coc-bh-table/example]
+   ;
+   ;[hex-picker/example]
+   ;[rgba-picker/example]])
 
