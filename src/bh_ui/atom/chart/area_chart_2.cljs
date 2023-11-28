@@ -18,9 +18,11 @@
 
 
 (defn data->config [data next-color]
-  (log/info "data->config" (spec/valid? :tabular-data/meta-data data)
-    "_____" (spec/valid? :remote-data/meta-data data)
-    "_____" data)
+
+  ;(log/info "data->config" (spec/valid? :tabular-data/meta-data data)
+  ;  "_____" (spec/valid? :remote-data/meta-data data)
+  ;  "_____" data)
+
   (cond
     (or (spec/valid? :tabular-data/meta-data data)
       (spec/valid? :remote-data/meta-data data))
@@ -82,7 +84,7 @@
 
 
 (defn- make-area-display [data config]
-  (log/info "make-area-display (a)" data "_____" config)
+  ;(log/info "make-area-display (a)" data "_____" config)
 
   (let [ret (->> (get-in data [:metadata :fields])
               (filter (fn [[_ v]] (= :number v)))
@@ -100,7 +102,7 @@
               (remove empty?)
               (into [:<>]))]
 
-    (log/info "make-area-display (b)" ret)
+    ;(log/info "make-area-display (b)" ret)
 
     ret))
 
@@ -108,11 +110,11 @@
 (defn component [& {:keys [data config style help component-id container-id]}]
   (let [d    (h/resolve-value data)
         c    (h/resolve-value config)
-        _    (log/info "component (a)" c "_____" (empty? @c))
+        ;_    (log/info "component (a)" c "_____" (empty? @c))
         styl (h/resolve-value style)
         hlp  (h/resolve-value help)]
 
-    (log/info "component (b)" d "_____" c)
+    ;(log/info "component (b)" d "_____" c)
 
     (fn []
       (let [next-color (atom -2)

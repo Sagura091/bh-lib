@@ -18,7 +18,7 @@
 (log/info "demo.catalog.atom.example.chart.area-chart-2")
 
 
-(defn default-config [next-color]
+(defn example-config [next-color]
   (merge {:isAnimationActive true
           :grid              {:include         true
                               :strokeDasharray {:dash 3 :space 3}
@@ -46,7 +46,6 @@
 
 
 (def example-data data/meta-tabular-data)
-(def example-config default-config)
 
 
 (defn both-ratom-example []
@@ -62,6 +61,7 @@
 > You can use the buttons in the bottom-most panel to change some of the chart configuration options and see
 > how that affects the configuration (shown in the gray panel) and how the chart responds."
      :example-data example-data
+     :reset-data example-data
      :random-data-fn data/random-meta-tabular-data
      :example-config (example-config next-color)
      :source-code bh/area-chart-source-code
