@@ -166,7 +166,7 @@
     ^{:key id} [:> Model {:url              (str model-folder "/" model-format "/"
                                               url "." model-format)
                           :modelMatrix      matrix
-                          :minimumPixelSize 128
+                          :minimumPixelSize 64
                           :maximumScale     (* scale 100)}]))
 
 

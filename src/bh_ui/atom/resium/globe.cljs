@@ -55,8 +55,8 @@
                                :id "ISS",
                                :model-folder "data/models",
                                :position [-5.046279817318429 170.08176731324795 372325.67633414874],
-                               :url "duck",
-                               :scale 5000}
+                               :url "ISS_2016",
+                               :scale 500}
                               {:shape :shape/path,
                                :id "ISS-orbit",
                                :positions [[48.37436643146414 108.86271764416266 379188.3002179639]
@@ -100,7 +100,7 @@
                                :model-folder "data/models",
                                :position [-0.0042067748257224764 6.0087090588891074 3.5786507621350795E7],
                                :url "satellite",
-                               :scale 5000}
+                               :scale 1000}
                               {:shape :shape/path,
                                :id "wgs-f1-orbit",
                                :positions [[-0.001020558630658204 6.008748726340671 3.578664969184205E7]
@@ -144,7 +144,7 @@
                                :model-folder "data/models",
                                :position [0.018743679235158236 -135.18991972356042 3.578786346970888E7],
                                :url "satellite",
-                               :scale 5000}
+                               :scale 1000}
                               {:shape :shape/path,
                                :id "wgs-f6-orbit",
                                :positions [[0.017032347006904064 -135.18957755781875 3.578762501332535E7]
@@ -188,7 +188,7 @@
                                :model-folder "data/models",
                                :position [-0.0036012606688371677 175.03774780673896 3.57868411943167E7],
                                :url "satellite",
-                               :scale 5000}
+                               :scale 1000}
                               {:shape :shape/path,
                                :id "wgs-f7-orbit",
                                :positions [[-0.005512098323907175 175.03789528496492 3.578679165814169E7]

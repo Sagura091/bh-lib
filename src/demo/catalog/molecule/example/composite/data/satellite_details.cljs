@@ -4,10 +4,10 @@
 
 
 (defn satellite-details []
-  {"ISS"    {:model "duck" :scale 5000}
-   "wgs-f1" {:model "satellite" :scale 5000}
-   "wgs-f6" {:model "satellite" :scale 5000}
-   "wgs-f7" {:model "satellite" :scale 5000}})
+  {"ISS"    {:model "ISS_2016" :scale 500}
+   "wgs-f1" {:model "satellite" :scale 1000}
+   "wgs-f6" {:model "satellite" :scale 1000}
+   "wgs-f7" {:model "satellite" :scale 1000}})
 
 
 

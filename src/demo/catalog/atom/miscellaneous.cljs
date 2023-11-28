@@ -15,8 +15,8 @@
   []
 
   [:div
-   [ww-globe/example]
    [r-globe/example]
+   [ww-globe/example]
    [two-d-globe/example]
 
    [data-table/example]
