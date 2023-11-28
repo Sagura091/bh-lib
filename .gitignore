@@ -53,3 +53,4 @@ components/metaversion/src/rocky_road/metaversion/rocky_road.clj
 /*.xlsx
 /*.json
 
+/0001-last-3-commits.patch
