@@ -17,13 +17,9 @@
   (limit-lon (+ lon delta)))
 
 
-(defn- ->km [v]
-  (* 1000 v))
-
-
 (defn- orbit-positions [positions ephemeris]
   (->> positions
-    (map (fn [[_ [lat lon alt]]] [lat lon (->km alt)]))
+    (map (fn [[_ [lat lon alt]]] [lat lon (support/->km alt)]))
     vec))
 
 

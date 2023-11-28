@@ -4,6 +4,8 @@
             [taoensso.timbre :as log]))
 
 
+(defn ->km [v]
+  (* 1000 v))
 
 
 (defn make-handler [data sub-name]

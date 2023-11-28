@@ -4,28 +4,20 @@
             [demo.catalog.molecule.example.composite.source-fn.support :as support]))
 
 
-(defn- ->km [v]
-  (* 1000 v))
-
-
 (defn- fn-3d-model* [entities models]
   (->> entities
     (map (fn [{:keys [name orbit/position orbit/ephemeris] :as entity}]
            (let [m (-> models (get name))
-                 [_ [lat lon alt]] (->> position (filter #(= 0 (first %))) first)]
+                 [_ [lat lon alt]] (->> position (filter #(= 0 (first %))) first)
+                 shape {:shape        :shape/model
+                        :id           name
+                        :model-folder "data/models"
+                        :position     [lat lon (support/->km alt)]
+                        :url          (:model m)
+                        :scale        (:scale m)}]
              (if (:shapes entity)
-               (update entity :shapes conj {:shape        :shape/model
-                                            :id           name
-                                            :model-folder "data/models"
-                                            :position     [lat lon (->km alt)]
-                                            :url          (:model m)
-                                            :scale        (:scale m)})
-               (assoc entity :shapes [{:shape        :shape/model
-                                       :id           name
-                                       :model-folder "data/models"
-                                       :position     [lat lon (->km alt)]
-                                       :url          (:model m)
-                                       :scale        (:scale m)}])))))
+               (update entity :shapes conj shape)
+               (assoc entity :shapes [shape])))))
     vec))
 
 

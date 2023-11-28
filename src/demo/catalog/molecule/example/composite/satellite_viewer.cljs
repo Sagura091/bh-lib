@@ -4,7 +4,8 @@
             [demo.catalog.molecule.example.composite.source-fn.add-color :as add-color]
             [demo.catalog.molecule.example.composite.source-fn.model-3d :as add-model]
             [demo.catalog.molecule.example.composite.source-fn.orbital-path :as orbit]
-            [demo.catalog.molecule.example.composite.source-fn.extract-shapes :as extract]))
+            [demo.catalog.molecule.example.composite.source-fn.extract-shapes :as extract]
+            [demo.catalog.molecule.example.composite.source-fn.entity-label :as label]))
 
 
 
@@ -23,6 +24,7 @@
      (add-color/fn-add-color* next-color)
      (add-model/fn-3d-model* (details/satellite-details))
      (orbit/fn-orbital-path*)
+     (label/fn-entity-label*)
      (extract/fn-extract-shapes*)))
 
   ())
