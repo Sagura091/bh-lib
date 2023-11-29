@@ -55,8 +55,8 @@
                                :id "ISS",
                                :model-folder "data/models",
                                :position [-5.046279817318429 170.08176731324795 372325.67633414874],
-                               :url "ISS_2016",
-                               :scale 500}
+                               :url "satellite",
+                               :scale 1000}
                               {:shape :shape/path,
                                :id "ISS-orbit",
                                :positions [[48.37436643146414 108.86271764416266 379188.3002179639]
