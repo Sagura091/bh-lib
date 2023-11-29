@@ -424,3 +424,10 @@
 
   ())
 
+
+
+(comment
+  (shuffle html-color-names)
+
+
+  ())

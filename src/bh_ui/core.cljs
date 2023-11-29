@@ -412,7 +412,6 @@
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 
 (def resium-globe                           res-globe/globe)
-(def resium-sample-data                     res-globe/sample-data)
 (def resium-shape                           res-shape/make-shape)
 
 ;;;;;;;;;;;;; WORLDWIND ;;;;;;;;
