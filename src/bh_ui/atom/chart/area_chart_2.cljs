@@ -17,12 +17,12 @@
 (def source-code '[])
 
 
-(defn data->config [data next-color]
-
+(defn data->config
+  "Converts the raw unformatted data into a config format that the charts expect"
+  [data next-color]
   ;(log/info "data->config" (spec/valid? :tabular-data/meta-data data)
   ;  "_____" (spec/valid? :remote-data/meta-data data)
   ;  "_____" data)
-
   (cond
     (or (spec/valid? :tabular-data/meta-data data)
       (spec/valid? :remote-data/meta-data data))
@@ -53,7 +53,9 @@
         (into {})))))
 
 
-(defn standard-chart-components [component-id config]
+(defn standard-chart-components
+  "This function will include chart options given what is set in the config parameter"
+  [component-id config]
 
   ;(log/info "standard-chart-components (a)" component-id config)
 
@@ -83,7 +85,9 @@
                  :verticalAlign (get-in config [:legend :verticalAlign])}])])
 
 
-(defn- make-area-display [data config]
+(defn- make-area-display
+  "This function is used to display the chart data on the screen"
+  [data config]
   ;(log/info "make-area-display (a)" data "_____" config)
 
   (let [ret (->> (get-in data [:metadata :fields])
@@ -107,7 +111,21 @@
     ret))
 
 
-(defn component [& {:keys [data config style help component-id container-id]}]
+(defn component
+  "Creates an Area Chart in a Responsive Container from the ReCharts Library.
+
+Parameters:
+- & {:keys [data config style help component-id container-id]}: A map of parameters.
+ - :data: A map that contains the data for the area chart
+ - :config: A map of chart configurations, Ex: {{:legend {:include true}} {:x-axis {:include true}}
+            {:y-axis {:include true}} {:grid {:include true}}}
+ - :style: A map including any changes to be made to the css styling
+ - :help: A map with config properties to enable or disable hoverable tooltips for the visual component (not currently supported)
+ - :component-id: A unique identifier for the component.
+
+Returns:
+- A hiccup-style component representing the wrapper component with an area chart."
+  [& {:keys [data config style help component-id container-id]}]
   (let [d    (h/resolve-value data)
         c    (h/resolve-value config)
         ;_    (log/info "component (a)" c "_____" (empty? @c))
