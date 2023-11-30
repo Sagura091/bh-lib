@@ -69,7 +69,7 @@
                                        [0.803921568627451 0.3607843137254902 0.3607843137254902 1]
                                        "#CD5C5C"],
                                :width 1,
-                               :extrude true}
+                               :extrude false}
                               {:shape :shape/label,
                                :id "ISS",
                                :location [-5.046279817318429 170.08176731324795 372325.67633414874],
@@ -113,7 +113,7 @@
                                        [0.9411764705882353 0.5019607843137255 0.5019607843137255 1]
                                        "#F08080"],
                                :width 1,
-                               :extrude true}
+                               :extrude false}
                               {:shape :shape/label,
                                :id "wgs-f1",
                                :location [-0.0042067748257224764 6.0087090588891074 3.5786507621350795E7],
@@ -157,7 +157,7 @@
                                        [0.9803921568627451 0.5019607843137255 0.4470588235294118 1]
                                        "#FA8072"],
                                :width 1,
-                               :extrude true}
+                               :extrude false}
                               {:shape :shape/label,
                                :id "wgs-f6",
                                :location [0.018743679235158236 -135.18991972356042 3.578786346970888E7],
@@ -201,7 +201,7 @@
                                        [0.9137254901960784 0.5882352941176471 0.47843137254901963 1]
                                        "#E9967A"],
                                :width 1,
-                               :extrude true}
+                               :extrude false}
                               {:shape :shape/label,
                                :id "wgs-f7",
                                :location [-0.0036012606688371677 175.03774780673896 3.57868411943167E7],
@@ -224,7 +224,7 @@
                               {:shape     :shape/path :id "polar-sat-1-orbit"
                                :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
                                :color     (pallet/get-color-name pallet/html-color-names :lemonchiffon)
-                               :width     1 :extrude true}
+                               :width     1 :extrude false}
 
                               {:shape          :shape/volume :id "polar-sat-1-coverage"
                                :positions      [[40 -90 alt] [30 -100 0] [30 -80 0] [50 -80 0] [50 -100 0]]
