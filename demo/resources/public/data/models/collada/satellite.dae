@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <asset>
+    <contributor>
+      <author>Blender User</author>
+      <authoring_tool>Blender 2.81.16 commit date:2019-12-04, commit time:11:32, hash:f1aa4d18d49d</authoring_tool>
+    </contributor>
+    <created>2023-11-30T10:12:03</created>
+    <modified>2023-11-30T10:12:03</modified>
+    <unit name="meter" meter="1"/>
+    <up_axis>Z_UP</up_axis>
+  </asset>
+  <library_cameras>
+    <camera id="Camera-camera" name="Camera">
+      <optics>
+        <technique_common>
+          <perspective>
+            <xfov sid="xfov">39.59775</xfov>
+            <aspect_ratio>1.777778</aspect_ratio>
+            <znear sid="znear">0.1</znear>
+            <zfar sid="zfar">100</zfar>
+          </perspective>
+        </technique_common>
+      </optics>
+      <extra>
+        <technique profile="blender">
+          <shiftx sid="shiftx" type="float">0</shiftx>
+          <shifty sid="shifty" type="float">0</shifty>
+          <dof_distance sid="dof_distance" type="float">10</dof_distance>
+        </technique>
+      </extra>
+    </camera>
+  </library_cameras>
+  <library_lights>
+    <light id="Light-light" name="Light">
+      <technique_common>
+        <point>
+          <color sid="color">1000 1000 1000</color>
+          <constant_attenuation>1</constant_attenuation>
+          <linear_attenuation>0</linear_attenuation>
+          <quadratic_attenuation>0.00111109</quadratic_attenuation>
+        </point>
+      </technique_common>
+      <extra>
+        <technique profile="blender">
+          <type sid="type" type="int">0</type>
+          <flag sid="flag" type="int">0</flag>
+          <mode sid="mode" type="int">1</mode>
+          <gamma sid="blender_gamma" type="float">1</gamma>
+          <red sid="red" type="float">1</red>
+          <green sid="green" type="float">1</green>
+          <blue sid="blue" type="float">1</blue>
+          <shadow_r sid="blender_shadow_r" type="float">0</shadow_r>
+          <shadow_g sid="blender_shadow_g" type="float">0</shadow_g>
+          <shadow_b sid="blender_shadow_b" type="float">0</shadow_b>
+          <energy sid="blender_energy" type="float">1000</energy>
+          <dist sid="blender_dist" type="float">29.99998</dist>
+          <spotsize sid="spotsize" type="float">75</spotsize>
+          <spotblend sid="spotblend" type="float">0.15</spotblend>
+          <att1 sid="att1" type="float">0</att1>
+          <att2 sid="att2" type="float">1</att2>
+          <falloff_type sid="falloff_type" type="int">2</falloff_type>
+          <clipsta sid="clipsta" type="float">0.04999995</clipsta>
+          <clipend sid="clipend" type="float">30.002</clipend>
+          <bias sid="bias" type="float">1</bias>
+          <soft sid="soft" type="float">3</soft>
+          <bufsize sid="bufsize" type="int">2880</bufsize>
+          <samp sid="samp" type="int">3</samp>
+          <buffers sid="buffers" type="int">1</buffers>
+          <area_shape sid="area_shape" type="int">1</area_shape>
+          <area_size sid="area_size" type="float">0.1</area_size>
+          <area_sizey sid="area_sizey" type="float">0.1</area_sizey>
+          <area_sizez sid="area_sizez" type="float">1</area_sizez>
+        </technique>
+      </extra>
+    </light>
+  </library_lights>
+  <library_effects>
+    <effect id="SalarMat-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.02725164 0.03164276 0.64 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+    <effect id="Material_001-effect">
+      <profile_COMMON>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <color sid="diffuse">0.64 0.64 0.64 1</color>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
+  </library_effects>
+  <library_images/>
+  <library_materials>
+    <material id="SalarMat-material" name="SalarMat">
+      <instance_effect url="#SalarMat-effect"/>
+    </material>
+    <material id="Material_001-material" name="Material.001">
+      <instance_effect url="#Material_001-effect"/>
+    </material>
+  </library_materials>
+  <library_geometries>
+    <geometry id="SolarPanelsMesh-mesh" name="SolarPanelsMesh">
+      <mesh>
+        <source id="SolarPanelsMesh-mesh-positions">
+          <float_array id="SolarPanelsMesh-mesh-positions-array" count="12">-0.5000006 0 0.4999998 0.5 0 -0.4999998 -0.4999995 0 -0.5000001 0.4999995 0 0.5000001</float_array>
+          <technique_common>
+            <accessor source="#SolarPanelsMesh-mesh-positions-array" count="4" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="SolarPanelsMesh-mesh-normals">
+          <float_array id="SolarPanelsMesh-mesh-normals-array" count="3">0 1 0</float_array>
+          <technique_common>
+            <accessor source="#SolarPanelsMesh-mesh-normals-array" count="1" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="SolarPanelsMesh-mesh-vertices">
+          <input semantic="POSITION" source="#SolarPanelsMesh-mesh-positions"/>
+        </vertices>
+        <triangles material="SalarMat-material" count="2">
+          <input semantic="VERTEX" source="#SolarPanelsMesh-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#SolarPanelsMesh-mesh-normals" offset="1"/>
+          <p>0 0 1 0 2 0 0 0 3 0 1 0</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="PanelBacksMesh-mesh" name="PanelBacksMesh">
+      <mesh>
+        <source id="PanelBacksMesh-mesh-positions">
+          <float_array id="PanelBacksMesh-mesh-positions-array" count="240">3 -0.09000003 -0.5 1 -0.09000003 0.4999999 1 -0.09000003 -0.5000001 3 -0.09000003 0.4999998 0.9999994 0.09000003 0.4999997 3 0.09000003 -0.5000002 1 0.09000003 -0.5000002 3 0.09000003 0.5 3 0.09000003 0.5 1 -0.09000003 0.4999999 3 -0.09000003 0.4999998 0.9999994 0.09000003 0.4999997 0.9999994 0.09000003 0.4999997 1 -0.09000003 -0.5000001 1 -0.09000003 0.4999999 1 0.09000003 -0.5000002 1 0.09000003 -0.5000002 3 -0.09000003 -0.5 1 -0.09000003 -0.5000001 3 0.09000003 -0.5000002 3 0.09000003 -0.5000002 3 -0.09000003 0.4999998 3 -0.09000003 -0.5 3 0.09000003 0.5 1 -0.1 0.0999999 0.5000002 -0.1 -0.1 1 -0.1 -0.1 0.5 -0.1 0.09999996 0.4999994 0.1 0.0999999 0.9999999 0.1 -0.1 0.5000004 0.1 -0.1 0.9999995 0.1 0.1 0.9999995 0.1 0.1 0.5 -0.1 0.09999996 1 -0.1 0.0999999 0.4999994 0.1 0.0999999 -3 0.09000003 -0.4999998 -0.9999994 0.09000003 0.4999998 -1 0.09000003 -0.5000001 -3 0.09000003 0.5000005 0.5000004 0.1 -0.1 1 -0.1 -0.1 0.5000002 -0.1 -0.1 0.9999999 0.1 -0.1 -1 -0.09000003 0.5000001 -3 -0.09000003 -0.4999995 -1 -0.09000003 -0.5 -3 -0.09000003 0.5000002 -0.9999994 0.09000003 0.4999998 -3 -0.09000003 0.5000002 -1 -0.09000003 0.5000001 -3 0.09000003 0.5000005 -1 0.09000003 -0.5000001 -1 -0.09000003 0.5000001 -1 -0.09000003 -0.5 -0.9999994 0.09000003 0.4999998 -3 0.09000003 -0.4999998 -1 -0.09000003 -0.5 -3 -0.09000003 -0.4999995 -1 0.09000003 -0.5000001 -3 0.09000003 0.5000005 -3 -0.09000003 -0.4999995 -3 -0.09000003 0.5000002 -3 0.09000003 -0.4999998 -0.5000001 -0.1 0.1 -1 -0.1 -0.0999999 -0.5000003 -0.1 -0.09999996 -1 -0.1 0.1 -1 0.1 -0.0999999 -0.4999994 0.1 0.09999996 -0.5000005 0.1 -0.1 -0.9999997 0.1 0.1000001 -0.4999994 0.1 0.09999996 -1 -0.1 0.1 -0.5000001 -0.1 0.1 -0.9999997 0.1 0.1000001 -1 0.1 -0.0999999 -0.5000003 -0.1 -0.09999996 -1 -0.1 -0.0999999 -0.5000005 0.1 -0.1</float_array>
+          <technique_common>
+            <accessor source="#PanelBacksMesh-mesh-positions-array" count="80" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="PanelBacksMesh-mesh-normals">
+          <float_array id="PanelBacksMesh-mesh-normals-array" count="108">0 -1 0 0 -1 0 0 1 0 0 1 0 0 -1.32455e-6 1 -2.06961e-7 1.32455e-6 1 -1 -3.31137e-6 -2.98023e-7 -1 1.32455e-6 -1.07288e-6 0 -6.62274e-7 -1 0 -1.32455e-6 -1 1 2.6491e-6 4.76837e-7 1 2.64909e-6 4.76837e-7 0 -1 0 0 1 0 0 1 0 0 -5.96046e-7 1 -2.23517e-7 2.98022e-7 1 0 1 0 0 -2.98023e-7 -1 1.49012e-7 0 -1 0 -1 0 0 -1 0 0 1.49012e-6 1 3.72529e-7 -1.32455e-6 1 1 2.64909e-6 -2.38419e-7 1 -4.30478e-6 -1.07288e-6 -2.48353e-7 -1.32455e-6 -1 -1.65568e-7 -6.62274e-7 -1 -1 2.6491e-6 4.76837e-7 -1 2.64909e-6 4.76837e-7 0 -1 0 0 1 0 0 2.98023e-7 1 2.98023e-7 -2.98024e-7 1 0 0 -1 -2.23518e-7 -2.98023e-7 -1</float_array>
+          <technique_common>
+            <accessor source="#PanelBacksMesh-mesh-normals-array" count="36" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="PanelBacksMesh-mesh-vertices">
+          <input semantic="POSITION" source="#PanelBacksMesh-mesh-positions"/>
+        </vertices>
+        <triangles material="Material_001-material" count="40">
+          <input semantic="VERTEX" source="#PanelBacksMesh-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#PanelBacksMesh-mesh-normals" offset="1"/>
+          <p>0 0 1 0 2 0 3 1 1 1 0 1 4 2 5 2 6 2 4 3 7 3 5 3 8 4 9 4 10 4 8 5 11 5 9 5 12 6 13 6 14 6 12 7 15 7 13 7 16 8 17 8 18 8 16 9 19 9 17 9 20 10 21 10 22 10 20 11 23 11 21 11 24 1 25 1 26 1 24 12 27 12 25 12 28 13 29 13 30 13 28 14 31 14 29 14 32 15 33 15 34 15 32 16 35 16 33 16 36 17 37 17 38 17 39 2 37 2 36 2 40 18 41 18 42 18 40 19 43 19 41 19 44 20 45 20 46 20 44 21 47 21 45 21 48 22 49 22 50 22 48 23 51 23 49 23 52 24 53 24 54 24 52 25 55 25 53 25 56 26 57 26 58 26 56 27 59 27 57 27 60 28 61 28 62 28 60 29 63 29 61 29 64 1 65 1 66 1 64 30 67 30 65 30 68 31 69 31 70 31 71 2 69 2 68 2 72 32 73 32 74 32 72 33 75 33 73 33 76 34 77 34 78 34 76 35 79 35 77 35</p>
+        </triangles>
+      </mesh>
+    </geometry>
+    <geometry id="BaseCubeMesh-mesh" name="BaseCubeMesh">
+      <mesh>
+        <source id="BaseCubeMesh-mesh-positions">
+          <float_array id="BaseCubeMesh-mesh-positions-array" count="72">0.5 -0.5 -0.5 -0.5000001 -0.5 0.4999999 -0.4999998 -0.5 -0.5000001 0.5 -0.5 0.5 -0.5000002 0.5 0.4999998 0.5000002 0.5 -0.4999997 -0.5 0.5 -0.5 0.4999997 0.5 0.5000004 0.5000002 0.5 -0.4999997 0.5 -0.5 0.5 0.5 -0.5 -0.5 0.4999997 0.5 0.5000004 0.4999997 0.5 0.5000004 -0.5000001 -0.5 0.4999999 0.5 -0.5 0.5 -0.5000002 0.5 0.4999998 -0.5000002 0.5 0.4999998 -0.4999998 -0.5 -0.5000001 -0.5000001 -0.5 0.4999999 -0.5 0.5 -0.5 -0.5 0.5 -0.5 0.5 -0.5 -0.5 -0.4999998 -0.5 -0.5000001 0.5000002 0.5 -0.4999997</float_array>
+          <technique_common>
+            <accessor source="#BaseCubeMesh-mesh-positions-array" count="24" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <source id="BaseCubeMesh-mesh-normals">
+          <float_array id="BaseCubeMesh-mesh-normals-array" count="33">0 -1 0 0 1 0 0 1 0 1 -2.38419e-7 0 1 3.57628e-7 5.06639e-7 0 -3.57628e-7 1 -4.76837e-7 0 1 -1 -1.78814e-7 -2.98023e-7 -1 -2.38419e-7 -2.68221e-7 1.19209e-7 1.19209e-7 -1 2.98023e-7 2.38419e-7 -1</float_array>
+          <technique_common>
+            <accessor source="#BaseCubeMesh-mesh-normals-array" count="11" stride="3">
+              <param name="X" type="float"/>
+              <param name="Y" type="float"/>
+              <param name="Z" type="float"/>
+            </accessor>
+          </technique_common>
+        </source>
+        <vertices id="BaseCubeMesh-mesh-vertices">
+          <input semantic="POSITION" source="#BaseCubeMesh-mesh-positions"/>
+        </vertices>
+        <triangles material="Material_001-material" count="12">
+          <input semantic="VERTEX" source="#BaseCubeMesh-mesh-vertices" offset="0"/>
+          <input semantic="NORMAL" source="#BaseCubeMesh-mesh-normals" offset="1"/>
+          <p>0 0 1 0 2 0 3 0 1 0 0 0 4 1 5 1 6 1 4 2 7 2 5 2 8 3 9 3 10 3 8 4 11 4 9 4 12 5 13 5 14 5 12 6 15 6 13 6 16 7 17 7 18 7 16 8 19 8 17 8 20 9 21 9 22 9 20 10 23 10 21 10</p>
+        </triangles>
+      </mesh>
+    </geometry>
+  </library_geometries>
+  <library_visual_scenes>
+    <visual_scene id="Scene" name="Scene">
+      <node id="BaseCube" name="BaseCube" type="NODE">
+        <matrix sid="transform">1 0 0 0 0 -1.34359e-7 -1 0 0 1 -1.34359e-7 0 0 0 0 1</matrix>
+        <instance_geometry url="#BaseCubeMesh-mesh" name="BaseCube">
+          <bind_material>
+            <technique_common>
+              <instance_material symbol="Material_001-material" target="#Material_001-material"/>
+            </technique_common>
+          </bind_material>
+        </instance_geometry>
+        <node id="PanelBacks" name="PanelBacks" type="NODE">
+          <matrix sid="transform">1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</matrix>
+          <instance_geometry url="#PanelBacksMesh-mesh" name="PanelBacks">
+            <bind_material>
+              <technique_common>
+                <instance_material symbol="Material_001-material" target="#Material_001-material"/>
+              </technique_common>
+            </bind_material>
+          </instance_geometry>
+          <node id="SolarPanel_A" name="SolarPanel_A" type="NODE">
+            <matrix sid="transform">1 0 0 2.5 0 1 0 0.1 0 0 1 -1.49012e-7 0 0 0 1</matrix>
+            <instance_geometry url="#SolarPanelsMesh-mesh" name="SolarPanel_A">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="SalarMat-material" target="#SalarMat-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="SolarPanel_B" name="SolarPanel_B" type="NODE">
+            <matrix sid="transform">1 0 0 1.5 0 1 0 0.1 0 0 1 -1.49012e-7 0 0 0 1</matrix>
+            <instance_geometry url="#SolarPanelsMesh-mesh" name="SolarPanel_B">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="SalarMat-material" target="#SalarMat-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="SolarPanel_C" name="SolarPanel_C" type="NODE">
+            <matrix sid="transform">1 0 0 -1.5 0 1 0 0.1 0 0 1 -1.49012e-7 0 0 0 1</matrix>
+            <instance_geometry url="#SolarPanelsMesh-mesh" name="SolarPanel_C">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="SalarMat-material" target="#SalarMat-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+          <node id="SolarPanel_D" name="SolarPanel_D" type="NODE">
+            <matrix sid="transform">1 0 0 -2.5 0 1 0 0.1 0 0 1 -1.49012e-7 0 0 0 1</matrix>
+            <instance_geometry url="#SolarPanelsMesh-mesh" name="SolarPanel_D">
+              <bind_material>
+                <technique_common>
+                  <instance_material symbol="SalarMat-material" target="#SalarMat-material"/>
+                </technique_common>
+              </bind_material>
+            </instance_geometry>
+          </node>
+        </node>
+      </node>
+      <node id="Camera" name="Camera" type="NODE">
+        <matrix sid="transform">0.6859207 -0.3240135 0.6515582 7.358891 0.7276763 0.3054208 -0.6141704 -6.925791 0 0.8953956 0.4452714 4.958309 0 0 0 1</matrix>
+        <instance_camera url="#Camera-camera"/>
+      </node>
+      <node id="Light" name="Light" type="NODE">
+        <matrix sid="transform">-0.2908646 -0.7711008 0.5663932 4.076245 0.9551712 -0.1998834 0.2183912 1.005454 -0.05518906 0.6045247 0.7946723 5.903862 0 0 0 1</matrix>
+        <instance_light url="#Light-light"/>
+      </node>
+    </visual_scene>
+  </library_visual_scenes>
+  <scene>
+    <instance_visual_scene url="#Scene"/>
+  </scene>
+</COLLADA>
