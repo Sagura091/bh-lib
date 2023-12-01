@@ -37,9 +37,9 @@
 ; :shape/polygon
 (defmethod make-shape :shape/polygon [{:keys [id locations
                                               fill-color outline-color
-                                              width z]}]
+                                              width z] :as params}]
 
-  ;(log/info "polygon" locations "//" fill-color "//" outline-color "//" width)
+  (log/info "make-shape :shape/polygon" params)
 
   (let [[_ _ _ fc _] fill-color
         [_ _ _ oc _] outline-color
@@ -58,9 +58,9 @@
 ; :shape/circle
 (defmethod make-shape :shape/circle [{:keys [id location
                                              fill-color outline-color
-                                             width radius z]}]
+                                             width radius z] :as params}]
 
-  ;(log/info "circle" location "//" fill-color "//" outline-color "//" width "//" radius)
+  (log/info "make-shape :shape/circle" params)
 
   (let [[_ _ _ fc _] fill-color
         [_ _ _ oc _] outline-color
@@ -75,9 +75,9 @@
 
 
 ; :shape/polyline
-(defmethod make-shape :shape/polyline [{:keys [id locations outline-color width z]}]
+(defmethod make-shape :shape/polyline [{:keys [id locations outline-color width z] :as params}]
 
-  ;(log/info "circle" locations "//" outline-color "//" width)
+  (log/info "make-shape :shape/polyline" params)
 
   (let [[_ _ _ oc _] outline-color
         attributes (attributes/shape-attributes

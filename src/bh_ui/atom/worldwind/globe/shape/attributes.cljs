@@ -7,9 +7,9 @@
 (log/info "bh-ui.atom.worldwind.globe.shape.attributes")
 
 
-(defn shape-attributes [{:keys [fill-color outline-color width]}]
+(defn shape-attributes [{:keys [fill-color outline-color width] :as params}]
 
-  ;(log/info "attributes" fill-color "//" outline-color "//" width)
+  (log/info "shape-attributes" params)
 
   (let [attributes (WorldWind/ShapeAttributes.)]
     (set! (.-interiorColor attributes) (color/color (or fill-color color/default-fill-color)))
@@ -19,9 +19,9 @@
     attributes))
 
 
-(defn text-attributes [{:keys [fill-color outline-color width]}]
+(defn text-attributes [{:keys [fill-color outline-color width] :as params}]
 
-  ;(log/info "attributes" fill-color "//" outline-color "//" width)
+  (log/info "text-attributes" params)
 
   (let [attributes (WorldWind/TextAttributes.)]
     (set! (.-color attributes) (color/color (or fill-color color/default-fill-color)))

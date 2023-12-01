@@ -12,9 +12,9 @@
 ; :shape/polygon
 (defmethod shape/make-shape :shape/path [{:keys [id positions
                                                  color width
-                                                 extrude]}]
+                                                 extrude] :as params}]
 
-  ;(log/info "make-shape :shape/path" positions "//" color "//" width "//" extrude)
+  (log/info "make-shape :shape/path" params)
 
   (let [[_ _ _ color _] color
         attributes (attributes/shape-attributes

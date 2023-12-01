@@ -46,11 +46,11 @@
 
 
 (defn make-layer [{:keys [layer-id shapes z] :as layer}]
-  ;(log/info "makeLayer" layer-id "//" shapes)
+  (log/info "makeLayer (a)" layer)
 
   (let [ret (renderable-layer layer-id z
               (map shape/make-shape shapes))]
-    ;(log/info "makeLayer" layer-id "//" layer)
+    (log/info "makeLayer (b)" ret)
     ret))
 
 
