@@ -7,7 +7,8 @@
             [malli.error :as me]
             [malli.generator :as mg]
             [malli.provider :as mp]
-            [taoensso.timbre :as log]))
+            [taoensso.timbre :as log]
+            [bh-ui.version]))
 
 
 (log/info "bh-ui.utils.example-data")

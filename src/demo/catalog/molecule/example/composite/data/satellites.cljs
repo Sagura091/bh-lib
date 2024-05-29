@@ -69,6 +69,7 @@
   ())
 
 
+;; play with the satellite.js library to convert 2LE data into various orbit values
 (comment
   (do
     (def line1 "1 25544U 98067A   19156.50900463  .00003075  00000-0  59442-4 0  9992")
@@ -122,6 +123,34 @@
 
   ())
 
+
+
+;; use https://www.n2yo.com/database/ and https://celestrak.org/NORAD/elements/gp.php?{QUERY}=VALUE[&FORMAT=VALUE]
+;; to fetch 2LE data for various satellites
+;;
+;; see also https://celestrak.org/NORAD/documentation/gp-data-formats.php
+(comment
+  ;; ISS:
+  (def template "https://celestrak.org/NORAD/elements/gp.php?{QUERY}={NORAD-ID}&FORMAT=2LE")
+
+  "https://celestrak.org/NORAD/elements/gp.php?CATNR=25544&FORMAT=2LE"
+  ()
+
+  ;; experimenting with https://www.n2yo.com/database UI (and https://www.n2yo.com/api/ which requires an API key)
+  ;; we learn that:
+
+  ;; search by Intl designator
+  "https://www.n2yo.com/database/?nssdc={INTL-DESIGNATOR}#results"
+
+  ;; search by NORAD number
+  "https://www.n2yo.com/database/?id={NORAD-ID}#results"
+
+  ;; search by (partial) name:
+  "https://www.n2yo.com/database/?name={NAME}#results"
+
+
+
+  ())
 
 (comment
   (do
