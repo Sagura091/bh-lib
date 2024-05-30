@@ -2,7 +2,7 @@
   (:require ["resium" :refer (Viewer CameraFlyTo Globe Entity EllipseGraphics PolygonGraphics
                                PolylineGraphics PointPrimitive LabelGraphics Model ModelGraphics ModelProps)]
             ["cesium" :refer (Cartesian3 Ion Color CircleGeometry LabelStyle Material
-                               MaterialProperty ImageMaterialProperty Transforms)]
+                               MaterialProperty ImageMaterialProperty Transforms ArcType)]
             [bh-ui.utils.bounding-box :as bound]
             [taoensso.timbre :as log]))
 
@@ -109,12 +109,21 @@
                                    :material  (ImageMaterialProperty. (clj->js {:image url}))}]])
 
 
-; :shape/polyline
-(defmethod make-shape :shape/polyline [{:keys [id locations width outline-color]}]
+; :shape/globeline
+(defmethod make-shape :shape/globeline [{:keys [id locations width outline-color]}]
   (let [[_ _ _ [r g b a] _] outline-color]
     ^{:key id} [:> Entity
                 [:> PolylineGraphics {:positions (.fromDegreesArray Cartesian3 (clj->js (correct-locations locations)))
                                       :width     width
+                                      :material  (Color. r g b a)}]]))
+
+; :shape/spaceline
+(defmethod make-shape :shape/spaceline [{:keys [id locations width outline-color]}]
+  (let [[_ _ _ [r g b a] _] outline-color]
+    ^{:key id} [:> Entity
+                [:> PolylineGraphics {:positions (.fromDegreesArrayHeights Cartesian3 (clj->js (correct-positions locations)))
+                                      :width     width
+                                      :arcType  (. ArcType -NONE)
                                       :material  (Color. r g b a)}]]))
 
 

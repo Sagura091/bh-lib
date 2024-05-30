@@ -22,7 +22,7 @@
                                :fill-color    (pallet/get-color-name pallet/html-color-names :red 0.6)
                                :outline-color (pallet/get-color-name pallet/html-color-names :red 1.0)
                                :width         2}
-                              {:shape         :shape/polyline :id "line1" :locations [[35 -75] [35 -125]]
+                              {:shape         :shape/globeline :id "line1" :locations [[35 -75] [35 -125]]
                                :outline-color (pallet/get-color-name pallet/html-color-names :yellow)
                                :width         5}
                               {:shape         :shape/circle :id "circle"
@@ -30,7 +30,7 @@
                                :fill-color    (pallet/get-color-name pallet/html-color-names :green 0.5) ; [0 1 0 0.5]
                                :outline-color (pallet/get-color-name pallet/html-color-names :white) ;[1 1 1 1]
                                :width         2 :height 2}
-                              {:shape         :shape/polyline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
+                              {:shape         :shape/globeline :id "line2" :locations [[22 -55] [45 -105] [36 -125.7]]
                                :outline-color (pallet/get-color-name pallet/html-color-names :pink)
                                :width         5}
                               {:shape         :shape/label :id "orlando" :location [28.538336 -81.379234] :label "Orlando"
@@ -220,7 +220,9 @@
 
                   {:layer-id "polar-sat-1"
                    :z        100
-                   :shapes   [
+                   :shapes   [{:shape         :shape/spaceline :id "wgs-orlo" :locations [[28.538336 -81.379234 0] [0.018743679235158236 -135.18991972356042 3.578786346970888E7]]
+                               :outline-color (pallet/get-color-name pallet/html-color-names :red)
+                               :width         5}
                               {:shape     :shape/path :id "polar-sat-1-orbit"
                                :positions [[90 -100 alt] [0 -90 alt] [-90 -80 alt] [0 90 alt] [90 -80 alt]]
                                :color     (pallet/get-color-name pallet/html-color-names :lemonchiffon)
