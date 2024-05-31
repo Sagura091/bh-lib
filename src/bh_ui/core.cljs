@@ -412,6 +412,7 @@
 ;;;;;;;;;;;;; RESIUM ;;;;;;;;;;
 
 (def resium-globe                           res-globe/globe)
+(def czml-globe                             res-globe/czmlglobe)
 (def resium-shape                           res-shape/make-shape)
 
 ;;;;;;;;;;;;; WORLDWIND ;;;;;;;;

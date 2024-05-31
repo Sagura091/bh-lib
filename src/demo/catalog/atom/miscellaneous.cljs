@@ -15,7 +15,8 @@
   []
 
   [:div
-   [r-globe/example]
+   [r-globe/example-models]
+   [r-globe/example-czml]
    [ww-globe/example]
    [two-d-globe/example]
 
