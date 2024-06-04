@@ -10,7 +10,9 @@
 (def sample-data [
                   {:layer-id "misc"
                    :z        10
-                   :shapes   [{:shape         :shape/polygon :id "square"
+                   :shapes   [{:shape         :shape/pointlabel :id "Phoenix"
+                               :location      [33.553946 -112.010341]}
+                              {:shape         :shape/polygon :id "square"
                                :locations     [[30.0 -130.0] [30.0 -100.0]
                                                [0.0 -100.0] [0.0 -130.0]]
                                :fill-color    (pallet/get-color-name pallet/html-color-names :red 0.6)

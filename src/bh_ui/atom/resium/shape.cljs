@@ -1,8 +1,9 @@
 (ns bh-ui.atom.resium.shape
   (:require ["resium" :refer (Viewer CameraFlyTo Globe Entity EllipseGraphics PolygonGraphics
-                               PolylineGraphics PointPrimitive LabelGraphics Model ModelGraphics ModelProps)]
-            ["cesium" :refer (Cartesian3 Ion Color CircleGeometry LabelStyle Material
-                               MaterialProperty ImageMaterialProperty Transforms ArcType)]
+                               PolylineGraphics PointPrimitive LabelGraphics Model ModelGraphics ModelProps
+                                     PointGraphics LabelGraphics)]
+            ["cesium" :as Cesium :refer (Cartesian3 Ion Color CircleGeometry LabelStyle Material HorizontalOrigin
+                               MaterialProperty ImageMaterialProperty Transforms ArcType Cartesian2)]
             [bh-ui.utils.bounding-box :as bound]
             [taoensso.timbre :as log]))
 
@@ -61,8 +62,26 @@
    ;(log/info "cartesian3 (lat lon alt)")
    (.fromDegrees Cartesian3 lon lat alt)))
 
+;; BE BLESSED  https://roman01la.github.io/javascript-to-clojurescript/
 
 (defmulti make-shape (fn [{:keys [shape]}] shape))
+
+
+(defmethod make-shape :shape/pointlabel [{:keys [id location]}]
+  ^{:key id} [:> Entity {:position (cartesian3 location)}
+              [:> PointGraphics {:pixelSize 6
+                                 :color (. Color -WHITE)
+                                 :outlineColor (. Color -DIMGREY)
+                                 :outlineWidth 1}]
+              [:> LabelGraphics {:text id
+                                 :font "17px Arial"
+                                 :style (. LabelStyle -FILL_AND_OUTLINE)
+                                 :outlineColor (. Color -DIMGREY)
+                                 :outlineWidth 2
+                                 :horizontalOrigin (. HorizontalOrigin -LEFT)
+                                 :pixelOffset (new Cartesian2 10 0)
+                                 :distanceDisplayCondition (new (.-DistanceDisplayCondition Cesium) 2000 8e7),
+                                 :translucencyByDistance (new (.-NearFarScalar Cesium) 6e7 1.0 8e7 0.0)}]])
 
 ; :shape/polygon
 (defmethod make-shape :shape/polygon [{:keys [id locations fill-color outline-color width]}]
