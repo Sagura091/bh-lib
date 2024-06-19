@@ -46,7 +46,6 @@
     Clicking on a tab will swap the content to the associated hiccup 'child'"
 
   [tab-kind children style config]
-  ; TODO: where does :style apply?
 
   ;(log/info "h-tab (a)" config "//" children)
 
@@ -63,7 +62,7 @@
       [rc/v-box
        :gap "5px"
        :children [[tab-kind :src (rc/at)
-                   :style {:border "1px solid"}
+                   :style (merge style {:border "1px solid"})
                    :model selected-tab
                    :tabs pages
                    :on-change #(reset! selected-tab %)]
@@ -118,7 +117,6 @@
     Clicking on a tab will swap the content to the associated hiccup 'child'"
 
   [tab-kind children style config]
-  ; TODO: where does :style apply?
 
   (let [contents     (map make-tab (zipmap (:labels config) children))
         selected-tab (r/atom (-> contents first :id))]
@@ -127,7 +125,7 @@
       [rc/h-box
        :gap "5px"
        :children [[tab-kind :src (rc/at)
-                   :style {:border "1px solid"}
+                   :style (merge style {:border "1px solid"})
                    :model selected-tab
                    :tabs contents
                    :on-change #(reset! selected-tab %)]

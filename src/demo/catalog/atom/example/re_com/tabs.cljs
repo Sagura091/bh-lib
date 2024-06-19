@@ -90,7 +90,7 @@ Clicking on a tab will swap the content to the associated hiccup 'child'"
                   :width "100%"
                   :gap "25px"
                   :children [(labeled-example "Horizontal Tabs" [bh/recom-h-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
-                             (labeled-example "Horizontal Bar Tabs" [bh/recom-h-bar-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
+                             (labeled-example "Horizontal Bar Tabs" [bh/recom-h-bar-tabs :style {:color "blue" :background-color "grey"} :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])
                              (labeled-example "Horizontal Pill Tabs" [bh/recom-h-pill-tabs :config bh/recom-tabs-sample-config :children bh/recom-tabs-sample-children])]]
                  [rc/h-box :src (rc/at)
                   :width "100%"

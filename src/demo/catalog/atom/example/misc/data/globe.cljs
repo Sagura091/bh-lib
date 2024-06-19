@@ -73,7 +73,7 @@
                                :width 1,
                                :extrude false}
                               {:shape :shape/label,
-                               :id "ISS",
+                               :id "ISS-label",
                                :location [-5.046279817318429 170.08176731324795 372325.67633414874],
                                :label "ISS",
                                :fill-color [:indianred
@@ -117,7 +117,7 @@
                                :width 1,
                                :extrude false}
                               {:shape :shape/label,
-                               :id "wgs-f1",
+                               :id "wgs-f1-label",
                                :location [-0.0042067748257224764 6.0087090588891074 3.5786507621350795E7],
                                :label "wgs-f1",
                                :fill-color [:lightcoral
@@ -161,7 +161,7 @@
                                :width 1,
                                :extrude false}
                               {:shape :shape/label,
-                               :id "wgs-f6",
+                               :id "wgs-f6-label",
                                :location [0.018743679235158236 -135.18991972356042 3.578786346970888E7],
                                :label "wgs-f6",
                                :fill-color [:salmon
@@ -205,7 +205,7 @@
                                :width 1,
                                :extrude false}
                               {:shape :shape/label,
-                               :id "wgs-f7",
+                               :id "wgs-f7-label",
                                :location [-0.0036012606688371677 175.03774780673896 3.57868411943167E7],
                                :label "wgs-f7",
                                :fill-color [:darksalmon

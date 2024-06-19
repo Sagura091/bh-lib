@@ -44,7 +44,7 @@
 
 (defn cartesian3
   ([v]
-   (log/info "cartesian3 (vector)")
+   ;(log/info "cartesian3 (vector)")
    (case (count v)
      2 (let [[lat lon] v]
          ;(log/info "cartesian3 (vec [lat lon])" v)
@@ -130,6 +130,7 @@
 
 ; :shape/globeline
 (defmethod make-shape :shape/globeline [{:keys [id locations width outline-color]}]
+  (log/info "make-shape :shape/globeline " id)
   (let [[_ _ _ [r g b a] _] outline-color]
     ^{:key id} [:> Entity
                 [:> PolylineGraphics {:positions (.fromDegreesArray Cartesian3 (clj->js (correct-locations locations)))
@@ -138,7 +139,9 @@
 
 ; :shape/spaceline
 (defmethod make-shape :shape/spaceline [{:keys [id locations width outline-color]}]
+  (log/info "make-shape :shape/spaceline: " id)
   (let [[_ _ _ [r g b a] _] outline-color]
+    (log/info "Spaceline color: " outline-color "rgba?: " r g b a)
     ^{:key id} [:> Entity
                 [:> PolylineGraphics {:positions (.fromDegreesArrayHeights Cartesian3 (clj->js (correct-positions locations)))
                                       :width     width

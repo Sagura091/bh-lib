@@ -1,5 +1,5 @@
 (ns bh-ui.atom.resium.globe
-  (:require ["resium" :refer (Viewer Globe Clock )]
+  (:require ["resium" :refer (Viewer Globe Clock CzmlDataSource)]
             ["cesium" :as Cesium :refer (Cartesian3 Ion JulianDate dataSource CzmlDataSource DataSourceCollection Timeline)]
             [bh-ui.atom.resium.shape :as s]
             [bh-ui.utils.bounding-box :as bound]
@@ -99,6 +99,9 @@
 
     [:> Viewer {:class "h-w-100pc"
                 :dataSources collector}]
+    [:> CzmlDataSource {:data (clj->js czml)}]
+    ;; this CzmlDataSource component from Resium might work, but got it working
+    ;; with the above load datasource to the Viewer so not touching it
 
 
     )
