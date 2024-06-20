@@ -9,19 +9,19 @@
 (log/info "bh-ui.table")
 
 
-(defn table-column-headers [data rows width height]
+(defn table-column-headers [data col-labels rows width height]
   (let [d          (apply set (map keys data))
         col-count  (count d)
         col-width  (max 80 (- (/ (or width 400) col-count) 5))
         row-height (max 50 (/ (or height 400) (+ 2 (or rows 5))))]
     (->> d
       (map (fn [k]
-             {:id    k :header-label (name k) :row-label-fn k
+             {:id k :header-label (get col-labels k) :row-label-fn k
               :width col-width :height row-height}))
       (into []))))
 
 
-(defn- table* [& {:keys [data max-rows width height cell-style-fn
+(defn- table* [& {:keys [data metadata max-rows width height cell-style-fn
                          on-click-row-fn row-line-color]}]
 
   ;(log/info "table-star" @data)
@@ -34,7 +34,7 @@
 
     [rc/simple-v-table :src (rc/at)
      :model data
-     :columns (table-column-headers @data 5 (or width 200) (or height))
+     :columns (table-column-headers @data (:column-labels metadata) 5 (or width 200) (or height 200))
      :max-rows (or max-rows (count @data))
      :table-row-line-color (or row-line-color "#00fff0")
      :on-click-row (or on-click-row-fn #())
@@ -75,6 +75,7 @@
         :children [[table*
                     :data (h/resolve-value (if (:data @d) (:data @d) []))
                     :max-rows (or max-rows (count (:data @d)))
+                    :metadata (:metadata @d)
                     :width width
                     :height height
                     :row-line-color (or row-line-color "#00fff0")
@@ -105,6 +106,7 @@
     (if (:metadata @d)
       [meta-table
        :data data
+       :metadata (:metadata @d)
        :max-rows max-rows
        :width width
        :height height

@@ -11,6 +11,7 @@
                 {:title "Sample Data with meta-data"
                  :metadata {:type :tabular
                             :id :name
+                            :column-labels {:name "Name" :kp "KP" :uv "UV" :pv "PV" :amt "AMT"}
                             :fields {:name :string :uv :number :pv :number :tv :number :amt :number}}
                  :data [{:name "Page A" :kp 2000 :uv 4000 :pv 2400 :amt 2400}
                         {:name "Page B" :kp 2000 :uv 3000 :pv 5598 :amt 2210}
