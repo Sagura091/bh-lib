@@ -25,7 +25,7 @@
 		"@tippyjs/react": "^4.2.6",
 		"astrouxds": "1.0.1",
 		"bulma": "0.9.4",
-		"cesium": "1.91.0",
+		"cesium": "1.122.0",
 		"dagre": "0.8.5",
 		"emoji-regex": "10.2.1",
 		"fixed-data-table-2": "1.2.19",
