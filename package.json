@@ -63,7 +63,7 @@
 		"copy-webpack-plugin": "11.0.0",
 		"css-loader": "^6.8.1",
 		"imports-loader": "4.0.1",
-		"shadow-cljs": "2.24.0",
+		"shadow-cljs": "2.28.18",
 		"style-loader": "^3.3.3",
 		"webpack": "5.88.0",
 		"webpack-cli": "5.1.4"
