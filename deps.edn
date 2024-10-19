@@ -18,7 +18,7 @@
              org.clojars.ertucetin/re-frame-flow {:mvn/version "0.1.4"}
              com.lucasbradstreet/cljs-uuid-utils {:mvn/version "1.0.2"}
              aysylu/loom                         {:mvn/version "1.0.2"}
-             thheller/shadow-cljs                {:mvn/version "2.24.0"}
+             thheller/shadow-cljs                {:mvn/version "2.28.18"}
              metosin/malli                       {:mvn/version "0.11.0"}
              metasoarous/oz                      {:mvn/version "2.0.0-alpha5"}
              io.github.nextjournal/clerk         {:mvn/version "0.14.919"}
